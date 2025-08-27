@@ -1,0 +1,64 @@
+@php
+    use App\Enums\FontType;
+    use App\Enums\HeadingTag;
+    use App\Enums\HeadingSize;
+@endphp
+
+@props([
+    'as' => HeadingTag::H3, // default to h3
+    'size' => HeadingSize::H3, // default size
+    'font' => null, // optional font
+    'id' => null, // optional id
+    'class' => '', // additional classes
+])
+
+@php
+  // Define size classes for heading (mapped to the abstract classes from Tailwind)
+ $sizeClasses = [
+        HeadingSize::H1 => 'heading-1',
+        HeadingSize::H2 => 'heading-2',
+        HeadingSize::H3 => 'heading-3',
+        HeadingSize::H4 => 'heading-4',
+        HeadingSize::H5 => 'heading-5',
+        HeadingSize::H6 => 'heading-6',
+        HeadingSize::DISPLAY_LARGE => 'text-display-large',
+        HeadingSize::DISPLAY_MEDIUM => 'text-display-medium',
+        HeadingSize::DISPLAY_SMALL => 'text-display-small',
+  ];
+
+ // Define optional font classes
+    $fontClasses = [
+        FontType::SANS => '!font-sans',
+        FontType::SERIF => '!font-serif',
+        FontType::MONO => '!font-mono',
+    ];
+
+  // Validate that the provided "as" and "size" props are valid
+  if (!in_array($as, HeadingTag::getValues())) {
+      throw new InvalidArgumentException("Invalid heading tag: {$as}");
+  }
+
+  if (!in_array($size, HeadingSize::getValues())) {
+      throw new InvalidArgumentException("Invalid heading size: {$size}");
+  }
+
+   // If a font is provided, ensure it's valid, otherwise use null (no override)
+    if ($font && !in_array($font, FontType::getValues())) {
+        throw new InvalidArgumentException("Invalid font type: {$font}");
+    }
+
+  // Get the appropriate class for the size prop
+  $headingClass = $sizeClasses[$size] ?? $sizeClasses[HeadingSize::H3]; // default to heading-3 size if no size provided
+
+  // If a font is provided, add the font class, otherwise rely on the default in the size class
+  $fontClass = $font ? $fontClasses[$font] : '';
+
+  // Combine the heading class with any additional classes passed from the parent
+  $classes = trim("{$headingClass} {$fontClass} {$class}");
+@endphp
+
+@if(trim($slot) !== '')
+  <{{ $as }} id="{{ $id }}" class="{{ $classes }}">
+    {{ $slot }}
+  </{{ $as }}>
+@endif

@@ -1,0 +1,74 @@
+@import "tailwindcss" theme(static);
+@source "../views/";
+@source "../../app/";
+
+/* Display heading classes with mobile and desktop compositions */
+.text-display-large {
+  @apply text-5xl md:text-6xl lg:text-9xl font-serif font-extralight leading-tight;
+}
+
+.text-display-medium {
+  @apply text-5xl md:text-6xl lg:text-8xl font-serif font-extralight leading-tight;
+}
+
+.text-display-small {
+  @apply text-4xl md:text-5xl lg:text-7xl font-serif font-extralight leading-tight;
+}
+
+/* Heading classes with mobile and desktop compositions */
+.heading-1,
+h2.wp-block-heading {
+  @apply text-4xl lg:text-6xl font-serif font-extralight leading-tight;
+}
+
+.heading-2,
+h3.wp-block-heading {
+  @apply text-3xl lg:text-4xl font-serif font-extralight leading-tight;
+}
+
+.heading-3,
+h4.wp-block-heading {
+  @apply text-2xl lg:text-3xl font-serif font-extralight leading-tight;
+}
+
+.heading-4,
+h5.wp-block-heading,
+h6.wp-block-heading {
+  @apply text-xl lg:text-2xl font-sans font-extralight leading-tight;
+}
+
+.heading-5 {
+  @apply text-lg lg:text-xl font-extralight leading-normal font-sans;
+}
+
+.heading-6 {
+  @apply text-base lg:text-lg font-extralight leading-normal font-sans;
+}
+
+.text-xlarge {
+  @apply text-xl lg:text-3xl leading-loose font-sans;
+}
+
+.text-large {
+  @apply text-xl lg:text-2xl leading-loose font-sans;
+}
+
+.text-medium {
+  @apply text-lg lg:text-xl leading-relaxed font-sans;
+}
+
+.text-default {
+  @apply text-base lg:text-lg leading-normal font-sans;
+}
+
+.text-small {
+  @apply text-sm lg:text-base leading-normal font-sans;
+}
+
+.text-xsmall {
+  @apply text-xs lg:text-sm leading-normal font-sans;
+}
+
+strong {
+  @apply font-bold;
+}

@@ -1,0 +1,63 @@
+@php
+  use App\Enums\ContainerSize;
+  use App\Enums\HeadingTag;
+  use App\Enums\HeadingSize;
+  use App\Enums\TextSize;
+  use App\Enums\TextTag;
+  use App\Enums\ThemeVariant;
+@endphp
+
+@props([
+    'eyebrow' => null,
+    'heading' => null,
+    'subtitle' => null,
+    'variant' => ThemeVariant::LIGHT,
+    'classes' => '', // Extra classes for container
+    'wrapperClasses' => null, // Classes for optional wrapper div
+])
+
+@php
+  // Early return if no content to display
+  if (empty($eyebrow) && empty($heading) && empty($subtitle)) {
+    return;
+  }
+
+  // Define variant classes for light and dark
+  $eyebrowClasses = $variant === ThemeVariant::DARK ? 'text-primary-lime border-primary-lime' : 'pill-purple';
+  $titleClasses = $variant === ThemeVariant::DARK ? 'text-white' : 'text-primary-navy';
+  $subtitleClasses = $variant === ThemeVariant::DARK ? 'text-primary-inverse-muted' : 'text-neutral-500';
+@endphp
+
+@if ($wrapperClasses)
+  <div class="{{ $wrapperClasses }}">
+@endif
+
+    <x-container :size="ContainerSize::MEDIUM" {{ $attributes->merge(['classes' => 'text-center space-y-4 ' . $classes]) }}>
+        <x-text
+          :as="TextTag::SPAN"
+          :size="TextSize::XSMALL"
+          class="block max-w-max mx-auto pill {{ $eyebrowClasses }}"
+        >
+          {!! $eyebrow !!}
+        </x-text>
+
+        <x-heading
+          :as="HeadingTag::H2"
+          :size="HeadingSize::H1"
+          class="{{ $titleClasses }}"
+        >
+          {!! $heading !!}
+        </x-heading>
+
+        <x-text
+          :as="TextTag::P"
+          :size="TextSize::MEDIUM"
+          class="max-w-[68ch] mx-auto {{ $subtitleClasses }}"
+        >
+          {!! $subtitle !!}
+        </x-text>
+    </x-container>
+
+@if ($wrapperClasses)
+  </div>
+@endif
