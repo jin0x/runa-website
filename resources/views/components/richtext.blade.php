@@ -14,12 +14,13 @@
 
 @php
   $sizeClasses = [
-      TextSize::XLARGE => 'text-xlarge',
-      TextSize::LARGE => 'text-large',
-      TextSize::MEDIUM => 'text-medium',
-      TextSize::BASE => 'text-default',
-      TextSize::SMALL => 'text-small',
+      TextSize::CAPTION => 'text-caption',
       TextSize::XSMALL => 'text-xsmall',
+      TextSize::SMALL => 'text-small',
+      TextSize::BASE => 'text-default',
+      TextSize::MEDIUM => 'text-medium',
+      TextSize::LARGE => 'text-large',
+      TextSize::XLARGE => 'text-xlarge',
   ];
 
   $fontClasses = [

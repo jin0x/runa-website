@@ -6,101 +6,290 @@
 
 /* Theme configuration */
 @theme {
-  /* Custom Colors */
-  --color-primary-lime: #c4ff00;
-  --color-primary-violet: #6b46c1;
-  --color-primary-dark: #1a1a1a;
-  --color-primary-white: #ffffff;
-  --color-navy: #1e293b;
+  /* Shadow */
+  --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 
-  /* Extend default colors */
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #6b7280;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
-  --color-gray-900: #111827;
-
-  /* Font Families */
+  /* Font Families - keeping existing */
   --font-family-sans:
     system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     'Noto Sans', sans-serif;
   --font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-family-mono:
     'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-}
 
-/* Display heading classes with mobile and desktop compositions */
-.text-display-large {
-  @apply text-5xl md:text-6xl lg:text-9xl font-serif font-extralight leading-tight;
-}
+  /* Primary Brand Colors */
+  --color-brand-primary: #8d5fff;
+  --color-brand-secondary: #3a5bff;
+  --color-brand-tertiary: #000934;
+  --color-brand-quaternary: #acc2dd;
+  --color-accent-lime: #d5ffbe;
+  --color-accent-mist: #c2b4fc;
+  --color-accent-blue: #0b1a5f;
 
-.text-display-medium {
-  @apply text-5xl md:text-6xl lg:text-8xl font-serif font-extralight leading-tight;
-}
+  /* Semantic Colors */
+  --color-semantic-success: #9fe870;
+  --color-semantic-warning: #ffeb69;
+  --color-semantic-error: #fc273f;
+  --color-semantic-info: #a0e1e1;
+  --color-semantic-highlight: #ffc091;
+  --color-semantic-decorative: #ffd7ef;
 
-.text-display-small {
-  @apply text-4xl md:text-5xl lg:text-7xl font-serif font-extralight leading-tight;
+  /* Neutral Colors */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f3f3f3;
+  --color-neutral-100: #d7d8d6;
+  --color-neutral-400: #9c9ea0;
+  --color-neutral-700: #53565a;
+  --color-neutral-800: #f5f6f7;
+
+  /* Custom Gradient Colors */
+  --color-brand-tertiary-32: rgba(0, 9, 52, 0.32);
+  --color-neutral-0-32: rgba(255, 255, 255, 0.32);
+
+  /* Text Sizes */
+  --text-3xs: 0.75rem; /* 12px - Caption */
+  --text-2xs: 0.875rem; /* 14px - Small Body */
+  --text-xs: 1rem; /* 16px - Body */
+  --text-sm: 1.125rem; /* 18px */
+  --text-base: 1.25rem; /* 20px */
+  --text-lg: 1.5rem; /* 24px */
+  --text-xl: 1.75rem; /* 28px */
+  --text-2xl: 2rem; /* 32px */
+  --text-3xl: 2.25rem; /* 36px */
+  --text-4xl: 2.5rem; /* 40px */
+  --text-5xl: 2.75rem; /* 44px */
+  --text-6xl: 3rem; /* 48px */
+  --text-7xl: 4rem; /* 64px */
+  --text-8xl: 5.5rem; /* 88px */
+
+  /* Transitions */
+  --default-transition-duration: 250ms;
+
+  /* Gradients */
+  --gradient-4: linear-gradient(
+    180deg,
+    var(--color-brand-tertiary-32) 57.95%,
+    var(--color-neutral-0-32) 178.8%
+  );
 }
 
 /* Heading classes with mobile and desktop compositions */
 .heading-1,
 h2.wp-block-heading {
-  @apply text-4xl lg:text-6xl font-serif font-extralight leading-tight;
+  font-size: var(--text-5xl);
+  @apply font-serif font-bold uppercase;
+  line-height: 85%;
+}
+
+@media (min-width: 768px) {
+  .heading-1,
+  h2.wp-block-heading {
+    font-size: var(--text-8xl);
+  }
 }
 
 .heading-2,
 h3.wp-block-heading {
-  @apply text-3xl lg:text-4xl font-serif font-extralight leading-tight;
+  font-size: var(--text-3xl);
+  @apply font-serif font-bold uppercase;
+  line-height: 85%;
+}
+
+@media (min-width: 768px) {
+  .heading-2,
+  h3.wp-block-heading {
+    font-size: var(--text-7xl);
+  }
 }
 
 .heading-3,
 h4.wp-block-heading {
-  @apply text-2xl lg:text-3xl font-serif font-extralight leading-tight;
+  font-size: var(--text-2xl);
+  @apply font-sans font-normal;
+  line-height: 110%;
+}
+
+@media (min-width: 768px) {
+  .heading-3,
+  h4.wp-block-heading {
+    font-size: var(--text-6xl);
+  }
 }
 
 .heading-4,
-h5.wp-block-heading,
-h6.wp-block-heading {
-  @apply text-xl lg:text-2xl font-sans font-extralight leading-tight;
+h5.wp-block-heading {
+  font-size: var(--text-xl);
+  @apply font-sans font-normal;
+  line-height: 110%;
 }
 
-.heading-5 {
-  @apply text-lg lg:text-xl font-extralight leading-normal font-sans;
+@media (min-width: 768px) {
+  .heading-4,
+  h5.wp-block-heading {
+    font-size: var(--text-4xl);
+  }
+}
+
+.heading-5,
+h6.wp-block-heading {
+  font-size: var(--text-lg);
+  @apply font-sans font-normal;
+  line-height: 110%;
+}
+
+@media (min-width: 768px) {
+  .heading-5,
+  h6.wp-block-heading {
+    font-size: var(--text-2xl);
+  }
 }
 
 .heading-6 {
-  @apply text-base lg:text-lg font-extralight leading-normal font-sans;
+  font-size: var(--text-base);
+  @apply font-sans font-normal;
+  line-height: 110%;
 }
 
-.text-xlarge {
-  @apply text-xl lg:text-3xl leading-loose font-sans;
+@media (min-width: 768px) {
+  .heading-6 {
+    font-size: var(--text-lg);
+  }
 }
 
-.text-large {
-  @apply text-xl lg:text-2xl leading-loose font-sans;
+/* Display heading classes - keeping for backward compatibility */
+.text-display-large {
+  font-size: var(--text-5xl);
+  @apply font-serif font-bold uppercase;
+  line-height: 85%;
 }
 
-.text-medium {
-  @apply text-lg lg:text-xl leading-relaxed font-sans;
+@media (min-width: 768px) {
+  .text-display-large {
+    font-size: var(--text-8xl);
+  }
 }
 
-.text-default {
-  @apply text-base lg:text-lg leading-normal font-sans;
+.text-display-medium {
+  font-size: var(--text-3xl);
+  @apply font-serif font-bold uppercase;
+  line-height: 85%;
 }
 
-.text-small {
-  @apply text-sm lg:text-base leading-normal font-sans;
+@media (min-width: 768px) {
+  .text-display-medium {
+    font-size: var(--text-7xl);
+  }
+}
+
+.text-display-small {
+  font-size: var(--text-2xl);
+  @apply font-serif font-normal;
+  line-height: 110%;
+}
+
+@media (min-width: 768px) {
+  .text-display-small {
+    font-size: var(--text-6xl);
+  }
+}
+
+/* Text size classes */
+.text-caption {
+  font-size: var(--text-3xs);
+  line-height: 110%;
+  @apply inline-block;
 }
 
 .text-xsmall {
-  @apply text-xs lg:text-sm leading-normal font-sans;
+  font-size: var(--text-2xs);
+  line-height: 110%;
+}
+
+.text-small {
+  font-size: var(--text-2xs);
+  line-height: 110%;
+}
+
+.text-default {
+  font-size: var(--text-xs);
+  line-height: 110%;
+}
+
+.text-medium {
+  font-size: var(--text-sm);
+  line-height: 110%;
+}
+
+@media (min-width: 768px) {
+  .text-medium {
+    font-size: var(--text-base);
+  }
+}
+
+.text-large {
+  font-size: var(--text-base);
+  line-height: 110%;
+}
+
+@media (min-width: 768px) {
+  .text-large {
+    font-size: var(--text-lg);
+  }
+}
+
+.text-xlarge {
+  font-size: var(--text-base);
+  line-height: 110%;
+}
+
+@media (min-width: 768px) {
+  .text-xlarge {
+    font-size: var(--text-xl);
+  }
 }
 
 strong {
   @apply font-bold;
+}
+
+/* Utility classes */
+.text-gradient {
+  background: linear-gradient(to bottom, #ffffff, #9e9ea0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.bg-gradient-4 {
+  background: var(--gradient-4);
+}
+
+.card-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(156, 158, 160, 0.5) 0%,
+    rgba(156, 158, 160, 0.1) 100%
+  );
+}
+
+.divider-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-0, rgba(255, 255, 255, 0.66)) 0%,
+    var(--color-neutral-400, rgba(156, 158, 160, 0.66)) 100%
+  );
+}
+
+.testimonial-gradient {
+  background: var(--gradient-4);
+}
+
+.resource-card-gradient {
+  border-radius: 0px;
+  background: linear-gradient(
+    180deg,
+    rgba(243, 243, 243, 0.3) 0%,
+    rgba(243, 243, 243, 0.06) 100%
+  );
 }
