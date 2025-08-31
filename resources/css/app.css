@@ -108,35 +108,57 @@ h2 {
 }
 
 h3 {
-  @apply text-2xl md:text-6xl font-sans font-normal leading-[110%];
+  @apply heading-3;
 }
 
 h4 {
-  @apply text-xl md:text-4xl font-sans font-normal leading-[110%];
+  @apply heading-4;
 }
 
 h5 {
-  @apply text-lg md:text-2xl font-sans font-normal leading-[110%];
+  @apply heading-5;
 }
 
 h6 {
-  @apply text-base md:text-lg font-sans font-normal leading-[110%];
+  @apply heading-6;
 }
 
-/* Gutenberg block headings inherit from native tags above */
-/* No need to redefine them */
+/* Gutenberg block headings - explicitly styled to ensure they work */
+h1.wp-block-heading {
+  @apply heading-1;
+}
+
+h2.wp-block-heading {
+  @apply heading-2;
+}
+
+h3.wp-block-heading {
+  @apply heading-3;
+}
+
+h4.wp-block-heading {
+  @apply heading-4;
+}
+
+h5.wp-block-heading {
+  @apply heading-5;
+}
+
+h6.wp-block-heading {
+  @apply heading-6;
+}
 
 /* Display heading classes - keeping for backward compatibility */
 .text-display-large {
-  @apply text-5xl md:text-8xl font-serif font-bold uppercase leading-[85%];
+  @apply heading-1;
 }
 
 .text-display-medium {
-  @apply text-3xl md:text-7xl font-serif font-bold uppercase leading-[85%];
+  @apply heading-2;
 }
 
 .text-display-small {
-  @apply text-2xl md:text-6xl font-sans font-normal leading-[110%];
+  @apply heading-3;
 }
 
 /* Text size classes */
@@ -170,7 +192,7 @@ h6 {
 
 /* Apply default text styles to native paragraph tags */
 p {
-  @apply text-xs leading-[110%];
+  @apply text-default;
 }
 
 strong {
