@@ -138,15 +138,18 @@ h6.wp-block-heading {
 }
 
 .text-display-lg {
-  @apply text-5xl md:text-8xl font-serif font-bold uppercase leading-[85%];
+  @apply text-5xl md:text-8xl font-bold uppercase leading-[85%];
+  font-family: var(--font-heading);
 }
 
 .text-display-md {
-  @apply text-3xl md:text-7xl font-serif font-bold uppercase leading-[85%];
+  @apply text-3xl md:text-7xl font-bold uppercase leading-[85%];
+  font-family: var(--font-heading);
 }
 
 .heading-7 {
-  @apply text-sm md:text-base font-sans font-normal leading-[110%];
+  @apply text-sm md:text-base font-normal leading-[110%];
+  font-family: var(--font-body);
 }
 
 /* Text size classes */
