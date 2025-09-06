@@ -9,30 +9,23 @@
   /* Shadow */
   --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 
-  /* Font Families - keeping existing */
-  --font-family-sans:
-    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif;
-  --font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
-  --font-family-mono:
-    'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  /* Font Families */
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-heading: 'Lineca', Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono: 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
-  /* Primary Brand Colors */
-  --color-brand-primary: #8d5fff;
-  --color-brand-secondary: #3a5bff;
-  --color-brand-tertiary: #000934;
-  --color-brand-quaternary: #acc2dd;
-  --color-accent-lime: #d5ffbe;
-  --color-accent-mist: #c2b4fc;
-  --color-accent-blue: #0b1a5f;
+  /* Primary Colors */
+  --color-primary-black: #000000;
+  --color-primary-white: #ffffff;
+  --color-primary-green-neon: #00ffa3;
+  --color-primary-green-soft: #93ff82;
+  --color-primary-yellow: #eefc51;
+  --color-primary-gradient: linear-gradient(90deg, #00ffa3 0%, #eefc51 100%);
 
-  /* Semantic Colors */
-  --color-semantic-success: #9fe870;
-  --color-semantic-warning: #ffeb69;
-  --color-semantic-error: #fc273f;
-  --color-semantic-info: #a0e1e1;
-  --color-semantic-highlight: #ffc091;
-  --color-semantic-decorative: #ffd7ef;
+  /* Secondary Colors */
+  --color-secondary-pink: #fc18b0;
+  --color-secondary-purple: #af44ec;
+  --color-secondary-cyan: #0ce3f8;
 
   /* Neutral Colors */
   --color-neutral-0: #ffffff;
@@ -43,24 +36,24 @@
   --color-neutral-800: #f5f6f7;
 
   /* Custom Gradient Colors */
-  --color-brand-tertiary-32: rgba(0, 9, 52, 0.32);
+  --color-primary-black-32: rgba(0, 0, 0, 0.32);
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
 
   /* Text Sizes */
-  --text-3xs: 0.75rem; /* 12px - Caption */
-  --text-2xs: 0.875rem; /* 14px - Small Body */
-  --text-xs: 1rem; /* 16px - Body */
-  --text-sm: 1.125rem; /* 18px */
-  --text-base: 1.25rem; /* 20px */
-  --text-lg: 1.5rem; /* 24px */
-  --text-xl: 1.75rem; /* 28px */
-  --text-2xl: 2rem; /* 32px */
-  --text-3xl: 2.25rem; /* 36px */
-  --text-4xl: 2.5rem; /* 40px */
-  --text-5xl: 2.75rem; /* 44px */
-  --text-6xl: 3rem; /* 48px */
-  --text-7xl: 4rem; /* 64px */
-  --text-8xl: 5.5rem; /* 88px */
+  --text-3xs: 0.75rem; /* 12pt - Caption */
+  --text-2xs: 0.875rem; /* 14pt - Small Body */
+  --text-xs: 1rem; /* 16pt - Body */
+  --text-sm: 1.125rem; /* 18pt */
+  --text-base: 1.25rem; /* 20pt */
+  --text-lg: 1.375rem; /* 22pt */
+  --text-xl: 1.375rem; /* 22pt */
+  --text-2xl: 1.375rem; /* 22pt */
+  --text-3xl: 1.375rem; /* 22pt */
+  --text-4xl: 1.375rem; /* 22pt */
+  --text-5xl: 1.375rem; /* 22pt */
+  --text-6xl: 1.375rem; /* 22pt */
+  --text-7xl: 1.375rem; /* 22pt */
+  --text-8xl: 1.375rem; /* 22pt */
 
   /* Transitions */
   --default-transition-duration: 250ms;
@@ -68,47 +61,54 @@
   /* Gradients */
   --gradient-4: linear-gradient(
     180deg,
-    var(--color-brand-tertiary-32) 57.95%,
+    var(--color-primary-black-32) 57.95%,
     var(--color-neutral-0-32) 178.8%
   );
 }
 
 /* Heading classes */
 .heading-1 {
-  @apply text-5xl md:text-8xl font-serif font-bold uppercase leading-[85%];
+  @apply text-5xl md:text-8xl font-bold leading-[85%];
+  font-family: var(--font-heading);
 }
 
 .heading-2 {
-  @apply text-3xl md:text-7xl font-serif font-bold uppercase leading-[85%];
+  @apply text-3xl md:text-7xl font-bold leading-[85%];
+  font-family: var(--font-heading);
 }
 
 .heading-3 {
-  @apply text-2xl md:text-6xl font-sans font-normal leading-[110%];
+  @apply text-2xl md:text-6xl font-normal leading-[110%];
+  font-family: var(--font-body);
 }
 
 .heading-4 {
-  @apply text-xl md:text-4xl font-sans font-normal leading-[110%];
+  @apply text-xl md:text-4xl font-normal leading-[110%];
+  font-family: var(--font-body);
 }
 
 .heading-5 {
-  @apply text-lg md:text-2xl font-sans font-normal leading-[110%];
+  @apply text-lg md:text-2xl font-normal leading-[110%];
+  font-family: var(--font-body);
 }
 
 .heading-6 {
-  @apply text-base md:text-lg font-sans font-normal leading-[110%];
+  @apply text-base md:text-lg font-normal leading-[110%];
+  font-family: var(--font-body);
 }
 
 /* Apply heading styles to native HTML tags */
 h1,
 h1.wp-block-heading,
 .text-display-large {
-  @apply text-5xl md:text-8xl font-serif font-bold uppercase leading-[85%];
+  @apply text-5xl md:text-8xl font-bold leading-[85%];
+  font-family: var(--font-heading);
 }
 
 h2,
 h2.wp-block-heading,
 .text-display-medium {
-  @apply text-3xl md:text-7xl font-serif font-bold uppercase leading-[85%];
+  @apply text-3xl md:text-7xl font-serif font-bold leading-[85%];
 }
 
 h3,
@@ -130,6 +130,18 @@ h5.wp-block-heading {
 h6,
 h6.wp-block-heading {
   @apply text-base md:text-lg font-sans font-normal leading-[110%];
+}
+
+.text-display-lg {
+  @apply text-5xl md:text-8xl font-serif font-bold uppercase leading-[85%];
+}
+
+.text-display-md {
+  @apply text-3xl md:text-7xl font-serif font-bold uppercase leading-[85%];
+}
+
+.heading-7 {
+  @apply text-sm md:text-base font-sans font-normal leading-[110%];
 }
 
 /* Text size classes */

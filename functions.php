@@ -2,7 +2,6 @@
 
 use Roots\Acorn\Application;
 
-
 define("TEXT_DOMAIN", "runa");
 
 /*
@@ -64,3 +63,44 @@ collect(['setup', 'filters'])
             );
         }
     });
+
+
+
+/**
+ * Add custom @font-face styles for the ABC Diatype Rounded font.
+ *
+ * This function adds inline styles to define the ABC Diatype Rounded font family using @font-face,
+ * and sets it as the default font for the body element. The font files are located in
+ * the theme's assets/fonts directory.
+ *
+ * @since Rocketdocs 1.0
+ */
+add_action('wp_head', function () {
+    echo "<style>
+        @font-face {
+            font-family: 'Lineca';
+            src: url('" . \Roots\asset('fonts/Lineca-Regular.woff2')->uri() . "') format('woff2'),
+                 url('" . \Roots\asset('fonts/Lineca-Regular.woff')->uri() . "') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Lineca';
+            src: url('" . \Roots\asset('fonts/LinecaMono-Bold.woff2')->uri() . "') format('woff2'),
+                 url('" . \Roots\asset('fonts/LinecaMono-Bold.woff')->uri() . "') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+        body {
+            font-family: 'ABC Diatype Rounded', sans-serif;
+        }
+    </style>";
+}, 100);
+
+/**
+ * Add your Google Fonts here.
+ * This is specifically for the theme Sage from roots.io and goes in config.php
+ * Change the font name, weights and styles to what you are using as needed.
+ */
+define('GOOGLE_FONTS', 'Inter:300,400,500:latin');
