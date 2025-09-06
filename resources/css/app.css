@@ -101,14 +101,15 @@
 h1,
 h1.wp-block-heading,
 .text-display-large {
-  @apply text-5xl md:text-8xl font-bold leading-[85%];
+  @apply text-5xl md:text-8xl font-bold uppercase leading-[85%];
   font-family: var(--font-heading);
 }
 
 h2,
 h2.wp-block-heading,
 .text-display-medium {
-  @apply text-3xl md:text-7xl font-serif font-bold leading-[85%];
+  @apply text-3xl md:text-7xl font-bold uppercase leading-[85%];
+  font-family: var(--font-heading);
 }
 
 h3,
