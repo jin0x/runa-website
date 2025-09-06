@@ -184,6 +184,7 @@ h6.wp-block-heading {
 /* Apply default text styles to native paragraph tags */
 p {
   @apply text-xs leading-[110%];
+  font-family: var(--font-body);
 }
 
 strong {
