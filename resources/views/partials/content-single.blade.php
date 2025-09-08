@@ -3,7 +3,7 @@
     <div class="mb-4">
       @include('partials.entry-meta')
     </div>
-    
+
     <h1 class="p-name text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
       {!! $title !!}
     </h1>
