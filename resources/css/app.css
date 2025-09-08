@@ -10,9 +10,12 @@
   --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 
   /* Font Families */
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-body:
+    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif;
   --font-heading: 'Lineca', Georgia, Cambria, 'Times New Roman', Times, serif;
-  --font-mono: 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-mono:
+    'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
   /* Primary Colors */
   --color-primary-black: #000000;
@@ -101,14 +104,14 @@
 h1,
 h1.wp-block-heading,
 .text-display-large {
-  @apply text-5xl md:text-8xl font-bold uppercase leading-[85%];
+  @apply text-5xl md:text-8xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 
 h2,
 h2.wp-block-heading,
 .text-display-medium {
-  @apply text-3xl md:text-7xl font-bold uppercase leading-[85%];
+  @apply text-3xl md:text-7xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 
@@ -138,12 +141,12 @@ h6.wp-block-heading {
 }
 
 .text-display-lg {
-  @apply text-5xl md:text-8xl font-bold uppercase leading-[85%];
+  @apply text-5xl md:text-8xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 
 .text-display-md {
-  @apply text-3xl md:text-7xl font-bold uppercase leading-[85%];
+  @apply text-3xl md:text-7xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 

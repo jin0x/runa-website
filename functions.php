@@ -1,6 +1,7 @@
 <?php
 
 use Roots\Acorn\Application;
+use Illuminate\Support\Facades\Vite;
 
 define("TEXT_DOMAIN", "runa");
 
@@ -79,21 +80,21 @@ add_action('wp_head', function () {
     echo "<style>
         @font-face {
             font-family: 'Lineca';
-            src: url('" . \Roots\asset('fonts/Lineca-Regular.woff2')->uri() . "') format('woff2'),
-                 url('" . \Roots\asset('fonts/Lineca-Regular.woff')->uri() . "') format('woff');
+            src: url('" . Vite::asset('resources/fonts/Lineca-Regular.woff2') . "') format('woff2'),
+                 url('" . Vite::asset('resources/fonts/Lineca-Regular.woff') . "') format('woff');
             font-weight: 400;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'Lineca';
-            src: url('" . \Roots\asset('fonts/LinecaMono-Bold.woff2')->uri() . "') format('woff2'),
-                 url('" . \Roots\asset('fonts/LinecaMono-Bold.woff')->uri() . "') format('woff');
+            src: url('" . Vite::asset('resources/fonts/Lineca-Bold.woff2') . "') format('woff2'),
+                 url('" . Vite::asset('resources/fonts/Lineca-Bold.woff') . "') format('woff');
             font-weight: 700;
             font-style: normal;
         }
         body {
-            font-family: 'ABC Diatype Rounded', sans-serif;
+            font-family: 'Lineca', sans-serif;
         }
     </style>";
 }, 100);
