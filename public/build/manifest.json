@@ -1,0 +1,47 @@
+{
+  "editor.deps.json": {
+    "file": "assets/editor.deps-DxpY22xl.json",
+    "src": "editor.deps.json"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-Dll4W70n.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/editor.css": {
+    "file": "assets/editor-BK8We7v9.css",
+    "src": "resources/css/editor.css",
+    "isEntry": true
+  },
+  "resources/fonts/Lineca-Bold.woff": {
+    "file": "assets/Lineca-Bold-D973aGa9.woff",
+    "src": "resources/fonts/Lineca-Bold.woff"
+  },
+  "resources/fonts/Lineca-Bold.woff2": {
+    "file": "assets/Lineca-Bold-B9wAE2gK.woff2",
+    "src": "resources/fonts/Lineca-Bold.woff2"
+  },
+  "resources/fonts/Lineca-Regular.woff": {
+    "file": "assets/Lineca-Regular-BCtsch4e.woff",
+    "src": "resources/fonts/Lineca-Regular.woff"
+  },
+  "resources/fonts/Lineca-Regular.woff2": {
+    "file": "assets/Lineca-Regular-DOLL2HFD.woff2",
+    "src": "resources/fonts/Lineca-Regular.woff2"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-3nGkjloO.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-Ds_YmOBQ.css"
+    ]
+  },
+  "resources/js/editor.js": {
+    "file": "assets/editor-CfU4GbSP.js",
+    "name": "editor",
+    "src": "resources/js/editor.js",
+    "isEntry": true
+  }
+}
