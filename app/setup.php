@@ -161,6 +161,9 @@ add_action('after_setup_theme', function () {
      * @link https://developer.wordpress.org/reference/functions/add_theme_support/#customize-selective-refresh-widgets
      */
     add_theme_support('customize-selective-refresh-widgets');
+
+    // Disable block-based widget editor to use legacy widgets
+    remove_theme_support('widgets-block-editor');
 }, 20);
 
 /**
@@ -169,6 +172,7 @@ add_action('after_setup_theme', function () {
  * @return void
  */
 add_action('widgets_init', function () {
+    error_log('Footer widget areas being registered');
     $config = [
         'before_widget' => '<section class="widget %1$s %2$s">',
         'after_widget'  => '</section>',
@@ -176,21 +180,11 @@ add_action('widgets_init', function () {
         'after_title'   => '</h3>',
     ];
 
-    register_sidebar([
-                          'name' => __('Primary', TEXT_DOMAIN),
-                          'id'   => 'sidebar-primary',
-                      ] + $config);
-
-    register_sidebar([
-                          'name' => __('Footer', TEXT_DOMAIN),
-                          'id'   => 'sidebar-footer',
-                      ] + $config);
-
     // Footer widget areas
     $footer_widget_config = [
         'before_widget' => '<div class="footer-widget %1$s %2$s">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="text-white text-xs uppercase font-semibold mb-4">',
+        'before_title'  => '<h3 class="text-primary-green-neon text-xs uppercase font-semibold mb-4">',
         'after_title'   => '</h3>',
     ];
 

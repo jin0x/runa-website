@@ -188,7 +188,7 @@ foreach ($social_networks_array as $network) {
     </div>
 
     <!-- Bottom Bar -->
-    <div class="flex flex-col md:flex-row items-center text-sm gap-4 lg:gap-6">
+    <div class="flex flex-col md:flex-row items-center gap-4 lg:gap-6 text-2xs">
       @if($footer_copyrights)
         <span>{!! $footer_copyrights !!}</span>
       @endif
