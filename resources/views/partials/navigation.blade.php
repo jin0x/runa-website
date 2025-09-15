@@ -31,15 +31,15 @@
           @if ($item->children)
             <!-- L2 Submenu -->
             <div class="w-full absolute left-0"
-                 x-show="activeDropdown === '{{ $loop->index }}'"
-                 @click.away="closeDropdown()"
-                 x-cloak
-                 x-transition:enter="transition ease-out duration-100"
-                 x-transition:enter-start="opacity-0 transform scale-95"
-                 x-transition:enter-end="opacity-100 transform scale-100"
-                 x-transition:leave="transition ease-in duration-75"
-                 x-transition:leave-start="opacity-100 transform scale-100"
-                 x-transition:leave-end="opacity-0 transform scale-95">
+                x-show="activeDropdown === '{{ $loop->index }}'"
+                @click.away="closeDropdown()"
+                x-cloak
+                x-transition:enter="transition ease-out duration-100"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-75"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-95">
               <ul class="
               {{ get_field('simple_menu', $item->id) ? 'min-w-fit lg:flex-col lg:gap-2' : '' }}
               mt-2 bg-primary-dark  p-8 flex flex-col gap-8 mx-auto max-w-fit rounded-bl-xl rounded-br-xl">
