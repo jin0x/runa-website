@@ -109,7 +109,7 @@ add_action('after_setup_theme', function () {
      */
     register_nav_menus([
         'primary_navigation' => __('Primary Navigation', TEXT_DOMAIN),
-        'footer_legal'       => __('Footer Legal Menu', TEXT_DOMAIN),
+        'footer_menu'        => __('Footer Menu', TEXT_DOMAIN),
     ]);
 
     /**

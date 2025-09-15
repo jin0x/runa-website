@@ -80,7 +80,7 @@ foreach ($social_networks_array as $network) {
                 :size="TextSize::CAPS"
                 class=""
               >
-                Bluesky
+                Twitter
               </x-text>
             </a>
           @endif
@@ -188,17 +188,17 @@ foreach ($social_networks_array as $network) {
     </div>
 
     <!-- Bottom Bar -->
-    <div class="flex flex-col md:flex-row items-center gap-4 lg:gap-6 text-2xs">
+    <div class="flex flex-col md:flex-row items-center gap-4 lg:gap-6 text-3xs">
       @if($footer_copyrights)
         <span>{!! $footer_copyrights !!}</span>
       @endif
       <div class="flex gap-8 mt-4 md:mt-0">
         <?php
         wp_nav_menu( array(
-          'theme_location' => 'footer_legal',
+          'theme_location' => 'footer_menu',
           'container'      => false,
-          'menu_class'     => 'flex gap-8',
-          'add_li_class'   => 'hover:text-primary-lime transition-colors'
+          'menu_class'     => 'flex gap-8 flex-wrap',
+          'add_li_class'   => 'hover:text-primary-lime transition-colors whitespace-nowrap'
         ) );
         ?>
       </div>
