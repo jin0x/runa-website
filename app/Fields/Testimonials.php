@@ -45,6 +45,9 @@ class Testimonials extends Field
         $testimonials = Builder::make('testimonials');
 
         $testimonials
+            ->setLocation('post_type', '==', 'testimonial');
+
+        $testimonials
             ->addText('company_name', [
                 'label' => 'Company Name',
                 'instructions' => 'Enter the company or organization name',
@@ -106,39 +109,4 @@ class Testimonials extends Field
         return $testimonials->build();
     }
 
-    /**
-     * The field group location.
-     *
-     * @return array
-     */
-    public function location()
-    {
-        return [
-            [
-                [
-                    'param' => 'post_type',
-                    'operator' => '==',
-                    'value' => 'testimonial',
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * The field group settings.
-     *
-     * @return array
-     */
-    public function settings()
-    {
-        return [
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => [],
-            'active' => true,
-            'description' => '',
-        ];
-    }
 }
