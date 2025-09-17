@@ -61,7 +61,7 @@
             <div class="hidden lg:absolute lg:flex lg:items-center lg:justify-end lg:inset-y-0 lg:right-0 gap-2">
               @if (!empty($primary_cta_url) && !empty($primary_cta_label))
                 <x-button
-                  :variant="ButtonVariant::SECONDARY"
+                  :variant="ButtonVariant::PRIMARY"
                   :size="ButtonSize::SMALL"
                   :href="$primary_cta_url"
                   target="{{ $primary_cta_target }}"
@@ -71,7 +71,7 @@
               @endif
               @if (!empty($secondary_cta_url) && !empty($secondary_cta_label))
                 <x-button
-                  :variant="ButtonVariant::PRIMARY"
+                  :variant="ButtonVariant::SECONDARY"
                   :size="ButtonSize::SMALL"
                   :href="$secondary_cta_url"
                   target="{{ $secondary_cta_target }}"
@@ -155,7 +155,7 @@
               <div class="flex flex-col gap-2 p-4 text-center items-start">
                 @if (!empty($primary_cta_url) && !empty($primary_cta_label))
                   <x-button
-                    :variant="ButtonVariant::SECONDARY"
+                    :variant="ButtonVariant::PRIMARY"
                     :href="$primary_cta_url"
                     target="{{ $primary_cta_target }}"
                   >
@@ -164,7 +164,7 @@
                 @endif
                 @if (!empty($secondary_cta_url) && !empty($secondary_cta_label))
                   <x-button
-                    :variant="ButtonVariant::PRIMARY"
+                    :variant="ButtonVariant::SECONDARY"
                     :href="$secondary_cta_url"
                     target="{{ $secondary_cta_target }}"
                   >
