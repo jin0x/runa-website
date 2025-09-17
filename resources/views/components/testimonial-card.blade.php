@@ -42,11 +42,11 @@
     <div class="flex items-start justify-between mb-6">
       <div class="flex-1">
         @if($companyLogo)
-          <div class="w-16 h-16 mb-4 flex items-center justify-center bg-neutral-50 rounded-xl overflow-hidden">
+          <div class="mb-4 flex items-center justify-start">
             <img
               src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
               alt="{{ $companyName }} logo"
-              class="max-w-full max-h-full object-contain"
+              class="h-12 w-auto object-contain"
             >
           </div>
         @endif
