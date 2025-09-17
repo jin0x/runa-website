@@ -1237,12 +1237,12 @@
         },
         {
           "name": "Primary (Black)",
-          "slug": "primary-black",
+          "slug": "primary-dark",
           "color": "#000"
         },
         {
           "name": "Primary (White)",
-          "slug": "primary-white",
+          "slug": "primary-light",
           "color": "#fff"
         },
         {
@@ -1262,7 +1262,7 @@
         },
         {
           "name": "Primary (Black 32)",
-          "slug": "primary-black-32",
+          "slug": "primary-dark-32",
           "color": "#00000052"
         },
         {
@@ -1281,14 +1281,7 @@
     },
     "spacing": {
       "padding": true,
-      "units": [
-        "px",
-        "%",
-        "em",
-        "rem",
-        "vw",
-        "vh"
-      ]
+      "units": ["px", "%", "em", "rem", "vw", "vh"]
     },
     "typography": {
       "defaultFontSizes": false,

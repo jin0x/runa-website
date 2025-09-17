@@ -16,8 +16,8 @@
 @php
   // Define variant classes for buttons
   $variantClasses = [
-      ButtonVariant::GREEN => 'bg-primary-lime text-gray-900 hover:bg-primary-white',
-      ButtonVariant::PURPLE => 'bg-primary-violet text-white hover:bg-primary-white hover:text-gray-900',
+      ButtonVariant::GREEN => 'bg-primary-lime text-gray-900 hover:bg-primary-light',
+      ButtonVariant::PURPLE => 'bg-primary-violet text-white hover:bg-primary-light hover:text-gray-900',
       ButtonVariant::LIGHT => 'bg-white text-gray-900 hover:bg-primary-dark hover:text-white',
       ButtonVariant::DARK => 'bg-primary-dark text-white hover:bg-white hover:text-gray-900',
       ButtonVariant::TRANSPARENT => 'bg-transparent text-navy hover:bg-gray-100',

@@ -39,6 +39,7 @@ Application::configure()
         App\Providers\ThemeServiceProvider::class,
         App\Providers\AcfComposerServiceProvider::class,
         App\Providers\BlockCategoryServiceProvider::class,
+        Log1x\Poet\PoetServiceProvider::class,
     ])
     ->boot();
 
