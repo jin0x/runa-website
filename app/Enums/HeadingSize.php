@@ -13,7 +13,6 @@ class HeadingSize
     const DISPLAY_LARGE = 'text-display-large';
     const DISPLAY_MEDIUM = 'text-display-medium';
     const DISPLAY_SMALL = 'text-display-small';
-    const DISPLAY_EXTRA_LARGE = 'text-display-xl'; // Heading - 120px
 
     public static function getValues(): array {
         return [
@@ -26,7 +25,6 @@ class HeadingSize
             self::DISPLAY_LARGE,
             self::DISPLAY_MEDIUM,
             self::DISPLAY_SMALL,
-            self::DISPLAY_EXTRA_LARGE,
         ];
     }
 }
