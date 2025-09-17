@@ -209,6 +209,19 @@ strong {
   background: var(--gradient-4);
 }
 
+.bg-gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary-green-soft), var(--color-primary-yellow));
+}
+
+/* Button hover states */
+.btn-primary:hover {
+  background: var(--gradient-4) !important;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, var(--color-primary-green-soft), var(--color-primary-yellow)) !important;
+}
+
 .card-gradient {
   background: linear-gradient(
     180deg,

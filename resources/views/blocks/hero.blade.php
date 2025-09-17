@@ -41,9 +41,9 @@
   $textColor = 'text-white';
   $descriptionColor = 'text-primary-light';
 
-  // Define button variants - primary will be lime, secondary will be transparent
-  $primaryButtonVariant = ButtonVariant::GREEN;
-  $secondaryButtonVariant = ButtonVariant::TRANSPARENT;
+  // Define button variants - primary and secondary
+  $primaryButtonVariant = ButtonVariant::PRIMARY;
+  $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
   // Define accent color for highlighted text in title
   $accentColor = 'text-primary-lime';
