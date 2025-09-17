@@ -113,7 +113,6 @@ class TestimonialsSliderBlock extends Block
             'autoplay' => $this->getAutoplay(),
             'autoplay_delay' => $this->getAutoplayDelay(),
             'show_navigation' => $this->getShowNavigation(),
-            'show_pagination' => $this->getShowPagination(),
             'show_company_logos' => $this->getShowCompanyLogos(),
             'show_ratings' => $this->getShowRatings(),
         ];
@@ -184,12 +183,6 @@ class TestimonialsSliderBlock extends Block
                 'instructions' => 'Display previous/next arrows',
                 'default_value' => 1,
                 'ui' => 1,
-            ])
-            ->addTrueFalse('show_pagination', [
-                'label' => 'Show Pagination Dots',
-                'instructions' => 'Display pagination dots',
-                'default_value' => 1,
-                'ui' => 1,
             ]);
 
         return $testimonials->build();
@@ -251,16 +244,6 @@ class TestimonialsSliderBlock extends Block
     public function getShowNavigation()
     {
         return get_field('show_navigation') !== false ? get_field('show_navigation') : true;
-    }
-
-    /**
-     * Get the show pagination field.
-     *
-     * @return bool
-     */
-    public function getShowPagination()
-    {
-        return get_field('show_pagination') !== false ? get_field('show_pagination') : true;
     }
 
     /**
