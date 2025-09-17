@@ -1,0 +1,68 @@
+<?php
+/**
+ * Theme helpers.
+ */
+
+namespace App\Helpers;
+
+/**
+ * Applies specific Tailwind CSS classes to HTML tags within a given content string.
+ *
+ * This function modifies the provided content by adding predefined CSS classes to
+ * unordered lists (`<ul>`), list items (`<li>`), paragraphs (`<p>`), and links (`<a>`) tags.
+ * Additionally, it applies specific heading styles to `<h1>` through `<h6>` tags using a
+ * `preg_replace_callback`.
+ *
+ * @param string $content The HTML content to modify.
+ *
+ * @return string The formatted HTML content with the applied styles.
+ */
+
+ function apply_tailwind_classes_to_content(string $content): string {
+    if (empty($content)) {
+        return '';
+    }
+
+    $content = wpautop($content);
+
+    preg_match_all('/<p.*?>/', $content, $p_matches);
+    preg_match_all('/<h[1-6].*?>/', $content, $h_matches);
+
+    $p_count = count($p_matches[0]);
+    $h_count = count($h_matches[0]);
+
+    if ($p_count > 1) {
+        $content = str_replace('<p>', '<p class="mb-4">', $content);
+    }
+
+    $content = preg_replace_callback(
+        '/<(h[1-6])>(.*?)<\/\1>/i',
+        function ($matches) use ($h_count) {
+            $tag = $matches[1];
+            $content = $matches[2];
+
+            $classes = match ($tag) {
+                'h1' => 'heading-1' . ($h_count > 1 ? ' mb-6' : ''),
+                'h2' => 'heading-2' . ($h_count > 1 ? ' mb-6' : ''),
+                'h3' => 'heading-3' . ($h_count > 1 ? ' mb-6' : ''),
+                'h4' => 'heading-4' . ($h_count > 1 ? ' mb-6' : ''),
+                'h5' => 'heading-5' . ($h_count > 1 ? ' mb-6' : ''),
+                'h6' => 'heading-6' . ($h_count > 1 ? ' mb-6' : ''),
+            };
+
+            return "<{$tag} class=\"{$classes}\">{$content}</{$tag}>";
+        },
+        $content
+    );
+
+    $content = str_replace('<ul>', '<ul class="list-disc pl-6">', $content);
+    $content = str_replace('<li>', '<li class="mb-1">', $content);
+    $content = str_replace('<strong>', '<strong class="!font-semibold">', $content);
+    $content = preg_replace(
+        '/<a(.*?)>/i',
+        '<a$1 class="hover:underline underline-offset-4">',
+        $content
+    );
+
+    return $content;
+}
