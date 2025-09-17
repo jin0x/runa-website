@@ -10,8 +10,8 @@
   <x-container :size="ContainerSize::LARGE" class="py-16 md:py-24">
     {{-- Blog Title --}}
     <div class="mb-12">
-      <x-heading 
-        :as="HeadingTag::H1" 
+      <x-heading
+        :as="HeadingTag::H1"
         :size="HeadingSize::DISPLAY_LARGE"
         class="mb-8"
       >
@@ -27,26 +27,26 @@
           'hide_empty' => true,
         ]);
       @endphp
-      
+
       @if(!empty($categories))
         <div class="flex flex-wrap gap-3">
           <a href="{{ get_permalink(get_option('page_for_posts')) }}">
-            <x-badge 
-              variant="default" 
-              size="lg" 
+            <x-badge
+              variant="default"
+              size="lg"
               rounded="full"
-              class="hover:bg-primary-green-neon hover:text-primary-black transition-colors cursor-pointer"
+              class="hover:bg-primary-green-neon hover:text-primary-dark transition-colors cursor-pointer"
             >
               All Posts
             </x-badge>
           </a>
           @foreach($categories as $category)
             <a href="{{ get_category_link($category) }}">
-              <x-badge 
-                variant="default" 
-                size="lg" 
+              <x-badge
+                variant="default"
+                size="lg"
                 rounded="full"
-                class="hover:bg-primary-green-neon hover:text-primary-black transition-colors cursor-pointer"
+                class="hover:bg-primary-green-neon hover:text-primary-dark transition-colors cursor-pointer"
               >
                 {{ $category->name }}
               </x-badge>
@@ -84,7 +84,7 @@
       {{-- Regular Posts Grid --}}
       @if($postCount > 1)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          @while(have_posts()) 
+          @while(have_posts())
             @php the_post() @endphp
             <x-post-card :featured="false" :post="get_the_ID()" />
           @endwhile
@@ -108,12 +108,12 @@
                 $isActive = strpos($page, 'current') !== false;
                 $isEllipsis = strpos($page, 'dots') !== false;
               @endphp
-              
+
               <li>
                 @if($isEllipsis)
                   <span class="px-3 py-2 text-neutral-400">...</span>
                 @elseif($isActive)
-                  <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary-green-neon text-primary-black font-medium">
+                  <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary-green-neon text-primary-dark font-medium">
                     {!! strip_tags($page) !!}
                   </span>
                 @else

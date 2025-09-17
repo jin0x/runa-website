@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Content sources for editor styles */
 @source "../views/**/*.blade.php";
@@ -10,9 +10,9 @@
   --color-primary-lime: #c4ff00;
   --color-primary-violet: #6b46c1;
   --color-primary-dark: #1a1a1a;
-  --color-primary-white: #ffffff;
+  --color-primary-light: #ffffff;
   --color-navy: #1e293b;
-  
+
   /* Extend default colors */
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
@@ -24,9 +24,12 @@
   --color-gray-700: #374151;
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
-  
+
   /* Font Families */
-  --font-family-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  --font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-family-mono: "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-family-sans:
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+  --font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-family-mono:
+    'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }

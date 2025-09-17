@@ -19,8 +19,8 @@
     'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
   /* Primary Colors */
-  --color-primary-black: #000000;
-  --color-primary-white: #ffffff;
+  --color-primary-dark: #000000;
+  --color-primary-light: #ffffff;
   --color-primary-green-neon: #00ffa3;
   --color-primary-green-soft: #93ff82;
   --color-primary-yellow: #eefc51;
@@ -40,7 +40,7 @@
   --color-neutral-800: #f5f6f7;
 
   /* Custom Gradient Colors */
-  --color-primary-black-32: rgba(0, 0, 0, 0.32);
+  --color-primary-dark-32: rgba(0, 0, 0, 0.32);
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
 
   /* Text Sizes */
@@ -65,7 +65,7 @@
   /* Gradients */
   --gradient-4: linear-gradient(
     180deg,
-    var(--color-primary-black-32) 57.95%,
+    var(--color-primary-dark-32) 57.95%,
     var(--color-neutral-0-32) 178.8%
   );
 }
@@ -300,7 +300,7 @@ strong {
 }
 
 .pagination .current {
-  @apply bg-primary-green-neon text-primary-black font-medium;
+  @apply bg-primary-green-neon text-primary-dark font-medium;
 }
 
 .pagination .dots {
