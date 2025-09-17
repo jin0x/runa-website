@@ -1236,12 +1236,12 @@
           "color": "#fff"
         },
         {
-          "name": "Primary (Black)",
+          "name": "Primary (Dark)",
           "slug": "primary-dark",
           "color": "#000"
         },
         {
-          "name": "Primary (White)",
+          "name": "Primary (Light)",
           "slug": "primary-light",
           "color": "#fff"
         },
@@ -1249,6 +1249,11 @@
           "name": "Primary (Green Neon)",
           "slug": "primary-green-neon",
           "color": "#00ffa3"
+        },
+        {
+          "name": "Primary (Green Soft)",
+          "slug": "primary-green-soft",
+          "color": "#93ff82"
         },
         {
           "name": "Primary (Yellow)",
@@ -1261,7 +1266,7 @@
           "color": "#fff"
         },
         {
-          "name": "Primary (Black 32)",
+          "name": "Primary (Dark 32)",
           "slug": "primary-dark-32",
           "color": "#00000052"
         },
@@ -1281,7 +1286,14 @@
     },
     "spacing": {
       "padding": true,
-      "units": ["px", "%", "em", "rem", "vw", "vh"]
+      "units": [
+        "px",
+        "%",
+        "em",
+        "rem",
+        "vw",
+        "vh"
+      ]
     },
     "typography": {
       "defaultFontSizes": false,
