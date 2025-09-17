@@ -229,6 +229,14 @@ strong {
   background: var(--gradient-4);
 }
 
+.content-media-gradient {
+  background: var(--gradients-color-01-vertical, linear-gradient(
+    180deg,
+     var(--color-primary-yellow) 0.04%, 
+     var(--color-primary-green-soft) 50%, 
+     var(--color-primary-green-neon) 99.96%));
+}
+
 .resource-card-gradient {
   border-radius: 0px;
   background: linear-gradient(
