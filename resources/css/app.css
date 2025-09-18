@@ -243,6 +243,10 @@ strong {
   ) !important;
 }
 
+.btn-light:hover {
+  background: rgba(255, 255, 255, 1) !important;
+}
+
 .card-gradient {
   background: linear-gradient(
     180deg,
