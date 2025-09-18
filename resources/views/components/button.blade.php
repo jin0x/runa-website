@@ -18,12 +18,14 @@
   $variantClasses = [
       ButtonVariant::PRIMARY => 'btn-primary text-primary-dark border-2 border-transparent hover:text-primary-light hover:border-primary-green-neon',
       ButtonVariant::SECONDARY => 'btn-secondary text-primary-light border-2 border-primary-green-neon transition-all duration-300 hover:text-primary-dark hover:border-transparent',
+      ButtonVariant::LIGHT => 'btn-light text-primary-dark border-2 border-white transition-all duration-300 hover:bg-white hover:bg-opacity-100',
   ];
 
   // Define background styles (using CSS custom properties for gradients)
   $backgroundStyles = [
       ButtonVariant::PRIMARY => 'background: linear-gradient(135deg, var(--color-primary-green-soft), var(--color-primary-yellow));',
       ButtonVariant::SECONDARY => 'background: var(--gradient-4);',
+      ButtonVariant::LIGHT => 'background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);',
   ];
 
   // Define size classes for buttons

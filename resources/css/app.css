@@ -143,14 +143,14 @@ h4.wp-block-heading {
 }
 
 h5,
-h5.wp-block-heading,
-.widget-title {
+h5.wp-block-heading {
   @apply text-lg md:text-2xl font-normal leading-[110%];
   font-family: var(--font-body);
 }
 
 h6,
-h6.wp-block-heading {
+h6.wp-block-heading,
+.widget-title {
   @apply text-base md:text-lg font-normal leading-[110%];
   font-family: var(--font-body);
 }
@@ -241,6 +241,10 @@ strong {
     var(--color-primary-green-soft),
     var(--color-primary-yellow)
   ) !important;
+}
+
+.btn-light:hover {
+  background: rgba(255, 255, 255, 1) !important;
 }
 
 .card-gradient {

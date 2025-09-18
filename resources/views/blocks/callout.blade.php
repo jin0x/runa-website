@@ -37,10 +37,6 @@
       default => 'text-primary-navy',
   };
 
-  // Set button variants based on theme
-  $buttonVariant = ButtonVariant::PRIMARY;
-  $secondaryButtonVariant = ButtonVariant::SECONDARY;
-
   // Always use centered layout as per Figma design
   $contentClasses = 'flex flex-col text-center items-center gap-6';
   $textContainerClasses = 'max-w-3xl';
@@ -96,7 +92,7 @@
               $button_target = $button['cta']['target'] ?? '_self';
 
               // First button is primary, others are secondary
-              $currentButtonVariant = $index === 0 ? $buttonVariant : $secondaryButtonVariant;
+              $currentButtonVariant = $index === 0 ? ButtonVariant::PRIMARY : ButtonVariant::SECONDARY;
             @endphp
 
             @if(!empty($button_label) && !empty($button_link))
