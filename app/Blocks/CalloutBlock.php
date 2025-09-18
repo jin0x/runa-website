@@ -113,9 +113,9 @@ class CalloutBlock extends Block
             'title' => $this->getTitle(),
             'content' => $this->getContent(),
             'ctas' => $this->getCtas(),
-            'layout' => $this->getLayout(),
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
+            'background_image' => $this->getBackgroundImage(),
         ];
     }
 
@@ -163,19 +163,17 @@ class CalloutBlock extends Block
                 'return_format' => 'array',
             ])
             ->endRepeater()
+            ->addImage('background_image', [
+                'label' => 'Background Image',
+                'instructions' => 'Optional background image that will be positioned at the bottom of the section',
+                'required' => 0,
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'library' => 'all',
+            ])
 
             ->addTab('Settings', [
                 'placement' => 'top',
-            ])
-            ->addSelect('layout', [
-                'label' => 'Layout',
-                'instructions' => 'Choose the layout for the callout',
-                'choices' => [
-                    'side-by-side' => 'Side-by-Side',
-                    'stacked' => 'Stacked',
-                ],
-                'default_value' => 'side-by-side',
-                'required' => 1,
             ])
             ->addPartial(SectionOptions::class);
 
@@ -222,15 +220,6 @@ class CalloutBlock extends Block
         return get_field('ctas') ?: [];
     }
 
-    /**
-     * Return the layout field.
-     *
-     * @return string
-     */
-    public function getLayout()
-    {
-        return get_field('layout') ?: 'side-by-side';
-    }
 
     /**
      * Return the section size field.
@@ -250,5 +239,15 @@ class CalloutBlock extends Block
     public function getTheme()
     {
         return get_field('theme') ?: 'light';
+    }
+
+    /**
+     * Return the background image field.
+     *
+     * @return array|null
+     */
+    public function getBackgroundImage()
+    {
+        return get_field('background_image');
     }
 }

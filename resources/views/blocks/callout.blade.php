@@ -28,7 +28,7 @@
   // Set background color based on theme
   $bgColor = match ($theme) {
       'dark' => 'bg-primary-dark',
-      default => 'bg-white',
+      default => 'bg-primary-light',
   };
 
   // Set text color based on theme
@@ -38,46 +38,47 @@
   };
 
   // Set button variants based on theme
-  $buttonVariant = $theme === 'dark' ? ButtonVariant::LIGHT : ButtonVariant::DARK;
-  $secondaryButtonVariant = $theme === 'dark' ? ButtonVariant::TRANSPARENT : ButtonVariant::LIGHT;
+  $buttonVariant = ButtonVariant::PRIMARY;
+  $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
-  // Set the layout classes
-  $contentClasses = $layout === 'side-by-side'
-      ? 'flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12'
-      : 'flex flex-col text-center items-center gap-6';
+  // Always use centered layout as per Figma design
+  $contentClasses = 'flex flex-col text-center items-center gap-6';
+  $textContainerClasses = 'max-w-3xl';
+  $buttonsContainerClasses = 'flex flex-wrap justify-center gap-4 mt-6';
 
-  $textContainerClasses = $layout === 'side-by-side'
-      ? 'flex-1 max-w-2xl'
-      : 'max-w-3xl';
-
-  $buttonsContainerClasses = $layout === 'side-by-side'
-      ? 'flex flex-wrap gap-4 mt-6'
-      : 'flex flex-wrap justify-center gap-4 mt-6';
+  // Background image styles
+  $hasBackgroundImage = !empty($background_image);
+  $sectionClasses = $hasBackgroundImage ? 'relative overflow-hidden' : '';
+  $backgroundImageUrl = $hasBackgroundImage ? $background_image['url'] : null;
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
-  <x-container :size="ContainerSize::XLARGE">
+<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $sectionClasses }} {{ $block->classes }}">
+  @if($hasBackgroundImage)
+    <div
+      class="absolute inset-x-0 bottom-0 h-full bg-cover bg-center bg-no-repeat pointer-events-none"
+      style="background-image: url('{{ $backgroundImageUrl }}'); background-position: center bottom;"
+    ></div>
+  @endif
+
+  <x-container :size="ContainerSize::XLARGE" classes="relative z-10">
     <div class="{{ $contentClasses }}">
       <div class="{{ $textContainerClasses }}">
-        @if($eyebrow)
-          <x-text
-            :as="TextTag::SPAN"
-            :size="TextSize::SMALL"
-            class="inline-block mb-3 font-semibold {{ $textColor }}"
-          >
-            {{ $eyebrow }}
-          </x-text>
-        @endif
 
-        @if($title)
-          <x-heading
-            :as="HeadingTag::H2"
-            :size="HeadingSize::H2"
-            class="mb-4 {{ $textColor }}"
-          >
-            {{ $title }}
-          </x-heading>
-        @endif
+        <x-text
+          :as="TextTag::SPAN"
+          :size="TextSize::MEDIUM"
+          class="inline-block mb-3 font-semibold text-gradient-primary uppercase"
+        >
+          {{ $eyebrow }}
+        </x-text>
+
+        <x-heading
+          :as="HeadingTag::H2"
+          :size="HeadingSize::H3"
+          class="mb-4 {{ $textColor }}"
+        >
+          {{ $title }}
+        </x-heading>
 
         @if($content)
           <div class="prose prose-lg {{ $textColor }} max-w-none">
