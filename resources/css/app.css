@@ -57,7 +57,7 @@
   --text-5xl: 1.375rem; /* 22pt */
   --text-6xl: 1.375rem; /* 22pt */
   --text-7xl: 1.375rem; /* 22pt */
-  --text-8xl: 1.375rem; /* 22pt */
+  --text-8xl: 7.5rem; /* 22pt */
 
   /* Transitions */
   --default-transition-duration: 250ms;
