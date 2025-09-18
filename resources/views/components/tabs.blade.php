@@ -51,7 +51,7 @@
 
 <div x-data="{ activeTab: '{{ $defaultActiveTab }}' }" class="{{ $class }}">
   {{-- Tab Navigation --}}
-  <div class="overflow-x-auto">
+  <div class="overflow-x-auto flex justify-center">
     <div class="inline-flex {{ $tabContainerClasses }} gap-2 min-w-max">
       @foreach($tabs as $tab)
         <button
