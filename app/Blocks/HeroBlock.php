@@ -143,13 +143,10 @@ class HeroBlock extends Block
                 'instructions' => 'Main heading for the hero section',
                 'required' => 1,
             ])
-            ->addWysiwyg('description', [
-                'label' => 'Body Copy',
-                'instructions' => 'Main content for the hero section',
+             ->addText('description', [
+                'label' => 'Subtitle',
+                'instructions' => 'Subtitle for the hero section',
                 'required' => 0,
-                'tabs' => 'visual',
-                'toolbar' => 'basic',
-                'media_upload' => 0,
             ])
             ->addRepeater('ctas', [
                 'label' => 'Call to Actions',

@@ -165,6 +165,7 @@ class ClientLogosBlock extends Block
                 'choices' => [
                     'grid' => 'Grid',
                     'slider' => 'Slider',
+                    'marquee' => 'Marquee',
                 ],
                 'default_value' => 'grid',
                 'required' => 1,
