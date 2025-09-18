@@ -70,6 +70,15 @@
   );
 }
 
+/* Gradient text utility class */
+.text-gradient-primary {
+  background: linear-gradient(90deg, theme('colors.primary.green.neon') 0%, theme('colors.primary.yellow') 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+
 /* Heading classes */
 .heading-1 {
   @apply text-5xl md:text-8xl font-bold leading-[85%];

@@ -67,7 +67,7 @@
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::SMALL"
-          class="inline-block mb-3 font-semibold {{ $textColor }}"
+          class="inline-block mb-3 font-semibold text-gradient-primary uppercase"
         >
           {{ $eyebrow }}
         </x-text>
