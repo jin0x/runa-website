@@ -28,10 +28,10 @@
   };
 
   $tabButtonBaseClasses = match($variant) {
-      'underline' => 'px-4 py-2 text-sm font-medium border-b-2 transition-colors duration-200',
-      'pills' => 'px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200',
-      'buttons' => 'px-4 py-2 text-sm font-medium rounded-md border transition-colors duration-200',
-      default => 'px-4 py-2 text-sm font-medium border-b-2 transition-colors duration-200',
+      'underline' => 'px-4 py-2 text-sm font-medium border-b-2 whitespace-nowrap',
+      'pills' => 'px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap',
+      'buttons' => 'px-4 py-2 text-sm font-medium rounded-md border whitespace-nowrap',
+      default => 'px-4 py-2 text-sm font-medium border-b-2 whitespace-nowrap',
   };
 
   $tabActiveClasses = match($variant) {
@@ -51,17 +51,19 @@
 
 <div x-data="{ activeTab: '{{ $defaultActiveTab }}' }" class="{{ $class }}">
   {{-- Tab Navigation --}}
-  <div class="flex {{ $tabContainerClasses }}">
-    @foreach($tabs as $tab)
-      <button
-        @click="activeTab = '{{ $tab['id'] }}'"
-        :class="activeTab === '{{ $tab['id'] }}' ? '{{ $tabActiveClasses }}' : '{{ $tabInactiveClasses }}'"
-        class="{{ $tabButtonBaseClasses }}"
-        type="button"
-      >
-        {{ $tab['label'] }}
-      </button>
-    @endforeach
+  <div class="overflow-x-auto">
+    <div class="flex {{ $tabContainerClasses }} min-w-max">
+      @foreach($tabs as $tab)
+        <button
+          @click="activeTab = '{{ $tab['id'] }}'"
+          :class="activeTab === '{{ $tab['id'] }}' ? '{{ $tabActiveClasses }}' : '{{ $tabInactiveClasses }}'"
+          class="{{ $tabButtonBaseClasses }}"
+          type="button"
+        >
+          {{ $tab['label'] }}
+        </button>
+      @endforeach
+    </div>
   </div>
 
   {{-- Tab Content --}}
@@ -69,12 +71,6 @@
     @foreach($tabs as $tab)
       <div
         x-show="activeTab === '{{ $tab['id'] }}'"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 transform translate-y-1"
-        x-transition:enter-end="opacity-100 transform translate-y-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 transform translate-y-0"
-        x-transition:leave-end="opacity-0 transform translate-y-1"
         id="{{ $tab['id'] }}"
         role="tabpanel"
       >
