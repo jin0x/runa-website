@@ -44,20 +44,20 @@
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
 
   /* Text Sizes */
-  --text-3xs: 0.75rem; /* 12pt - Caption */
-  --text-2xs: 0.875rem; /* 14pt - Small Body */
-  --text-xs: 1rem; /* 16pt - Body */
-  --text-sm: 1.125rem; /* 18pt */
-  --text-base: 1.25rem; /* 20pt */
-  --text-lg: 1.375rem; /* 22pt */
-  --text-xl: 1.375rem; /* 22pt */
-  --text-2xl: 1.375rem; /* 22pt */
-  --text-3xl: 1.375rem; /* 22pt */
-  --text-4xl: 1.375rem; /* 22pt */
-  --text-5xl: 1.375rem; /* 22pt */
-  --text-6xl: 1.375rem; /* 22pt */
-  --text-7xl: 1.375rem; /* 22pt */
-  --text-8xl: 1.375rem; /* 22pt */
+  --text-3xs: 0.75rem; /* 12px - Caption */
+  --text-2xs: 0.875rem; /* 14px - Small Body */
+  --text-xs: 1rem; /* 16px - Body */
+  --text-sm: 1.125rem; /* 18px */
+  --text-base: 1.25rem; /* 20px */
+  --text-lg: 1.5rem; /* 24px */
+  --text-xl: 1.75rem; /* 28px */
+  --text-2xl: 2rem; /* 32px */
+  --text-3xl: 2.25rem; /* 36px */
+  --text-4xl: 2.5rem; /* 40px */
+  --text-5xl: 2.75rem; /* 44px */
+  --text-6xl: 3rem; /* 48px */
+  --text-7xl: 4rem; /* 64px */
+  --text-8xl: 5.5rem; /* 88px */
 
   /* Transitions */
   --default-transition-duration: 250ms;
@@ -72,7 +72,11 @@
 
 /* Gradient text utility class */
 .text-gradient-primary {
-  background: linear-gradient(90deg, theme('colors.primary.green.neon') 0%, theme('colors.primary.yellow') 100%);
+  background: linear-gradient(
+    90deg,
+    theme('colors.primary.green.neon') 0%,
+    theme('colors.primary.yellow') 100%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -219,7 +223,11 @@ strong {
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(135deg, var(--color-primary-green-soft), var(--color-primary-yellow));
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-green-soft),
+    var(--color-primary-yellow)
+  );
 }
 
 /* Button hover states */
@@ -228,7 +236,11 @@ strong {
 }
 
 .btn-secondary:hover {
-  background: linear-gradient(135deg, var(--color-primary-green-soft), var(--color-primary-yellow)) !important;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-green-soft),
+    var(--color-primary-yellow)
+  ) !important;
 }
 
 .card-gradient {
@@ -252,11 +264,15 @@ strong {
 }
 
 .content-media-gradient {
-  background: var(--gradients-color-01-vertical, linear-gradient(
-    180deg,
-     var(--color-primary-yellow) 0.04%, 
-     var(--color-primary-green-soft) 50%, 
-     var(--color-primary-green-neon) 99.96%));
+  background: var(
+    --gradients-color-01-vertical,
+    linear-gradient(
+      180deg,
+      var(--color-primary-yellow) 0.04%,
+      var(--color-primary-green-soft) 50%,
+      var(--color-primary-green-neon) 99.96%
+    )
+  );
 }
 
 .resource-card-gradient {
