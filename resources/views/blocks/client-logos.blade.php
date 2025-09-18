@@ -72,111 +72,71 @@
       @endforeach
     </x-grid>
   
-@elseif($layout_type === 'marquee')
-  {{-- Marquee Layout --}}
-  @php $marqueeId = 'marquee-' . uniqid(); @endphp
+  @elseif($layout_type === 'marquee')
+    {{-- Marquee Layout --}}
+    @php $marqueeId = 'marquee-' . uniqid(); @endphp
   
-  <div class="py-6 overflow-hidden bg-primary-yellow">
-    <div class="flex items-center" id="{{ $marqueeId }}">
-      {{-- First set of logos --}}
-      <div class="marquee-content flex items-center gap-6 flex-shrink-0">
-        @foreach($logos as $logo)
-          @php
-            $logo_image = $logo['logo'] ?? null;
-            $logo_link = $logo['link'] ?? null;
-            $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Client logo');
-            $logo_url = $logo_image['url'] ?? '';
-          @endphp
+    <div class="py-6 overflow-hidden bg-primary-yellow">
+      {{-- Fade gradients --}}
+      <div class="absolute left-0 top-0 bottom-0 w-16 marquee-fade-left z-10    pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 marquee-fade-right z-10    pointer-events-none"></div>
 
-          @if(!empty($logo_url))
-            <div class="flex items-center justify-center px-3">
-              @if(!empty($logo_link) && !empty($logo_link['url']))
-                <a href="{{ $logo_link['url'] }}"
-                   target="{{ $logo_link['target'] ?? '_self' }}"
-                   class="flex items-center justify-center"
-                >
-                  <img src="{{ $logo_url }}" alt="{{ $alt_text }}" class="max-h-12 max-w-[140px] w-auto object-contain">
-                </a>
-              @else
-                <img src="{{ $logo_url }}" alt="{{ $alt_text }}" class="max-h-12 max-w-[140px] w-auto object-contain">
+      <div class="marquee__inner" id="{{ $marqueeId }}" aria-hidden="true">
+        {{-- Create multiple parts for smooth scrolling --}}
+        @for ($i = 0; $i < 6; $i++)
+          <div class="marquee__part flex items-center gap-6 flex-shrink-0 pr-6">
+            @foreach($logos as $logo)
+              @php
+                $logo_image = $logo['logo'] ?? null;
+                $logo_link = $logo['link'] ?? null;
+                $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Client   logo');
+                $logo_url = $logo_image['url'] ?? '';
+              @endphp
+
+              @if(!empty($logo_url))
+                <div class="flex items-center justify-center px-3">
+                  @if(!empty($logo_link) && !empty($logo_link['url']))
+                    <a href="{{ $logo_link['url'] }}"
+                       target="{{ $logo_link['target'] ?? '_self' }}"
+                       class="flex items-center justify-center"
+                    >
+                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="max-h-12 max-w-[140px] w-auto object-contain">
+                    </a>
+                  @else
+                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="max-h-12 max-w-[140px] w-auto object-contain">
+                  @endif
+                </div>
               @endif
-            </div>
-          @endif
-        @endforeach
-      </div>
-
-      {{-- Duplicate set for seamless loop --}}
-      <div class="marquee-content flex items-center gap-6 flex-shrink-0">
-        @foreach($logos as $logo)
-          @php
-            $logo_image = $logo['logo'] ?? null;
-            $logo_link = $logo['link'] ?? null;
-            $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Client logo');
-            $logo_url = $logo_image['url'] ?? '';
-          @endphp
-
-          @if(!empty($logo_url))
-            <div class="flex items-center justify-center px-3">
-              @if(!empty($logo_link) && !empty($logo_link['url']))
-                <a href="{{ $logo_link['url'] }}"
-                   target="{{ $logo_link['target'] ?? '_self' }}"
-                   class="flex items-center justify-center"
-                >
-                  <img src="{{ $logo_url }}" alt="{{ $alt_text }}" class="max-h-12 max-w-[140px] w-auto object-contain">
-                </a>
-              @else
-                <img src="{{ $logo_url }}" alt="{{ $alt_text }}" class="max-h-12 max-w-[140px] w-auto object-contain">
-              @endif
-            </div>
-          @endif
-        @endforeach
+            @endforeach
+          </div>
+        @endfor
       </div>
     </div>
-  </div>
 
-  {{-- Updated GSAP Animation Script --}}
+  {{-- GSAP Animation Script --}}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const marqueeContainer = document.getElementById('{{ $marqueeId }}');
-      
-      if (marqueeContainer) {
-        console.log('Marquee container found');
-        
-        // Check if GSAP is available
-        if (typeof gsap !== 'undefined') {
-          console.log('GSAP is available');
-          
-          const marqueeContent = marqueeContainer.querySelector('.marquee-content');
-          if (marqueeContent) {
-            const contentWidth = marqueeContent.offsetWidth;
-            console.log('Content width:', contentWidth);
-            
-            // Create infinite scrolling animation
-            gsap.to(marqueeContainer, {
-              x: -contentWidth,
+      const marqueeInner = document.getElementById('{{ $marqueeId }}');
+
+      if (marqueeInner) {
+        const gsapInstance = window.gsap || gsap;
+
+        if (gsapInstance) {
+          // Wait a moment for images to load
+          setTimeout(function() {
+            // Create the infinite animation 
+            let tween = gsapInstance.to("#{{ $marqueeId }} .marquee__part", {
+              xPercent: -100, 
+              repeat: -1, 
               duration: 20,
-              ease: "none",
-              repeat: -1
-            });
-            
-            console.log('Animation started');
-          }
-        } else {
-          console.log('GSAP not available - checking window.gsap');
-          if (typeof window.gsap !== 'undefined') {
-            // Use window.gsap instead
-            const marqueeContent = marqueeContainer.querySelector('.marquee-content');
-            if (marqueeContent) {
-              const contentWidth = marqueeContent.offsetWidth;
-              
-              window.gsap.to(marqueeContainer, {
-                x: -contentWidth,
-                duration: 20,
-                ease: "none",
-                repeat: -1
-              });
-            }
-          }
+              ease: "linear"
+            }).totalProgress(0.5);
+
+            // Center the marquee
+            gsapInstance.set("#{{ $marqueeId }}", {xPercent: -50});
+
+            console.log('CodePen-style marquee animation started');
+          }, 500);
         }
       }
     });
