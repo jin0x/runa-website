@@ -43,8 +43,7 @@
       <div class="absolute inset-0 bg-primary-dark"></div>
     @endif
 
-    {{-- Gradient Overlay - black gradient from left to right --}}
-    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent z-10"></div>
+
   </div>
 
   {{-- Content Container --}}
