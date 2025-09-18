@@ -66,7 +66,7 @@
 
         <x-text
           :as="TextTag::SPAN"
-          :size="TextSize::SMALL"
+          :size="TextSize::MEDIUM"
           class="inline-block mb-3 font-semibold text-gradient-primary uppercase"
         >
           {{ $eyebrow }}
@@ -74,7 +74,7 @@
 
         <x-heading
           :as="HeadingTag::H2"
-          :size="HeadingSize::H2"
+          :size="HeadingSize::H3"
           class="mb-4 {{ $textColor }}"
         >
           {{ $title }}
