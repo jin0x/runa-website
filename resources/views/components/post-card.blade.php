@@ -20,11 +20,11 @@
   $date = get_the_date('M j, Y', $postId);
   $author = get_the_author_meta('display_name', get_post_field('post_author', $postId));
   $authorAvatar = get_avatar_url(get_post_field('post_author', $postId), ['size' => 32]);
-  
+
   // Get primary tag
   $tags = get_the_tags($postId);
   $primaryTag = !empty($tags) ? $tags[0] : null;
-  
+
   // Reading time (rough estimate)
   $content = get_post_field('post_content', $postId);
   $wordCount = str_word_count(strip_tags($content));
@@ -37,8 +37,8 @@
       {{-- Image --}}
       <div class="{{ $featured ? 'lg:w-1/2' : 'w-full' }} relative overflow-hidden rounded-2xl bg-neutral-100">
         @if($thumbnail)
-          <img 
-            src="{{ $thumbnail }}" 
+          <img
+            src="{{ $thumbnail }}"
             alt="{{ $title }}"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 {{ $featured ? 'aspect-[16/10]' : 'aspect-[4/3]' }}"
             loading="lazy"
@@ -60,8 +60,8 @@
         @endif
 
         {{-- Title --}}
-        <x-heading 
-          :as="$featured ? HeadingTag::H2 : HeadingTag::H3" 
+        <x-heading
+          :as="$featured ? HeadingTag::H2 : HeadingTag::H3"
           :size="$featured ? HeadingSize::H3 : HeadingSize::H5"
           class="mb-3 line-clamp-2 group-hover:text-primary-green-neon transition-colors duration-200"
         >
@@ -69,8 +69,8 @@
         </x-heading>
 
         {{-- Excerpt --}}
-        <x-text 
-          :as="TextTag::P" 
+        <x-text
+          :as="TextTag::P"
           :size="$featured ? TextSize::BASE : TextSize::SMALL"
           class="text-neutral-400 mb-6 {{ $featured ? 'line-clamp-3' : 'line-clamp-2' }}"
         >

@@ -116,29 +116,31 @@
   {{-- GSAP Animation Script --}}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const marqueeInner = document.getElementById('{{ $marqueeId }}');
+      // Wait for GSAP to be available on window object
+      function initMarquee() {
+        const marqueeInner = document.getElementById('{{ $marqueeId }}');
 
-      if (marqueeInner) {
-        const gsapInstance = window.gsap || gsap;
+        if (marqueeInner && window.gsap) {
+          // Create the infinite animation
+          let tween = window.gsap.to("#{{ $marqueeId }} .marquee__part", {
+            xPercent: -100,
+            repeat: -1,
+            duration: 20,
+            ease: "linear"
+          }).totalProgress(0.5);
 
-        if (gsapInstance) {
-          // Wait a moment for images to load
-          setTimeout(function() {
-            // Create the infinite animation 
-            let tween = gsapInstance.to("#{{ $marqueeId }} .marquee__part", {
-              xPercent: -100, 
-              repeat: -1, 
-              duration: 20,
-              ease: "linear"
-            }).totalProgress(0.5);
+          // Center the marquee
+          window.gsap.set("#{{ $marqueeId }}", {xPercent: -50});
 
-            // Center the marquee
-            gsapInstance.set("#{{ $marqueeId }}", {xPercent: -50});
-
-            console.log('CodePen-style marquee animation started');
-          }, 500);
+          console.log('CodePen-style marquee animation started');
+        } else if (marqueeInner && !window.gsap) {
+          // If GSAP isn't loaded yet, try again in a moment
+          setTimeout(initMarquee, 100);
         }
       }
+
+      // Give app.js time to set window.gsap
+      setTimeout(initMarquee, 100);
     });
   </script>
 
