@@ -56,8 +56,8 @@
   --text-4xl: 1.375rem; /* 22pt */
   --text-5xl: 1.375rem; /* 22pt */
   --text-6xl: 1.375rem; /* 22pt */
-  --text-7xl: 1.375rem; /* 22pt */
-  --text-8xl: 7.5rem; /* 22pt */
+  --text-7xl: 3rem; /* 48px */
+  --text-8xl: 7.5rem; /* 120px */
 
   /* Transitions */
   --default-transition-duration: 250ms;
@@ -339,4 +339,29 @@ strong {
     var(--color-primary-yellow) 20%, 
     transparent 100%
   );
+}
+
+/* Split Content Block Styles */
+.split-content-block .grid > div:first-child {
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+}
+
+.split-content-block .grid > div:last-child {
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
+@media (max-width: 767px) {
+  .split-content-block .grid > div:first-child {
+    border-radius: 0;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+  
+  .split-content-block .grid > div:last-child {
+    border-radius: 0;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+  }
 }
