@@ -29,7 +29,6 @@ namespace App\Helpers;
     preg_match_all('/<h[1-6].*?>/', $content, $h_matches);
 
     $p_count = count($p_matches[0]);
-    $h_count = count($h_matches[0]);
 
     if ($p_count > 1) {
         $content = str_replace('<p>', '<p class="mb-4">', $content);
@@ -37,17 +36,17 @@ namespace App\Helpers;
 
     $content = preg_replace_callback(
         '/<(h[1-6])>(.*?)<\/\1>/i',
-        function ($matches) use ($h_count) {
+        function ($matches){
             $tag = $matches[1];
             $content = $matches[2];
 
             $classes = match ($tag) {
-                'h1' => 'heading-1' . ($h_count > 1 ? ' mb-6' : ''),
-                'h2' => 'heading-2' . ($h_count > 1 ? ' mb-6' : ''),
-                'h3' => 'heading-3' . ($h_count > 1 ? ' mb-6' : ''),
-                'h4' => 'heading-4' . ($h_count > 1 ? ' mb-6' : ''),
-                'h5' => 'heading-5' . ($h_count > 1 ? ' mb-6' : ''),
-                'h6' => 'heading-6' . ($h_count > 1 ? ' mb-6' : ''),
+                'h1' => 'heading-1 mb-6',
+                'h2' => 'heading-2 mb-6',
+                'h3' => 'heading-3 mb-6',
+                'h4' => 'heading-4 mb-6',
+                'h5' => 'heading-5 mb-6',
+                'h6' => 'heading-6 mb-6',
             };
 
             return "<{$tag} class=\"{$classes}\">{$content}</{$tag}>";
