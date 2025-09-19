@@ -43,6 +43,9 @@
   --color-primary-dark-32: rgba(0, 0, 0, 0.32);
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
 
+  /* Background Colors */
+  --color-background-secondary: #171717;
+
   /* Text Sizes */
   --text-3xs: 0.75rem; /* 12px - Caption */
   --text-2xs: 0.875rem; /* 14px - Small Body */
@@ -228,6 +231,10 @@ strong {
     var(--color-primary-green-soft),
     var(--color-primary-yellow)
   );
+}
+
+.bg-secondary {
+  background-color: var(--color-background-secondary);
 }
 
 /* Button hover states */
