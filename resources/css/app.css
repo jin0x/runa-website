@@ -363,3 +363,55 @@ strong {
 .pagination .dots {
   @apply text-neutral-400;
 }
+
+
+.marquee__inner {
+  display: flex;
+  width: fit-content;
+}
+
+.marquee__part {
+  flex-shrink: 0;
+}
+
+/* Marquee fade masks */
+.marquee-fade-left {
+  background: linear-gradient(to right, 
+    var(--color-primary-yellow) 50%, 
+    var(--color-primary-yellow) 20%, 
+    transparent 100%
+  );
+}
+
+.marquee-fade-right {
+  background: linear-gradient(to left, 
+    var(--color-primary-yellow) 50%, 
+    var(--color-primary-yellow) 20%, 
+    transparent 100%
+  );
+}
+
+/* Split Content Block Styles */
+.split-content-block .grid > div:first-child {
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+}
+
+.split-content-block .grid > div:last-child {
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
+@media (max-width: 767px) {
+  .split-content-block .grid > div:first-child {
+    border-radius: 0;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+  
+  .split-content-block .grid > div:last-child {
+    border-radius: 0;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+  }
+}
