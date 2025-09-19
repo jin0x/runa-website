@@ -83,7 +83,7 @@
     {{-- Quote --}}
     @if($quote)
       <div class="flex-1 mb-6">
-        <blockquote class="{{ $featured ? 'text-lg' : 'text-base' }} text-neutral-700 leading-relaxed">
+        <blockquote class="{{ $featured ? 'text-md' : 'text-xs' }} text-neutral-700 leading-relaxed">
           "{{ $featured ? $quote : $truncatedQuote }}"
         </blockquote>
       </div>

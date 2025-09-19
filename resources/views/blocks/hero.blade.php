@@ -22,8 +22,8 @@
   $heightClass = $compact ? 'h-[600px]' : 'h-screen';
 
   // Define button variants
-  $primaryButtonVariant = ButtonVariant::GREEN;
-  $secondaryButtonVariant = ButtonVariant::TRANSPARENT;
+  $primaryButtonVariant = ButtonVariant::PRIMARY;
+  $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
   // Define accent color for highlighted text in title
   $accentColor = 'text-primary-lime';

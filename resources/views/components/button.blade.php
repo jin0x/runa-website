@@ -5,7 +5,7 @@
 @endphp
 
 @props([
-    'variant' => ButtonVariant::GREEN,
+    'variant' => ButtonVariant::PRIMARY,
     'as' => ButtonType::LINK,
     'href'=> '',
     'icon' => false, // Boolean to show/hide icon
@@ -16,11 +16,16 @@
 @php
   // Define variant classes for buttons
   $variantClasses = [
-      ButtonVariant::GREEN => 'bg-primary-lime text-gray-900 hover:bg-primary-light',
-      ButtonVariant::PURPLE => 'bg-primary-violet text-white hover:bg-primary-light hover:text-gray-900',
-      ButtonVariant::LIGHT => 'bg-white text-gray-900 hover:bg-primary-dark hover:text-white',
-      ButtonVariant::DARK => 'bg-primary-dark text-white hover:bg-white hover:text-gray-900',
-      ButtonVariant::TRANSPARENT => 'bg-transparent text-navy hover:bg-gray-100',
+      ButtonVariant::PRIMARY => 'btn-primary text-primary-dark border-2 border-transparent hover:text-primary-light hover:border-primary-green-neon',
+      ButtonVariant::SECONDARY => 'btn-secondary text-primary-light border-2 border-primary-green-neon transition-all duration-300 hover:text-primary-dark hover:border-transparent',
+      ButtonVariant::LIGHT => 'btn-light text-primary-dark border-2 border-white transition-all duration-300 hover:bg-white hover:bg-opacity-100',
+  ];
+
+  // Define background styles (using CSS custom properties for gradients)
+  $backgroundStyles = [
+      ButtonVariant::PRIMARY => 'background: linear-gradient(135deg, var(--color-primary-green-soft), var(--color-primary-yellow));',
+      ButtonVariant::SECONDARY => 'background: var(--gradient-4);',
+      ButtonVariant::LIGHT => 'background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);',
   ];
 
   // Define size classes for buttons
@@ -40,15 +45,18 @@
   }
 
   // Combine the base button class with the variant class, size class and any additional classes
-  $buttonClass = trim("inline-flex items-center gap-2 rounded-full font-normal font-sans {$variantClasses[$variant]} {$sizeClasses[$size]} {$class}");
+  $buttonClass = trim("inline-flex items-center gap-2 rounded-full font-normal font-sans !no-underline {$variantClasses[$variant]} {$sizeClasses[$size]} {$class}");
+
+  // Get the background style for the current variant
+  $backgroundStyle = $backgroundStyles[$variant];
 @endphp
 
 @if ($as === ButtonType::BUTTON)
-  <button {{ $attributes->merge(['class' => $buttonClass, 'type' => 'button']) }}>
+  <button {{ $attributes->merge(['class' => $buttonClass, 'type' => 'button', 'style' => $backgroundStyle]) }}>
     {{ $slot }}
   </button>
 @else
-  <a href="{{ $href }}" {{ $attributes->merge(['class' => $buttonClass]) }}>
+  <a href="{{ $href }}" {{ $attributes->merge(['class' => $buttonClass, 'style' => $backgroundStyle]) }}>
     <span>{{ $slot }}</span>
 
     @if ($icon)

@@ -4,19 +4,15 @@ namespace App\Enums;
 
 class ButtonVariant
 {
-    const GREEN = 'green';
-    const PURPLE = 'purple';
-    const TRANSPARENT = 'transparent';
+    const PRIMARY = 'primary';
+    const SECONDARY = 'secondary';
     const LIGHT = 'light';
-    const DARK = 'dark';
 
     public static function getValues(): array {
         return [
-            self::GREEN,
-            self::PURPLE,
-            self::TRANSPARENT,
+            self::PRIMARY,
+            self::SECONDARY,
             self::LIGHT,
-            self::DARK,
         ];
     }
 }

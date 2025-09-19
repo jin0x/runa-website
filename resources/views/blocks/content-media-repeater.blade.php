@@ -34,8 +34,8 @@
   $eyebrowClasses = $theme === 'dark' ? 'text-primary-lime border-primary-lime' : 'text-primary-purple border-primary-purple';
   $headingClasses = $theme === 'dark' ? 'text-white' : 'text-primary-navy';
   $textClasses = $theme === 'dark' ? 'text-primary-light' : 'text-neutral-700';
-  $buttonVariant = $theme === 'dark' ? ButtonVariant::LIGHT : ButtonVariant::DARK;
-  $secondaryButtonVariant = $theme === 'dark' ? ButtonVariant::DARK : ButtonVariant::LIGHT;
+  $buttonVariant = ButtonVariant::PRIMARY;
+  $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
   // Media classes
   $mediaClasses = 'w-full object-cover h-full min-h-[294px] xl:min-h-[640px]';
