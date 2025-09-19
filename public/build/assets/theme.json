@@ -1266,6 +1266,11 @@
           "color": "#fc18b0"
         },
         {
+          "name": "Secondary (Purple)",
+          "slug": "secondary-purple",
+          "color": "#af44ec"
+        },
+        {
           "name": "Secondary (Cyan)",
           "slug": "secondary-cyan",
           "color": "#0ce3f8"
