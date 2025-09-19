@@ -1261,6 +1261,16 @@
           "color": "#eefc51"
         },
         {
+          "name": "Secondary (Pink)",
+          "slug": "secondary-pink",
+          "color": "#fc18b0"
+        },
+        {
+          "name": "Secondary (Cyan)",
+          "slug": "secondary-cyan",
+          "color": "#0ce3f8"
+        },
+        {
           "name": "Neutral (0)",
           "slug": "neutral-0",
           "color": "#fff"
