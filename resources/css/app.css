@@ -52,15 +52,17 @@
   --text-xs: 1rem; /* 16px - Body */
   --text-sm: 1.125rem; /* 18px */
   --text-base: 1.25rem; /* 20px */
+  /* Need a 22px */
   --text-lg: 1.5rem; /* 24px */
   --text-xl: 1.75rem; /* 28px */
   --text-2xl: 2rem; /* 32px */
-  --text-3xl: 2.25rem; /* 36px */
+  --text-3xl: 2.25rem; /* 36px */ /* TBR */
   --text-4xl: 2.5rem; /* 40px */
-  --text-5xl: 2.75rem; /* 44px */
+  --text-5xl: 2.75rem; /* 44px */ /* TBR */
   --text-6xl: 3rem; /* 48px */
   --text-7xl: 4rem; /* 64px */
-  --text-8xl: 5.5rem; /* 88px */
+  --text-8xl: 5.5rem; /* 88px */ /* TBR  or replaced with 72*/
+  /* Need a new one 120px */
 
   /* Transitions */
   --default-transition-duration: 250ms;
@@ -119,22 +121,19 @@
 
 /* Apply heading styles to native HTML tags */
 h1,
-h1.wp-block-heading,
-.text-display-large {
+h1.wp-block-heading {
   @apply text-5xl md:text-8xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 
 h2,
-h2.wp-block-heading,
-.text-display-medium {
+h2.wp-block-heading {
   @apply text-3xl md:text-7xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 
 h3,
-h3.wp-block-heading,
-.text-display-small {
+h3.wp-block-heading {
   @apply text-2xl md:text-6xl font-normal leading-[110%];
   font-family: var(--font-body);
 }
@@ -364,7 +363,6 @@ strong {
   @apply text-neutral-400;
 }
 
-
 .marquee__inner {
   display: flex;
   width: fit-content;
@@ -376,17 +374,19 @@ strong {
 
 /* Marquee fade masks */
 .marquee-fade-left {
-  background: linear-gradient(to right, 
-    var(--color-primary-yellow) 50%, 
-    var(--color-primary-yellow) 20%, 
+  background: linear-gradient(
+    to right,
+    var(--color-primary-yellow) 50%,
+    var(--color-primary-yellow) 20%,
     transparent 100%
   );
 }
 
 .marquee-fade-right {
-  background: linear-gradient(to left, 
-    var(--color-primary-yellow) 50%, 
-    var(--color-primary-yellow) 20%, 
+  background: linear-gradient(
+    to left,
+    var(--color-primary-yellow) 50%,
+    var(--color-primary-yellow) 20%,
     transparent 100%
   );
 }
@@ -408,7 +408,7 @@ strong {
     border-top-left-radius: 2rem;
     border-top-right-radius: 2rem;
   }
-  
+
   .split-content-block .grid > div:last-child {
     border-radius: 0;
     border-bottom-left-radius: 2rem;
