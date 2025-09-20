@@ -43,7 +43,7 @@
 
         <x-heading
           :as="HeadingTag::H2"
-          :size="HeadingSize::H1"
+          :size="HeadingSize::H2"
           class="{{ $titleClasses }}"
         >
           {!! $heading !!}

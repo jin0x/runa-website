@@ -50,59 +50,62 @@
   <div class="absolute bottom-0 left-0 right-0 z-20 pb-16 px-4 lg:px-8">
 
       <x-container>
-        @if ($eyebrow)
-          <x-text
-            :as="TextTag::SPAN"
-            :size="TextSize::SMALL"
-            class="inline-block px-4 py-2 rounded-full border border-primary-green-neon text-white mb-3"
-          >
-            {{ $eyebrow }}
-          </x-text>
-        @endif
 
-        @if ($title)
-          <x-heading
-            :as="HeadingTag::H1"
-            :size="HeadingSize::H1"
-            class="text-white mb-3"
-          >
-            {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
-          </x-heading>
-        @endif
+        <div class="space-y-4">
+          @if ($eyebrow)
+            <x-text
+              :as="TextTag::SPAN"
+              :size="TextSize::SMALL"
+              class="inline-block px-4 py-2 rounded-full border border-primary-green-neon text-white mb-3"
+            >
+              {{ $eyebrow }}
+            </x-text>
+          @endif
 
-        @if ($content)
-          <x-text
-            :as="TextTag::SPAN"
-            :size="TextSize::LARGE"
-            class="text-white/90 mb-8 max-w-2xl"
-          >
-            {!! $content !!}
-          </x-text>
-        @endif
+          @if ($title)
+            <x-heading
+              :as="HeadingTag::H1"
+              :size="HeadingSize::H1"
+              class="text-white mb-3"
+            >
+              {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
+            </x-heading>
+          @endif
 
-        @if (!empty($ctas))
-          <div class="flex flex-wrap gap-2">
-            @foreach ($ctas as $index => $button)
-              @php
-                $button_label = $button['cta']['title'] ?? null;
-                $button_link = $button['cta']['url'] ?? null;
-                $button_target = $button['cta']['target'] ?? '_self';
-                // First button is primary, second is secondary
-                $buttonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
-              @endphp
+          @if ($content)
+            <x-text
+              :as="TextTag::SPAN"
+              :size="TextSize::LARGE"
+              class="text-white/90 mb-8 max-w-2xl"
+            >
+              {!! $content !!}
+            </x-text>
+          @endif
 
-              @if (!empty($button_label) && !empty($button_link))
-                <x-button
-                  :variant="$buttonVariant"
-                  :href="$button_link"
-                  target="{{ $button_target }}"
-                >
-                  {{ $button_label }}
-                </x-button>
-              @endif
-            @endforeach
-          </div>
-        @endif
+          @if (!empty($ctas))
+            <div class="flex flex-wrap gap-2">
+              @foreach ($ctas as $index => $button)
+                @php
+                  $button_label = $button['cta']['title'] ?? null;
+                  $button_link = $button['cta']['url'] ?? null;
+                  $button_target = $button['cta']['target'] ?? '_self';
+                  // First button is primary, second is secondary
+                  $buttonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
+                @endphp
+
+                @if (!empty($button_label) && !empty($button_link))
+                  <x-button
+                    :variant="$buttonVariant"
+                    :href="$button_link"
+                    target="{{ $button_target }}"
+                  >
+                    {{ $button_label }}
+                  </x-button>
+                @endif
+              @endforeach
+            </div>
+          @endif
+        </div>
         </x-container>
 
   </div>

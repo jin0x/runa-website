@@ -22,7 +22,7 @@
   // Set background color based on theme
   $bgColor = match ($theme) {
       'dark' => 'bg-primary-dark',
-      default => 'bg-white',
+      default => 'bg-primary-yellow',
   };
 
   // Configure logo styles - removed max-height constraints to prevent cutoff
@@ -71,12 +71,12 @@
         </div>
       @endforeach
     </x-grid>
-  
+
   @elseif($layout_type === 'marquee')
     {{-- Marquee Layout --}}
     @php $marqueeId = 'marquee-' . uniqid(); @endphp
-  
-    <div class="py-6 overflow-hidden bg-primary-yellow">
+
+    <div class="py-6 overflow-hidden">
       {{-- Fade gradients --}}
       <div class="absolute left-0 top-0 bottom-0 w-16 marquee-fade-left z-10    pointer-events-none"></div>
       <div class="absolute right-0 top-0 bottom-0 w-16 marquee-fade-right z-10    pointer-events-none"></div>
