@@ -18,8 +18,9 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="bg-black {{ $block->classes }}">
-  <div class="text-center">
-    {{-- Section Heading --}}
+  <x-container>
+    <div class="text-center">
+      {{-- Section Heading --}}
     @if($eyebrow)
       <x-text
         :as="TextTag::SPAN"
@@ -187,4 +188,5 @@
       @endif
     </div>
   </div>
+  </x-container>
 </x-section>

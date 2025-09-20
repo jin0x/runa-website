@@ -58,32 +58,33 @@
   }
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="py-16 px-16 lg:px-16 {{ $bgColor }} {{ $block->classes }}">
-  <div class="text-center">
-    <div class="flex flex-col items-center">
+<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+  <x-container>
+    <div class="text-center">
+      <div class="flex flex-col items-center">
 
-      {{-- Eyebrow --}}
-      @if($eyebrow)
-        <x-text
-          :as="TextTag::SPAN"
-          :size="TextSize::BASE"
-          class="block uppercase tracking-wider {{ $eyebrowColor }} mb-8"
-        >
-          {{ $eyebrow }}
-        </x-text>
-      @endif
+        {{-- Eyebrow --}}
+        @if($eyebrow)
+          <x-text
+            :as="TextTag::SPAN"
+            :size="TextSize::BASE"
+            class="block uppercase tracking-wider {{ $eyebrowColor }} mb-8"
+          >
+            {{ $eyebrow }}
+          </x-text>
+        @endif
 
-      {{-- Main Heading --}}
-      @if($heading)
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H1"
-          class="mb-12 {{ $textColor }} max-w-5xl"
-        >
-          {!! preg_replace('/\b(Fund|Pay|Own)\b/', '<span class="' .  $accentClasses . '">$1</span>', $heading) !!}
-        </x-heading>
-      @endif
-    </div>
+        {{-- Main Heading --}}
+        @if($heading)
+          <x-heading
+            :as="HeadingTag::H2"
+            :size="HeadingSize::H1"
+            class="mb-12 {{ $textColor }}"
+          >
+            {!! preg_replace('/\b(Fund|Pay|Own)\b/', '<span class="' .  $accentClasses . '">$1</span>', $heading) !!}
+          </x-heading>
+        @endif
+      </div>
 
     {{-- Statistics Cards --}}
     @if(!empty($statistics_cards))
@@ -148,17 +149,18 @@
       </div>
     @endif
 
-    {{-- Call to Action --}}
-    @if(!empty($cta) && !empty($cta['url']) && !empty($cta['title']))
-      <div class="flex justify-center">
-        <x-button
-          :variant="$buttonVariant"
-          :href="$cta['url']"
-          target="{{ $cta['target'] ?? '_self' }}"
-        >
-          {{ $cta['title'] }}
-        </x-button>
-      </div>
-    @endif
-  </div>
+      {{-- Call to Action --}}
+      @if(!empty($cta) && !empty($cta['url']) && !empty($cta['title']))
+        <div class="flex justify-center">
+          <x-button
+            :variant="$buttonVariant"
+            :href="$cta['url']"
+            target="{{ $cta['target'] ?? '_self' }}"
+          >
+            {{ $cta['title'] }}
+          </x-button>
+        </div>
+      @endif
+    </div>
+  </x-container>
 </x-section>

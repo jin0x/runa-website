@@ -3,7 +3,7 @@
 @endphp
 
 @props([
-    'size' => ContainerSize::WIDE, // Default size
+    'size' => ContainerSize::XLARGE, // Default size
     'classes' => '', // Extra classes
 ])
 
