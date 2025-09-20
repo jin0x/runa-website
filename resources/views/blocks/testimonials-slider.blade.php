@@ -1,10 +1,44 @@
 @php
   use App\Enums\ContainerSize;
+  use App\Enums\SectionSize;
+  use App\Enums\ThemeVariant;
+
+  // Convert section_size string to SectionSize enum
+  $sectionSizeValue = match ($section_size) {
+      'none' => SectionSize::NONE,
+      'xs' => SectionSize::XSMALL,
+      'sm' => SectionSize::SMALL,
+      'md' => SectionSize::MEDIUM,
+      'lg' => SectionSize::LARGE,
+      'xl' => SectionSize::XLARGE,
+      default => SectionSize::LARGE,
+  };
+
+  // Set background color based on theme
+  $bgColor = match ($theme) {
+      'dark' => 'bg-primary-dark',
+      'light' => 'bg-white',
+      'green' => 'bg-primary-green-neon',
+      default => 'bg-primary-green-neon',
+  };
+
+  // Set container size based on section size
+  $containerSize = match ($section_size) {
+      'xl' => ContainerSize::XLARGE,
+      'lg' => ContainerSize::LARGE,
+      default => ContainerSize::MEDIUM,
+  };
+
+  // Set text color based on theme
+  $textColor = match ($theme) {
+      'light' => 'text-primary-dark',
+      default => 'text-white',
+  };
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
-  <div class="testimonials-slider-block py-16 md:py-24 bg-primary-green-neon">
-    <x-container :size="ContainerSize::LARGE">
+  <x-section :size="$sectionSizeValue" classes="testimonials-slider-block {{ $bgColor }} {{ $block->classes ?? '' }}">
+    <x-container :size="$containerSize">
 
       <x-slider
         :navigation="$show_navigation"
@@ -29,16 +63,16 @@
       </x-slider>
 
     </x-container>
-  </div>
+  </x-section>
 @else
   {{-- No testimonials fallback --}}
-  <div class="py-16 md:py-24 bg-primary-green-neon">
-    <x-container :size="ContainerSize::LARGE">
+  <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes ?? '' }}">
+    <x-container :size="$containerSize">
       <div class="text-center">
-        <p class="text-lg text-white">
+        <p class="text-lg {{ $textColor }}">
           No testimonials available. Create some testimonials to display them here.
         </p>
       </div>
     </x-container>
-  </div>
+  </x-section>
 @endif

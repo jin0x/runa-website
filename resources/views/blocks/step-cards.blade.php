@@ -49,7 +49,7 @@
       classes="mb-12"
     />
   @endif
-  
+
     <x-container classes="!px-0">
         <x-grid columns="3" classes="mt-12">
             @foreach($steps as $step)
@@ -59,9 +59,9 @@
                             @php
                                 $step_image_alt= !empty($step['image']['alt']) ? $step['image']['alt'] : $step['title'];
                             @endphp
-                            <img 
-                                src="{{ $step['image']['url'] }}" 
-                                alt="{{ $step_image_alt }}" 
+                            <img
+                                src="{{ $step['image']['url'] }}"
+                                alt="{{ $step_image_alt }}"
                                 class="h-[300px] w-full"
                             >
                         </div>
@@ -96,5 +96,5 @@
             @endforeach
         </x-grid>
     </x-container>
-  
+
 </x-section>

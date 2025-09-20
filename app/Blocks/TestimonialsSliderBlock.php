@@ -2,6 +2,7 @@
 
 namespace App\Blocks;
 
+use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 
@@ -26,7 +27,7 @@ class TestimonialsSliderBlock extends Block
      *
      * @var string
      */
-    public $category = 'formatting';
+    public $category = 'runa';
 
     /**
      * The block icon.
@@ -115,6 +116,8 @@ class TestimonialsSliderBlock extends Block
             'show_navigation' => $this->getShowNavigation(),
             'show_company_logos' => $this->getShowCompanyLogos(),
             'show_ratings' => $this->getShowRatings(),
+            'section_size' => $this->getSectionSize(),
+            'theme' => $this->getTheme(),
         ];
     }
 
@@ -183,7 +186,11 @@ class TestimonialsSliderBlock extends Block
                 'instructions' => 'Display previous/next arrows',
                 'default_value' => 1,
                 'ui' => 1,
-            ]);
+            ])
+            ->addTab('Settings', [
+                'placement' => 'top',
+            ])
+            ->addPartial(SectionOptions::class);
 
         return $testimonials->build();
     }
@@ -264,5 +271,25 @@ class TestimonialsSliderBlock extends Block
     public function getShowRatings()
     {
         return get_field('show_ratings') !== false ? get_field('show_ratings') : true;
+    }
+
+    /**
+     * Get the section size field.
+     *
+     * @return string
+     */
+    public function getSectionSize()
+    {
+        return get_field('section_size') ?: 'lg';
+    }
+
+    /**
+     * Get the theme field.
+     *
+     * @return string
+     */
+    public function getTheme()
+    {
+        return get_field('theme') ?: 'green';
     }
 }

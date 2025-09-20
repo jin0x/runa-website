@@ -58,73 +58,75 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
-  <div class="text-center">
-    {{-- Section Heading --}}
-    @if($heading)
-      <x-heading
-        :as="HeadingTag::H2"
-        :size="HeadingSize::H2"
-        class="mb-12 {{ $textColor }}"
-      >
-        {{ $heading }}
-      </x-heading>
-    @endif
+  <x-container>
+    <div class="text-center">
+      {{-- Section Heading --}}
+      @if($heading)
+        <x-heading
+          :as="HeadingTag::H2"
+          :size="HeadingSize::H2"
+          class="mb-12 {{ $textColor }}"
+        >
+          {{ $heading }}
+        </x-heading>
+      @endif
 
-    {{-- Action Cards --}}
-    @if(!empty($cards))
-      <div class="grid {{ $gridClasses }} gap-6">
-        @foreach($cards as $card)
-          <div class="{{ $cardBgClasses }} rounded-2xl p-6">
-          {{-- Icon --}}
-            @if(!empty($card['icon']))
-              <div class="mb-6">
-                <div class="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center">
-                  <img 
-                    src="{{ $card['icon']['url'] }}" 
-                    alt="{{ $card['icon']['alt'] ?? 'Card icon' }}"
-                    class="w-12 h-12 object-contain"
-                  />
+      {{-- Action Cards --}}
+      @if(!empty($cards))
+        <div class="grid {{ $gridClasses }} gap-6">
+          @foreach($cards as $card)
+            <div class="{{ $cardBgClasses }} rounded-2xl p-6">
+            {{-- Icon --}}
+              @if(!empty($card['icon']))
+                <div class="mb-6">
+                  <div class="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center">
+                    <img
+                      src="{{ $card['icon']['url'] }}"
+                      alt="{{ $card['icon']['alt'] ?? 'Card icon' }}"
+                      class="w-12 h-12 object-contain"
+                    />
+                  </div>
                 </div>
-              </div>
-            @endif
+              @endif
 
-            {{-- Card Title --}}
-            @if(!empty($card['title']))
-              <x-heading
-                :as="HeadingTag::H3"
-                :size="HeadingSize::H4"
-                class="mb-8 {{ $cardTextColor }} text-left"
-              >
-                {{ $card['title'] }}
-              </x-heading>
-            @endif
-
-            {{-- Optional Description --}}
-            @if(!empty($card['description']))
-              <x-text
-                :as="TextTag::P"
-                :size="TextSize::BASE"
-                class="mb-8 {{ $cardTextColor }} text-left"
-              >
-                {{ $card['description'] }}
-              </x-text>
-            @endif
-
-            {{-- CTA Button --}}
-            @if(!empty($card['cta']) && !empty($card['cta']['url']) && !empty($card['cta']['title']))
-              <div class="text-left">
-                <x-button
-                  :variant="$buttonVariant"
-                  :href="$card['cta']['url']"
-                  target="{{ $card['cta']['target'] ?? '_self' }}"
+              {{-- Card Title --}}
+              @if(!empty($card['title']))
+                <x-heading
+                  :as="HeadingTag::H3"
+                  :size="HeadingSize::H4"
+                  class="mb-8 {{ $cardTextColor }} text-left"
                 >
-                  {{ $card['cta']['title'] }}
-                </x-button>
-              </div>
-            @endif
-          </div>
-        @endforeach
-      </div>
-    @endif
-  </div>
+                  {{ $card['title'] }}
+                </x-heading>
+              @endif
+
+              {{-- Optional Description --}}
+              @if(!empty($card['description']))
+                <x-text
+                  :as="TextTag::P"
+                  :size="TextSize::BASE"
+                  class="mb-8 {{ $cardTextColor }} text-left"
+                >
+                  {{ $card['description'] }}
+                </x-text>
+              @endif
+
+              {{-- CTA Button --}}
+              @if(!empty($card['cta']) && !empty($card['cta']['url']) && !empty($card['cta']['title']))
+                <div class="text-left">
+                  <x-button
+                    :variant="$buttonVariant"
+                    :href="$card['cta']['url']"
+                    target="{{ $card['cta']['target'] ?? '_self' }}"
+                  >
+                    {{ $card['cta']['title'] }}
+                  </x-button>
+                </div>
+              @endif
+            </div>
+          @endforeach
+        </div>
+      @endif
+    </div>
+  </x-container>
 </x-section>

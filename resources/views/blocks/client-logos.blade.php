@@ -22,12 +22,12 @@
   // Set background color based on theme
   $bgColor = match ($theme) {
       'dark' => 'bg-primary-dark',
-      default => 'bg-white',
+      default => 'bg-primary-yellow',
   };
 
-  // Configure logo styles with reduced dimensions for a more compact display
-  $logoContainerClasses = 'flex items-center justify-center w-full max-h-24 p-3';
-  $logoClasses = 'max-h-12 max-w-[140px] w-auto object-contain transition-opacity hover:opacity-80';
+  // Configure logo styles - optimized for both square and wide logos
+  $logoContainerClasses = 'flex items-center justify-center w-full min-h-[100px] p-4';
+  $logoClasses = 'h-12 w-auto max-w-full object-contain transition-opacity hover:opacity-80';
 
   // Extract just the number from the grid_columns value
   $columnsNumber = is_string($grid_columns) ? preg_replace('/[^0-9]/', '', $grid_columns) : '4';
@@ -59,8 +59,8 @@
           @if(!empty($logo_url))
             @if(!empty($logo_link) && !empty($logo_link['url']))
               <a href="{{ $logo_link['url'] }}"
-                 target="{{ $logo_link['target'] ?? '_self' }}"
-                 class="flex items-center justify-center"
+                target="{{ $logo_link['target'] ?? '_self' }}"
+                class="flex items-center justify-center"
               >
                 <img src="{{ $logo_url }}" alt="{{ $alt_text }}" class="{{ $logoClasses }}">
               </a>
@@ -71,12 +71,12 @@
         </div>
       @endforeach
     </x-grid>
-  
+
   @elseif($layout_type === 'marquee')
     {{-- Marquee Layout --}}
     @php $marqueeId = 'marquee-' . uniqid(); @endphp
-  
-    <div class="py-6 overflow-hidden bg-primary-yellow">
+
+    <div class="py-6 overflow-hidden">
       {{-- Fade gradients --}}
       <div class="absolute left-0 top-0 bottom-0 w-16 marquee-fade-left z-10    pointer-events-none"></div>
       <div class="absolute right-0 top-0 bottom-0 w-16 marquee-fade-right z-10    pointer-events-none"></div>
@@ -97,13 +97,13 @@
                 <div class="flex items-center justify-center px-3">
                   @if(!empty($logo_link) && !empty($logo_link['url']))
                     <a href="{{ $logo_link['url'] }}"
-                       target="{{ $logo_link['target'] ?? '_self' }}"
-                       class="flex items-center justify-center"
+                      target="{{ $logo_link['target'] ?? '_self' }}"
+                      class="flex items-center justify-center"
                     >
-                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="max-h-12 max-w-[140px] w-auto object-contain">
+                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="h-12 w-auto max-w-full object-contain">
                     </a>
                   @else
-                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="max-h-12 max-w-[140px] w-auto object-contain">
+                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="h-12 w-auto max-w-full object-contain">
                   @endif
                 </div>
               @endif

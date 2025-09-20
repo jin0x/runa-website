@@ -5,6 +5,7 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
+  use App\Enums\ThemeVariant;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -17,15 +18,14 @@
       default => SectionSize::MEDIUM,
   };
 
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+
   // Set background color based on theme
   $bgColor = match ($theme) {
       'light' => 'bg-white',
       default => 'bg-black',
   };
-
-  // Set text colors based on theme
-  $textColor = $theme === 'dark' ? 'text-gradient-primary' : 'text-primary-black';
-  $eyebrowColor = $theme === 'dark' ? 'text-primary-green-soft' : 'text-neutral-600';
 
   // Map accent colors to CSS classes
   $accentClasses = match ($accent_color) {
@@ -58,32 +58,25 @@
   }
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="py-16 px-16 lg:px-16 {{ $bgColor }} {{ $block->classes }}">
-  <div class="text-center">
-    <div class="flex flex-col items-center">
+<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
 
-      {{-- Eyebrow --}}
-      @if($eyebrow)
-        <x-text
-          :as="TextTag::SPAN"
-          :size="TextSize::BASE"
-          class="block uppercase tracking-wider {{ $eyebrowColor }} mb-8"
-        >
-          {{ $eyebrow }}
-        </x-text>
-      @endif
+  @if($section_eyebrow || $section_title || $section_description)
+    @php
+      // Process heading with accent highlights if section_title exists
+      $processedHeading = $section_title ? preg_replace('/\b(Fund|Pay|Own)\b/', '<span class="' .  $accentClasses . '">$1</span>', $section_title) : null;
+    @endphp
 
-      {{-- Main Heading --}}
-      @if($heading)
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H1"
-          class="mb-12 {{ $textColor }} max-w-5xl"
-        >
-          {!! preg_replace('/\b(Fund|Pay|Own)\b/', '<span class="' .  $accentClasses . '">$1</span>', $heading) !!}
-        </x-heading>
-      @endif
-    </div>
+    <x-section-heading
+      :eyebrow="$section_eyebrow"
+      :heading="$processedHeading"
+      :subtitle="$section_description"
+      :variant="$themeVariant"
+      classes="mb-12"
+    />
+  @endif
+
+  <x-container>
+    <div class="text-center">
 
     {{-- Statistics Cards --}}
     @if(!empty($statistics_cards))
@@ -100,8 +93,8 @@
             {{-- Icon --}}
             @if(!empty($card['icon']))
               <div class="mb-4 flex justify-center">
-                <img 
-                  src="{{ $card_url }}" 
+                <img
+                  src="{{ $card_url }}"
                   alt="{{ $alt_text ?? 'Statistic icon' }}"
                   class="w-12 h-12 object-contain"
                 />
@@ -148,17 +141,18 @@
       </div>
     @endif
 
-    {{-- Call to Action --}}
-    @if(!empty($cta) && !empty($cta['url']) && !empty($cta['title']))
-      <div class="flex justify-center">
-        <x-button
-          :variant="$buttonVariant"
-          :href="$cta['url']"
-          target="{{ $cta['target'] ?? '_self' }}"
-        >
-          {{ $cta['title'] }}
-        </x-button>
-      </div>
-    @endif
-  </div>
+      {{-- Call to Action --}}
+      @if(!empty($cta) && !empty($cta['url']) && !empty($cta['title']))
+        <div class="flex justify-center">
+          <x-button
+            :variant="$buttonVariant"
+            :href="$cta['url']"
+            target="{{ $cta['target'] ?? '_self' }}"
+          >
+            {{ $cta['title'] }}
+          </x-button>
+        </div>
+      @endif
+    </div>
+  </x-container>
 </x-section>

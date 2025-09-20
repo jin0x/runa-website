@@ -1289,6 +1289,11 @@
           "name": "Neutral (0 32)",
           "slug": "neutral-0-32",
           "color": "#ffffff52"
+        },
+        {
+          "name": "Background (Secondary)",
+          "slug": "background-secondary",
+          "color": "#171717"
         }
       ]
     },

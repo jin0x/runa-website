@@ -9,6 +9,7 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
+  use App\Enums\SectionSize;
 
   // Handle background image URL
   $bg_image_url = '';
@@ -29,7 +30,7 @@
   $accentColor = 'text-primary-lime';
 @endphp
 
-<section class="relative w-full {{ $heightClass }} overflow-hidden">
+<x-section :size="SectionSize::NONE" classes="relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
   {{-- Background Image --}}
   <div class="absolute inset-0 w-full h-full z-0">
     @if (!empty($bg_image_url))
@@ -46,63 +47,66 @@
   </div>
 
   {{-- Content Container --}}
-  <div class="absolute bottom-0 left-0 right-0 z-20 p-16">
-    <div class="w-full mx-auto">
-      <div class="max-w-7xl">
-        @if ($eyebrow)
-          <x-text
-            :as="TextTag::SPAN"
-            :size="TextSize::SMALL"
-            class="inline-block px-4 py-2 rounded-full border border-primary-green-neon text-white mb-3"
-          >
-            {{ $eyebrow }}
-          </x-text>
-        @endif
+  <div class="absolute bottom-0 left-0 right-0 z-20 pb-16 px-4 lg:px-8">
 
-        @if ($title)
-          <x-heading
-            :as="HeadingTag::H1"
-            :size="HeadingSize::H1"
-            class="text-white mb-3"
-          >
-            {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
-          </x-heading>
-        @endif
+      <x-container>
 
-        @if ($content)
-          <x-text
-            :as="TextTag::SPAN"
-            :size="TextSize::LARGE"
-            class="text-white/90 mb-8 max-w-2xl"
-          >
-            {!! $content !!}
-          </x-text>
-        @endif
+          <x-flex direction="col" gapsize="md">
+          @if ($eyebrow)
+            <x-text
+              :as="TextTag::SPAN"
+              :size="TextSize::SMALL"
+              class="inline-block px-4 py-2 rounded-full border border-primary-green-neon text-white mb-3"
+            >
+              {{ $eyebrow }}
+            </x-text>
+          @endif
 
-        @if (!empty($ctas))
-          <div class="flex flex-wrap gap-2">
-            @foreach ($ctas as $index => $button)
-              @php
-                $button_label = $button['cta']['title'] ?? null;
-                $button_link = $button['cta']['url'] ?? null;
-                $button_target = $button['cta']['target'] ?? '_self';
-                // First button is primary, second is secondary
-                $buttonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
-              @endphp
+          @if ($title)
+            <x-heading
+              :as="HeadingTag::H1"
+              :size="HeadingSize::H1"
+              class="text-white mb-3"
+            >
+              {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
+            </x-heading>
+          @endif
 
-              @if (!empty($button_label) && !empty($button_link))
-                <x-button
-                  :variant="$buttonVariant"
-                  :href="$button_link"
-                  target="{{ $button_target }}"
-                >
-                  {{ $button_label }}
-                </x-button>
-              @endif
-            @endforeach
-          </div>
-        @endif
-      </div>
-    </div>
+          @if ($content)
+            <x-text
+              :as="TextTag::SPAN"
+              :size="TextSize::LARGE"
+              class="text-white/90 mb-8 max-w-2xl"
+            >
+              {!! $content !!}
+            </x-text>
+          @endif
+
+          @if (!empty($ctas))
+            <div class="flex flex-wrap gap-2">
+              @foreach ($ctas as $index => $button)
+                @php
+                  $button_label = $button['cta']['title'] ?? null;
+                  $button_link = $button['cta']['url'] ?? null;
+                  $button_target = $button['cta']['target'] ?? '_self';
+                  // First button is primary, second is secondary
+                  $buttonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
+                @endphp
+
+                @if (!empty($button_label) && !empty($button_link))
+                  <x-button
+                    :variant="$buttonVariant"
+                    :href="$button_link"
+                    target="{{ $button_target }}"
+                  >
+                    {{ $button_label }}
+                  </x-button>
+                @endif
+              @endforeach
+            </div>
+          @endif
+          </x-flex>
+        </x-container>
+
   </div>
-</section>
+</x-section>
