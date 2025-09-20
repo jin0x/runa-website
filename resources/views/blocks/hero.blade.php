@@ -47,8 +47,8 @@
 
   {{-- Content Container --}}
   <div class="absolute bottom-0 left-0 right-0 z-20 p-16">
-    <div class="w-full mx-auto">
-      <div class="max-w-7xl">
+
+      <x-container>
         @if ($eyebrow)
           <x-text
             :as="TextTag::SPAN"
@@ -102,7 +102,7 @@
             @endforeach
           </div>
         @endif
-      </div>
-    </div>
+        </x-container>
+
   </div>
 </section>
