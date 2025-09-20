@@ -9,7 +9,7 @@ use App\Fields\Partials\GridOptions;
 use App\Fields\Partials\CTALink;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
-use Log1x\AcfComposer\Partial; 
+use Log1x\AcfComposer\Partial;
 
 class IconCards extends Block
 {
@@ -32,7 +32,7 @@ class IconCards extends Block
      *
      * @var string
      */
-    public $category = 'text';
+    public $category = 'runa';
 
     /**
      * The block icon.
@@ -132,9 +132,9 @@ class IconCards extends Block
         ],
     ];
 
-     /**
-     * Data to be passed to the block before rendering.
-     */
+    /**
+    * Data to be passed to the block before rendering.
+    */
     public function with(): array
     {
         return [
@@ -144,7 +144,7 @@ class IconCards extends Block
             'section_description' => $this->getSectionDescription(),
 
             // Content Fields (repeater)
-            'cards' => $this->getContentCards(), 
+            'cards' => $this->getContentCards(),
 
             // Section Options
             'section_size' => $this->getSectionSize(),
@@ -154,16 +154,16 @@ class IconCards extends Block
         ];
     }
 
-     /**
-     * The block field group.
-     */
+    /**
+    * The block field group.
+    */
     public function fields(): array
     {
         $iconCards = Builder::make('icon_cards');
 
         $iconCards
             ->addMessage('Icon Cards', 'A grid of cards with icons, titles, and descriptions for showcasing features or key content.')
-            
+
             ->addTab('Section Heading', [
                 'placement' => 'top',
             ])
@@ -271,7 +271,7 @@ class IconCards extends Block
         return get_field('columns') ?: '3';
     }
 
-    public function getCardsBackground ()
+    public function getCardsBackground()
     {
         return get_field('cards_background') ?: 'cyan';
     }

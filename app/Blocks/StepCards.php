@@ -6,7 +6,7 @@ use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
-use Log1x\AcfComposer\Partial; 
+use Log1x\AcfComposer\Partial;
 
 class StepCards extends Block
 {
@@ -29,7 +29,7 @@ class StepCards extends Block
      *
      * @var string
      */
-    public $category = 'text';
+    public $category = 'runa';
 
     /**
      * The block icon.
@@ -129,9 +129,9 @@ class StepCards extends Block
         ],
     ];
 
-     /**
-     * Data to be passed to the block before rendering.
-     */
+    /**
+    * Data to be passed to the block before rendering.
+    */
     public function with(): array
     {
         return [
@@ -141,7 +141,7 @@ class StepCards extends Block
             'section_description' => $this->getSectionDescription(),
 
             // Content Fields (repeater)
-            'steps' => $this->getContentCards(), 
+            'steps' => $this->getContentCards(),
 
             // Section Options
             'section_size' => $this->getSectionSize(),
@@ -149,16 +149,16 @@ class StepCards extends Block
         ];
     }
 
-     /**
-     * The block field group.
-     */
+    /**
+    * The block field group.
+    */
     public function fields(): array
     {
         $stepCards = Builder::make('step_cards');
 
         $stepCards
             ->addMessage('Step Image Cards', 'A grid of cards with images, titles, and descriptions for showcasing features or key content.')
-            
+
             ->addTab('Section Heading', [
                 'placement' => 'top',
             ])

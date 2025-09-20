@@ -1,11 +1,52 @@
 @php
   use App\Enums\ContainerSize;
   use App\Enums\SectionSize;
+  use App\Enums\ThemeVariant;
+
+  // Convert section_size string to SectionSize enum
+  $sectionSizeValue = match ($section_size) {
+      'none' => SectionSize::NONE,
+      'xs' => SectionSize::XSMALL,
+      'sm' => SectionSize::SMALL,
+      'md' => SectionSize::MEDIUM,
+      'lg' => SectionSize::LARGE,
+      'xl' => SectionSize::XLARGE,
+      default => SectionSize::LARGE,
+  };
+
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = match ($theme) {
+      'dark' => ThemeVariant::DARK,
+      'light' => ThemeVariant::LIGHT,
+      'accent' => ThemeVariant::ACCENT,
+      default => ThemeVariant::ACCENT,
+  };
+
+  // Set background color based on theme
+  $bgColor = match ($theme) {
+      'dark' => 'bg-primary-dark',
+      'light' => 'bg-white',
+      'accent' => 'bg-primary-green-neon',
+      default => 'bg-primary-green-neon',
+  };
+
+  // Set container size based on section size
+  $containerSize = match ($section_size) {
+      'xl' => ContainerSize::XLARGE,
+      'lg' => ContainerSize::LARGE,
+      default => ContainerSize::MEDIUM,
+  };
+
+  // Set text color based on theme
+  $textColor = match ($theme) {
+      'light' => 'text-primary-dark',
+      default => 'text-white',
+  };
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
-  <x-section :size="SectionSize::LARGE" classes="testimonials-slider-block bg-primary-green-neon {{ $block->classes ?? '' }}">
-    <x-container :size="ContainerSize::LARGE">
+  <x-section :size="$sectionSizeValue" classes="testimonials-slider-block {{ $bgColor }} {{ $block->classes ?? '' }}">
+    <x-container :size="$containerSize">
 
       <x-slider
         :navigation="$show_navigation"
@@ -33,10 +74,10 @@
   </x-section>
 @else
   {{-- No testimonials fallback --}}
-  <x-section :size="SectionSize::LARGE" classes="bg-primary-green-neon {{ $block->classes ?? '' }}">
-    <x-container :size="ContainerSize::LARGE">
+  <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes ?? '' }}">
+    <x-container :size="$containerSize">
       <div class="text-center">
-        <p class="text-lg text-white">
+        <p class="text-lg {{ $textColor }}">
           No testimonials available. Create some testimonials to display them here.
         </p>
       </div>

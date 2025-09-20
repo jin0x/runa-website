@@ -28,7 +28,7 @@ class HeroBlock extends Block
      *
      * @var string
      */
-    public $category = 'formatting';
+    public $category = 'runa';
 
     /**
      * The block icon.
