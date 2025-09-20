@@ -14,19 +14,11 @@
       default => SectionSize::LARGE,
   };
 
-  // Convert theme string to ThemeVariant enum
-  $themeVariant = match ($theme) {
-      'dark' => ThemeVariant::DARK,
-      'light' => ThemeVariant::LIGHT,
-      'accent' => ThemeVariant::ACCENT,
-      default => ThemeVariant::ACCENT,
-  };
-
   // Set background color based on theme
   $bgColor = match ($theme) {
       'dark' => 'bg-primary-dark',
       'light' => 'bg-white',
-      'accent' => 'bg-primary-green-neon',
+      'green' => 'bg-primary-green-neon',
       default => 'bg-primary-green-neon',
   };
 

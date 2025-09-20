@@ -290,6 +290,6 @@ class TestimonialsSliderBlock extends Block
      */
     public function getTheme()
     {
-        return get_field('theme') ?: 'accent';
+        return get_field('theme') ?: 'green';
     }
 }
