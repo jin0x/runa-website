@@ -51,7 +51,7 @@
 
       <x-container>
 
-        <div class="space-y-4">
+          <x-flex direction="col" gapsize="md">
           @if ($eyebrow)
             <x-text
               :as="TextTag::SPAN"
@@ -105,7 +105,7 @@
               @endforeach
             </div>
           @endif
-        </div>
+          </x-flex>
         </x-container>
 
   </div>

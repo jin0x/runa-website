@@ -27,7 +27,7 @@
 
   // Configure logo styles - optimized for both square and wide logos
   $logoContainerClasses = 'flex items-center justify-center w-full min-h-[100px] p-4';
-  $logoClasses = 'h-16 w-auto max-w-full object-contain transition-opacity hover:opacity-80';
+  $logoClasses = 'h-12 w-auto max-w-full object-contain transition-opacity hover:opacity-80';
 
   // Extract just the number from the grid_columns value
   $columnsNumber = is_string($grid_columns) ? preg_replace('/[^0-9]/', '', $grid_columns) : '4';
@@ -59,8 +59,8 @@
           @if(!empty($logo_url))
             @if(!empty($logo_link) && !empty($logo_link['url']))
               <a href="{{ $logo_link['url'] }}"
-                 target="{{ $logo_link['target'] ?? '_self' }}"
-                 class="flex items-center justify-center"
+                target="{{ $logo_link['target'] ?? '_self' }}"
+                class="flex items-center justify-center"
               >
                 <img src="{{ $logo_url }}" alt="{{ $alt_text }}" class="{{ $logoClasses }}">
               </a>
@@ -97,13 +97,13 @@
                 <div class="flex items-center justify-center px-3">
                   @if(!empty($logo_link) && !empty($logo_link['url']))
                     <a href="{{ $logo_link['url'] }}"
-                       target="{{ $logo_link['target'] ?? '_self' }}"
-                       class="flex items-center justify-center"
+                      target="{{ $logo_link['target'] ?? '_self' }}"
+                      class="flex items-center justify-center"
                     >
-                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="h-16 w-auto max-w-full object-contain">
+                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="h-12 w-auto max-w-full object-contain">
                     </a>
                   @else
-                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="h-16 w-auto max-w-full object-contain">
+                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="h-12 w-auto max-w-full object-contain">
                   @endif
                 </div>
               @endif

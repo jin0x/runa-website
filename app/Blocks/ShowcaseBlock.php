@@ -2,6 +2,7 @@
 
 namespace App\Blocks;
 
+use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
 use App\Fields\Partials\MediaComponent;
 use Log1x\AcfComposer\Block;
@@ -79,8 +80,12 @@ class ShowcaseBlock extends Block
     public function with()
     {
         return [
-            'eyebrow' => $this->getEyebrow(),
-            'heading' => $this->getHeading(),
+            // Section Heading Fields
+            'section_eyebrow' => $this->getSectionEyebrow(),
+            'section_title' => $this->getSectionTitle(),
+            'section_description' => $this->getSectionDescription(),
+
+            // Content Fields
             'statistics_cards' => $this->getStatisticsCards(),
             'media_type' => $this->getMediaType(),
             'image' => $this->getImage(),
@@ -88,6 +93,8 @@ class ShowcaseBlock extends Block
             'lottie' => $this->getLottie(),
             'cta' => $this->getCta(),
             'accent_color' => $this->getAccentColor(),
+
+            // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
         ];
@@ -103,18 +110,13 @@ class ShowcaseBlock extends Block
         $showcase = Builder::make('showcase');
 
         $showcase
-            ->addTab('Content', [
+            ->addTab('Section Heading', [
                 'placement' => 'top',
             ])
-            ->addText('eyebrow', [
-                'label' => 'Eyebrow Text',
-                'instructions' => 'Small text displayed above the heading (will be capitalized)',
-                'required' => 0,
-            ])
-            ->addText('heading', [
-                'label' => 'Main Heading',
-                'instructions' => 'Main heading for the showcase section',
-                'required' => 1,
+            ->addPartial(SectionHeading::class)
+
+            ->addTab('Content', [
+                'placement' => 'top',
             ])
             ->addRepeater('statistics_cards', [
                 'label' => 'Statistics Cards',
@@ -185,16 +187,21 @@ class ShowcaseBlock extends Block
     }
 
     /**
-     * Get field methods
+     * Section heading getters
      */
-    public function getEyebrow()
+    public function getSectionEyebrow()
     {
         return get_field('eyebrow');
     }
 
-    public function getHeading()
+    public function getSectionTitle()
     {
         return get_field('heading');
+    }
+
+    public function getSectionDescription()
+    {
+        return get_field('subtitle');
     }
 
     public function getStatisticsCards()
