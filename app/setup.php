@@ -184,7 +184,7 @@ add_action('widgets_init', function () {
     $footer_widget_config = [
         'before_widget' => '<div class="footer-widget %1$s %2$s">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title text-primary-green-neon text-xs font-semibold mb-4">',
+        'before_title'  => '<h3 class="widget-title uppercase text-primary-green-neon mb-4">',
         'after_title'   => '</h3>',
     ];
 

@@ -150,8 +150,7 @@ h5.wp-block-heading {
 }
 
 h6,
-h6.wp-block-heading,
-.widget-title {
+h6.wp-block-heading {
   @apply text-base md:text-lg font-normal leading-[110%];
   font-family: var(--font-body);
 }
@@ -166,7 +165,8 @@ h6.wp-block-heading,
   font-family: var(--font-heading);
 }
 
-.heading-7 {
+.heading-7,
+.widget-title {
   @apply text-sm md:text-base font-normal leading-[110%];
   font-family: var(--font-body);
 }
@@ -417,4 +417,8 @@ strong {
 
 .page-header {
   @apply hidden;
+}
+
+.footer a {
+  @apply no-underline hover:underline;
 }
