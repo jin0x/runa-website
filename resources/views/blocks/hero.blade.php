@@ -9,6 +9,7 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
+  use App\Enums\SectionSize;
 
   // Handle background image URL
   $bg_image_url = '';
@@ -29,7 +30,7 @@
   $accentColor = 'text-primary-lime';
 @endphp
 
-<section class="relative w-full {{ $heightClass }} overflow-hidden">
+<x-section :size="SectionSize::NONE" classes="relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
   {{-- Background Image --}}
   <div class="absolute inset-0 w-full h-full z-0">
     @if (!empty($bg_image_url))
@@ -46,7 +47,7 @@
   </div>
 
   {{-- Content Container --}}
-  <div class="absolute bottom-0 left-0 right-0 z-20 p-16">
+  <div class="absolute bottom-0 left-0 right-0 z-20 pb-16 px-4 lg:px-8">
 
       <x-container>
         @if ($eyebrow)
@@ -105,4 +106,4 @@
         </x-container>
 
   </div>
-</section>
+</x-section>

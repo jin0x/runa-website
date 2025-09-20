@@ -53,16 +53,15 @@
   --text-sm: 1.125rem; /* 18px */
   --text-base: 1.25rem; /* 20px */
   /* Need a 22px */
-  --text-lg: 1.5rem; /* 24px */
-  --text-xl: 1.75rem; /* 28px */
-  --text-2xl: 2rem; /* 32px */
-  --text-3xl: 2.25rem; /* 36px */ /* TBR */
+  --text-lg: 1.375rem; /* 22px */
+  --text-xl: 1.5rem; /* 24px */
+  --text-2x: 1.75rem; /* 28px */
+  --text-3xl: 2rem; /* 32px */
   --text-4xl: 2.5rem; /* 40px */
-  --text-5xl: 2.75rem; /* 44px */ /* TBR */
-  --text-6xl: 3rem; /* 48px */
-  --text-7xl: 4rem; /* 64px */
-  --text-8xl: 5.5rem; /* 88px */ /* TBR  or replaced with 72*/
-  /* Need a new one 120px */
+  --text-5xl: 3rem; /* 48px */
+  --text-6xl: 4rem; /* 64px */
+  --text-7xl: 4.5rem; /* 88px */
+  --text-8xl: 7.5rem; /* 120px */
 
   /* Transitions */
   --default-transition-duration: 250ms;
@@ -414,4 +413,8 @@ strong {
     border-bottom-left-radius: 2rem;
     border-bottom-right-radius: 2rem;
   }
+}
+
+.page-header {
+  @apply hidden;
 }

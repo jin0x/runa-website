@@ -1,9 +1,10 @@
 @php
   use App\Enums\ContainerSize;
+  use App\Enums\SectionSize;
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
-  <div class="testimonials-slider-block py-16 md:py-24 bg-primary-green-neon">
+  <x-section :size="SectionSize::LARGE" classes="testimonials-slider-block bg-primary-green-neon {{ $block->classes ?? '' }}">
     <x-container :size="ContainerSize::LARGE">
 
       <x-slider
@@ -29,10 +30,10 @@
       </x-slider>
 
     </x-container>
-  </div>
+  </x-section>
 @else
   {{-- No testimonials fallback --}}
-  <div class="py-16 md:py-24 bg-primary-green-neon">
+  <x-section :size="SectionSize::LARGE" classes="bg-primary-green-neon {{ $block->classes ?? '' }}">
     <x-container :size="ContainerSize::LARGE">
       <div class="text-center">
         <p class="text-lg text-white">
@@ -40,5 +41,5 @@
         </p>
       </div>
     </x-container>
-  </div>
+  </x-section>
 @endif
