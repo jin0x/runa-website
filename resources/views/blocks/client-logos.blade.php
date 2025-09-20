@@ -25,9 +25,9 @@
       default => 'bg-white',
   };
 
-  // Configure logo styles with reduced dimensions for a more compact display
-  $logoContainerClasses = 'flex items-center justify-center w-full max-h-24 p-3';
-  $logoClasses = 'max-h-12 max-w-[140px] w-auto object-contain transition-opacity hover:opacity-80';
+  // Configure logo styles - removed max-height constraints to prevent cutoff
+  $logoContainerClasses = 'flex items-center justify-center w-full min-h-[80px] p-4';
+  $logoClasses = 'max-h-16 max-w-[160px] w-auto h-auto object-contain transition-opacity hover:opacity-80';
 
   // Extract just the number from the grid_columns value
   $columnsNumber = is_string($grid_columns) ? preg_replace('/[^0-9]/', '', $grid_columns) : '4';
@@ -100,10 +100,10 @@
                        target="{{ $logo_link['target'] ?? '_self' }}"
                        class="flex items-center justify-center"
                     >
-                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="max-h-12 max-w-[140px] w-auto object-contain">
+                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="max-h-16 max-w-[160px] w-auto h-auto object-contain">
                     </a>
                   @else
-                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="max-h-12 max-w-[140px] w-auto object-contain">
+                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="max-h-16 max-w-[160px] w-auto h-auto object-contain">
                   @endif
                 </div>
               @endif
