@@ -45,52 +45,7 @@ import 'swiper/css/pagination';
 // Register Alpine components BEFORE Alpine.start()
 window.Alpine = Alpine;
 
-// Simple test component
-Alpine.data('testCounter', () => ({
-  count: 0,
-  init() {
-    console.log('Test Counter Component Initialized');
-  },
-  increment() {
-    this.count++;
-    console.log('Counter incremented to:', this.count);
-  }
-}));
 
-// Register scroll lock component
-Alpine.data('scrollLock', (sectionsData, mobileBreakpoint) => ({
-  sections: sectionsData || [],
-  activeSection: 0,
-  progressPercentage: 0,
-  progressOffset: 0,
-  isMobile: false,
-  scrollTimeline: null,
-  mobileBreakpoint: mobileBreakpoint || 996,
-
-  init() {
-    console.log('ScrollLock Alpine Component Init', {
-      sections: this.sections.length,
-      element: this.$el
-    });
-
-    this.checkMobile();
-    this.setupScrollTrigger();
-  },
-
-  checkMobile() {
-    this.isMobile = window.innerWidth <= this.mobileBreakpoint;
-  },
-
-  setupScrollTrigger() {
-    if (this.isMobile || !window.gsap || !window.ScrollTrigger) {
-      console.log('Skipping ScrollTrigger setup');
-      return;
-    }
-
-    console.log('Setting up ScrollTrigger');
-    // ScrollTrigger setup will go here
-  }
-}));
 
 domReady(() => {
   console.log('=== APP.JS INITIALIZATION ===');

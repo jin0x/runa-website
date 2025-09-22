@@ -42,22 +42,6 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
-  <!-- ALPINE TEST COMPONENT -->
-  <div x-data="testCounter" style="background: yellow; padding: 20px; margin: 20px 0; border: 2px solid black;">
-    <h3>Alpine Test Component</h3>
-    <p>Count: <span x-text="count"></span></p>
-    <button @click="increment" style="background: blue; color: white; padding: 10px; cursor: pointer;">
-      Click to Test Alpine (Count should increase)
-    </button>
-  </div>
-
-  <!-- Simple inline Alpine test -->
-  <div x-data="{ message: 'Alpine is working!' }" style="background: lightgreen; padding: 10px; margin: 10px 0;">
-    <p x-text="message"></p>
-    <button @click="message = 'You clicked!'" style="padding: 5px; cursor: pointer;">
-      Change Message
-    </button>
-  </div>
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
@@ -70,26 +54,8 @@
   @endif
 
   @php
-    // Debug: Check sections data
-    $sectionsJson = json_encode($sections);
     $hasValidSections = !empty($sections) && is_array($sections) && count($sections) > 0;
   @endphp
-
-
-  <!-- STATIC HTML FALLBACK (Always visible) -->
-  <div style="background: #f0f0f0; padding: 20px; margin: 20px 0; border: 2px solid #333;">
-    <h3 style="color: #333;">Static Content (No JS Required)</h3>
-    @if($hasValidSections)
-      @foreach($sections as $index => $section)
-        <div style="margin: 10px 0; padding: 10px; background: white; border: 1px solid #ccc;">
-          <strong>{{ $section['title'] }}</strong><br>
-          {{ substr($section['description'], 0, 100) }}...
-        </div>
-      @endforeach
-    @else
-      <p style="color: red;">NO SECTIONS FOUND!</p>
-    @endif
-  </div>
 
   @if($hasValidSections)
     <!-- Desktop Scroll Lock Component -->
@@ -103,10 +69,10 @@
       <div class="hidden lg:block">
         <div class="relative">
           <!-- Progress Bar -->
-          <div class="absolute left-0 top-0 bottom-0 w-1 {{ $progressTrackClasses }} z-10 rounded-full">
+          <div class="absolute left-0 top-0 w-1 h-full {{ $progressTrackClasses }} z-20 rounded-full">
             <div
               class="scroll-progress-bar w-full {{ $progressBarClasses }} transition-all duration-300 ease-out rounded-full"
-              style="height: 0%; transform: translateY(0px)"
+              style="height: 0%; transform-origin: top"
             ></div>
           </div>
 
@@ -159,7 +125,6 @@
     return;
   }
 
-  console.log('Initializing scroll lock component:', blockId);
 
   // Decode data from base64
   const encodedData = container.dataset.sections;
@@ -168,7 +133,6 @@
   let sections;
   try {
     sections = JSON.parse(atob(encodedData));
-    console.log('Sections loaded:', sections.length);
   } catch (e) {
     console.error('Failed to decode sections data:', e);
     return;
@@ -256,14 +220,11 @@
 
   function initScrollTrigger() {
     if (isMobile || !window.gsap || !window.ScrollTrigger) {
-      console.log('Skipping ScrollTrigger setup');
       return;
     }
 
     const scrollContent = container.querySelector('.scroll-lock-content');
     if (!scrollContent) return;
-
-    console.log('Setting up ScrollTrigger');
 
     window.ScrollTrigger.create({
       trigger: scrollContent,
