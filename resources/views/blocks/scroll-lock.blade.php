@@ -42,6 +42,23 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+  <!-- ALPINE TEST COMPONENT -->
+  <div x-data="testCounter" style="background: yellow; padding: 20px; margin: 20px 0; border: 2px solid black;">
+    <h3>Alpine Test Component</h3>
+    <p>Count: <span x-text="count"></span></p>
+    <button @click="increment" style="background: blue; color: white; padding: 10px; cursor: pointer;">
+      Click to Test Alpine (Count should increase)
+    </button>
+  </div>
+
+  <!-- Simple inline Alpine test -->
+  <div x-data="{ message: 'Alpine is working!' }" style="background: lightgreen; padding: 10px; margin: 10px 0;">
+    <p x-text="message"></p>
+    <button @click="message = 'You clicked!'" style="padding: 5px; cursor: pointer;">
+      Change Message
+    </button>
+  </div>
+
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
       :eyebrow="$section_eyebrow"
@@ -59,13 +76,28 @@
   @endphp
 
 
+  <!-- STATIC HTML FALLBACK (Always visible) -->
+  <div style="background: #f0f0f0; padding: 20px; margin: 20px 0; border: 2px solid #333;">
+    <h3 style="color: #333;">Static Content (No JS Required)</h3>
+    @if($hasValidSections)
+      @foreach($sections as $index => $section)
+        <div style="margin: 10px 0; padding: 10px; background: white; border: 1px solid #ccc;">
+          <strong>{{ $section['title'] }}</strong><br>
+          {{ substr($section['description'], 0, 100) }}...
+        </div>
+      @endforeach
+    @else
+      <p style="color: red;">NO SECTIONS FOUND!</p>
+    @endif
+  </div>
+
   @if($hasValidSections)
     <!-- Desktop Scroll Lock Component -->
     <div
       id="{{ $blockId }}"
-      x-data="scrollLockComponent({!! $sectionsJson !!}, {{ $mobile_breakpoint }})"
-      x-init="init()"
       class="scroll-lock-container"
+      data-sections="{{ base64_encode(json_encode($sections)) }}"
+      data-mobile-breakpoint="{{ $mobile_breakpoint }}"
     >
       <!-- Desktop Layout -->
       <div class="hidden lg:block">
@@ -73,8 +105,8 @@
           <!-- Progress Bar -->
           <div class="absolute left-0 top-0 bottom-0 w-1 {{ $progressTrackClasses }} z-10 rounded-full">
             <div
-              class="w-full {{ $progressBarClasses }} transition-all duration-300 ease-out rounded-full"
-              :style="`height: ${progressPercentage}%; transform: translateY(${progressOffset}px)`"
+              class="scroll-progress-bar w-full {{ $progressBarClasses }} transition-all duration-300 ease-out rounded-full"
+              style="height: 0%; transform: translateY(0px)"
             ></div>
           </div>
 
@@ -82,43 +114,15 @@
           <div class="scroll-lock-content pl-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen max-w-7xl mx-auto px-4">
               <!-- Left Content -->
-              <div class="relative min-h-[400px]">
-                <template x-for="(section, index) in sections" :key="index">
-                  <div
-                    class="scroll-section absolute w-full"
-                    :class="index === activeSection ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
-                    x-transition:enter="transition-opacity duration-700"
-                    x-transition:leave="transition-opacity duration-700"
-                    x-show="index === activeSection"
-                  >
-                    <h3
-                      class="mb-6 {{ $headingClasses }} text-3xl lg:text-4xl font-bold"
-                      x-text="section.title"
-                    ></h3>
-
-                    <div class="{{ $textClasses }} text-lg leading-relaxed" x-text="section.description"></div>
-                  </div>
-                </template>
+              <div class="scroll-content-container relative min-h-[400px]">
+                <!-- Content will be populated by JavaScript -->
               </div>
 
               <!-- Right Image -->
               <div class="relative">
                 <div class="sticky top-1/2 transform -translate-y-1/2">
-                  <div class="relative w-full h-96 lg:h-[600px] overflow-hidden rounded-lg shadow-lg">
-                    <template x-for="(section, index) in sections" :key="index">
-                      <div
-                        :data-image-index="index"
-                        class="absolute inset-0 transition-all duration-700 ease-in-out"
-                        :class="index === activeSection ? 'opacity-100 scale-100' : 'opacity-0 scale-95'"
-                        x-show="index === activeSection"
-                      >
-                        <img
-                          :src="section.image.url"
-                          :alt="section.image.alt || section.title"
-                          class="w-full h-full object-cover"
-                        />
-                      </div>
-                    </template>
+                  <div class="scroll-image-container relative w-full h-96 lg:h-[600px] overflow-hidden rounded-lg shadow-lg">
+                    <!-- Images will be populated by JavaScript -->
                   </div>
                 </div>
               </div>
@@ -130,29 +134,8 @@
 
       <!-- Mobile Layout (Stacked) -->
       <div class="block lg:hidden">
-        <div class="space-y-12">
-          <template x-for="(section, index) in sections" :key="index">
-            <div class="mobile-section">
-              <!-- Image First -->
-              <div class="mb-6">
-                <img
-                  :src="section.image.url"
-                  :alt="section.image.alt || section.title"
-                  class="w-full h-auto object-cover rounded-lg"
-                />
-              </div>
-
-              <!-- Content -->
-              <div>
-                <h3
-                  class="mb-4 {{ $headingClasses }} text-2xl font-bold"
-                  x-text="section.title"
-                ></h3>
-
-                <div class="{{ $textClasses }} text-base leading-relaxed" x-text="section.description"></div>
-              </div>
-            </div>
-          </template>
+        <div class="scroll-mobile-container space-y-12">
+          <!-- Mobile content will be populated by JavaScript -->
         </div>
       </div>
     </div>
@@ -165,180 +148,174 @@
   @endif
 </x-section>
 
+@if($hasValidSections)
 <script>
-  function scrollLockComponent(sectionsData, mobileBreakpoint) {
-    return {
-      sections: sectionsData || [],
-      activeSection: 0,
-      progressPercentage: 0,
-      progressOffset: 0,
-      isMobile: false,
-      scrollTimeline: null,
-      mobileBreakpoint: mobileBreakpoint || 996,
+(function() {
+  const blockId = '{{ $blockId }}';
+  const container = document.getElementById(blockId);
 
-      init() {
-        this.checkMobile();
+  if (!container) {
+    console.error('Scroll lock container not found:', blockId);
+    return;
+  }
 
-        // Add resize listener
-        this.resizeHandler = () => {
-          this.checkMobile();
-          this.handleResize();
-        };
-        window.addEventListener('resize', this.resizeHandler);
+  console.log('Initializing scroll lock component:', blockId);
 
-        // Initialize scroll trigger if not mobile
-        // Debug log
-        console.log('ScrollLock Init:', {
-          sections: this.sections,
-          isMobile: this.isMobile,
-          gsapAvailable: typeof gsap !== 'undefined',
-          scrollTriggerAvailable: typeof ScrollTrigger !== 'undefined'
-        });
+  // Decode data from base64
+  const encodedData = container.dataset.sections;
+  const mobileBreakpoint = parseInt(container.dataset.mobileBreakpoint) || 996;
 
-        if (!this.isMobile) {
-          if (typeof gsap !== 'undefined') {
-            if (typeof ScrollTrigger !== 'undefined') {
-              this.$nextTick(() => {
-                this.initScrollTrigger();
-              });
-            } else {
-              console.error('ScrollTrigger not available');
-            }
-          } else {
-            console.error('GSAP not available');
-          }
-        }
+  let sections;
+  try {
+    sections = JSON.parse(atob(encodedData));
+    console.log('Sections loaded:', sections.length);
+  } catch (e) {
+    console.error('Failed to decode sections data:', e);
+    return;
+  }
 
-        // Cleanup on destroy
-        this.$el.addEventListener('x-data:cleanup', () => this.destroy());
-      },
+  // DOM elements
+  const contentContainer = container.querySelector('.scroll-content-container');
+  const imageContainer = container.querySelector('.scroll-image-container');
+  const mobileContainer = container.querySelector('.scroll-mobile-container');
+  const progressBar = container.querySelector('.scroll-progress-bar');
 
-      checkMobile() {
-        this.isMobile = window.innerWidth <= this.mobileBreakpoint;
-      },
+  let activeSection = 0;
+  let isMobile = window.innerWidth <= mobileBreakpoint;
 
-      handleResize() {
-        if (this.scrollTimeline) {
-          this.scrollTimeline.kill();
-          this.scrollTimeline = null;
-        }
+  // Create content elements
+  function createContent() {
+    // Desktop content
+    contentContainer.innerHTML = '';
+    imageContainer.innerHTML = '';
 
-        // Debug log
-        console.log('ScrollLock Init:', {
-          sections: this.sections,
-          isMobile: this.isMobile,
-          gsapAvailable: typeof gsap !== 'undefined',
-          scrollTriggerAvailable: typeof ScrollTrigger !== 'undefined'
-        });
+    sections.forEach((section, index) => {
+      // Create content section
+      const contentDiv = document.createElement('div');
+      contentDiv.className = `scroll-section absolute w-full transition-opacity duration-700 ease-in-out ${index === 0 ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`;
+      contentDiv.innerHTML = `
+        <h3 class="mb-6 {{ $headingClasses }} text-3xl lg:text-4xl font-bold">${section.title}</h3>
+        <div class="{{ $textClasses }} text-lg leading-relaxed">${section.description}</div>
+      `;
+      contentContainer.appendChild(contentDiv);
 
-        if (!this.isMobile) {
-          if (typeof gsap !== 'undefined') {
-            if (typeof ScrollTrigger !== 'undefined') {
-              this.$nextTick(() => {
-                this.initScrollTrigger();
-              });
-            } else {
-              console.error('ScrollTrigger not available');
-            }
-          } else {
-            console.error('GSAP not available');
-          }
-        }
-      },
+      // Create image section
+      const imageDiv = document.createElement('div');
+      imageDiv.className = `absolute inset-0 transition-all duration-700 ease-in-out ${index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`;
+      imageDiv.innerHTML = `
+        <img src="${section.image.url}" alt="${section.image.alt || section.title}" class="w-full h-full object-cover">
+      `;
+      imageContainer.appendChild(imageDiv);
+    });
 
-      initScrollTrigger() {
-        console.log('InitScrollTrigger called', {
-          isMobile: this.isMobile,
-          sectionsLength: this.sections.length
-        });
+    // Mobile content
+    mobileContainer.innerHTML = '';
+    sections.forEach((section, index) => {
+      const mobileDiv = document.createElement('div');
+      mobileDiv.className = 'mobile-section';
+      mobileDiv.innerHTML = `
+        <div class="mb-6">
+          <img src="${section.image.url}" alt="${section.image.alt || section.title}" class="w-full h-auto object-cover rounded-lg">
+        </div>
+        <div>
+          <h3 class="mb-4 {{ $headingClasses }} text-2xl font-bold">${section.title}</h3>
+          <div class="{{ $textClasses }} text-base leading-relaxed">${section.description}</div>
+        </div>
+      `;
+      mobileContainer.appendChild(mobileDiv);
+    });
+  }
 
-        if (this.isMobile || this.sections.length === 0) {
-          console.log('Skipping ScrollTrigger: mobile or no sections');
-          return;
-        }
+  function updateActiveSection(newSection) {
+    if (newSection === activeSection) return;
 
-        const container = this.$el.querySelector('.scroll-lock-content');
+    const contentSections = contentContainer.querySelectorAll('.scroll-section');
+    const imageSections = imageContainer.querySelectorAll('div');
 
-        if (!container) return;
+    // Hide current
+    if (contentSections[activeSection]) {
+      contentSections[activeSection].className = contentSections[activeSection].className.replace('opacity-100 pointer-events-auto', 'opacity-0 pointer-events-none');
+    }
+    if (imageSections[activeSection]) {
+      imageSections[activeSection].className = imageSections[activeSection].className.replace('opacity-100 scale-100', 'opacity-0 scale-95');
+    }
 
-        // Create ScrollTrigger for pinning and progress tracking
-        this.scrollTimeline = ScrollTrigger.create({
-          trigger: container,
-          start: "top top",
-          end: `+=${this.sections.length * window.innerHeight * 1.5}`, // Add extra height for traction
-          scrub: 2, // Higher scrub value for more resistance/traction
-          pin: true,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            const progress = self.progress;
-
-            // Calculate which section should be active with traction
-            const rawSectionProgress = progress * this.sections.length;
-            const currentSectionIndex = Math.floor(rawSectionProgress);
-            const sectionProgress = rawSectionProgress - currentSectionIndex;
-
-            // Add traction - require 25% progress before changing sections
-            let targetSection = currentSectionIndex;
-            if (sectionProgress > 0.25) {
-              targetSection = Math.min(currentSectionIndex + 1, this.sections.length - 1);
-            }
-
-            // Smooth section transitions
-            if (targetSection !== this.activeSection) {
-              this.activeSection = targetSection;
-            }
-
-            // Update progress bar with smooth animation
-            const smoothProgress = gsap.utils.clamp(0, 100, progress * 100);
-            this.progressPercentage = smoothProgress;
-
-            // Offset progress bar based on scroll position
-            const maxOffset = container.offsetHeight - window.innerHeight;
-            this.progressOffset = gsap.utils.clamp(0, maxOffset, progress * maxOffset);
-          },
-          onToggle: (self) => {
-            if (self.isActive) {
-              // Add body class for styling when scroll-locked
-              document.body.classList.add('scroll-locked');
-            } else {
-              document.body.classList.remove('scroll-locked');
-            }
-          }
-        });
-
-        // Add image transition animations
-        this.sections.forEach((section, index) => {
-          gsap.set(`[data-image-index="${index}"]`, {
-            opacity: index === 0 ? 1 : 0,
-            scale: index === 0 ? 1 : 0.95
-          });
-        });
-      },
-
-      destroy() {
-        // Remove resize listener
-        if (this.resizeHandler) {
-          window.removeEventListener('resize', this.resizeHandler);
-        }
-
-        // Kill scroll timeline
-        if (this.scrollTimeline) {
-          this.scrollTimeline.kill();
-          this.scrollTimeline = null;
-        }
-
-        // Clean up any scroll triggers related to this component
-        if (typeof ScrollTrigger !== 'undefined') {
-          ScrollTrigger.getAll().forEach(trigger => {
-            if (trigger.trigger && this.$el.contains(trigger.trigger)) {
-              trigger.kill();
-            }
-          });
-        }
-
-        // Remove body class
-        document.body.classList.remove('scroll-locked');
-      }
+    // Show new
+    activeSection = newSection;
+    if (contentSections[activeSection]) {
+      contentSections[activeSection].className = contentSections[activeSection].className.replace('opacity-0 pointer-events-none', 'opacity-100 pointer-events-auto');
+    }
+    if (imageSections[activeSection]) {
+      imageSections[activeSection].className = imageSections[activeSection].className.replace('opacity-0 scale-95', 'opacity-100 scale-100');
     }
   }
+
+  function checkMobile() {
+    isMobile = window.innerWidth <= mobileBreakpoint;
+  }
+
+  function initScrollTrigger() {
+    if (isMobile || !window.gsap || !window.ScrollTrigger) {
+      console.log('Skipping ScrollTrigger setup');
+      return;
+    }
+
+    const scrollContent = container.querySelector('.scroll-lock-content');
+    if (!scrollContent) return;
+
+    console.log('Setting up ScrollTrigger');
+
+    window.ScrollTrigger.create({
+      trigger: scrollContent,
+      start: "top top",
+      end: `+=${sections.length * window.innerHeight * 1.5}`,
+      scrub: 2,
+      pin: true,
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const rawSectionProgress = progress * sections.length;
+        const currentSectionIndex = Math.floor(rawSectionProgress);
+        const sectionProgress = rawSectionProgress - currentSectionIndex;
+
+        let targetSection = currentSectionIndex;
+        if (sectionProgress > 0.25) {
+          targetSection = Math.min(currentSectionIndex + 1, sections.length - 1);
+        }
+
+        updateActiveSection(targetSection);
+
+        // Update progress bar
+        if (progressBar) {
+          progressBar.style.height = `${progress * 100}%`;
+        }
+      }
+    });
+  }
+
+  // Initialize
+  createContent();
+  checkMobile();
+
+  window.addEventListener('resize', () => {
+    checkMobile();
+    // Refresh ScrollTrigger on resize
+    if (window.ScrollTrigger) {
+      window.ScrollTrigger.refresh();
+    }
+  });
+
+  // Wait for GSAP to be ready
+  if (window.gsap && window.ScrollTrigger) {
+    initScrollTrigger();
+  } else {
+    // Wait for app.js to load GSAP
+    setTimeout(() => {
+      if (window.gsap && window.ScrollTrigger) {
+        initScrollTrigger();
+      }
+    }, 1000);
+  }
+})();
 </script>
+@endif
