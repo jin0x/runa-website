@@ -30,9 +30,12 @@ namespace App\Helpers;
 
     $p_count = count($p_matches[0]);
 
+    $p_base_class = 'text-xs';
+    $p_class = $p_base_class;
     if ($p_count > 1) {
-        $content = str_replace('<p>', '<p class="mb-4">', $content);
+        $p_class .= ' mb-4';
     }
+    $content = str_replace('<p>', '<p class="' . $p_class . '">', $content);
 
     $content = preg_replace_callback(
         '/<(h[1-6])>(.*?)<\/\1>/i',
