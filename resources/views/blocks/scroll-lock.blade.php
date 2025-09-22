@@ -81,14 +81,36 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen max-w-7xl mx-auto px-4">
               <!-- Left Content -->
               <div class="scroll-content-container relative min-h-[400px]">
-                <!-- Content will be populated by JavaScript -->
+                @foreach($sections as $index => $section)
+                  <div class="scroll-section mb-8 transition-all duration-700 ease-in-out {{ $index === 0 ? 'opacity-100' : 'opacity-60' }}" data-section-index="{{ $index }}">
+                    <x-heading
+                      :as="HeadingTag::H3"
+                      :size="HeadingSize::H4"
+                      class="mb-6 {{ $headingClasses }}"
+                    >
+                      {{ $section['title'] }}
+                    </x-heading>
+
+                    <x-text
+                      :as="TextTag::DIV"
+                      :size="TextSize::SMALL"
+                      class="{{ $textClasses }} leading-relaxed"
+                    >
+                      {!! $section['description'] !!}
+                    </x-text>
+                  </div>
+                @endforeach
               </div>
 
               <!-- Right Image -->
               <div class="relative">
                 <div class="sticky top-1/2 transform -translate-y-1/2">
                   <div class="scroll-image-container relative w-full h-96 lg:h-[600px] overflow-hidden rounded-lg shadow-lg">
-                    <!-- Images will be populated by JavaScript -->
+                    @foreach($sections as $index => $section)
+                      <div class="absolute inset-0 transition-all duration-700 ease-in-out {{ $index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95' }}" data-image-index="{{ $index }}">
+                        <img src="{{ $section['image']['url'] }}" alt="{{ $section['image']['alt'] ?? $section['title'] }}" class="w-full h-full object-cover">
+                      </div>
+                    @endforeach
                   </div>
                 </div>
               </div>
@@ -101,7 +123,30 @@
       <!-- Mobile Layout (Stacked) -->
       <div class="block lg:hidden">
         <div class="scroll-mobile-container space-y-12">
-          <!-- Mobile content will be populated by JavaScript -->
+          @foreach($sections as $section)
+            <div class="mobile-section">
+              <div class="mb-6">
+                <img src="{{ $section['image']['url'] }}" alt="{{ $section['image']['alt'] ?? $section['title'] }}" class="w-full h-auto object-cover rounded-lg">
+              </div>
+              <div>
+                <x-heading
+                  :as="\App\Enums\HeadingTag::H3"
+                  :size="\App\Enums\HeadingSize::H4"
+                  class="mb-4 {{ $headingClasses }}"
+                >
+                  {{ $section['title'] }}
+                </x-heading>
+
+                <x-text
+                  :as="\App\Enums\TextTag::DIV"
+                  :size="\App\Enums\TextSize::BASE"
+                  class="{{ $textClasses }} leading-relaxed"
+                >
+                  {!! $section['description'] !!}
+                </x-text>
+              </div>
+            </div>
+          @endforeach
         </div>
       </div>
     </div>
@@ -139,79 +184,39 @@
   }
 
   // DOM elements
-  const contentContainer = container.querySelector('.scroll-content-container');
-  const imageContainer = container.querySelector('.scroll-image-container');
-  const mobileContainer = container.querySelector('.scroll-mobile-container');
+  const contentSections = container.querySelectorAll('.scroll-section[data-section-index]');
+  const imageSections = container.querySelectorAll('[data-image-index]');
   const progressBar = container.querySelector('.scroll-progress-bar');
 
   let activeSection = 0;
   let isMobile = window.innerWidth <= mobileBreakpoint;
 
-  // Create content elements
-  function createContent() {
-    // Desktop content
-    contentContainer.innerHTML = '';
-    imageContainer.innerHTML = '';
-
-    sections.forEach((section, index) => {
-      // Create content section
-      const contentDiv = document.createElement('div');
-      contentDiv.className = `scroll-section absolute w-full transition-opacity duration-700 ease-in-out ${index === 0 ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`;
-      contentDiv.innerHTML = `
-        <h3 class="mb-6 {{ $headingClasses }} text-3xl lg:text-4xl font-bold">${section.title}</h3>
-        <div class="{{ $textClasses }} text-lg leading-relaxed">${section.description}</div>
-      `;
-      contentContainer.appendChild(contentDiv);
-
-      // Create image section
-      const imageDiv = document.createElement('div');
-      imageDiv.className = `absolute inset-0 transition-all duration-700 ease-in-out ${index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`;
-      imageDiv.innerHTML = `
-        <img src="${section.image.url}" alt="${section.image.alt || section.title}" class="w-full h-full object-cover">
-      `;
-      imageContainer.appendChild(imageDiv);
-    });
-
-    // Mobile content
-    mobileContainer.innerHTML = '';
-    sections.forEach((section, index) => {
-      const mobileDiv = document.createElement('div');
-      mobileDiv.className = 'mobile-section';
-      mobileDiv.innerHTML = `
-        <div class="mb-6">
-          <img src="${section.image.url}" alt="${section.image.alt || section.title}" class="w-full h-auto object-cover rounded-lg">
-        </div>
-        <div>
-          <h3 class="mb-4 {{ $headingClasses }} text-2xl font-bold">${section.title}</h3>
-          <div class="{{ $textClasses }} text-base leading-relaxed">${section.description}</div>
-        </div>
-      `;
-      mobileContainer.appendChild(mobileDiv);
-    });
-  }
-
   function updateActiveSection(newSection) {
     if (newSection === activeSection) return;
 
-    const contentSections = contentContainer.querySelectorAll('.scroll-section');
-    const imageSections = imageContainer.querySelectorAll('div');
+    // Update content sections highlighting
+    contentSections.forEach((section, index) => {
+      if (index === newSection) {
+        section.classList.remove('opacity-60');
+        section.classList.add('opacity-100');
+      } else {
+        section.classList.remove('opacity-100');
+        section.classList.add('opacity-60');
+      }
+    });
 
-    // Hide current
-    if (contentSections[activeSection]) {
-      contentSections[activeSection].className = contentSections[activeSection].className.replace('opacity-100 pointer-events-auto', 'opacity-0 pointer-events-none');
-    }
-    if (imageSections[activeSection]) {
-      imageSections[activeSection].className = imageSections[activeSection].className.replace('opacity-100 scale-100', 'opacity-0 scale-95');
-    }
+    // Update image sections visibility
+    imageSections.forEach((section, index) => {
+      if (index === newSection) {
+        section.classList.remove('opacity-0', 'scale-95');
+        section.classList.add('opacity-100', 'scale-100');
+      } else {
+        section.classList.remove('opacity-100', 'scale-100');
+        section.classList.add('opacity-0', 'scale-95');
+      }
+    });
 
-    // Show new
     activeSection = newSection;
-    if (contentSections[activeSection]) {
-      contentSections[activeSection].className = contentSections[activeSection].className.replace('opacity-0 pointer-events-none', 'opacity-100 pointer-events-auto');
-    }
-    if (imageSections[activeSection]) {
-      imageSections[activeSection].className = imageSections[activeSection].className.replace('opacity-0 scale-95', 'opacity-100 scale-100');
-    }
   }
 
   function checkMobile() {
@@ -255,7 +260,6 @@
   }
 
   // Initialize
-  createContent();
   checkMobile();
 
   window.addEventListener('resize', () => {
