@@ -8,7 +8,7 @@ use App\Fields\Partials\SectionOptions;
 use App\Fields\Partials\CTALink;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
-use Log1x\AcfComposer\Partial; 
+use Log1x\AcfComposer\Partial;
 
 class ContentMediaRepeater extends Block
 {
@@ -143,7 +143,7 @@ class ContentMediaRepeater extends Block
             'section_description' => $this->getSectionDescription(),
 
             // Content Fields (repeater)
-            'items' => $this->getContentItems(), 
+            'items' => $this->getContentItems(),
 
             // Section Options
             'section_size' => $this->getSectionSize(),
@@ -160,7 +160,7 @@ class ContentMediaRepeater extends Block
 
         $contentMediaRepeater
             ->addMessage('Content Media Repeater', 'Flexible content & media block with repeater support.')
-            
+
             ->addTab('Section Heading', [
                 'placement' => 'top',
             ])

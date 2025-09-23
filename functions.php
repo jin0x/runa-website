@@ -78,19 +78,25 @@ collect(['setup', 'filters', 'helpers'])
  * @since Rocketdocs 1.0
  */
 add_action('wp_head', function () {
+    // Helper to handle Vite::asset() returning array in beta versions
+    $get_asset_url = function ($path) {
+        $asset = Vite::asset($path);
+        return is_array($asset) ? $asset['url'] : $asset;
+    };
+
     echo "<style>
         @font-face {
             font-family: 'Lineca';
-            src: url('" . Vite::asset('resources/fonts/Lineca-Regular.woff2') . "') format('woff2'),
-                 url('" . Vite::asset('resources/fonts/Lineca-Regular.woff') . "') format('woff');
+            src: url('" . $get_asset_url('resources/fonts/Lineca-Regular.woff2') . "') format('woff2'),
+                url('" . $get_asset_url('resources/fonts/Lineca-Regular.woff') . "') format('woff');
             font-weight: 400;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'Lineca';
-            src: url('" . Vite::asset('resources/fonts/Lineca-Bold.woff2') . "') format('woff2'),
-                 url('" . Vite::asset('resources/fonts/Lineca-Bold.woff') . "') format('woff');
+            src: url('" . $get_asset_url('resources/fonts/Lineca-Bold.woff2') . "') format('woff2'),
+                url('" . $get_asset_url('resources/fonts/Lineca-Bold.woff') . "') format('woff');
             font-weight: 700;
             font-style: normal;
         }
