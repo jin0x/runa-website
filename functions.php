@@ -75,7 +75,7 @@ collect(['setup', 'filters', 'helpers'])
  * and sets it as the default font for the body element. The font files are located in
  * the theme's assets/fonts directory.
  *
- * @since Rocketdocs 1.0
+ * @since Runa 1.0
  */
 add_action('wp_head', function () {
     // Helper to handle Vite::asset() returning array in beta versions
