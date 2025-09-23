@@ -55,14 +55,14 @@
             @foreach($steps as $step)
                 <div class="flex flex-col overflow-hidden gap-y-6">
                     @if ( $step['image'] )
-                        <div class="w-full overflow-hidden rounded-xl font-">
+                        <div class="w-full overflow-hidden rounded-3xl font-">
                             @php
                                 $step_image_alt= !empty($step['image']['alt']) ? $step['image']['alt'] : $step['title'];
                             @endphp
                             <img
                                 src="{{ $step['image']['url'] }}"
                                 alt="{{ $step_image_alt }}"
-                                class="h-[300px] w-full"
+                                class="object-cover h-[300px] 2xl:h-full w-full"
                             >
                         </div>
                     @endif
