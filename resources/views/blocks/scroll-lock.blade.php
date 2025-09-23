@@ -85,7 +85,7 @@
                   <div class="scroll-section mb-8 transition-all duration-700 ease-in-out {{ $index === 0 ? 'opacity-100' : 'opacity-60' }}" data-section-index="{{ $index }}">
                     <x-heading
                       :as="HeadingTag::H3"
-                      :size="HeadingSize::H4"
+                      :size="HeadingSize::H5"
                       class="mb-6 {{ $headingClasses }}"
                     >
                       {{ $section['title'] }}
@@ -103,15 +103,13 @@
               </div>
 
               <!-- Right Image -->
-              <div class="relative">
-                <div class="sticky top-1/2 transform -translate-y-1/2">
-                  <div class="scroll-image-container relative w-full h-96 lg:h-[600px] overflow-hidden rounded-lg shadow-lg">
+              <div class="flex items-center justify-center">
+                <div class="scroll-image-container relative w-full h-96 lg:h-[600px] overflow-hidden rounded-lg shadow-lg">
                     @foreach($sections as $index => $section)
                       <div class="absolute inset-0 transition-all duration-700 ease-in-out {{ $index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95' }}" data-image-index="{{ $index }}">
                         <img src="{{ $section['image']['url'] }}" alt="{{ $section['image']['alt'] ?? $section['title'] }}" class="w-full h-full object-cover">
                       </div>
                     @endforeach
-                  </div>
                 </div>
               </div>
             </div>
