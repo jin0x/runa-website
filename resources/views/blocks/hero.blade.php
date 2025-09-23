@@ -56,7 +56,7 @@
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::SMALL"
-              class="inline-block px-4 py-2 rounded-full border border-primary-green-neon text-white mb-3"
+              class="inline-block text-gradient-primary uppercase mb-3"
             >
               {{ $eyebrow }}
             </x-text>
@@ -83,7 +83,7 @@
           @endif
 
           @if (!empty($ctas))
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-3">
               @foreach ($ctas as $index => $button)
                 @php
                   $button_label = $button['cta']['title'] ?? null;
