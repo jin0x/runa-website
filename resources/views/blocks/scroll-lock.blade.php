@@ -34,8 +34,6 @@
   $eyebrowClasses = $theme === 'dark' ? 'text-primary-lime border-primary-lime' : 'text-primary-purple border-primary-purple';
   $headingClasses = $theme === 'dark' ? 'text-white' : 'text-primary-navy';
   $textClasses = $theme === 'dark' ? 'text-primary-light' : 'text-neutral-700';
-  $progressBarClasses = $theme === 'dark' ? 'bg-primary-lime' : 'bg-primary-purple';
-  $progressTrackClasses = $theme === 'dark' ? 'bg-primary-dark/20' : 'bg-neutral-200';
 
   // Unique ID for this block instance
   $blockId = 'scroll-lock-' . uniqid();
@@ -68,16 +66,8 @@
       <!-- Desktop Layout -->
       <div class="hidden lg:block">
         <div class="relative">
-          <!-- Progress Bar -->
-          <div class="absolute left-0 top-0 w-1 h-full {{ $progressTrackClasses }} z-20 rounded-full">
-            <div
-              class="scroll-progress-bar w-full {{ $progressBarClasses }} transition-all duration-300 ease-out rounded-full"
-              style="height: 0%; transform-origin: top"
-            ></div>
-          </div>
-
           <!-- Content Container -->
-          <div class="scroll-lock-content pl-8">
+          <div class="scroll-lock-content">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen max-w-7xl mx-auto px-4">
               <!-- Left Content -->
               <div class="scroll-content-container relative min-h-[400px]">
@@ -184,7 +174,6 @@
   // DOM elements
   const contentSections = container.querySelectorAll('.scroll-section[data-section-index]');
   const imageSections = container.querySelectorAll('[data-image-index]');
-  const progressBar = container.querySelector('.scroll-progress-bar');
 
   let activeSection = 0;
   let isMobile = window.innerWidth <= mobileBreakpoint;
@@ -248,11 +237,6 @@
         }
 
         updateActiveSection(targetSection);
-
-        // Update progress bar
-        if (progressBar) {
-          progressBar.style.height = `${progress * 100}%`;
-        }
       }
     });
   }
