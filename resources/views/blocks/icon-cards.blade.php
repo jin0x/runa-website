@@ -56,7 +56,7 @@
       classes="mb-12"
     />
   @endif
-  
+
     <x-container classes="!px-0">
         <x-grid :columns="$gridColumns" :rowgapsize="$gapSize" colgapsize="lg" classes="mt-12">
             @foreach($cards as $card)
@@ -66,9 +66,9 @@
                             @php
                                 $card_image_alt= !empty($card['icon']['alt']) ? $card['icon']['alt'] : $card['title'];
                             @endphp
-                            <img 
-                                src="{{ $card['icon']['url'] }}" 
-                                alt="{{ $card_image_alt }}" 
+                            <img
+                                src="{{ $card['icon']['url'] }}"
+                                alt="{{ $card_image_alt }}"
                                 class="object-contain h-12 w-12"
                             >
                         </div>
@@ -77,10 +77,10 @@
                         <x-heading
                             id="main-title"
                             :as="HeadingTag::H4"
-                            :size="HeadingSize::H4"
-                            class="text-primary-dark text-left font-extrabold 
-                            relative after:content-[''] 
-                            after:absolute after:bottom-[-12px] after:left-0 after:w-full after:h-[1px] 
+                            :size="HeadingSize::H5"
+                            class="text-primary-dark text-left font-extrabold
+                            relative after:content-['']
+                            after:absolute after:bottom-[-12px] after:left-0 after:w-full after:h-[1px]
                             after:bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.10)_100%)]"
                         >
                             {{ $card['title'] }}
@@ -97,5 +97,5 @@
             @endforeach
         </x-grid>
     </x-container>
-  
+
 </x-section>
