@@ -1291,9 +1291,19 @@
           "color": "#ffffff52"
         },
         {
+          "name": "Neutral (Dark 40)",
+          "slug": "neutral-dark-40",
+          "color": "#6666"
+        },
+        {
           "name": "Background (Secondary)",
           "slug": "background-secondary",
           "color": "#171717"
+        },
+        {
+          "name": "Neutral (Dark 40)0%,var(  Color Primary Dark)100%);  Gradient 4)",
+          "slug": "neutral-dark-40)0%,var(--color-primary-dark)100%);--gradient-4",
+          "color": "linear-gradient(180deg,var(--color-primary-dark-32)57.95%,var(--color-neutral-0-32)178.8%)"
         }
       ]
     },
