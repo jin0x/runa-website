@@ -1,12 +1,12 @@
 @if ($navigation)
-  <nav x-data="navigation" aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-10 pt-2 pb-3 bg-gradient-3 rounded-4xl">
-    <ul class="flex md:space-x-2">
+  <nav x-data="navigation" aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-10 bg-gradient-3 rounded-full">
+    <ul class="flex md:space-x-1">
       @foreach ($navigation as $item)
         <li class="menu-item relative {{ $item->classes ?? '' }} {{ $item->active ? 'active' : '' }}">
-          <div class="flex items-center">
+          <div class="flex items-center h-16">
             <a
               href="{{ $item->url }}"
-              class="block px-4 py-2 text-base font-medium text-white hover:text-primary-green-neon transition-colors duration-200"
+              class="block p-2 text-sm font-medium text-white hover:text-primary-green-neon transition-colors duration-200"
             >
               {{ $item->label }}
             </a>
