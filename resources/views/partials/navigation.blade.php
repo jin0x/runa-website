@@ -1,12 +1,12 @@
 @if ($navigation)
-  <nav x-data="navigation" aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-2 pt-2 pb-3">
-    <ul class="flex md:space-x-4">
+  <nav x-data="navigation" aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-10 bg-gradient-3 rounded-full">
+    <ul class="flex md:space-x-1">
       @foreach ($navigation as $item)
         <li class="menu-item relative {{ $item->classes ?? '' }} {{ $item->active ? 'active' : '' }}">
-          <div class="flex items-center">
+          <div class="flex items-center h-16">
             <a
               href="{{ $item->url }}"
-              class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary-lime "
+              class="block p-2 text-sm font-medium text-white hover:text-primary-green-neon transition-colors duration-200"
             >
               {{ $item->label }}
             </a>
@@ -14,7 +14,7 @@
               <button
                 @click="toggleDropdown($event, '{{ $loop->index }}')"
                 @keydown.escape.window="closeDropdown()"
-                class="ml-1 p-1 rounded-md bg-transparent text-white hover:text-primary-lime focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                class="ml-1 p-1 rounded-md bg-transparent text-white hover:text-primary-green-neon focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green-neon"
                 aria-expanded="false"
               >
                 <span class="sr-only">Toggle dropdown</span>
@@ -45,7 +45,7 @@
               mt-2 bg-primary-dark  p-8 flex flex-col gap-8 mx-auto max-w-fit rounded-bl-xl rounded-br-xl">
                 @foreach ($item->children as $child)
                   <li class="min-w-[200px] {{ $child->classes ?? '' }} {{ $child->active ? 'active' : '' }}">
-                    <a href="{{ $child->url }}" class="block text-base font-medium text-white hover:text-primary-lime mb-2">
+                    <a href="{{ $child->url }}" class="block text-base font-medium text-white hover:text-primary-green-neon mb-2">
                       {{ $child->label }}
                     </a>
 

@@ -42,6 +42,7 @@
   /* Custom Gradient Colors */
   --color-primary-dark-32: rgba(0, 0, 0, 0.32);
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
+  --color-neutral-dark-40: rgba(102, 102, 102, 0.40);
 
   /* Background Colors */
   --color-background-secondary: #171717;
@@ -67,11 +68,19 @@
   --default-transition-duration: 250ms;
 
   /* Gradients */
+  --gradient-3: linear-gradient(
+    143deg,
+    var(--color-neutral-dark-40) 0%,
+    var(--color-primary-dark) 100%
+  );
+
   --gradient-4: linear-gradient(
     180deg,
     var(--color-primary-dark-32) 57.95%,
     var(--color-neutral-0-32) 178.8%
   );
+
+
 }
 
 /* Gradient text utility class */
@@ -217,6 +226,10 @@ strong {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+.bg-gradient-3 {
+  background: var(--gradient-3);
 }
 
 .bg-gradient-4 {
