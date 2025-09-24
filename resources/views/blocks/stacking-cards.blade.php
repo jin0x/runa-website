@@ -70,29 +70,29 @@
           <!-- Cards Container -->
           <div class="stacking-cards-content">
             <div class="relative min-h-screen flex items-center justify-center max-w-7xl mx-auto px-4">
-              <div class="stacking-cards-wrapper relative w-full max-w-md mx-auto" style="height: 600px;">
+              <div class="stacking-cards-wrapper relative w-full" style="height: 800px;">
                 @foreach($cards as $index => $card)
-                  <div class="stacking-card absolute w-full transition-all duration-700 ease-out {{ $index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95' }}"
+                  <div class="stacking-card absolute w-full transition-transform duration-700 ease-out"
                       data-card-index="{{ $index }}"
-                      style="z-index: {{ 10 + $index }}; top: 0; left: 0;">
-                    <div class="flex flex-col rounded-[32px] overflow-hidden relative {{ $cardBgColor }} shadow-xl">
-                      <div>
-                        <img src="{{ $card['image']['url'] }}" alt="{{ $card['image']['alt'] ?? $card['title'] }}" class="w-full h-full object-cover min-h-[250px] max-h-[250px]"/>
+                      style="z-index: {{ 10 + $index }}; top: 0; left: 0; transform: translateY(100vh);">
+                    <div class="flex flex-row rounded-[32px] overflow-hidden relative {{ $cardBgColor }} shadow-2xl">
+                      <div class="w-2/5 flex-shrink-0">
+                        <img src="{{ $card['image']['url'] }}" alt="{{ $card['image']['alt'] ?? $card['title'] }}" class="w-full h-full object-cover min-h-[400px]"/>
                       </div>
-                      <div class="flex flex-col flex-1 p-6 lg:p-8 min-h-[280px] rounded-bl-[32px] rounded-br-[32px] overflow-hidden">
-                        <div class="mb-auto space-y-4">
+                      <div class="flex flex-col flex-1 p-8 lg:p-12 min-h-[400px] justify-center">
+                        <div class="space-y-4">
                           <x-heading
                             :as="HeadingTag::H3"
-                            :size="HeadingSize::H4"
+                            :size="HeadingSize::H3"
                             :font="FontType::SANS"
-                            class="{{ $cardTextColor }}"
+                            class="{{ $cardTextColor }} mb-4"
                           >
                             {{ $card['title'] }}
                           </x-heading>
 
                           <x-text
                             :as="TextTag::P"
-                            :size="TextSize::SMALL"
+                            :size="TextSize::BASE"
                             class="{{ $cardTextColor }} leading-relaxed"
                           >
                             {!! $card['description'] !!}
@@ -100,9 +100,9 @@
                         </div>
 
                         @if(!empty($card['cta']))
-                          <div class="pt-6">
+                          <div class="pt-8">
                             <a href="{{ $card['cta']['url'] }}"
-                              class="{{ $cardTextColor }} hover:text-primary-orange text-sm font-normal underline underline-offset-4"
+                              class="{{ $cardTextColor }} hover:text-primary-orange text-base font-medium underline underline-offset-4"
                               target="{{ $card['cta']['target'] ?? '_self' }}">
                               {{ $card['cta']['title'] ?? 'Learn more' }}
                             </a>
@@ -202,34 +202,32 @@
   let activeCard = 0;
   let isMobile = window.innerWidth <= mobileBreakpoint;
 
-  function updateActiveCard(newCard) {
-    if (newCard === activeCard) return;
-
-    // Calculate offset for stacking effect
-    const offsetIncrement = 20; // 20px offset per card
+  function updateActiveCard(progress) {
+    // Calculate which cards should be visible based on scroll progress
+    const totalCards = cards.length;
+    const cardProgress = progress * totalCards;
 
     cardElements.forEach((card, index) => {
       const cardIndex = parseInt(card.dataset.cardIndex);
+      const cardThreshold = cardIndex / totalCards;
 
-      if (cardIndex <= newCard) {
-        // Show card
-        card.classList.remove('opacity-0', 'scale-95');
-        card.classList.add('opacity-100', 'scale-100');
-
-        // Apply stacking offset
-        const offset = cardIndex * offsetIncrement;
-        card.style.transform = `translateY(${offset}px)`;
-        card.style.opacity = cardIndex === newCard ? '1' : '0.8';
+      if (progress >= cardThreshold) {
+        // Card should be visible and in position
+        const stackOffset = cardIndex * 100; // 100px offset between cards
+        card.style.transform = `translateY(${stackOffset}px)`;
+        card.style.opacity = '1';
+      } else if (progress >= (cardThreshold - 0.1)) {
+        // Card is sliding in
+        const slideProgress = (progress - (cardThreshold - 0.1)) / 0.1;
+        const yPos = (1 - slideProgress) * window.innerHeight + cardIndex * 100;
+        card.style.transform = `translateY(${yPos}px)`;
+        card.style.opacity = '1';
       } else {
-        // Hide card
-        card.classList.remove('opacity-100', 'scale-100');
-        card.classList.add('opacity-0', 'scale-95');
-        card.style.transform = 'translateY(0px)';
-        card.style.opacity = '0';
+        // Card is below viewport
+        card.style.transform = `translateY(${window.innerHeight}px)`;
+        card.style.opacity = '1';
       }
     });
-
-    activeCard = newCard;
   }
 
   function checkMobile() {
@@ -247,24 +245,12 @@
     window.ScrollTrigger.create({
       trigger: scrollContent,
       start: "top top",
-      end: `+=${cards.length * window.innerHeight * 1.2}`,
-      scrub: 1,
+      end: `+=${cards.length * window.innerHeight * 1.5}`,
+      scrub: 1.5,
       pin: true,
       anticipatePin: 1,
       onUpdate: (self) => {
-        const progress = self.progress;
-        const totalCards = cards.length;
-        const currentCardProgress = progress * totalCards;
-
-        // Determine which card should be active
-        let targetCard = Math.floor(currentCardProgress);
-
-        // Add some buffer to prevent rapid switching
-        if (currentCardProgress - targetCard > 0.3) {
-          targetCard = Math.min(targetCard + 1, totalCards - 1);
-        }
-
-        updateActiveCard(targetCard);
+        updateActiveCard(self.progress);
       }
     });
   }
@@ -281,11 +267,12 @@
     container
   });
 
-  // Show second card immediately for testing
+  // Show animation progression for testing
   setTimeout(() => {
     if (!isMobile && cardElements.length > 1) {
-      console.log('Test: Showing second card');
-      updateActiveCard(1);
+      console.log('Test: Showing cards animation');
+      // Animate through 50% progress
+      updateActiveCard(0.5);
     }
   }, 2000);
 
