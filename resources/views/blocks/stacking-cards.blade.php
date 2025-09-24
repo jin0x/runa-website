@@ -70,11 +70,11 @@
           <!-- Cards Container -->
           <div class="stacking-cards-content">
             <div class="relative min-h-screen flex items-center justify-center max-w-7xl mx-auto px-4">
-              <div class="stacking-cards-wrapper relative">
+              <div class="stacking-cards-wrapper relative w-full max-w-md mx-auto" style="height: 600px;">
                 @foreach($cards as $index => $card)
-                  <div class="stacking-card absolute w-full max-w-md transition-all duration-700 ease-out {{ $index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95' }}"
-                       data-card-index="{{ $index }}"
-                       style="z-index: {{ 10 + $index }};">
+                  <div class="stacking-card absolute w-full transition-all duration-700 ease-out {{ $index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95' }}"
+                      data-card-index="{{ $index }}"
+                      style="z-index: {{ 10 + $index }}; top: 0; left: 0;">
                     <div class="flex flex-col rounded-[32px] overflow-hidden relative {{ $cardBgColor }} shadow-xl">
                       <div>
                         <img src="{{ $card['image']['url'] }}" alt="{{ $card['image']['alt'] ?? $card['title'] }}" class="w-full h-full object-cover min-h-[250px] max-h-[250px]"/>
@@ -102,8 +102,8 @@
                         @if(!empty($card['cta']))
                           <div class="pt-6">
                             <a href="{{ $card['cta']['url'] }}"
-                               class="{{ $cardTextColor }} hover:text-primary-orange text-sm font-normal underline underline-offset-4"
-                               target="{{ $card['cta']['target'] ?? '_self' }}">
+                              class="{{ $cardTextColor }} hover:text-primary-orange text-sm font-normal underline underline-offset-4"
+                              target="{{ $card['cta']['target'] ?? '_self' }}">
                               {{ $card['cta']['title'] ?? 'Learn more' }}
                             </a>
                           </div>
@@ -219,15 +219,13 @@
         // Apply stacking offset
         const offset = cardIndex * offsetIncrement;
         card.style.transform = `translateY(${offset}px)`;
-
-        // Adjust opacity for stacked effect
-        const opacity = cardIndex === newCard ? 1 : 0.8 - (newCard - cardIndex) * 0.1;
-        card.style.opacity = Math.max(opacity, 0.3);
+        card.style.opacity = cardIndex === newCard ? '1' : '0.8';
       } else {
         // Hide card
         card.classList.remove('opacity-100', 'scale-100');
         card.classList.add('opacity-0', 'scale-95');
         card.style.transform = 'translateY(0px)';
+        card.style.opacity = '0';
       }
     });
 
@@ -273,6 +271,23 @@
 
   // Initialize
   checkMobile();
+
+  // Debug: Log card elements found
+  console.log('Stacking Cards Debug:', {
+    blockId,
+    cardElements: cardElements.length,
+    cards: cards.length,
+    isMobile,
+    container
+  });
+
+  // Show second card immediately for testing
+  setTimeout(() => {
+    if (!isMobile && cardElements.length > 1) {
+      console.log('Test: Showing second card');
+      updateActiveCard(1);
+    }
+  }, 2000);
 
   window.addEventListener('resize', () => {
     checkMobile();
