@@ -3,7 +3,6 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
-  use App\Enums\ButtonVariant;
 @endphp
 
 @props([
@@ -50,26 +49,26 @@
   };
 @endphp
 
-<div class="{{ $cardBgClasses }} {{ $paddingClasses }} rounded-2xl {{ $class }}">
+<div class="{{ $cardBgClasses }} {{ $paddingClasses }} rounded-2xl {{ $class }} text-left max-w-md flex flex-col h-full">
   {{-- Image --}}
   @if($image_url)
     <div class="mb-10 overflow-hidden rounded-xl">
       <img 
         src="{{ $image_url }}" 
         alt="{{ $image_alt }}"
-        class="w-full"
+        class="w-full {{ $imageHeight }} object-cover"
         loading="lazy"
       />
     </div>
   @endif
 
   {{-- Content --}}
-  <div class="bg-transparent">
+  <div class="bg-transparent flex-grow">
     {{-- Title --}}
     @if($title)
       <x-heading
-        :as="HeadingTag::H1"
-        :size="HeadingSize::H1"
+        :as="HeadingTag::H5"
+        :size="HeadingSize::H5"
         class="{{ $textColor }} mb-3"
       >
         {{ $title }}
@@ -92,7 +91,6 @@
   @if($cta && !empty($cta['url']) && !empty($cta['title']))
     <div class="mt-10">
       <x-button
-        :variant="ButtonVariant::TRANSPARENT"
         :href="$cta['url']"
         target="{{ $cta['target'] ?? '_self' }}"
         class="!text-primary-black hover:!text-primary-black underline !p-0 !bg-transparent hover:!bg-transparent"

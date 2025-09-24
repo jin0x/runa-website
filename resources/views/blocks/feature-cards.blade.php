@@ -11,13 +11,13 @@
       'md' => SectionSize::MEDIUM,
       'lg' => SectionSize::LARGE,
       'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
+      default => SectionSize::LARGE,
   };
 
   // Set background color based on theme
   $bgColor = match ($theme) {
       'dark' => 'bg-primary-black',
-      default => 'bg-primary-green-neon',
+      default => 'bg-primary-white',
   };
 
   // Set text color based on theme
@@ -33,13 +33,13 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
-  <div class="text-center">
+  <x-container classes="flex flex-col items-center">
     {{-- Section Heading --}}
     @if($heading)
       <x-heading
-        :as="HeadingTag::H2"
-        :size="HeadingSize::H2"
-        class="mb-12 {{ $textColor }}"
+        :as="HeadingTag::H4"
+        :size="HeadingSize::H4"
+        class="text-center mb-12 {{ $textColor }} max-w-3xl"
       >
         {{ $heading }}
       </x-heading>
@@ -60,5 +60,5 @@
         @endforeach
       </div>
     @endif
-  </div>
+  </x-container>
 </x-section>

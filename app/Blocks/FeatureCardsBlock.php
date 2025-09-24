@@ -138,43 +138,44 @@ class FeatureCardsBlock extends Block
                 'return_format' => 'array',
                 'required' => 1,
             ])
-            // ->addSelect('columns', [
-            //     'label' => 'Number of Columns',
-            //     'instructions' => 'How many columns to display on desktop',
-            //     'choices' => [
-            //         '1' => '1 Column',
-            //         '2' => '2 Columns', 
-            //         '3' => '3 Columns',
-            //         '4' => '4 Columns',
-            //     ],
-            //     'default_value' => '3',
-            //     'required' => 1,
-            // ])
-            // ->addSelect('card_theme', [
-            //     'label' => 'Card Theme',
-            //     'instructions' => 'Choose the color theme for the cards',
-            //     'choices' => [
-            //         'light' => 'Light (Green)',
-            //         'dark' => 'Dark (Yellow)',
-            //     ],
-            //     'default_value' => 'light',
-            //     'required' => 1,
-            // ])
-            // ->addSelect('card_size', [
-            //     'label' => 'Card Size',
-            //     'instructions' => 'Choose the size for the cards',
-            //     'choices' => [
-            //         'small' => 'Small',
-            //         'default' => 'Default',
-            //         'large' => 'Large',
-            //     ],
-            //     'default_value' => 'default',
-            //     'required' => 1,
-            // ])
+            
             ->endRepeater()
 
             ->addTab('Layout', [
                 'placement' => 'top',
+            ])
+            ->addSelect('columns', [
+                'label' => 'Number of Columns',
+                'instructions' => 'How many columns to display on desktop',
+                'choices' => [
+                    '1' => '1 Column',
+                    '2' => '2 Columns', 
+                    '3' => '3 Columns',
+                    '4' => '4 Columns',
+                ],
+                'default_value' => '3',
+                'required' => 1,
+            ])
+            ->addSelect('card_theme', [
+                'label' => 'Card Theme',
+                'instructions' => 'Choose the color theme for the cards',
+                'choices' => [
+                    'light' => 'Light (Green)',
+                    'dark' => 'Dark (Yellow)',
+                ],
+                'default_value' => 'light',
+                'required' => 1,
+            ])
+            ->addSelect('card_size', [
+                'label' => 'Card Size',
+                'instructions' => 'Choose the size for the cards',
+                'choices' => [
+                    'small' => 'Small',
+                    'default' => 'Default',
+                    'large' => 'Large',
+                ],
+                'default_value' => 'default',
+                'required' => 1,
             ])
             
 
