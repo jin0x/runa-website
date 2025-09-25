@@ -57,10 +57,6 @@ return [
                     'title' => 'Slug',
                     'meta_key' => 'company_slug',
                 ],
-                'country_name' => [
-                    'title' => 'Country',
-                    'meta_key' => 'country_name',
-                ],
                 'company_country' => [
                     'taxonomy' => 'company_country',
                 ],

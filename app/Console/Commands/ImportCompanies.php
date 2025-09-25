@@ -287,9 +287,27 @@ class ImportCompanies
     {
         // Add country taxonomy
         if (!empty($data['taxonomy_company_country'])) {
-            $country_term = wp_insert_term($data['taxonomy_company_country'], 'company_country');
-            if (!is_wp_error($country_term)) {
-                wp_set_post_terms($post_id, [$country_term['term_id']], 'company_country');
+            $country_name = trim($data['taxonomy_company_country']);
+
+            // Check if term already exists
+            $existing_term = get_term_by('name', $country_name, 'company_country');
+
+            if ($existing_term) {
+                // Use existing term
+                $country_term_id = $existing_term->term_id;
+            } else {
+                // Create new term
+                $country_term = wp_insert_term($country_name, 'company_country');
+                if (is_wp_error($country_term)) {
+                    throw new Exception("Failed to create country term '{$country_name}': " . $country_term->get_error_message());
+                }
+                $country_term_id = $country_term['term_id'];
+            }
+
+            // Assign term to post
+            $result = wp_set_post_terms($post_id, [$country_term_id], 'company_country');
+            if (is_wp_error($result)) {
+                throw new Exception("Failed to assign country taxonomy: " . $result->get_error_message());
             }
         }
 
@@ -302,14 +320,27 @@ class ImportCompanies
                 $category = trim($category);
                 if (empty($category)) continue;
 
-                $cat_term = wp_insert_term($category, 'company_category');
-                if (!is_wp_error($cat_term)) {
+                // Check if term already exists
+                $existing_term = get_term_by('name', $category, 'company_category');
+
+                if ($existing_term) {
+                    // Use existing term
+                    $category_ids[] = $existing_term->term_id;
+                } else {
+                    // Create new term
+                    $cat_term = wp_insert_term($category, 'company_category');
+                    if (is_wp_error($cat_term)) {
+                        throw new Exception("Failed to create category term '{$category}': " . $cat_term->get_error_message());
+                    }
                     $category_ids[] = $cat_term['term_id'];
                 }
             }
 
             if (!empty($category_ids)) {
-                wp_set_post_terms($post_id, $category_ids, 'company_category');
+                $result = wp_set_post_terms($post_id, $category_ids, 'company_category');
+                if (is_wp_error($result)) {
+                    throw new Exception("Failed to assign category taxonomies: " . $result->get_error_message());
+                }
             }
         }
     }
