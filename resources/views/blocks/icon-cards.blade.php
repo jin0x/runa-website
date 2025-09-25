@@ -22,6 +22,8 @@
 
   // Convert theme string to ThemeVariant enum
   $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  
+  $textClasses = $theme === 'dark' ? 'text-primary-light' : 'text-primary-dark';
 
   // Set background color based on theme
   $bgColor = match ($theme) {
@@ -78,7 +80,7 @@
                             id="main-title"
                             :as="HeadingTag::H4"
                             :size="HeadingSize::H5"
-                            class="text-primary-dark text-left font-extrabold
+                            class="{{ $textClasses }} text-left font-extrabold
                             relative after:content-['']
                             after:absolute after:bottom-[-12px] after:left-0 after:w-full after:h-[1px]
                             after:bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.10)_100%)]"
@@ -88,7 +90,7 @@
                         <x-text
                             :as="TextTag::P"
                             :size="TextSize::SMALL"
-                            class="text-primary-dark text-left font-normal text-default"
+                            class="{{ $textClasses }} text-left font-normal text-default"
                         >
                             {{ $card['text'] }}
                         </x-text>

@@ -62,7 +62,7 @@
                             <img
                                 src="{{ $step['image']['url'] }}"
                                 alt="{{ $step_image_alt }}"
-                                class="object-cover h-[300px] 2xl:h-full w-full"
+                                class="object-cover h-full lg:h-[210px] xl:h-[300px] 2xl:h-full w-full"
                             >
                         </div>
                     @endif

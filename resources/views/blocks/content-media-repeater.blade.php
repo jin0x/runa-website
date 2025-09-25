@@ -89,7 +89,7 @@
             $media_order   = 'order-2 ' . ($is_even ? 'md:order-1' : 'md:order-2');
 
             // si es par a la derecha
-            $grid_layout = $is_even ? 'md:grid-cols-[6.7fr_3.3fr]' : 'md:grid-cols-[3.3fr_6.7fr]';
+            $grid_layout = $is_even ? 'xl:grid-cols-[6.7fr_3.3fr]' : 'xl:grid-cols-[3.3fr_6.7fr]';
         }
       @endphp
       <div class="grid grid-cols-1 md:grid-cols-2 {{ $grid_layout }} gap-12 lg:gap-18 items-center {{ !$loop->last ? 'mb-12' : '' }}">
@@ -140,7 +140,7 @@
           :mediaType="$item['media_type']"
           :mediaUrl="$media_url"
           :classes="$mediaClasses"
-          :containerClasses="$media_order . ' overflow-hidden'"
+          :containerClasses="$media_order . ' overflow-hidden rounded-[48px]'"
         />      
       </div>
     @endforeach
