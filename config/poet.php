@@ -40,6 +40,39 @@ return [
                 ],
             ],
         ],
+        'company' => [
+            'enter_title_here' => 'Enter company name',
+            'menu_icon' => 'dashicons-building',
+            'supports' => ['title', 'revisions', 'thumbnail'],
+            'show_in_rest' => true,
+            'has_archive' => true,
+            'publicly_queryable' => true,
+            'exclude_from_search' => false,
+            'labels' => [
+                'singular' => 'Company',
+                'plural' => 'Companies',
+            ],
+            'admin_cols' => [
+                'company_slug' => [
+                    'title' => 'Slug',
+                    'meta_key' => 'company_slug',
+                ],
+                'country_name' => [
+                    'title' => 'Country',
+                    'meta_key' => 'country_name',
+                ],
+                'company_country' => [
+                    'taxonomy' => 'company_country',
+                ],
+                'company_category' => [
+                    'taxonomy' => 'company_category',
+                ],
+                'date' => [
+                    'title' => 'Date',
+                    'default' => 'ASC',
+                ],
+            ],
+        ],
     ],
 
     /*
@@ -53,7 +86,30 @@ return [
     */
 
     'taxonomy' => [
-        //
+        'company_country' => [
+            'post_type' => ['company'],
+            'labels' => [
+                'singular' => 'Country',
+                'plural' => 'Countries',
+            ],
+            'hierarchical' => false,
+            'show_in_rest' => true,
+            'show_admin_column' => true,
+            'show_in_quick_edit' => true,
+            'show_tagcloud' => false,
+        ],
+        'company_category' => [
+            'post_type' => ['company'],
+            'labels' => [
+                'singular' => 'Category',
+                'plural' => 'Categories',
+            ],
+            'hierarchical' => true,
+            'show_in_rest' => true,
+            'show_admin_column' => true,
+            'show_in_quick_edit' => true,
+            'show_tagcloud' => true,
+        ],
     ],
 
     /*
