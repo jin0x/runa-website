@@ -80,6 +80,12 @@
     var(--color-neutral-0-32) 178.8%
   );
 
+  --gradient-5: linear-gradient(
+    180deg,
+    var(--color-primary-dark) 0%,
+    var(--color-neutral-dark-40) 299.21%
+  );
+
 
 }
 
@@ -234,6 +240,10 @@ strong {
 
 .bg-gradient-4 {
   background: var(--gradient-4);
+}
+
+.bg-gradient-5 {
+  background: var(--gradient-5);
 }
 
 .bg-gradient-primary {
