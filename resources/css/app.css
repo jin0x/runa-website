@@ -80,6 +80,12 @@
     var(--color-neutral-0-32) 178.8%
   );
 
+  --gradient-5: linear-gradient(
+    180deg,
+    var(--color-primary-dark) 0%,
+    var(--color-neutral-dark-40) 299.21%
+  );
+
 
 }
 
@@ -236,6 +242,10 @@ strong {
   background: var(--gradient-4);
 }
 
+.bg-gradient-5 {
+  background: var(--gradient-5);
+}
+
 .bg-gradient-primary {
   background: linear-gradient(
     135deg,
@@ -384,6 +394,10 @@ strong {
   flex-shrink: 0;
 }
 
+.marquee__lane {
+  white-space: nowrap;
+}
+
 /* Marquee fade masks */
 .marquee-fade-left {
   background: linear-gradient(
@@ -401,6 +415,15 @@ strong {
     var(--color-primary-yellow) 20%,
     transparent 100%
   );
+}
+
+.marquee-part > div + div {
+  margin-left: 28px;
+}
+
+/* Vertical spacing between lanes - 14px */
+.marquee-lane + .marquee-lane {
+  margin-top: 14px;
 }
 
 /* Split Content Block Styles */
