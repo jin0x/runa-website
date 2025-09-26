@@ -175,7 +175,13 @@
                       @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
-                      {{ $country_name ?: 'N/A' }}
+                      @if($country_terms && !is_wp_error($country_terms))
+                        {!! $country_terms[0]->name !!}
+                      @elseif($country_name)
+                        {{ $country_name }}
+                      @else
+                        N/A
+                      @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
                       @if(!empty($country_code))
@@ -191,7 +197,7 @@
                         <div class="flex flex-wrap gap-1">
                           @foreach($category_terms as $category)
                             <span class="inline-flex items-center px-2 py-1 rounded text-xs bg-gray-200 text-gray-800">
-                              {{ $category->name }}
+                              {!! $category->name !!}
                             </span>
                           @endforeach
                         </div>
