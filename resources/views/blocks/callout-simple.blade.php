@@ -35,7 +35,7 @@
   };
   
   // Always use centered layout as per Figma design
-  $contentClasses = 'flex flex-col gap-6 p-16 content-end';
+  $contentClasses = 'flex flex-col gap-6 p-8 lg:p-16 content-end';
   $textContainerClasses = 'lg:max-w-[469px]';
   $buttonsContainerClasses = 'flex flex-wrap gap-4';
 
