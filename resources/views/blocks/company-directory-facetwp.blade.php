@@ -184,9 +184,19 @@
                       @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
-                      @if(!empty($country_code))
+                      @php
+                        // Get country code - try ACF field first, then derive from country name
+                        $display_country_code = $country_code;
+
+                        if (empty($display_country_code) && $country_terms && !is_wp_error($country_terms)) {
+                          // Call static method - no need to instantiate class
+                          $display_country_code = \App\Blocks\CompanyDirectoryBlock::getCountryCode($country_terms[0]->name);
+                        }
+                      @endphp
+
+                      @if(!empty($display_country_code))
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-green-neon text-black">
-                          {{ strtoupper($country_code) }}
+                          {{ strtoupper($display_country_code) }}
                         </span>
                       @else
                         <span class="text-gray-500">N/A</span>

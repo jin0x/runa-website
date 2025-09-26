@@ -4,6 +4,7 @@ namespace App\Blocks;
 
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
+use League\ISO3166\ISO3166;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 
@@ -294,5 +295,70 @@ class CompanyDirectoryBlock extends Block
         // Default to true if FacetWP is available, false otherwise
         $default = function_exists('FWP') ? true : false;
         return get_field('use_facetwp') !== null ? get_field('use_facetwp') : $default;
+    }
+
+    /**
+     * Get ISO 2-letter country code from country name
+     *
+     * @param string $countryName
+     * @return string|null
+     */
+    public static function getCountryCode($countryName)
+    {
+        if (empty($countryName)) {
+            return null;
+        }
+
+        try {
+            $iso3166 = new ISO3166;
+
+            // Common country name variations mapping
+            $nameMapping = [
+                'United States' => 'United States of America',
+                'USA' => 'United States of America',
+                'UK' => 'United Kingdom of Great Britain and Northern Ireland',
+                'Britain' => 'United Kingdom of Great Britain and Northern Ireland',
+                'Russia' => 'Russian Federation',
+                'South Korea' => 'Korea, Republic of',
+                'North Korea' => 'Korea, Democratic People\'s Republic of',
+                'Iran' => 'Iran, Islamic Republic of',
+                'Syria' => 'Syrian Arab Republic',
+                'Venezuela' => 'Venezuela, Bolivarian Republic of',
+                'Bolivia' => 'Bolivia, Plurinational State of',
+                'Tanzania' => 'Tanzania, United Republic of',
+                'Vietnam' => 'Viet Nam',
+                'Moldova' => 'Moldova, Republic of',
+                'Macedonia' => 'North Macedonia',
+            ];
+
+            // Try mapped name first
+            $searchName = $nameMapping[$countryName] ?? $countryName;
+
+            // Attempt to find country by name
+            $country = $iso3166->name($searchName);
+            return $country['alpha2'];
+
+        } catch (\Exception $e) {
+            // If lookup fails, try a few common variations
+            $commonVariations = [
+                trim($countryName),
+                ucwords(strtolower($countryName)),
+                $countryName . ' Republic',
+                'Republic of ' . $countryName,
+            ];
+
+            foreach ($commonVariations as $variation) {
+                try {
+                    $country = $iso3166->name($variation);
+                    return $country['alpha2'];
+                } catch (\Exception $inner) {
+                    continue;
+                }
+            }
+
+            // Log the failed lookup for debugging
+            error_log("Country code lookup failed for: " . $countryName);
+            return null;
+        }
     }
 }
