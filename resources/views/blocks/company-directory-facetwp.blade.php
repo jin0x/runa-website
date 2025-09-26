@@ -109,16 +109,108 @@
 
       {{-- Companies Table --}}
       <div class="overflow-x-auto">
-        <div class="facetwp-template" data-name="company_directory">
-          {{-- Companies will be loaded here via FacetWP --}}
-          @if(function_exists('facetwp_display'))
-            {!! facetwp_display('template', 'company_directory') !!}
-          @else
-            <div class="text-center py-8">
-              <p class="text-lg {{ $textColor }} mb-2">FacetWP is not active.</p>
-              <p class="text-sm text-gray-500">Please activate FacetWP plugin to use the filtering functionality.</p>
-            </div>
-          @endif
+        <div class="facetwp-template">
+          @php
+            // Custom WP_Query for company directory with FacetWP integration
+            $query_args = [
+              'post_status'    => 'publish',
+              'post_type'      => 'company',
+              'posts_per_page' => 50,
+              'orderby'        => 'title',
+              'order'          => 'ASC',
+              'facetwp'        => true, // Let FacetWP handle the filtering
+              'meta_query'     => [
+                [
+                  'key' => 'company_slug',
+                  'compare' => 'EXISTS',
+                ],
+              ],
+            ];
+
+            $companies_query = new WP_Query($query_args);
+          @endphp
+
+          <table class="w-full {{ $theme === 'dark' ? 'bg-gray-900' : 'bg-white' }} shadow-lg rounded-lg overflow-hidden">
+            <thead class="{{ $theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50' }}">
+              <tr>
+                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                  Company Name
+                </th>
+                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                  Country
+                </th>
+                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                  Country Code
+                </th>
+                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                  Categories
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y {{ $borderColor }}">
+              @if($companies_query->have_posts())
+                @while($companies_query->have_posts())
+                  @php
+                    $companies_query->the_post();
+
+                    // Get ACF fields
+                    $company_slug = get_field('company_slug');
+                    $country_code = get_field('country_code');
+                    $country_name = get_field('country_name');
+
+                    // Get taxonomies
+                    $country_terms = get_the_terms(get_the_ID(), 'company_country');
+                    $category_terms = get_the_terms(get_the_ID(), 'company_category');
+                  @endphp
+
+                  <tr class="company-row hover:{{ $theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-medium {{ $textColor }}">
+                        {{ get_the_title() }}
+                      </div>
+                      @if(!empty($company_slug))
+                        <div class="text-xs text-gray-500">
+                          {{ $company_slug }}
+                        </div>
+                      @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
+                      {{ $country_name ?: 'N/A' }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
+                      @if(!empty($country_code))
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-green-neon text-black">
+                          {{ strtoupper($country_code) }}
+                        </span>
+                      @else
+                        <span class="text-gray-500">N/A</span>
+                      @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
+                      @if($category_terms && !is_wp_error($category_terms))
+                        <div class="flex flex-wrap gap-1">
+                          @foreach($category_terms as $category)
+                            <span class="inline-flex items-center px-2 py-1 rounded text-xs bg-gray-200 text-gray-800">
+                              {{ $category->name }}
+                            </span>
+                          @endforeach
+                        </div>
+                      @else
+                        <span class="text-gray-500">N/A</span>
+                      @endif
+                    </td>
+                  </tr>
+                @endwhile
+                @php(wp_reset_postdata())
+              @else
+                <tr>
+                  <td colspan="4" class="px-6 py-8 text-center text-sm text-gray-500">
+                    No companies found matching your filters.
+                  </td>
+                </tr>
+              @endif
+            </tbody>
+          </table>
         </div>
       </div>
 

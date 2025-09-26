@@ -223,113 +223,34 @@ add_action('init', function () {
         return;
     }
 
-    // Create Company Directory Facets programmatically
-    add_action('wp_loaded', function () {
-        // Check if facets already exist to avoid duplicates
-        $existing_facets = FWP()->helper->get_facets();
-        $facet_names = array_column($existing_facets, 'name');
+    // Note: FacetWP facets and templates need to be created manually in the admin
+    // This is because the FacetWP API doesn't expose public methods for programmatic creation
+    // Visit WP Admin > Settings > FacetWP to create the following:
 
-        // Company Country Facet
-        if (!in_array('company_country', $facet_names)) {
-            FWP()->helper->save_facet([
-                'name' => 'company_country',
-                'label' => 'Country',
-                'type' => 'dropdown',
-                'source' => 'tax/company_country',
-                'source_other' => '',
-                'parent_term' => '',
-                'modifier_type' => '',
-                'modifier_values' => '',
-                'ghost' => 'no',
-                'auto_refresh' => 'yes',
-                'search_engine' => 'no',
-                'preserve_ghosts' => 'no',
-                'operator' => 'or',
-                'orderby' => 'display_value',
-                'count' => '5',
-                'soft_limit' => '0',
-                'hierarchical' => 'no',
-                'show_expanded' => 'no',
-                'prefix' => '',
-                'suffix' => '',
-                'sort' => 'default'
-            ]);
-        }
-
-        // Company Category Facet
-        if (!in_array('company_category', $facet_names)) {
-            FWP()->helper->save_facet([
-                'name' => 'company_category',
-                'label' => 'Category',
-                'type' => 'dropdown',
-                'source' => 'tax/company_category',
-                'source_other' => '',
-                'parent_term' => '',
-                'modifier_type' => '',
-                'modifier_values' => '',
-                'ghost' => 'no',
-                'auto_refresh' => 'yes',
-                'search_engine' => 'no',
-                'preserve_ghosts' => 'no',
-                'operator' => 'or',
-                'orderby' => 'display_value',
-                'count' => '5',
-                'soft_limit' => '0',
-                'hierarchical' => 'yes',
-                'show_expanded' => 'no',
-                'prefix' => '',
-                'suffix' => '',
-                'sort' => 'default'
-            ]);
-        }
-
-        // Company Search Facet
-        if (!in_array('company_search', $facet_names)) {
-            FWP()->helper->save_facet([
-                'name' => 'company_search',
-                'label' => 'Search',
-                'type' => 'search',
-                'source' => 'post_title',
-                'source_other' => '',
-                'parent_term' => '',
-                'modifier_type' => '',
-                'modifier_values' => '',
-                'ghost' => 'no',
-                'auto_refresh' => 'yes',
-                'search_engine' => 'no',
-                'preserve_ghosts' => 'no',
-                'operator' => 'or',
-                'orderby' => 'display_value',
-                'count' => '5',
-                'soft_limit' => '0',
-                'hierarchical' => 'no',
-                'show_expanded' => 'no',
-                'prefix' => '',
-                'suffix' => '',
-                'sort' => 'default',
-                'placeholder' => 'Search by company name...'
-            ]);
-        }
-
-        // Create template if it doesn't exist
-        $existing_templates = FWP()->helper->get_templates();
-        $template_names = array_column($existing_templates, 'name');
-
-        if (!in_array('company_directory', $template_names)) {
-            FWP()->helper->save_template([
-                'name' => 'company_directory',
-                'label' => 'Company Directory',
-                'query' => [
-                    'post_type' => ['company'],
-                    'post_status' => 'publish',
-                    'orderby' => 'title',
-                    'order' => 'ASC',
-                    'posts_per_page' => 50, // Pagination for better performance
-                ],
-                'layout' => 'custom'
-            ]);
-        }
-    }, 99);
+    /* Required Facets to Create Manually:
+     *
+     * 1. Country Facet:
+     *    - Name: company_country
+     *    - Label: Country
+     *    - Type: Dropdown
+     *    - Data Source: Taxonomy > company_country
+     *
+     * 2. Category Facet:
+     *    - Name: company_category
+     *    - Label: Category
+     *    - Type: Dropdown
+     *    - Data Source: Taxonomy > company_category
+     *    - Enable Hierarchical: Yes
+     *
+     * 3. Search Facet:
+     *    - Name: company_search
+     *    - Label: Search
+     *    - Type: Search
+     *    - Data Source: Post Title
+     *    - Placeholder: Search by company name...
+     *
+     * Note: No template needed - using custom WP_Query with 'facetwp' => true
+     */
 });
 
 /**
@@ -339,7 +260,7 @@ add_action('init', function () {
  * @param $class
  * @return mixed
  */
-add_filter('facetwp_query_args', function ($query_args, $class) {
+add_filter('facetwp_query_args', function ($query_args) {
     // Only apply to company directory pages
     if (isset($query_args['post_type']) && in_array('company', (array) $query_args['post_type'])) {
         // Remove the limit from the original block query
@@ -353,7 +274,7 @@ add_filter('facetwp_query_args', function ($query_args, $class) {
     }
 
     return $query_args;
-}, 10, 2);
+});
 
 /**
  * Customize FacetWP settings for better performance
@@ -371,59 +292,9 @@ add_filter('facetwp_settings', function ($settings) {
     return $settings;
 });
 
-/**
- * Register custom FacetWP template for company directory
- *
- * @param $output
- * @param $params
- * @return string
- */
-add_filter('facetwp_template_html', function ($output, $params) {
-    if ('company_directory' === $params['template_name']) {
-        // Start output buffering
-        ob_start();
+// Template-related code removed - now using custom WP_Query approach
 
-        // Set theme context for the template
-        $theme = get_query_var('company_directory_theme', 'light');
-        set_query_var('company_directory_theme', $theme);
-
-        // Include the custom template
-        $template_path = get_template_directory() . '/resources/views/facetwp/company-directory-template.php';
-        if (file_exists($template_path)) {
-            include $template_path;
-        } else {
-            echo '<p>Company directory template not found.</p>';
-        }
-
-        $output = ob_get_clean();
-    }
-
-    return $output;
-}, 10, 2);
-
-/**
- * Set theme context for FacetWP company directory
- * This allows the template to access the theme setting
- */
-add_action('wp_head', function () {
-    if (is_admin()) {
-        return;
-    }
-
-    // Check if we're on a page with the company directory block
-    global $post;
-    if ($post && has_blocks($post->post_content)) {
-        $blocks = parse_blocks($post->post_content);
-        foreach ($blocks as $block) {
-            if (isset($block['blockName']) && $block['blockName'] === 'acf/company-directory') {
-                // Extract theme from block attributes if available
-                $theme = $block['attrs']['data']['theme'] ?? 'light';
-                set_query_var('company_directory_theme', $theme);
-                break;
-            }
-        }
-    }
-});
+// Theme context code removed - handled directly in Blade template now
 
 /**
  * Ensure FacetWP loads only company posts for company directory
@@ -431,9 +302,10 @@ add_action('wp_head', function () {
  * @param $wp_query
  * @param $facet
  */
-add_action('facetwp_pre_load', function ($params, $facet) {
+add_filter('facetwp_pre_load', function ($params, $facet) {
     // Only modify query for company-related facets
-    if (in_array($facet['name'], ['company_country', 'company_category', 'company_search'])) {
+    if (isset($facet['name']) && in_array($facet['name'], ['company_country', 'company_category', 'company_search'])) {
         $params['query_args']['post_type'] = 'company';
     }
+    return $params;
 }, 10, 2);
