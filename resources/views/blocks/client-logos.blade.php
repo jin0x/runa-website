@@ -113,34 +113,66 @@
       </div>
     </div>
 
-  {{-- GSAP Animation Script --}}
+  {{-- Modern GSAP Animation Script --}}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Wait for GSAP to be available on window object
-      function initMarquee() {
-        const marqueeInner = document.getElementById('{{ $marqueeId }}');
+      const marqueeId = '{{ $marqueeId }}';
 
-        if (marqueeInner && window.gsap) {
-          // Create the infinite animation
-          let tween = window.gsap.to("#{{ $marqueeId }} .marquee__part", {
-            xPercent: -100,
-            repeat: -1,
-            duration: 20,
-            ease: "linear"
-          }).totalProgress(0.5);
+      // Modern GSAP initialization
+      const initMarquee = () => {
+        const marqueeInner = document.getElementById(marqueeId);
+        if (!marqueeInner) return;
 
-          // Center the marquee
-          window.gsap.set("#{{ $marqueeId }}", {xPercent: -50});
+        const parts = marqueeInner.querySelectorAll('.marquee__part');
+        if (parts.length === 0) return;
 
-          console.log('CodePen-style marquee animation started');
-        } else if (marqueeInner && !window.gsap) {
-          // If GSAP isn't loaded yet, try again in a moment
-          setTimeout(initMarquee, 100);
+        // Add CSS optimization
+        marqueeInner.style.willChange = 'transform';
+        parts.forEach(part => {
+          part.style.willChange = 'transform';
+        });
+
+        // Modern GSAP animation with better performance
+        const animation = window.gsap.to(parts, {
+          xPercent: -100,
+          duration: 20,
+          ease: "none",
+          repeat: -1,
+          force3D: true
+        });
+
+        // Set initial position for smooth infinite scroll
+        window.gsap.set(marqueeInner, { xPercent: -50 });
+
+        console.log('✅ Client logos marquee animation started');
+
+        // Return cleanup function
+        return () => {
+          animation?.kill();
+          marqueeInner.style.willChange = 'auto';
+          parts.forEach(part => {
+            part.style.willChange = 'auto';
+          });
+        };
+      };
+
+      // Register with GSAPManager
+      if (window.GSAPManager) {
+        window.GSAPManager.register(
+          `client-logos-marquee-${marqueeId}`,
+          initMarquee
+        );
+      } else {
+        // Fallback for legacy initialization
+        console.warn('GSAPManager not available, using legacy initialization');
+        if (window.gsap) {
+          initMarquee();
+        } else {
+          setTimeout(() => {
+            if (window.gsap) initMarquee();
+          }, 100);
         }
       }
-
-      // Give app.js time to set window.gsap
-      setTimeout(initMarquee, 100);
     });
   </script>
 

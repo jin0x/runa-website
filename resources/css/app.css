@@ -5,6 +5,70 @@
 @source "../views/**/*.blade.php";
 @source "../../app/**/*.php";
 
+/* GSAP Animation Optimizations */
+.marquee__inner,
+.marquee__part,
+.stacking-card,
+.scroll-section,
+.scroll-image-container > div {
+  /* GPU acceleration for transform animations */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Marquee optimizations */
+.marquee__inner {
+  display: flex;
+  width: fit-content;
+}
+
+.marquee__part {
+  display: flex;
+  flex-shrink: 0;
+}
+
+/* Smooth animations */
+.marquee__lane {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Fade gradients for marquees */
+.marquee-fade-left {
+  background: linear-gradient(to right, currentColor, transparent);
+}
+
+.marquee-fade-right {
+  background: linear-gradient(to left, currentColor, transparent);
+}
+
+/* Stacking cards optimizations */
+.stacking-cards-wrapper {
+  contain: layout style paint;
+}
+
+.stacking-card {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Scroll lock optimizations */
+.scroll-lock-content {
+  contain: layout style paint;
+}
+
+.scroll-section {
+  will-change: opacity;
+  transition: opacity 0.7s ease-in-out;
+}
+
+.scroll-image-container > div {
+  will-change: opacity, transform;
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+}
+
 /* Theme configuration */
 @theme {
   /* Shadow */

@@ -252,16 +252,36 @@
     }
   });
 
-  // Wait for GSAP to be ready
-  if (window.gsap && window.ScrollTrigger) {
-    initScrollTrigger();
-  } else {
-    // Wait for app.js to load GSAP
-    setTimeout(() => {
-      if (window.gsap && window.ScrollTrigger) {
+  // Register with GSAPManager for proper initialization
+  if (window.GSAPManager) {
+    window.GSAPManager.register(
+      `scroll-lock-${blockId}`,
+      () => {
         initScrollTrigger();
+        // Return cleanup function
+        return () => {
+          if (window.ScrollTrigger) {
+            window.ScrollTrigger.getAll().forEach(trigger => {
+              if (trigger.trigger && trigger.trigger.closest(`#${blockId}`)) {
+                trigger.kill();
+              }
+            });
+          }
+        };
       }
-    }, 1000);
+    );
+  } else {
+    // Fallback for legacy initialization
+    console.warn('GSAPManager not available for scroll lock, using legacy initialization');
+    if (window.gsap && window.ScrollTrigger) {
+      initScrollTrigger();
+    } else {
+      setTimeout(() => {
+        if (window.gsap && window.ScrollTrigger) {
+          initScrollTrigger();
+        }
+      }, 1000);
+    }
   }
 })();
 </script>

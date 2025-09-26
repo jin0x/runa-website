@@ -145,12 +145,12 @@
                     $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
                     $logo_url = $logo_image['url'] ?? '';
                   @endphp
-                  
+
                   @if(!empty($logo_url))
                     <div class="flex items-center justify-center">
-                      <img 
-                        src="{{ $logo_url }}" 
-                        alt="{{ $alt_text }}" 
+                      <img
+                        src="{{ $logo_url }}"
+                        alt="{{ $alt_text }}"
                         class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
                       >
                     </div>
@@ -172,12 +172,12 @@
                     $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
                     $logo_url = $logo_image['url'] ?? '';
                   @endphp
-                  
+
                   @if(!empty($logo_url))
                     <div class="flex items-center justify-center">
-                      <img 
-                        src="{{ $logo_url }}" 
-                        alt="{{ $alt_text }}" 
+                      <img
+                        src="{{ $logo_url }}"
+                        alt="{{ $alt_text }}"
                         class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
                       >
                     </div>
@@ -199,12 +199,12 @@
                     $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
                     $logo_url = $logo_image['url'] ?? '';
                   @endphp
-                  
+
                   @if(!empty($logo_url))
                     <div class="flex items-center justify-center">
-                      <img 
-                        src="{{ $logo_url }}" 
-                        alt="{{ $alt_text }}" 
+                      <img
+                        src="{{ $logo_url }}"
+                        alt="{{ $alt_text }}"
                         class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
                       >
                     </div>
@@ -216,61 +216,74 @@
         </div>
       </div>
 
-      {{-- GSAP Animation Script --}}
+      {{-- Modern GSAP Animation Script --}}
       <script>
         document.addEventListener('DOMContentLoaded', function() {
-          function initShowcaseMarquee() {
+          const marqueeId = '{{ $marqueeId }}';
+
+          // Modern GSAP initialization using centralized manager
+          const initShowcaseMarquee = () => {
+            const lanes = [
+              { selector: `#${marqueeId}-lane1`, direction: 1, duration: 20 },
+              { selector: `#${marqueeId}-lane2`, direction: -1, duration: 22 },
+              { selector: `#${marqueeId}-lane3`, direction: 1, duration: 20 }
+            ];
+
+            const animations = [];
+
+            lanes.forEach(({ selector, direction, duration }) => {
+              const element = document.querySelector(selector);
+              if (!element) return;
+
+              // Add CSS optimization
+              element.style.willChange = 'transform';
+
+              // Modern GSAP animation - no timeline needed for simple infinite loops
+              const animation = window.gsap.to(selector, {
+                xPercent: direction === 1 ? -50 : 0,
+                duration: duration,
+                ease: "none",
+                repeat: -1,
+                force3D: true, // GPU acceleration
+                // Set initial position based on direction
+                ...(direction === -1 && {
+                  immediateRender: true,
+                  startAt: { xPercent: -50 }
+                })
+              });
+
+              animations.push(animation);
+            });
+
+            // Return cleanup function for memory management
+            return () => {
+              animations.forEach(animation => animation?.kill());
+              lanes.forEach(({ selector }) => {
+                const element = document.querySelector(selector);
+                if (element) {
+                  element.style.willChange = 'auto';
+                }
+              });
+            };
+          };
+
+          // Register with GSAPManager for proper lifecycle management
+          if (window.GSAPManager) {
+            window.GSAPManager.register(
+              `showcase-marquee-${marqueeId}`,
+              initShowcaseMarquee
+            );
+          } else {
+            // Fallback for legacy initialization
+            console.warn('GSAPManager not available, using legacy initialization');
             if (window.gsap) {
-              // Lane 1: Left to Right
-              const setupLane1 = () => {
-                window.gsap.set("#{{ $marqueeId }}-lane1", { xPercent: 0 });
-                window.gsap.timeline({
-                  defaults: { ease: 'none', repeat: -1 }
-                })
-                .to("#{{ $marqueeId }}-lane1", {
-                  xPercent: -50,
-                  duration: 20,
-                })
-                .set("#{{ $marqueeId }}-lane1", { x: 0 });
-              };
-            
-              // Lane 2: Right to Left (reversed)
-              const setupLane2 = () => {
-                window.gsap.set("#{{ $marqueeId }}-lane2", { xPercent: -50 });
-                window.gsap.timeline({
-                  defaults: { ease: 'none', repeat: -1 }
-                })
-                .to("#{{ $marqueeId }}-lane2", {
-                  xPercent: 0,
-                  duration: 22,
-                })
-                .set("#{{ $marqueeId }}-lane2", { x: 0 });
-              };
-            
-              // Lane 3: Left to Right
-              const setupLane3 = () => {
-                window.gsap.set("#{{ $marqueeId }}-lane3", { xPercent: 0 });
-                window.gsap.timeline({
-                  defaults: { ease: 'none', repeat: -1 }
-                })
-                .to("#{{ $marqueeId }}-lane3", {
-                  xPercent: -50,
-                  duration: 20,
-                })
-                .set("#{{ $marqueeId }}-lane3", { x: 0 });
-              };
-            
-              // Initialize all lanes
-              setupLane1();
-              setupLane2();
-              setupLane3();
-            
+              initShowcaseMarquee();
             } else {
-              setTimeout(initShowcaseMarquee, 100);
+              setTimeout(() => {
+                if (window.gsap) initShowcaseMarquee();
+              }, 100);
             }
           }
-
-          setTimeout(initShowcaseMarquee, 100);
         });
       </script>
     @endif
