@@ -56,6 +56,9 @@
   } elseif ($media_type === 'lottie' && !empty($lottie) && is_array($lottie)) {
       $media_url = $lottie['url'] ?? '';
   }
+
+  // Generate unique ID for marquee
+  $marqueeId = 'showcase-marquee-' . uniqid();
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
@@ -125,6 +128,151 @@
           </div>
         @endforeach
       </div>
+    @endif
+
+        {{-- Media Section --}}
+    @if($media_type === 'logo-marquee' && !empty($marquee_logos))
+      {{-- 3-Lane Logo Marquee --}}
+      <div class="mb-12 py-8 overflow-hidden">
+        {{-- Lane 1: Left to Right --}}
+        <div class="marquee__lane mb-3.5 overflow-hidden">
+          <div class="marquee__inner" id="{{ $marqueeId }}-lane1">
+            @for ($i = 0; $i < 2; $i++)
+              <div class="marquee__part flex items-center gap-7">
+                @foreach($marquee_logos as $logo)
+                  @php
+                    $logo_image = $logo['logo'] ?? null;
+                    $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
+                    $logo_url = $logo_image['url'] ?? '';
+                  @endphp
+                  
+                  @if(!empty($logo_url))
+                    <div class="flex items-center justify-center">
+                      <img 
+                        src="{{ $logo_url }}" 
+                        alt="{{ $alt_text }}" 
+                        class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
+                      >
+                    </div>
+                  @endif
+                @endforeach
+              </div>
+            @endfor
+          </div>
+        </div>
+
+        {{-- Lane 2: Right to Left --}}
+        <div class="marquee__lane mb-3.5 overflow-hidden">
+          <div class="marquee__inner" id="{{ $marqueeId }}-lane2">
+            @for ($i = 0; $i < 2; $i++)
+              <div class="marquee__part flex items-center gap-7 mr-3.5">
+                @foreach($marquee_logos as $logo)
+                  @php
+                    $logo_image = $logo['logo'] ?? null;
+                    $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
+                    $logo_url = $logo_image['url'] ?? '';
+                  @endphp
+                  
+                  @if(!empty($logo_url))
+                    <div class="flex items-center justify-center">
+                      <img 
+                        src="{{ $logo_url }}" 
+                        alt="{{ $alt_text }}" 
+                        class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
+                      >
+                    </div>
+                  @endif
+                @endforeach
+              </div>
+            @endfor
+          </div>
+        </div>
+
+        {{-- Lane 3: Left to Right --}}
+        <div class="marquee__lane overflow-hidden">
+          <div class="marquee__inner" id="{{ $marqueeId }}-lane3">
+            @for ($i = 0; $i < 2; $i++)
+              <div class="marquee__part flex items-center gap-7">
+                @foreach($marquee_logos as $logo)
+                  @php
+                    $logo_image = $logo['logo'] ?? null;
+                    $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
+                    $logo_url = $logo_image['url'] ?? '';
+                  @endphp
+                  
+                  @if(!empty($logo_url))
+                    <div class="flex items-center justify-center">
+                      <img 
+                        src="{{ $logo_url }}" 
+                        alt="{{ $alt_text }}" 
+                        class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
+                      >
+                    </div>
+                  @endif
+                @endforeach
+              </div>
+            @endfor
+          </div>
+        </div>
+      </div>
+
+      {{-- GSAP Animation Script --}}
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          function initShowcaseMarquee() {
+            if (window.gsap) {
+              // Lane 1: Left to Right
+              const setupLane1 = () => {
+                window.gsap.set("#{{ $marqueeId }}-lane1", { xPercent: 0 });
+                window.gsap.timeline({
+                  defaults: { ease: 'none', repeat: -1 }
+                })
+                .to("#{{ $marqueeId }}-lane1", {
+                  xPercent: -50,
+                  duration: 20,
+                })
+                .set("#{{ $marqueeId }}-lane1", { x: 0 });
+              };
+            
+              // Lane 2: Right to Left (reversed)
+              const setupLane2 = () => {
+                window.gsap.set("#{{ $marqueeId }}-lane2", { xPercent: -50 });
+                window.gsap.timeline({
+                  defaults: { ease: 'none', repeat: -1 }
+                })
+                .to("#{{ $marqueeId }}-lane2", {
+                  xPercent: 0,
+                  duration: 22,
+                })
+                .set("#{{ $marqueeId }}-lane2", { x: 0 });
+              };
+            
+              // Lane 3: Left to Right
+              const setupLane3 = () => {
+                window.gsap.set("#{{ $marqueeId }}-lane3", { xPercent: 0 });
+                window.gsap.timeline({
+                  defaults: { ease: 'none', repeat: -1 }
+                })
+                .to("#{{ $marqueeId }}-lane3", {
+                  xPercent: -50,
+                  duration: 20,
+                })
+                .set("#{{ $marqueeId }}-lane3", { x: 0 });
+              };
+            
+              // Initialize all lanes
+              setupLane1();
+              setupLane2();
+              setupLane3();
+            
+            } else {
+              setTimeout(initShowcaseMarquee, 100);
+            }
+          }
+
+          setTimeout(initShowcaseMarquee, 100);
+        });
+      </script>
     @endif
 
     {{-- Media Section --}}

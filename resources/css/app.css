@@ -394,6 +394,10 @@ strong {
   flex-shrink: 0;
 }
 
+.marquee__lane {
+  white-space: nowrap;
+}
+
 /* Marquee fade masks */
 .marquee-fade-left {
   background: linear-gradient(
@@ -411,6 +415,15 @@ strong {
     var(--color-primary-yellow) 20%,
     transparent 100%
   );
+}
+
+.marquee-part > div + div {
+  margin-left: 28px;
+}
+
+/* Vertical spacing between lanes - 14px */
+.marquee-lane + .marquee-lane {
+  margin-top: 14px;
 }
 
 /* Split Content Block Styles */

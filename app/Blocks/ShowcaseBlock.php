@@ -91,6 +91,7 @@ class ShowcaseBlock extends Block
             'image' => $this->getImage(),
             'video' => $this->getVideo(),
             'lottie' => $this->getLottie(),
+            'marquee_logos' => $this->getMarqueeLogos(),
             'cta' => $this->getCta(),
             'accent_color' => $this->getAccentColor(),
 
@@ -148,7 +149,95 @@ class ShowcaseBlock extends Block
             ->addTab('Media', [
                 'placement' => 'top',
             ])
-            ->addPartial(MediaComponent::class)
+            ->addSelect('media_type', [
+                'label' => 'Media Type',
+                'instructions' => 'Select the type of media to display',
+                'choices' => [
+                    'image' => 'Image',
+                    'video' => 'Video',
+                    'lottie' => 'Lottie Animation',
+                    'logo-marquee' => 'Logo Marquee (3 Lanes)'
+                ],
+                'default_value' => 'image',
+                'required' => 1,
+            ])
+            ->addImage('image', [
+                'label' => 'Image',
+                'instructions' => 'Select an image',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'media_type',
+                            'operator' => '==',
+                            'value' => 'image',
+                        ],
+                    ],
+                ],
+            ])
+            ->addFile('video', [
+                'label' => 'Video',
+                'instructions' => 'Upload or select a video file (MP4)',
+                'return_format' => 'array',
+                'library' => 'all',
+                'mime_types' => 'mp4',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'media_type',
+                            'operator' => '==',
+                            'value' => 'video',
+                        ],
+                    ],
+                ],
+            ])
+            ->addFile('lottie', [
+                'label' => 'Lottie Animation',
+                'instructions' => 'Upload or select a Lottie JSON file',
+                'return_format' => 'array',
+                'library' => 'all',
+                'mime_types' => 'json',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'media_type',
+                            'operator' => '==',
+                            'value' => 'lottie',
+                        ],
+                    ],
+                ],
+            ])
+            ->addRepeater('marquee_logos', [
+                'label' => 'Marquee Logos',
+                'instructions' => 'Add logos for the 3-lane marquee (minimum 10 recommended)',
+                'min' => 10,
+                'max' => 25,
+                'layout' => 'block',
+                'button_label' => 'Add Logo',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'media_type',
+                            'operator' => '==',
+                            'value' => 'logo-marquee',
+                        ],
+                    ],
+                ],
+            ])
+            ->addImage('logo', [
+                'label' => 'Logo',
+                'instructions' => 'Upload or select a logo image',
+                'return_format' => 'array',
+                'preview_size' => 'thumbnail',
+                'required' => 1,
+            ])
+            ->addText('alt_text', [
+                'label' => 'Alt Text',
+                'instructions' => 'Alternative text for the logo (for accessibility)',
+                'required' => 0,
+            ])
+            ->endRepeater()
 
             ->addTab('Call to Action', [
                 'placement' => 'top',
@@ -227,6 +316,11 @@ class ShowcaseBlock extends Block
     public function getLottie()
     {
         return get_field('lottie');
+    }
+
+    public function getMarqueeLogos()
+    {
+        return get_field('marquee_logos') ?: [];
     }
 
     public function getCta()
