@@ -6,6 +6,16 @@
   use App\Enums\TextSize;
   use App\Enums\ThemeVariant;
 
+  // Set theme context for FacetWP
+  set_query_var('company_directory_theme', $theme);
+@endphp
+
+{{-- Choose between FacetWP and legacy implementation --}}
+@if($use_facetwp && function_exists('FWP'))
+  @include('blocks.company-directory-facetwp')
+@else
+  {{-- Legacy implementation below --}}
+@php
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
       'none' => SectionSize::NONE,
@@ -404,3 +414,5 @@ CompanyDirectoryFilter.prototype.announceFilterResults = function(count) {
     liveRegion.textContent = message;
 };
 </script>
+
+@endif

@@ -78,7 +78,10 @@ class CompanyDirectoryBlock extends Block
      */
     public function with()
     {
-        return [
+        // Check if FacetWP is enabled for this block
+        $use_facetwp = $this->getUseFacetWP();
+
+        $data = [
             // Block Instance Data
             'block_id' => $this->getBlockId(),
 
@@ -87,15 +90,20 @@ class CompanyDirectoryBlock extends Block
             'section_title' => $this->getSectionTitle(),
             'section_description' => $this->getSectionDescription(),
 
-            // Company Data
-            'companies' => $this->getCompanies(),
-            'countries' => $this->getCountries(),
-            'categories' => $this->getCategories(),
-
             // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
+            'use_facetwp' => $use_facetwp,
         ];
+
+        // Only load company data if not using FacetWP
+        if (!$use_facetwp) {
+            $data['companies'] = $this->getCompanies();
+            $data['countries'] = $this->getCountries();
+            $data['categories'] = $this->getCategories();
+        }
+
+        return $data;
     }
 
     /**
@@ -115,6 +123,13 @@ class CompanyDirectoryBlock extends Block
 
             ->addTab('Settings', [
                 'placement' => 'top',
+            ])
+            ->addTrueFalse('use_facetwp', [
+                'label' => 'Use FacetWP for Filtering',
+                'message' => 'Enable FacetWP for better performance with large datasets',
+                'default_value' => 1,
+                'ui' => 1,
+                'instructions' => 'FacetWP provides server-side filtering for better performance with 4K+ records. Disable to use legacy client-side filtering (limited to 500 records).',
             ])
             ->addPartial(SectionOptions::class);
 
@@ -149,10 +164,11 @@ class CompanyDirectoryBlock extends Block
         $companies_data = get_transient($cache_key);
 
         if (false === $companies_data) {
-            // Optimized query with meta query for better performance
+            // Note: This is only used for legacy mode when FacetWP is disabled
+            // FacetWP handles all querying when enabled
             $companies = get_posts([
                 'post_type' => 'company',
-                'numberposts' => 500, // Limit initial load for performance
+                'numberposts' => 500, // Limit for legacy mode performance
                 'post_status' => 'publish',
                 'orderby' => 'title',
                 'order' => 'ASC',
@@ -271,5 +287,12 @@ class CompanyDirectoryBlock extends Block
     public function getTheme()
     {
         return get_field('theme') ?: 'light';
+    }
+
+    public function getUseFacetWP()
+    {
+        // Default to true if FacetWP is available, false otherwise
+        $default = function_exists('FWP') ? true : false;
+        return get_field('use_facetwp') !== null ? get_field('use_facetwp') : $default;
     }
 }
