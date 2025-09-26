@@ -123,6 +123,7 @@ class ImportCompanies
                     WP_CLI::log("Name: " . $company_data['post_title']);
                     WP_CLI::log("Slug: " . $company_data['company_slug']);
                     WP_CLI::log("Country: " . $company_data['country_name']);
+                    WP_CLI::log("Currency: " . $company_data['currency']);
                 }
 
                 if ($dry_run) {
@@ -188,6 +189,7 @@ class ImportCompanies
             'company_slug',
             'country_code',
             'country_name',
+            'currency',
             'categories',
             'taxonomy_company_country',
             'taxonomy_company_category'
@@ -207,6 +209,7 @@ class ImportCompanies
         WP_CLI::log("  📋 Would create post: " . $data['post_title']);
         WP_CLI::log("    - Slug: " . $data['company_slug']);
         WP_CLI::log("    - Country: " . $data['country_name'] . " ({$data['country_code']})");
+        WP_CLI::log("    - Currency: " . $data['currency']);
 
         if (!empty($data['categories'])) {
             WP_CLI::log("    - Categories: " . $data['categories']);
@@ -274,6 +277,7 @@ class ImportCompanies
         update_post_meta($post_id, 'company_slug', $data['company_slug']);
         update_post_meta($post_id, 'country_code', $data['country_code']);
         update_post_meta($post_id, 'country_name', $data['country_name']);
+        update_post_meta($post_id, 'company_currency', $data['currency']);
 
         if (!empty($data['image_url'])) {
             update_post_meta($post_id, 'image_url', $data['image_url']);
