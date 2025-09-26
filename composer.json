@@ -40,6 +40,7 @@
   },
   "require": {
     "php": ">=8.2",
+    "league/iso3166": "^4.3",
     "log1x/acf-composer": "^3.3",
     "log1x/navi": "^3.1",
     "log1x/poet": "^2.1",

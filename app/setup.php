@@ -212,3 +212,100 @@ add_action('widgets_init', function () {
                           'description' => __('Fourth footer widget area', TEXT_DOMAIN),
                       ] + $footer_widget_config);
 });
+
+/**
+ * FacetWP Configuration for Company Directory
+ *
+ * @return void
+ */
+add_action('init', function () {
+    if (!function_exists('FWP')) {
+        return;
+    }
+
+    // Note: FacetWP facets and templates need to be created manually in the admin
+    // This is because the FacetWP API doesn't expose public methods for programmatic creation
+    // Visit WP Admin > Settings > FacetWP to create the following:
+
+    /* Required Facets to Create Manually:
+     *
+     * 1. Country Facet:
+     *    - Name: company_country
+     *    - Label: Country
+     *    - Type: Dropdown
+     *    - Data Source: Taxonomy > company_country
+     *
+     * 2. Category Facet:
+     *    - Name: company_category
+     *    - Label: Category
+     *    - Type: Dropdown
+     *    - Data Source: Taxonomy > company_category
+     *    - Enable Hierarchical: Yes
+     *
+     * 3. Search Facet:
+     *    - Name: company_search
+     *    - Label: Search
+     *    - Type: Search
+     *    - Data Source: Post Title
+     *    - Placeholder: Search by company name...
+     *
+     * Note: No template needed - using custom WP_Query with 'facetwp' => true
+     */
+});
+
+/**
+ * Modify FacetWP query for company directory
+ *
+ * @param $query_args
+ * @param $class
+ * @return mixed
+ */
+add_filter('facetwp_query_args', function ($query_args) {
+    // Only apply to company directory pages
+    if (isset($query_args['post_type']) && in_array('company', (array) $query_args['post_type'])) {
+        // Remove the limit from the original block query
+        $query_args['posts_per_page'] = 50; // Start with reasonable pagination
+        $query_args['meta_query'] = [
+            [
+                'key' => 'company_slug',
+                'compare' => 'EXISTS',
+            ],
+        ];
+    }
+
+    return $query_args;
+});
+
+/**
+ * Customize FacetWP settings for better performance
+ *
+ * @param $settings
+ * @return mixed
+ */
+add_filter('facetwp_settings', function ($settings) {
+    // Enable query caching for better performance
+    $settings['cache'] = 'on';
+
+    // Set reasonable pagination
+    $settings['pager_default_per_page'] = 50;
+
+    return $settings;
+});
+
+// Template-related code removed - now using custom WP_Query approach
+
+// Theme context code removed - handled directly in Blade template now
+
+/**
+ * Ensure FacetWP loads only company posts for company directory
+ *
+ * @param $wp_query
+ * @param $facet
+ */
+add_filter('facetwp_pre_load', function ($params, $facet) {
+    // Only modify query for company-related facets
+    if (isset($facet['name']) && in_array($facet['name'], ['company_country', 'company_category', 'company_search'])) {
+        $params['query_args']['post_type'] = 'company';
+    }
+    return $params;
+}, 10, 2);

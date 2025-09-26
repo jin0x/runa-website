@@ -40,6 +40,35 @@ return [
                 ],
             ],
         ],
+        'company' => [
+            'enter_title_here' => 'Enter company name',
+            'menu_icon' => 'dashicons-building',
+            'supports' => ['title', 'revisions', 'thumbnail'],
+            'show_in_rest' => true,
+            'has_archive' => true,
+            'publicly_queryable' => true,
+            'exclude_from_search' => false,
+            'labels' => [
+                'singular' => 'Company',
+                'plural' => 'Companies',
+            ],
+            'admin_cols' => [
+                'company_slug' => [
+                    'title' => 'Slug',
+                    'meta_key' => 'company_slug',
+                ],
+                'company_country' => [
+                    'taxonomy' => 'company_country',
+                ],
+                'company_category' => [
+                    'taxonomy' => 'company_category',
+                ],
+                'date' => [
+                    'title' => 'Date',
+                    'default' => 'ASC',
+                ],
+            ],
+        ],
     ],
 
     /*
@@ -53,7 +82,48 @@ return [
     */
 
     'taxonomy' => [
-        //
+        'company_country' => [
+            'links' => ['company'],
+            'labels' => [
+                'singular' => 'Country',
+                'plural' => 'Countries',
+                'menu_name' => 'Countries',
+                'all_items' => 'All Countries',
+                'add_new_item' => 'Add New Country',
+                'edit_item' => 'Edit Country',
+            ],
+            'hierarchical' => false,
+            'public' => true,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'show_in_menu' => true,
+            'show_in_nav_menus' => true,
+            'show_in_rest' => true,
+            'show_in_quick_edit' => true,
+            'show_tagcloud' => false,
+            'meta_box_cb' => false,
+        ],
+        'company_category' => [
+            'links' => ['company'],
+            'labels' => [
+                'singular' => 'Category',
+                'plural' => 'Categories',
+                'menu_name' => 'Categories',
+                'all_items' => 'All Categories',
+                'add_new_item' => 'Add New Category',
+                'edit_item' => 'Edit Category',
+            ],
+            'hierarchical' => true,
+            'public' => true,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'show_in_menu' => true,
+            'show_in_nav_menus' => true,
+            'show_in_rest' => true,
+            'show_in_quick_edit' => true,
+            'show_tagcloud' => true,
+            'meta_box_cb' => false,
+        ],
     ],
 
     /*
