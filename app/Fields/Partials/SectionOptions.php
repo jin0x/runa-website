@@ -40,6 +40,7 @@ class SectionOptions extends Partial
                     'light' => 'Light',
                     'dark' => 'Dark',
                     'green' => 'Gradient Green',
+                    'purple' => 'Purple',
                 ],
                 'default_value' => 'light',
                 'wrapper' => [
