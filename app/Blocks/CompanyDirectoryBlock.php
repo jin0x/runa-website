@@ -161,7 +161,7 @@ class CompanyDirectoryBlock extends Block
     public function getCompanies()
     {
         // Use transient caching for companies data
-        $cache_key = 'company_directory_data_v1';
+        $cache_key = 'company_directory_data_v2';
         $companies_data = get_transient($cache_key);
 
         if (false === $companies_data) {
@@ -189,6 +189,7 @@ class CompanyDirectoryBlock extends Block
                 $company_slug = get_field('company_slug', $company->ID);
                 $country_code = get_field('country_code', $company->ID);
                 $country_name = get_field('country_name', $company->ID);
+                $company_currency = get_field('company_currency', $company->ID);
 
                 // Get taxonomies
                 $country_terms = get_the_terms($company->ID, 'company_country');
@@ -200,6 +201,7 @@ class CompanyDirectoryBlock extends Block
                     'slug' => $company_slug,
                     'country_code' => $country_code,
                     'country_name' => $country_name,
+                    'company_currency' => $company_currency,
                     'countries' => $country_terms ? array_map(fn($term) => $term->name, $country_terms) : [],
                     'categories' => $category_terms ? array_map(fn($term) => $term->name, $category_terms) : [],
                 ];

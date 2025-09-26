@@ -143,6 +143,9 @@
                   Country Code
                 </th>
                 <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                  Currency
+                </th>
+                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
                   Categories
                 </th>
               </tr>
@@ -157,6 +160,7 @@
                     $company_slug = get_field('company_slug');
                     $country_code = get_field('country_code');
                     $country_name = get_field('country_name');
+                    $company_currency = get_field('company_currency');
 
                     // Get taxonomies
                     $country_terms = get_the_terms(get_the_ID(), 'company_country');
@@ -197,6 +201,15 @@
                       @if(!empty($display_country_code))
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-green-neon text-black">
                           {{ strtoupper($display_country_code) }}
+                        </span>
+                      @else
+                        <span class="text-gray-500">N/A</span>
+                      @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
+                      @if(!empty($company_currency))
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          {{ strtoupper($company_currency) }}
                         </span>
                       @else
                         <span class="text-gray-500">N/A</span>
@@ -289,17 +302,24 @@ CompanyDirectoryFacetWP.prototype.styleFacetWPElements = function() {
 };
 
 CompanyDirectoryFacetWP.prototype.setupFacetWPEvents = function() {
+    // Set default country to US on initial load
+    document.addEventListener('facetwp-loaded', function() {
+        // Check if this is the initial load (no filters set yet)
+        if (typeof FWP.facets.company_country === 'undefined' || FWP.facets.company_country.length === 0) {
+            // Set default country to 'united-states' (FacetWP uses term slug)
+            FWP.facets.company_country = ['united-states'];
+            FWP.refresh();
+        }
+
+        this.removeLoadingState();
+        this.styleFacetWPElements(); // Re-apply styles after AJAX
+    }.bind(this));
+
     // Add loading state when filtering
     document.addEventListener('facetwp-refresh', function() {
         if (FWP.loaded) {
             this.addLoadingState();
         }
-    }.bind(this));
-
-    // Remove loading state when done
-    document.addEventListener('facetwp-loaded', function() {
-        this.removeLoadingState();
-        this.styleFacetWPElements(); // Re-apply styles after AJAX
     }.bind(this));
 };
 

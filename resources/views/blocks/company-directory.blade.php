@@ -170,6 +170,9 @@
                 Country Code
               </th>
               <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                Currency
+              </th>
+              <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
                 Categories
               </th>
             </tr>
@@ -200,6 +203,15 @@
                     @if(!empty($company['country_code']))
                       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-green-neon text-black">
                         {{ strtoupper($company['country_code']) }}
+                      </span>
+                    @else
+                      <span class="text-gray-500">N/A</span>
+                    @endif
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
+                    @if(!empty($company['company_currency']))
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        {{ strtoupper($company['company_currency']) }}
                       </span>
                     @else
                       <span class="text-gray-500">N/A</span>
