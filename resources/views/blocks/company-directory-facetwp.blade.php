@@ -166,7 +166,7 @@
                   <tr class="company-row hover:{{ $theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200">
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm font-medium {{ $textColor }}">
-                        {{ get_the_title() }}
+                        {!! get_the_title() !!}
                       </div>
                       @if(!empty($company_slug))
                         <div class="text-xs text-gray-500">
