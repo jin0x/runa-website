@@ -54,18 +54,11 @@ class Companies extends Field
                 'required' => 1,
                 'placeholder' => 'e.g. 47ST-AR',
             ])
-            ->addText('country_code', [
-                'label' => 'Country Code',
-                'instructions' => 'Enter the 2-letter country code',
-                'required' => 1,
-                'placeholder' => 'e.g. AR, AT, US',
-                'maxlength' => 2,
-            ])
-            ->addText('country_name', [
-                'label' => 'Country Name',
-                'instructions' => 'Enter the full country name',
-                'required' => 1,
-                'placeholder' => 'e.g. Argentina, Austria',
+            ->addText('company_currency', [
+                'label' => 'Company Currency',
+                'instructions' => 'Enter currency',
+                'required' => 0,
+                'placeholder' => 'e.g. EUR',
             ])
             ->addUrl('image_url', [
                 'label' => 'Company Logo URL',
