@@ -8,10 +8,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
-  base: process.env.APP_URL + '/wp-content/themes/runa/public/build/',
-  define: {
-    APP_URL: JSON.stringify(process.env.APP_URL),
-  },
+  base: '/wp-content/themes/runa/public/build/',
+  // base: process.env.APP_URL + '/wp-content/themes/runa/public/build/',
+  // define: {
+  //   APP_URL: JSON.stringify(process.env.APP_URL),
+  // },
   plugins: [
     tailwindcss(),
     laravel({

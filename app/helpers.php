@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme helpers.
  */
@@ -18,7 +19,8 @@ namespace App\Helpers;
  * @return string The formatted HTML content with the applied styles.
  */
 
- function apply_tailwind_classes_to_content(string $content): string {
+function apply_tailwind_classes_to_content(string $content): string
+{
     if (empty($content)) {
         return '';
     }
@@ -39,7 +41,7 @@ namespace App\Helpers;
 
     $content = preg_replace_callback(
         '/<(h[1-6])>(.*?)<\/\1>/i',
-        function ($matches){
+        function ($matches) {
             $tag = $matches[1];
             $content = $matches[2];
 
