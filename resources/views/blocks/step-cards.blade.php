@@ -53,7 +53,7 @@
     <x-container classes="!px-0">
         <x-grid columns="3" classes="mt-12">
             @foreach($steps as $step)
-                <div class="flex flex-col overflow-hidden gap-y-6">
+                <div class="flex flex-col overflow-hidden gap-y-6 p-6">
                     @if ( $step['image'] )
                         <div class="w-full overflow-hidden rounded-3xl font-">
                             @php
@@ -62,32 +62,32 @@
                             <img
                                 src="{{ $step['image']['url'] }}"
                                 alt="{{ $step_image_alt }}"
-                                class="object-cover h-full lg:h-[210px] xl:h-[300px] 2xl:h-full w-full"
+                                class="object-cover h-full w-full aspect-[1/1]"
                             >
                         </div>
                     @endif
                     <div class="flex flex-col flex-1 gap-y-3">
                       @php
                         $headingColors = [
+                          'text-primary-green-soft',
                           'text-secondary-pink',
                           'text-secondary-cyan',
-                          'text-primary-green-neon',
                         ];
 
                         $colorClass = $headingColors[($loop->iteration - 1) % count($headingColors)];
                       @endphp
                         <x-heading
                             id="main-title"
-                            :as="HeadingTag::H3"
-                            :size="HeadingSize::H3"
-                            class="{{ $colorClass }} text-center font-bold"
+                            :as="HeadingTag::H4"
+                            :size="HeadingSize::H4"
+                            class="{{ $colorClass }} text-left font-bold"
                         >
                             {{ $step['title'] }}
                         </x-heading>
                         <x-text
                             :as="TextTag::P"
                             :size="TextSize::SMALL"
-                            class="{{ $textColor }} text-center font-normal text-default"
+                            class="{{ $textColor }} text-left font-normal text-default"
                         >
                             {{ $step['text'] }}
                         </x-text>
