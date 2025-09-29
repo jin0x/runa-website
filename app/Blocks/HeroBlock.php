@@ -119,6 +119,7 @@ class HeroBlock extends Block
             'video' => $this->getVideo(),
             'lottie' => $this->getLottie(),
             'background_image' => $this->getBackgroundImage(),
+            'content_width' => $this->getContentWidth(),
             'compact' => $this->getCompact(),
         ];
     }
@@ -161,6 +162,19 @@ class HeroBlock extends Block
                 'return_format' => 'array',
             ])
             ->endRepeater()
+            ->addSelect('content_width', [
+                'label' => 'Content Width',
+                'instructions' => 'Choose how wide the text content should be',
+                'choices' => [
+                    'contained' => 'Contained (within container)',
+                    'full-width' => 'Full Width',
+                ],
+                'default_value' => 'contained',
+                'ui' => 1,
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ])
             ->addTrueFalse('compact', [
                 'label' => 'Compact Layout',
                 'instructions' => 'Enable for a shorter hero section',
@@ -282,5 +296,15 @@ class HeroBlock extends Block
     public function getCompact()
     {
         return get_field('compact') ?: false;
+    }
+
+    /**
+     * Return the content width field.
+     *
+     * @return string
+     */
+    public function getContentWidth()
+    {
+        return get_field('content_width') ?: 'contained';
     }
 }
