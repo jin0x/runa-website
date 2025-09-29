@@ -14,6 +14,7 @@
     'variant' => ThemeVariant::LIGHT,
     'classes' => '', // Extra classes for container
     'wrapperClasses' => null, // Classes for optional wrapper div
+    'headingClasses' => '', // Extra classes for heading
 ])
 
 @php
@@ -24,8 +25,8 @@
 
   // Define variant classes for light and dark
   $eyebrowClasses = $variant === ThemeVariant::DARK ? 'text-primary-lime border-primary-lime' : 'pill-purple';
-  $titleClasses = $variant === ThemeVariant::DARK ? 'text-white' : 'text-primary-navy';
-  $subtitleClasses = $variant === ThemeVariant::DARK ? 'text-primary-inverse-muted' : 'text-neutral-500';
+  $titleClasses = ($variant === ThemeVariant::DARK ? 'text-primary-light' : 'text-primary-dark') . ' ' . $headingClasses;
+  $subtitleClasses = $variant === ThemeVariant::DARK ? 'text-primary-light' : 'text-primary-dark';
 @endphp
 
 @if ($wrapperClasses)
