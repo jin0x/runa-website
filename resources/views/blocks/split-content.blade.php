@@ -26,6 +26,8 @@
   // Background color classes
   $backgroundClasses = match ($background_color) {
       'green' => 'bg-primary-green-soft',
+      'yellow' => 'bg-primary-yellow',
+      'pink' => 'bg-secondary-pink',
       default => 'bg-secondary-cyan',
   };
 
@@ -94,9 +96,17 @@
             <li class="flex items-center gap-2">
               {{-- Checkmark Icon --}}
               <div class="flex-shrink-0 w-6 h-6 {{ $iconClasses }} flex items-center justify-center">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                </svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="24" height="24" rx="12" fill="url(#paint0_linear_2793_21186)"/>
+                  <path d="M18.002 8.53955L9.34766 17.1938L4.75586 12.6021L5.81641 11.5415L9.34766 15.0728L16.9414                  7.479L18.002 8.53955Z" fill="black"/>
+                  <defs>
+                  <linearGradient id="paint0_linear_2793_21186" x1="0" y1="24" x2="24" y2="0"                   gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#00FFA3"/>
+                  <stop offset="0.48313" stop-color="#93FF82"/>
+                  <stop offset="0.943979" stop-color="#EEFC51"/>
+                  </linearGradient>
+                  </defs>
+                  </svg>
               </div>
               
               {{-- Feature Text --}}

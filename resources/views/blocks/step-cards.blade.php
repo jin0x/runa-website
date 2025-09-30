@@ -49,6 +49,13 @@
       'bg-primary-yellow',
   ];
 
+  $headingColors = [
+      'text-primary-green-soft',
+      'text-secondary-pink',
+      'text-secondary-cyan',
+      'text-primary-yellow',
+  ];
+
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }} overflow-visible">
@@ -88,12 +95,7 @@
                     @endif
                     <div class="flex flex-col flex-1 gap-y-3">
                       @php
-                        $headingColors = [
-                          'text-primary-green-soft',
-                          'text-secondary-pink',
-                          'text-secondary-cyan',
-                        ];
-
+                        
                         $colorClass = $headingColors[($loop->iteration - 1) % count($headingColors)];
                       @endphp
                         <x-heading
