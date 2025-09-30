@@ -1236,6 +1236,16 @@
           "color": "#fff"
         },
         {
+          "name": "Background",
+          "slug": "background",
+          "color": "#fff"
+        },
+        {
+          "name": "Foreground",
+          "slug": "foreground",
+          "color": "#000"
+        },
+        {
           "name": "Primary (Dark)",
           "slug": "primary-dark",
           "color": "#000"
