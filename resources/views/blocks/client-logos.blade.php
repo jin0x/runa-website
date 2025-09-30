@@ -16,13 +16,33 @@
       default => SectionSize::MEDIUM,
   };
 
-  // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+    // Convert theme string to ThemeVariant enum for section heading
+  $themeVariant = match ($theme) {
+      'dark' => ThemeVariant::DARK,
+      default => ThemeVariant::LIGHT,
+  };
 
-  // Set background color based on theme
+    // Set background color based on theme
   $bgColor = match ($theme) {
       'dark' => 'bg-primary-dark',
       default => 'bg-primary-yellow',
+  };
+
+  // Marquee fade gradient classes based on theme
+  $fadeLeftClass = match ($theme) {
+      'dark' => 'marquee-fade-left-dark',
+      default => 'marquee-fade-left',
+  };
+
+  $fadeRightClass = match ($theme) {
+      'dark' => 'marquee-fade-right-dark',
+      default => 'marquee-fade-right',
+  };
+
+  // Section heading based on theme
+  $sectionHeadingColor = match ($theme) {
+      'dark' => 'text-gradient-primary ',
+      default => 'text-primary-dark',
   };
 
   // Configure logo styles - optimized for both square and wide logos
@@ -38,6 +58,18 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+
+   {{-- Section Heading --}}
+  @if($section_eyebrow || $section_title || $section_description)
+    <x-section-heading
+      :eyebrow="$section_eyebrow"
+      :heading="$section_title"
+      :subtitle="$section_description"
+      classes="mb-12 {{ $sectionHeadingColor }}"
+    />
+  @endif
+
+  {{-- Logos Display --}}
   @if(!empty($logos))
   @if($layout_type === 'grid')
     <x-grid
@@ -78,8 +110,8 @@
 
     <div class="py-6 overflow-hidden">
       {{-- Fade gradients --}}
-      <div class="absolute left-0 top-0 bottom-0 w-16 marquee-fade-left z-10    pointer-events-none"></div>
-      <div class="absolute right-0 top-0 bottom-0 w-16 marquee-fade-right z-10    pointer-events-none"></div>
+      <div class="absolute left-0 top-0 bottom-0 w-16 {{ $fadeLeftClass }} z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 {{ $fadeLeftClass }} z-10 pointer-events-none"></div>
 
       <div class="marquee__inner" id="{{ $marqueeId }}" aria-hidden="true">
         {{-- Create multiple parts for smooth scrolling --}}
