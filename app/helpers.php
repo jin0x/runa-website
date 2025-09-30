@@ -19,7 +19,7 @@ namespace App\Helpers;
  * @return string The formatted HTML content with the applied styles.
  */
 
-function apply_tailwind_classes_to_content(string $content): string
+function apply_tailwind_classes_to_content(string $content, array $options = []): string
 {
     if (empty($content)) {
         return '';
@@ -33,15 +33,20 @@ function apply_tailwind_classes_to_content(string $content): string
     $p_count = count($p_matches[0]);
 
     $p_base_class = 'text-xs';
-    $p_class = $p_base_class;
+    $p_extra_class = $options['p'] ?? '';
+    $p_class = $p_base_class . ' ' . $p_extra_class;
+
     if ($p_count > 1) {
         $p_class .= ' mb-4';
     }
-    $content = str_replace('<p>', '<p class="' . $p_class . '">', $content);
+
+    $content = str_replace('<p>', '<p class="' . trim($p_class) . '">', $content);
+
+    $heading_extra_class = $options['heading'] ?? ''; 
 
     $content = preg_replace_callback(
         '/<(h[1-6])>(.*?)<\/\1>/i',
-        function ($matches) {
+        function ($matches) use ($heading_extra_class) {
             $tag = $matches[1];
             $content = $matches[2];
 
@@ -54,14 +59,15 @@ function apply_tailwind_classes_to_content(string $content): string
                 'h6' => 'heading-6 mb-6',
             };
 
-            return "<{$tag} class=\"{$classes}\">{$content}</{$tag}>";
+            return "<{$tag} class=\"{$classes} {$heading_extra_class}\">{$content}</{$tag}>";
         },
         $content
     );
 
     $content = str_replace('<ul>', '<ul class="list-disc pl-6">', $content);
     $content = str_replace('<li>', '<li class="mb-1">', $content);
-    $content = str_replace('<strong>', '<strong class="!font-semibold">', $content);
+    $strong_extra_class = $options['strong'] ?? '';
+    $content = str_replace('<strong>', '<strong class="' . $strong_extra_class . '">', $content);
     $content = preg_replace(
         '/<a(.*?)>/i',
         '<a$1 class="hover:underline underline-offset-4">',
