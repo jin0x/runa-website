@@ -43,6 +43,12 @@
       default => ButtonVariant::PRIMARY,
   };
 
+  // Section heading based on theme
+  $sectionHeadingColor = match ($theme) {
+      'dark' => 'text-gradient-primary ',
+      default => 'text-primary-dark',
+  };
+
   // Handle media URL
   $media_url = '';
   if ($media_type === 'video' && !empty($video) && is_array($video)) {
@@ -64,18 +70,15 @@
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
 
   @if($section_eyebrow || $section_title || $section_description)
-    @php
-      // Process heading with accent highlights if section_title exists
-      $processedHeading = $section_title ? preg_replace('/\b(Fund|Pay|Own)\b/', '<span class="' .  $accentClasses . '">$1</span>', $section_title) : null;
-    @endphp
-
-    <x-section-heading
+    <div class="max-w-4xl justify-self-center mb-12 text-center">
+      <x-section-heading
       :eyebrow="$section_eyebrow"
-      :heading="$processedHeading"
+      :heading="$section_title"
       :subtitle="$section_description"
       :variant="$themeVariant"
-      classes="mb-12"
-    />
+      classes="mb-12 {{ $sectionHeadingColor }}"
+      />
+    </div>
   @endif
 
   <x-container>
@@ -119,7 +122,7 @@
             @if(!empty($card['description']))
               <x-text
                 :as="TextTag::P"
-                :size="TextSize::SMALL"
+                :size="TextSize::LARGE"
                 class="text-white"
               >
                 {{ $card['description'] }}
