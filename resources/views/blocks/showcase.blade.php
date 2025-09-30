@@ -20,7 +20,13 @@
   };
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
+      'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
+      default => ThemeVariant::LIGHT,
+  };
 
   // Button variant based on accent color
   $buttonVariant = match ($accent_color) {
@@ -49,15 +55,13 @@
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
 
   @if($section_eyebrow || $section_title || $section_description)
-    <div class="max-w-4xl justify-self-center mb-12 text-center">
-      <x-section-heading
+    <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
       :variant="$themeVariant"
       classes="mb-12"
-      />
-    </div>
+    />
   @endif
 
   <x-container>

@@ -23,8 +23,10 @@
 
   // Convert theme string to ThemeVariant enum
   $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
       'dark' => ThemeVariant::DARK,
-      'green' => ThemeVariant::GREEN_GRADIENT,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
       default => ThemeVariant::LIGHT,
   };
 

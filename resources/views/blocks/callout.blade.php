@@ -24,7 +24,13 @@
   };
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
+      'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
+      default => ThemeVariant::LIGHT,
+  };
 
   // Set text color based on theme
   $textColor = match ($theme) {

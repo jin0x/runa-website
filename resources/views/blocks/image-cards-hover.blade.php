@@ -20,15 +20,25 @@
       default => SectionSize::MEDIUM,
   };
 
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
+      'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
+      default => ThemeVariant::LIGHT,
+  };
+
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
+      :variant="$themeVariant"
       classes="mb-12"
     />
   @endif

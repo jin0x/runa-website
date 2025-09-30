@@ -23,8 +23,10 @@
 
   // Convert theme string to ThemeVariant enum
   $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
       'dark' => ThemeVariant::DARK,
-      'green' => ThemeVariant::GREEN_GRADIENT,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
       default => ThemeVariant::LIGHT,
   };
 
@@ -59,16 +61,13 @@
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
 
   @if($section_eyebrow || $section_title || $section_description)
-    <div class="max-w-4xl justify-self-center mb-12 text-center">
-        <x-section-heading
-        :eyebrow="$section_eyebrow"
-        :heading="$section_title"
-        :subtitle="$section_description"
-        :variant="$themeVariant"
-        :color="$sectionHeadingColor"
-        classes="mb-12"
-        />
-    </div>
+    <x-section-heading
+      :eyebrow="$section_eyebrow"
+      :heading="$section_title"
+      :subtitle="$section_description"
+      :variant="$themeVariant"
+      classes="mb-12"
+    />
   @endif
 
     <x-container classes="!px-0">

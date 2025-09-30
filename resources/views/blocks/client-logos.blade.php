@@ -16,17 +16,16 @@
       default => SectionSize::MEDIUM,
   };
 
-    // Convert theme string to ThemeVariant enum for section heading
+  // Convert theme string to ThemeVariant enum
   $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
       'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
       default => ThemeVariant::LIGHT,
   };
 
-    // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      default => 'bg-primary-yellow',
-  };
+  // Background color handled by section component via $themeVariant
 
   // Marquee fade gradient classes based on theme
   $fadeLeftClass = match ($theme) {
@@ -53,7 +52,7 @@
   $gridGap = !empty($grid_gap) ? $grid_gap : 'lg';
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
 
    {{-- Section Heading --}}
   @if($section_eyebrow || $section_title || $section_description)

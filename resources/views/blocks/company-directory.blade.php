@@ -28,20 +28,22 @@
   };
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
-
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'light' => 'bg-white',
-      default => 'bg-black',
+  $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
+      'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
+      default => ThemeVariant::LIGHT,
   };
+
+  // Background color handled by section component via $themeVariant
 
   // Text colors based on theme
   $textColor = $theme === 'dark' ? 'text-white' : 'text-black';
   $borderColor = $theme === 'dark' ? 'border-gray-700' : 'border-gray-200';
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
 
   {{-- Section Heading --}}
   @if($section_eyebrow || $section_title || $section_description)

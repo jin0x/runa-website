@@ -24,8 +24,9 @@
   $variantClasses = match ($variant) {
       ThemeVariant::LIGHT => 'bg-white text-primary-dark',
       ThemeVariant::DARK => 'bg-primary-dark text-white',
-      ThemeVariant::GREEN => 'bg-primary-green-neon text-primary-dark',
+      ThemeVariant::GREEN => 'bg-gradient-to-b from-primary-yellow to-primary-green-soft text-primary-dark',
       ThemeVariant::PURPLE => 'bg-secondary-purple text-primary-dark',
+      ThemeVariant::GREEN_GRADIENT => 'bg-gradient-to-b from-primary-yellow to-primary-green-soft text-primary-dark',
       default => '',
   };
 

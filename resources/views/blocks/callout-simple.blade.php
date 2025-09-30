@@ -23,9 +23,12 @@
       default => SectionSize::MEDIUM,
   };
 
-  // Set ThemeVariant for section background
-  $sectionVariant = match ($theme) {
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
       'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
       default => ThemeVariant::LIGHT,
   };
 
@@ -45,7 +48,7 @@
 
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="$sectionVariant" classes="{{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
   <x-container classes="relative z-10 !px-0 min-h-[380px] flex items-end rounded-3xl overflow-hidden">
     @if($hasBackgroundImage)
       <div

@@ -19,9 +19,12 @@
       default => SectionSize::MEDIUM,
   };
 
-  // Set theme variant based on theme
+  // Convert theme string to ThemeVariant enum
   $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
       'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
       default => ThemeVariant::LIGHT,
   };
 

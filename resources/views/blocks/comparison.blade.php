@@ -17,9 +17,18 @@
       'xl' => SectionSize::XLARGE,
       default => SectionSize::MEDIUM,
   };
+
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
+      'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
+      default => ThemeVariant::LIGHT,
+  };
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="ThemeVariant::DARK" classes="{{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   <x-container>
     <div class="text-center">
       {{-- Section Heading --}}

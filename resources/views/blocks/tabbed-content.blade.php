@@ -24,11 +24,11 @@
   };
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
-
-  // Set ThemeVariant for section background
-  $sectionVariant = match ($theme) {
+  $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
       'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN,
+      'purple' => ThemeVariant::PURPLE,
       default => ThemeVariant::LIGHT,
   };
 
@@ -125,14 +125,14 @@
   }
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="$sectionVariant" classes="{{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   <x-container :size="ContainerSize::XLARGE">
 
-    @if(!empty($section_heading['eyebrow']) || !empty($section_heading['heading']) || !empty($section_heading['subtitle']))
+    @if($section_eyebrow || $section_title || $section_description)
       <x-section-heading
-        :eyebrow="$section_heading['eyebrow']"
-        :heading="$section_heading['heading']"
-        :subtitle="$section_heading['subtitle']"
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
         :variant="$themeVariant"
         classes="mb-12"
       />

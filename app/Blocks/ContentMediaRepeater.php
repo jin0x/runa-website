@@ -5,10 +5,8 @@ namespace App\Blocks;
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\MediaComponent;
 use App\Fields\Partials\SectionOptions;
-use App\Fields\Partials\CTALink;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
-use Log1x\AcfComposer\Partial;
 
 class ContentMediaRepeater extends Block
 {
