@@ -170,6 +170,8 @@ class StepCards extends Block
                         'label' => 'Content Step Cards',
                         'layout' => 'block',
                         'button_label' => 'Add Step Card',
+                        'min' => 1,
+                        'max' => 4,
                     ])
                     ->addText('title', [
                         'label' => 'Title',
