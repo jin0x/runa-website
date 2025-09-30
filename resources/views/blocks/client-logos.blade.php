@@ -39,11 +39,7 @@
       default => 'marquee-fade-right',
   };
 
-  // Section heading based on theme
-  $sectionHeadingColor = match ($theme) {
-      'dark' => 'text-gradient-primary ',
-      default => 'text-primary-dark',
-  };
+  // Section heading color is handled by section-heading component itself via theme variant
 
   // Configure logo styles - optimized for both square and wide logos
   $logoContainerClasses = 'flex items-center justify-center w-full min-h-[100px] p-4';
@@ -65,7 +61,8 @@
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      classes="mb-12 {{ $sectionHeadingColor }}"
+      :variant="$themeVariant"
+      classes="mb-12"
     />
   @endif
 

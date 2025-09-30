@@ -111,7 +111,7 @@
             <x-text
               :as="TextTag::DIV"
               :size="TextSize::BASE"
-              :color="$textColor"
+              {{-- :color="$textColor" --}}
               class="mb-8"
             >
               {!! apply_tailwind_classes_to_content($item['content_text']) !!}

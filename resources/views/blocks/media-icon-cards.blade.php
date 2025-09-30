@@ -8,6 +8,7 @@
   use App\Enums\TextSize;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\TextColor;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -23,15 +24,7 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
 
-  $textClasses = $theme === 'dark' ? 'text-primary-light' : 'text-primary-dark';
-
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'green' => 'content-media-gradient',
-      'purple' => 'bg-secondary-purple',
-      default => 'bg-white',
-  };
+  $textColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
 
   // Media handling
   $media_url = '';
@@ -56,7 +49,7 @@
   $gapSize = 'lg';
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
@@ -99,17 +92,16 @@
                         id="main-title"
                         :as="HeadingTag::H4"
                         :size="HeadingSize::H5"
-                        class="{{ $textClasses }} text-left font-extrabold
-                        relative after:content-['']
-                        after:absolute after:bottom-[-12px] after:left-0 after:w-full after:h-[1px]
-                        {{ $theme === 'purple' ? 'after:bg-primary-dark' : 'after:bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.10)_100%)]' }}"
+                        :color="$textColor"
+                        class="text-left font-extrabold"
                     >
                         {{ $card['title'] }}
                     </x-heading>
                     <x-text
                         :as="TextTag::P"
                         :size="TextSize::SMALL"
-                        class="{{ $textClasses }} text-left font-normal text-default"
+                        :color="$textColor"
+                        class="text-left font-normal"
                     >
                         {{ $card['text'] }}
                     </x-text>
