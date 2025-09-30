@@ -33,7 +33,7 @@
   // Theme-based color classes
   $eyebrowClasses = $theme === 'dark' ? 'text-primary-lime border-primary-lime' : 'text-primary-purple border-primary-purple';
   $headingClasses = $theme === 'dark' ? 'text-white' : 'text-primary-navy';
-  $textClasses = $theme === 'dark' ? 'text-primary-light' : 'text-neutral-700';
+  $textClasses = $theme === 'dark' ? 'text-primary-light' : '';
   $buttonVariant = ButtonVariant::PRIMARY;
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
@@ -53,7 +53,7 @@
       classes="mb-12"
     />
   @endif
-  
+
     @foreach($items as $item)
       @php
         // Media Validations
@@ -69,7 +69,7 @@
             if (is_array($image)) {
                 $media_url = $image['url'] ?? '';
             } else {
-                $media_url = $image; 
+                $media_url = $image;
             }
         } elseif ($media_type === 'lottie' && !empty($lottie) && is_array($lottie)) {
             $media_url = $lottie['url'] ?? '';
@@ -141,8 +141,8 @@
           :mediaUrl="$media_url"
           :classes="$mediaClasses"
           :containerClasses="$media_order . ' overflow-hidden rounded-[48px]'"
-        />      
+        />
       </div>
     @endforeach
-  
+
 </x-section>

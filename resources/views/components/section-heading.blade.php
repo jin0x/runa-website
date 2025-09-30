@@ -11,7 +11,7 @@
     'eyebrow' => null,
     'heading' => null,
     'subtitle' => null,
-    'variant' => ThemeVariant::LIGHT,
+    'variant' => null,
     'classes' => '', // Extra classes for container
     'wrapperClasses' => null, // Classes for optional wrapper div
     'headingClasses' => '', // Extra classes for heading
@@ -29,7 +29,7 @@
       ThemeVariant::DARK => 'text-gradient-primary',
       ThemeVariant::GREEN => 'text-primary-green-neon',
       ThemeVariant::PURPLE => 'text-secondary-purple',
-      default => 'text-primary-green-neon',
+      default => '',
   };
 
   // Map title colors to CSS classes
@@ -38,7 +38,7 @@
       ThemeVariant::DARK => 'text-gradient-primary',
       ThemeVariant::GREEN => 'text-primary-green-neon',
       ThemeVariant::PURPLE => 'text-secondary-purple',
-      default => 'text-primary-green-neon',
+      default => '',
   };
 
   // Map subtitle colors to CSS classes
@@ -47,7 +47,7 @@
       ThemeVariant::DARK => 'text-gradient-primary',
       ThemeVariant::GREEN => 'text-primary-green-neon',
       ThemeVariant::PURPLE => 'text-secondary-purple',
-      default => 'text-primary-green-neon',
+      default => '',
   };
 
 
