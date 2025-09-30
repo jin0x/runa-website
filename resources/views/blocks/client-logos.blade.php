@@ -4,37 +4,24 @@
    */
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = match ($theme) {
-      'light' => ThemeVariant::LIGHT,
-      'dark' => ThemeVariant::DARK,
-      'green' => ThemeVariant::GREEN,
-      'purple' => ThemeVariant::PURPLE,
-      default => ThemeVariant::LIGHT,
-  };
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
   // Background color handled by section component via $themeVariant
 
   // Marquee fade gradient classes based on theme
-  $fadeLeftClass = match ($theme) {
-      'dark' => 'marquee-fade-left-dark',
+  $fadeLeftClass = match ($themeVariant) {
+      ThemeVariant::DARK => 'marquee-fade-left-dark',
       default => 'marquee-fade-left',
   };
 
-  $fadeRightClass = match ($theme) {
-      'dark' => 'marquee-fade-right-dark',
+  $fadeRightClass = match ($themeVariant) {
+      ThemeVariant::DARK => 'marquee-fade-right-dark',
       default => 'marquee-fade-right',
   };
 

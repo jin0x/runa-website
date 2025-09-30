@@ -5,17 +5,10 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Handle image URL
   $image_url = '';

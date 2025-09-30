@@ -10,26 +10,13 @@
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
   use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = match ($theme) {
-      'light' => ThemeVariant::LIGHT,
-      'dark' => ThemeVariant::DARK,
-      'green' => ThemeVariant::GREEN,
-      'purple' => ThemeVariant::PURPLE,
-      default => ThemeVariant::LIGHT,
-  };
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
   // Media handling
   $media_url = '';
@@ -46,9 +33,9 @@
   }
 
   // Theme-based text colors
-  $eyebrowColor = $theme === 'dark' ? TextColor::GREEN_NEON : TextColor::GREEN_SOFT;
-  $headingColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
-  $textColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::GRAY;
+  $eyebrowColor = $themeVariant === ThemeVariant::DARK ? TextColor::GREEN_NEON : TextColor::GREEN_SOFT;
+  $headingColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
+  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::GRAY;
   $buttonVariant = ButtonVariant::PRIMARY;
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 

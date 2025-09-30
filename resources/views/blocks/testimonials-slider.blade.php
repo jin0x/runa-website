@@ -3,26 +3,13 @@
   use App\Enums\SectionSize;
   use App\Enums\ThemeVariant;
   use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::LARGE,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = match ($theme) {
-      'light' => ThemeVariant::LIGHT,
-      'dark' => ThemeVariant::DARK,
-      'green' => ThemeVariant::GREEN,
-      'purple' => ThemeVariant::PURPLE,
-      default => ThemeVariant::LIGHT,
-  };
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
   // Set container size based on section size
   $containerSize = match ($section_size) {
@@ -32,8 +19,8 @@
   };
 
   // Set text color based on theme
-  $textColor = match ($theme) {
-      'light' => TextColor::DARK,
+  $textColor = match ($themeVariant) {
+      ThemeVariant::LIGHT => TextColor::DARK,
       default => TextColor::LIGHT,
   };
 @endphp

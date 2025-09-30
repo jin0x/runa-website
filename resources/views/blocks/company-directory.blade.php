@@ -5,6 +5,7 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\ThemeVariant;
+  use App\Helpers\EnumHelper;
 
   // Set theme context for FacetWP
   set_query_var('company_directory_theme', $theme);
@@ -17,30 +18,16 @@
   {{-- Legacy implementation below --}}
 @php
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = match ($theme) {
-      'light' => ThemeVariant::LIGHT,
-      'dark' => ThemeVariant::DARK,
-      'green' => ThemeVariant::GREEN,
-      'purple' => ThemeVariant::PURPLE,
-      default => ThemeVariant::LIGHT,
-  };
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
   // Background color handled by section component via $themeVariant
 
   // Text colors based on theme
-  $textColor = $theme === 'dark' ? 'text-white' : 'text-black';
-  $borderColor = $theme === 'dark' ? 'border-gray-700' : 'border-gray-200';
+  $textColor = $themeVariant === ThemeVariant::DARK ? 'text-white' : 'text-black';
+  $borderColor = $themeVariant === ThemeVariant::DARK ? 'border-gray-700' : 'border-gray-200';
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
@@ -65,7 +52,7 @@
       data-theme="{{ $theme }}"
     >
       {{-- Filter Section --}}
-      <div class="mb-8 p-6 rounded-lg {{ $theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50' }} {{ $borderColor }} border">
+      <div class="mb-8 p-6 rounded-lg {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-gray-50' }} {{ $borderColor }} border">
         <form data-filters-form class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
 
           {{-- Country Filter --}}
@@ -77,7 +64,7 @@
               id="{{ $block_id }}-country"
               name="country"
               data-country-filter
-              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black' }}"
+              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800 text-white' : 'bg-white text-black' }}"
               aria-label="Filter companies by country"
             >
               <option value="">All Countries</option>
@@ -98,7 +85,7 @@
               id="{{ $block_id }}-category"
               name="category"
               data-category-filter
-              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black' }}"
+              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800 text-white' : 'bg-white text-black' }}"
               aria-label="Filter companies by category"
             >
               <option value="">All Categories</option>
@@ -121,7 +108,7 @@
               name="search"
               data-search-filter
               placeholder="Search by company name..."
-              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $theme === 'dark' ? 'bg-gray-800 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-500' }}"
+              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-500' }}"
               aria-label="Search companies by name"
             />
           </div>
@@ -159,8 +146,8 @@
 
       {{-- Companies Table --}}
       <div class="overflow-x-auto" data-table-container>
-        <table class="w-full {{ $theme === 'dark' ? 'bg-gray-900' : 'bg-white' }} shadow-lg rounded-lg overflow-hidden">
-          <thead class="{{ $theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50' }}">
+        <table class="w-full {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-white' }} shadow-lg rounded-lg overflow-hidden">
+          <thead class="{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }}">
             <tr>
               <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
                 Company Name
@@ -183,7 +170,7 @@
             @if(!empty($companies))
               @foreach($companies as $company)
                 <tr
-                  class="company-row hover:{{ $theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200"
+                  class="company-row hover:{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200"
                   data-company-name="{{ strtolower($company['title']) }}"
                   data-country="{{ !empty($company['countries']) ? implode(',', array_map('strtolower', $company['countries'])) : '' }}"
                   data-categories="{{ !empty($company['categories']) ? implode(',', array_map('strtolower', $company['categories'])) : '' }}"

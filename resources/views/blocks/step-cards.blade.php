@@ -9,36 +9,23 @@
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
   use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = match ($theme) {
-      'light' => ThemeVariant::LIGHT,
-      'dark' => ThemeVariant::DARK,
-      'green' => ThemeVariant::GREEN,
-      'purple' => ThemeVariant::PURPLE,
-      default => ThemeVariant::LIGHT,
-  };
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
   // Section heading text color based on theme
-  $sectionHeadingColor = match ($theme) {
-      'dark' => TextColor::GRADIENT,
+  $sectionHeadingColor = match ($themeVariant) {
+      ThemeVariant::DARK => TextColor::GRADIENT,
       default => TextColor::DARK,
   };
 
    // Set text color based on theme
-  $textColor = match ($theme) {
-      'dark' => TextColor::LIGHT,
+  $textColor = match ($themeVariant) {
+      ThemeVariant::DARK => TextColor::LIGHT,
       default => TextColor::DARK,
   };
 
