@@ -8,16 +8,16 @@ use App\Enums\SectionSize;
 class EnumHelper
 {
     /**
-     * Convert theme string to ThemeVariant enum
+     * Convert theme string to ThemeVariant constant
      */
-    public static function getThemeVariant(string $theme): ThemeVariant
+    public static function getThemeVariant(string $theme): string
     {
         return match ($theme) {
             'light' => ThemeVariant::LIGHT,
             'dark' => ThemeVariant::DARK,
             'green' => ThemeVariant::GREEN,
             'purple' => ThemeVariant::PURPLE,
-            'default' => ThemeVariant::LIGHT,
+            default => ThemeVariant::LIGHT,
         };
     }
 
