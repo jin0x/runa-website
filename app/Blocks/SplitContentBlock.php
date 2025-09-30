@@ -168,6 +168,8 @@ class SplitContentBlock extends Block
                 'choices' => [
                     'cyan' => 'Cyan',
                     'green' => 'Soft Green',
+                    'yellow' => 'Yellow',
+                    'pink' => 'Pink',
                 ],
                 'default_value' => 'cyan',
                 'required' => 1,
