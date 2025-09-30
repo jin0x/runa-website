@@ -30,32 +30,52 @@
       default => 'bg-white',
   };
 
+  // Section heading based on theme
+  $sectionHeadingColor = match ($theme) {
+      'dark' => 'text-gradient-primary ',
+      default => 'text-primary-dark',
+  };
+
    // Set text color based on theme
   $textColor = match ($theme) {
       'dark' => 'text-white',
       default => 'text-primary-navy',
   };
 
+  $cardColors = [
+      'bg-primary-green-soft',
+      'bg-secondary-pink',
+      'bg-secondary-cyan',
+      'bg-primary-yellow',
+  ];
+
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }} overflow-visible">
 
   @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$themeVariant"
-      classes="mb-12"
-    />
+    <div class="max-w-4xl justify-self-center mb-12 text-center">
+        <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$themeVariant"
+        classes="mb-12 {{ $sectionHeadingColor }}"
+        />
+    </div>
   @endif
 
     <x-container classes="!px-0">
         <x-grid columns="3" classes="mt-12">
             @foreach($steps as $step)
+                @php
+                    // Get color for this card based on index
+                    $cardBgColor = $cardColors[$loop->index % 4];
+                @endphp
+
                 <div class="flex flex-col overflow-hidden gap-y-6 p-6">
                     @if ( $step['image'] )
-                        <div class="w-full overflow-hidden rounded-3xl font-">
+                        <div class="w-full overflow-hidden rounded-3xl {{ $cardBgColor }}">
                             @php
                                 $step_image_alt= !empty($step['image']['alt']) ? $step['image']['alt'] : $step['title'];
                             @endphp
