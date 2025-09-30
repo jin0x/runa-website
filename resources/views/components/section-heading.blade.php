@@ -33,11 +33,11 @@
   <div class="{{ $wrapperClasses }}">
 @endif
 
-    <x-container :size="ContainerSize::MEDIUM" {{ $attributes->merge(['classes' => 'text-center space-y-4 ' . $classes]) }}>
+    <x-container :size="ContainerSize::MEDIUM" {{ $attributes->merge(['classes' => 'text-center' . $classes]) }}>
         <x-text
           :as="TextTag::SPAN"
-          :size="TextSize::XSMALL"
-          class="block max-w-max mx-auto pill {{ $eyebrowClasses }}"
+          :size="TextSize::LARGE"
+          class="block max-w-max mx-auto pill uppercase mb-8 font-extrabold {{ $eyebrowClasses }}"
         >
           {!! $eyebrow !!}
         </x-text>
@@ -45,7 +45,7 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H2"
-          class="{{ $titleClasses }}"
+          class="mb-3 {{ $titleClasses }}"
         >
           {!! $heading !!}
         </x-heading>
