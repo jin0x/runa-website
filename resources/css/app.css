@@ -6,6 +6,17 @@
 @source "../views/**/*.blade.php";
 @source "../../app/**/*.php";
 
+body {
+  @apply bg-background text-foreground;
+}
+
+:root {
+  .dark-theme {
+    --color-background: #000000;
+    --color-foreground: #ffffff;
+  }
+}
+
 /* GSAP Animation Optimizations */
 .marquee__inner,
 .marquee__part,
@@ -61,7 +72,7 @@
     var(--color-primary-dark) 50%,
     var(--color-primary-dark) 20%,
     transparent 100%
-  )
+  );
 }
 
 /* Stacking cards optimizations */
@@ -95,14 +106,15 @@
   --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 
   /* Font Families */
-  --font-body:
-    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
-    Arial, 'Noto Sans', sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
   --font-heading: 'Lineca', Georgia, Cambria, 'Times New Roman', Times, serif;
-  --font-mono:
-    'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-mono: 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
 
   /* Primary Colors */
+  --color-background: #ffffff;
+  --color-foreground: #000000;
   --color-primary-dark: #000000;
   --color-primary-light: #ffffff;
   --color-primary-green-neon: #00ffa3;
@@ -126,7 +138,7 @@
   /* Custom Gradient Colors */
   --color-primary-dark-32: rgba(0, 0, 0, 0.32);
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
-  --color-neutral-dark-40: rgba(102, 102, 102, 0.40);
+  --color-neutral-dark-40: rgba(102, 102, 102, 0.4);
 
   /* Background Colors */
   --color-background-secondary: #171717;
@@ -169,8 +181,6 @@
     var(--color-primary-dark) 0%,
     var(--color-neutral-dark-40) 299.21%
   );
-
-
 }
 
 /* Gradient text utility class */
