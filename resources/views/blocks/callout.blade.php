@@ -10,6 +10,7 @@
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
+  use App\Enums\TextColor;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -25,16 +26,10 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      default => 'bg-primary-light',
-  };
-
   // Set text color based on theme
   $textColor = match ($theme) {
-      'dark' => 'text-white',
-      default => 'text-primary-navy',
+      'dark' => TextColor::LIGHT,
+      default => TextColor::DARK,
   };
 
   // Always use centered layout as per Figma design
@@ -48,7 +43,7 @@
   $backgroundImageUrl = $hasBackgroundImage ? $background_image['url'] : null;
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $sectionClasses }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $sectionClasses }} {{ $block->classes }}">
   @if($hasBackgroundImage)
     <div
       class="absolute inset-x-0 bottom-0 h-full bg-cover bg-center bg-no-repeat pointer-events-none"
@@ -71,15 +66,21 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H3"
-          class="mb-4 {{ $textColor }}"
+          :color="$textColor"
+          class="mb-4"
         >
           {{ $title }}
         </x-heading>
 
         @if($content)
-          <div class="prose prose-lg {{ $textColor }} max-w-none">
+          <x-text
+            :as="TextTag::DIV"
+            :size="TextSize::LARGE"
+            :color="$textColor"
+            class="prose prose-lg max-w-none"
+          >
             {!! $content !!}
-          </div>
+          </x-text>
         @endif
       </div>
 

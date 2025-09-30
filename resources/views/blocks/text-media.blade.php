@@ -9,6 +9,7 @@
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\TextColor;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -24,12 +25,6 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      default => 'bg-white',
-  };
-
   // Media handling
   $media_url = '';
   if ($media_type === 'video' && !empty($video) && is_array($video)) {
@@ -44,10 +39,10 @@
       $media_url = $lottie['url'] ?? '';
   }
 
-  // Theme-based color classes
-  $eyebrowClasses = $theme === 'dark' ? 'text-primary-lime border-primary-lime' : 'text-primary-purple border-primary-purple';
-  $headingClasses = $theme === 'dark' ? 'text-white' : 'text-primary-navy';
-  $textClasses = $theme === 'dark' ? 'text-primary-light' : 'text-neutral-700';
+  // Theme-based text colors
+  $eyebrowColor = $theme === 'dark' ? TextColor::GREEN_NEON : TextColor::GREEN_SOFT;
+  $headingColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
+  $textColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::GRAY;
   $buttonVariant = ButtonVariant::PRIMARY;
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
@@ -55,7 +50,7 @@
   $mediaClasses = 'w-full object-cover h-full min-h-[425px] xl:min-h-[425px] xl:max-h-[712px]';
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
       :eyebrow="$section_eyebrow"
@@ -88,7 +83,8 @@
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::SMALL"
-          class="inline-block mb-4 {{ $eyebrowClasses }}"
+          :color="$eyebrowColor"
+          class="inline-block mb-4"
         >
           {{ $content_eyebrow }}
         </x-text>
@@ -98,16 +94,22 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H2"
-          class="mb-6 {{ $headingClasses }}"
+          :color="$headingColor"
+          class="mb-6"
         >
           {!! $content_heading !!}
         </x-heading>
       @endif
 
       @if($content_text)
-        <div class="{{ $textClasses }} mb-8">
+        <x-text
+          :as="TextTag::DIV"
+          :size="TextSize::BASE"
+          :color="$textColor"
+          class="mb-8"
+        >
           {!! $content_text !!}
-        </div>
+        </x-text>
       @endif
 
       @if(!empty($ctas))

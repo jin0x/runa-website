@@ -4,6 +4,7 @@
    */
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
@@ -23,17 +24,17 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'green' => 'content-media-gradient',
-      default => 'bg-white',
+  // Set ThemeVariant for section background
+  $sectionVariant = match ($theme) {
+      'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN_GRADIENT,
+      default => ThemeVariant::LIGHT,
   };
 
-  // Theme-based color classes
-  $eyebrowClasses = $theme === 'dark' ? 'text-primary-lime border-primary-lime' : 'text-primary-purple border-primary-purple';
-  $headingClasses = $theme === 'dark' ? 'text-white' : 'text-primary-navy';
-  $textClasses = $theme === 'dark' ? 'text-primary-light' : '';
+  // Theme-based color enums
+  $eyebrowColor = $theme === 'dark' ? TextColor::GREEN_NEON : TextColor::GRADIENT;
+  $headingColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
+  $textColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
   $buttonVariant = ButtonVariant::PRIMARY;
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
@@ -42,7 +43,7 @@
 
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$sectionVariant" classes="{{ $block->classes }} overflow-visible">
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
@@ -99,16 +100,22 @@
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::SMALL"
-              class="inline-block mb-4 {{ $eyebrowClasses }}"
+              :color="$eyebrowColor"
+              class="inline-block mb-4"
             >
               {{ $item['content_eyebrow'] }}
             </x-text>
           @endif
 
           @if(!empty($item['content_text']))
-            <div class="{{ $textClasses }} mb-8">
+            <x-text
+              :as="TextTag::DIV"
+              :size="TextSize::BASE"
+              :color="$textColor"
+              class="mb-8"
+            >
               {!! apply_tailwind_classes_to_content($item['content_text']) !!}
-            </div>
+            </x-text>
           @endif
 
           @if(!empty($item['ctas']))

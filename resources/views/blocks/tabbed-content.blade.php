@@ -8,6 +8,7 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
 
@@ -25,17 +26,16 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      default => 'bg-white',
+  // Set ThemeVariant for section background
+  $sectionVariant = match ($theme) {
+      'dark' => ThemeVariant::DARK,
+      default => ThemeVariant::LIGHT,
   };
 
-  // Set text color based on theme
-  $textColor = match ($theme) {
-      'dark' => 'text-white',
-      default => 'text-primary-navy',
-  };
+  // Set text color enums based on theme
+  $headingColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
+  $subtitleColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
+  $contentColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
 
   // Format tabs for the tabs component
   $formattedTabs = [];
@@ -48,7 +48,8 @@
             <x-heading
               :as="HeadingTag::H3"
               :size="HeadingSize::H3"
-              class="mb-4 {{ $textColor }}"
+              :color="$headingColor"
+              class="mb-4"
             >
               {{ $tab['content_data']['heading'] }}
             </x-heading>
@@ -58,16 +59,22 @@
             <x-text
               :as="TextTag::P"
               :size="TextSize::MEDIUM"
-              class="mb-6 {{ $textColor }} opacity-90"
+              :color="$subtitleColor"
+              class="mb-6 opacity-90"
             >
               {{ $tab['content_data']['subtitle'] }}
             </x-text>
           @endif
 
           @if(!empty($tab['content_data']['text']))
-            <div class="prose prose-lg {{ $textColor }} max-w-none mb-6">
+            <x-text
+              :as="TextTag::DIV"
+              :size="TextSize::LARGE"
+              :color="$contentColor"
+              class="prose prose-lg max-w-none mb-6"
+            >
               {!! $tab['content_data']['text'] !!}
-            </div>
+            </x-text>
           @endif
 
           @if(!empty($tab['content_data']['ctas']))
@@ -118,7 +125,7 @@
   }
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$sectionVariant" classes="{{ $block->classes }}">
   <x-container :size="ContainerSize::XLARGE">
 
     @if(!empty($section_heading['eyebrow']) || !empty($section_heading['heading']) || !empty($section_heading['subtitle']))

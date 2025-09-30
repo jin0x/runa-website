@@ -8,6 +8,7 @@
   use App\Enums\TextSize;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\TextColor;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -21,25 +22,22 @@
   };
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
-
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'green' => 'content-media-gradient',
-      default => 'bg-white',
+  $themeVariant = match ($theme) {
+      'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN_GRADIENT,
+      default => ThemeVariant::LIGHT,
   };
 
-  // Section heading based on theme
+  // Section heading text color based on theme
   $sectionHeadingColor = match ($theme) {
-      'dark' => 'text-gradient-primary ',
-      default => 'text-primary-dark',
+      'dark' => TextColor::GRADIENT,
+      default => TextColor::DARK,
   };
 
    // Set text color based on theme
   $textColor = match ($theme) {
-      'dark' => 'text-white',
-      default => 'text-primary-navy',
+      'dark' => TextColor::LIGHT,
+      default => TextColor::DARK,
   };
 
   $cardColors = [
@@ -50,15 +48,15 @@
   ];
 
   $headingColors = [
-      'text-primary-green-soft',
-      'text-secondary-pink',
-      'text-secondary-cyan',
-      'text-primary-yellow',
+      TextColor::GREEN_SOFT,
+      TextColor::GREEN_NEON, // Using available color instead of pink
+      TextColor::GREEN_NEON, // Using available color instead of cyan
+      TextColor::GREEN_SOFT, // Using available color instead of yellow
   ];
 
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
 
   @if($section_eyebrow || $section_title || $section_description)
     <div class="max-w-4xl justify-self-center mb-12 text-center">
@@ -67,7 +65,8 @@
         :heading="$section_title"
         :subtitle="$section_description"
         :variant="$themeVariant"
-        classes="mb-12 {{ $sectionHeadingColor }}"
+        :color="$sectionHeadingColor"
+        classes="mb-12"
         />
     </div>
   @endif
@@ -95,21 +94,22 @@
                     @endif
                     <div class="flex flex-col flex-1 gap-y-3">
                       @php
-                        
-                        $colorClass = $headingColors[($loop->iteration - 1) % count($headingColors)];
+                        $headingColor = $headingColors[($loop->iteration - 1) % count($headingColors)];
                       @endphp
                         <x-heading
                             id="main-title"
                             :as="HeadingTag::H4"
                             :size="HeadingSize::H4"
-                            class="{{ $colorClass }} text-left font-bold"
+                            :color="$headingColor"
+                            class="text-left font-bold"
                         >
                             {{ $step['title'] }}
                         </x-heading>
                         <x-text
                             :as="TextTag::P"
                             :size="TextSize::SMALL"
-                            class="{{ $textColor }} text-left font-normal text-default"
+                            :color="$textColor"
+                            class="text-left font-normal text-default"
                         >
                             {{ $step['text'] }}
                         </x-text>

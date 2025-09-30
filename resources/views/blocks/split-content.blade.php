@@ -4,6 +4,7 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -31,11 +32,8 @@
       default => 'bg-secondary-cyan',
   };
 
-  // Icon color classes (opposite of background for contrast)
-  $iconClasses = match ($background_color) {
-      'green' => 'text-secondary-cyan',
-      default => 'text-primary-green-soft',
-  };
+  // Text color for content (always dark on colored backgrounds)
+  $textColor = TextColor::DARK;
 
   // Layout order classes
   $imageOrder = $reverse_layout ? 'order-1 md:order-2' : 'order-1 md:order-1';
@@ -66,7 +64,8 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H2"
-          class="text-primary-black mb-8"
+          :color="$textColor"
+          class="mb-8"
         >
           {{ $heading }}
         </x-heading>
@@ -76,7 +75,8 @@
         <x-text
           :as="TextTag::P"
           :size="TextSize::BASE"
-          class="text-primary-black mb-6"
+          :color="$textColor"
+          class="mb-6"
         >
           {{ $description }}
         </x-text>
@@ -95,7 +95,7 @@
 
             <li class="flex items-center gap-2">
               {{-- Checkmark Icon --}}
-              <div class="flex-shrink-0 w-6 h-6 {{ $iconClasses }} flex items-center justify-center">
+              <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect width="24" height="24" rx="12" fill="url(#paint0_linear_2793_21186)"/>
                   <path d="M18.002 8.53955L9.34766 17.1938L4.75586 12.6021L5.81641 11.5415L9.34766 15.0728L16.9414                  7.479L18.002 8.53955Z" fill="black"/>
@@ -113,7 +113,8 @@
               <x-text
                 :as="TextTag::SPAN"
                 :size="TextSize::BASE"
-                class="text-primary-black {{ $fontWeight }}"
+                :color="$textColor"
+                class="{{ $fontWeight }}"
               >
                 {{ $feature['feature_text'] }}
               </x-text>

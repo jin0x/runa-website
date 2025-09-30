@@ -6,9 +6,10 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
-    use App\Enums\ButtonVariant;
+  use App\Enums\ButtonVariant;
 
 
   // Convert section_size string to SectionSize enum
@@ -22,17 +23,15 @@
       default => SectionSize::MEDIUM,
   };
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      default => 'bg-primary-light',
+  // Set ThemeVariant for section background
+  $sectionVariant = match ($theme) {
+      'dark' => ThemeVariant::DARK,
+      default => ThemeVariant::LIGHT,
   };
 
-  // Set text color based on theme
-  $textColor = match ($theme) {
-      'dark' => 'text-white',
-      default => 'text-primary-navy',
-  };
+  // Set text color enums based on theme
+  $headingColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
+  $contentColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
   
   // Always use centered layout as per Figma design
   $contentClasses = 'flex flex-col gap-6 p-8 lg:p-16 content-end';
@@ -46,15 +45,15 @@
 
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$sectionVariant" classes="{{ $block->classes }} overflow-visible">
   <x-container classes="relative z-10 !px-0 min-h-[380px] flex items-end rounded-3xl overflow-hidden">
     @if($hasBackgroundImage)
       <div
-        class="absolute inset-x-0 bottom-0 h-full bg-cover bg-center bg-no-repeat pointer-events-none {{ $bgColor }}"
+        class="absolute inset-x-0 bottom-0 h-full bg-cover bg-center bg-no-repeat pointer-events-none"
         style="background-image: url('{{ $backgroundImageUrl }}'); background-position: center bottom; z-index:-1;"
       ></div>
     @else
-      <div class="absolute inset-x-0 bottom-0 h-full pointer-events-none {{ $bgColor }}" style="z-index:-1;"></div>
+      <div class="absolute inset-x-0 bottom-0 h-full pointer-events-none" style="z-index:-1;"></div>
     @endif
     <div class="{{ $contentClasses }}">
       <div class="{{ $textContainerClasses }}">
@@ -70,15 +69,21 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H4"
-          class="mb-4 {{ $textColor }}"
+          :color="$headingColor"
+          class="mb-4"
         >
           {{ $title }}
         </x-heading>
 
         @if($content)
-          <div class="prose prose-lg {{ $textColor }} max-w-none">
+          <x-text
+            :as="TextTag::DIV"
+            :size="TextSize::LARGE"
+            :color="$contentColor"
+            class="prose prose-lg max-w-none"
+          >
             {!! $content !!}
-          </div>
+          </x-text>
         @endif
       </div>
 

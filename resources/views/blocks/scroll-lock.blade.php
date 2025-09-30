@@ -4,6 +4,7 @@
    */
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;
   use App\Enums\ThemeVariant;
@@ -23,23 +24,22 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'green' => 'scroll-lock-gradient',
-      default => 'bg-white',
+  // Set ThemeVariant for section background
+  $sectionVariant = match ($theme) {
+      'dark' => ThemeVariant::DARK,
+      'green' => ThemeVariant::GREEN_GRADIENT,
+      default => ThemeVariant::LIGHT,
   };
 
-  // Theme-based color classes
-  $eyebrowClasses = $theme === 'dark' ? 'text-primary-lime border-primary-lime' : 'text-primary-purple border-primary-purple';
-  $headingClasses = $theme === 'dark' ? 'text-white' : 'text-primary-navy';
-  $textClasses = $theme === 'dark' ? 'text-primary-light' : 'text-neutral-700';
+  // Theme-based color enums
+  $headingColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
+  $textColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::GRAY;
 
   // Unique ID for this block instance
   $blockId = 'scroll-lock-' . uniqid();
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$sectionVariant" classes="{{ $block->classes }}">
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
@@ -76,7 +76,8 @@
                     <x-heading
                       :as="HeadingTag::H3"
                       :size="HeadingSize::H5"
-                      class="mb-6 {{ $headingClasses }}"
+                      :color="$headingColor"
+                      class="mb-6"
                     >
                       {{ $section['title'] }}
                     </x-heading>
@@ -84,7 +85,8 @@
                     <x-text
                       :as="TextTag::DIV"
                       :size="TextSize::SMALL"
-                      class="{{ $textClasses }} leading-relaxed"
+                      :color="$textColor"
+                      class="leading-relaxed"
                     >
                       {!! $section['description'] !!}
                     </x-text>
@@ -120,7 +122,8 @@
                 <x-heading
                   :as="\App\Enums\HeadingTag::H3"
                   :size="\App\Enums\HeadingSize::H4"
-                  class="mb-4 {{ $headingClasses }}"
+                  :color="$headingColor"
+                  class="mb-4"
                 >
                   {{ $section['title'] }}
                 </x-heading>
@@ -128,7 +131,8 @@
                 <x-text
                   :as="\App\Enums\TextTag::DIV"
                   :size="\App\Enums\TextSize::BASE"
-                  class="{{ $textClasses }} leading-relaxed"
+                  :color="$textColor"
+                  class="leading-relaxed"
                 >
                   {!! $section['description'] !!}
                 </x-text>

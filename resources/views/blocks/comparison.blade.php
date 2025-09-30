@@ -4,6 +4,8 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
+  use App\Enums\ThemeVariant;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -17,7 +19,7 @@
   };
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="bg-black {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="ThemeVariant::DARK" classes="{{ $block->classes }}">
   <x-container>
     <div class="text-center">
       {{-- Section Heading --}}
@@ -25,7 +27,8 @@
       <x-text
         :as="TextTag::SPAN"
         :size="TextSize::SMALL"
-        class="block text-neutral-400 mb-3"
+        :color="TextColor::GRAY"
+        class="block mb-3"
       >
         {{ $eyebrow }}
       </x-text>
@@ -35,7 +38,8 @@
       <x-heading
         :as="HeadingTag::H3"
         :size="HeadingSize::H3"
-        class="text-white mb-3"
+        :color="TextColor::DARK"
+        class="mb-3"
       >
         {{ $heading }}
       </x-heading>
@@ -45,7 +49,8 @@
       <x-text
         :as="TextTag::P"
         :size="TextSize::MEDIUM"
-        class="text-white mb-16"
+        :color="TextColor::DARK"
+        class="mb-16"
       >
         {{ $subtitle }}
       </x-text>
@@ -61,7 +66,8 @@
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::XSMALL"
-              class="block text-neutral-400 mb-2 uppercase tracking-wider"
+              :color="TextColor::GRAY"
+              class="block mb-2 uppercase tracking-wider"
             >
               {{ $left_side['eyebrow'] }}
             </x-text>
@@ -71,7 +77,8 @@
             <x-heading
               :as="HeadingTag::H3"
               :size="HeadingSize::H3"
-              class="text-white mb-2"
+              :color="TextColor::DARK"
+              class="mb-2"
             >
               {{ $left_side['title'] }}
             </x-heading>
@@ -81,7 +88,8 @@
             <x-text
               :as="TextTag::P"
               :size="TextSize::BASE"
-              class="text-neutral-300 mb-4"
+              :color="TextColor::GRAY"
+              class="mb-4"
             >
               {{ $left_side['description'] }}
             </x-text>
@@ -109,7 +117,7 @@
                   <x-text
                     :as="TextTag::SPAN"
                     :size="TextSize::BASE"
-                    class="text-white"
+                    :color="TextColor::DARK"
                   >
                     {{ $feature['feature_text'] }}
                   </x-text>
@@ -128,7 +136,8 @@
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::XSMALL"
-              class="block text-neutral-400 mb-2 uppercase tracking-wider"
+              :color="TextColor::GRAY"
+              class="block mb-2 uppercase tracking-wider"
             >
               {{ $right_side['eyebrow'] }}
             </x-text>
@@ -138,7 +147,8 @@
             <x-heading
               :as="HeadingTag::H3"
               :size="HeadingSize::H3"
-              class="text-white mb-2"
+              :color="TextColor::DARK"
+              class="mb-2"
             >
               {{ $right_side['title'] }}
             </x-heading>
@@ -148,7 +158,8 @@
             <x-text
               :as="TextTag::P"
               :size="TextSize::BASE"
-              class="text-neutral-300 mb-4"
+              :color="TextColor::GRAY"
+              class="mb-4"
             >
               {{ $right_side['description'] }}
             </x-text>
@@ -176,7 +187,7 @@
                   <x-text
                     :as="TextTag::SPAN"
                     :size="TextSize::BASE"
-                    class="text-white"
+                    :color="TextColor::DARK"
                   >
                     {{ $feature['feature_text'] }}
                   </x-text>

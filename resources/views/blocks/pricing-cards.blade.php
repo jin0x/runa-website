@@ -4,6 +4,8 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
+  use App\Enums\ThemeVariant;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -16,16 +18,16 @@
       default => SectionSize::MEDIUM,
   };
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'light' => 'bg-white',
-      default => 'bg-primary-dark',
+  // Set theme variant based on theme
+  $themeVariant = match ($theme) {
+      'light' => ThemeVariant::LIGHT,
+      default => ThemeVariant::DARK,
   };
 
-  // Set text color based on theme
-  $textColor = $theme === 'dark' ? 'text-white' : 'text-primary-black';
-  $eyebrowColor = $theme === 'dark' ? 'text-primary-green-neon' : 'text-primary-green-neon';
-  $subtitleColor = $theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600';
+  // Set text colors based on theme
+  $textColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
+  $eyebrowColor = TextColor::GREEN_NEON;
+  $subtitleColor = $theme === 'dark' ? TextColor::GRAY : TextColor::GRAY;
 
   // Grid classes based on card count
   $cardCount = count($pricing_cards);
@@ -37,7 +39,7 @@
   };
 @endphp
 
-<section class="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   {{-- Title Section --}}
   <div class="py-16 px-4 lg:px-16 text-center">
     <div class="max-w-[1100px] mx-auto">
@@ -46,7 +48,8 @@
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::SMALL"
-          class="block {{ $eyebrowColor }} mb-6 uppercase tracking-wider font-medium"
+          :color="$eyebrowColor"
+          class="block mb-6 uppercase tracking-wider font-medium"
         >
           {{ $eyebrow }}
         </x-text>
@@ -57,7 +60,8 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H2"
-          class="{{ $textColor }} mb-6"
+          :color="$textColor"
+          class="mb-6"
         >
           {{ $heading }}
         </x-heading>
@@ -96,4 +100,4 @@
       </div>
     </div>
   @endif
-</section>
+</x-section>

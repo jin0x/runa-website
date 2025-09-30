@@ -10,6 +10,7 @@
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
   use App\Enums\SectionSize;
+  use App\Enums\TextColor;
 
   // Handle background image URL
   $bg_image_url = '';
@@ -27,7 +28,7 @@
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
   // Define accent color for highlighted text in title
-  $accentColor = 'text-primary-lime';
+  $accentColor = 'text-gradient-primary';
 
   // Determine if content should be full-width or contained
   $isFullWidth = $content_width === 'full-width';
@@ -67,7 +68,8 @@
           <x-heading
             :as="HeadingTag::H1"
             :size="HeadingSize::H1"
-            class="text-white mb-3"
+            :color="TextColor::DARK"
+            class="mb-3"
           >
             {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
           </x-heading>
@@ -77,7 +79,8 @@
           <x-text
             :as="TextTag::SPAN"
             :size="TextSize::LARGE"
-            class="text-white/90 mb-8"
+            :color="TextColor::DARK"
+            class="opacity-90 mb-8"
           >
             {!! $content !!}
           </x-text>
@@ -124,7 +127,8 @@
             <x-heading
               :as="HeadingTag::H1"
               :size="HeadingSize::H1"
-              class="text-white mb-3"
+              :color="TextColor::DARK"
+              class="mb-3"
             >
               {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
             </x-heading>
@@ -134,7 +138,8 @@
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::LARGE"
-              class="text-white/90 mb-8 max-w-2xl"
+              :color="TextColor::DARK"
+              class="opacity-90 mb-8 max-w-2xl"
             >
               {!! $content !!}
             </x-text>

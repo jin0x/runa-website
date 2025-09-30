@@ -5,6 +5,8 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
+  use App\Enums\TextColor;
+  use App\Enums\ThemeVariant;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = match ($section_size) {
@@ -17,14 +19,14 @@
       default => SectionSize::MEDIUM,
   };
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-black',
-      default => 'bg-white',
+  // Set theme variant based on theme
+  $themeVariant = match ($theme) {
+      'dark' => ThemeVariant::DARK,
+      default => ThemeVariant::LIGHT,
   };
 
   // Set text color based on theme
-  $textColor = $theme === 'dark' ? 'text-white' : 'text-primary-black';
+  $textColor = $theme === 'dark' ? TextColor::LIGHT : TextColor::DARK;
 
   // Map card background colors to CSS classes
   $cardBgClasses = match ($card_background_color) {
@@ -43,8 +45,8 @@
 
   // Text color for cards (most backgrounds need dark text)
   $cardTextColor = match ($card_background_color) {
-      'white' => 'text-primary-black',
-      default => 'text-primary-black',
+      'white' => TextColor::DARK,
+      default => TextColor::DARK,
   };
 
   // Determine grid columns based on card count
@@ -57,7 +59,7 @@
   };
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   <x-container>
     <div class="text-center">
       {{-- Section Heading --}}
@@ -65,7 +67,8 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H2"
-          class="mb-12 {{ $textColor }}"
+          :color="$textColor"
+          class="mb-12"
         >
           {{ $heading }}
         </x-heading>
@@ -94,7 +97,8 @@
                 <x-heading
                   :as="HeadingTag::H3"
                   :size="HeadingSize::H4"
-                  class="mb-8 {{ $cardTextColor }} text-left"
+                  :color="$cardTextColor"
+                  class="mb-8 text-left"
                 >
                   {{ $card['title'] }}
                 </x-heading>
@@ -105,7 +109,8 @@
                 <x-text
                   :as="TextTag::P"
                   :size="TextSize::BASE"
-                  class="mb-8 {{ $cardTextColor }} text-left"
+                  :color="$cardTextColor"
+                  class="mb-8 text-left"
                 >
                   {{ $card['description'] }}
                 </x-text>
