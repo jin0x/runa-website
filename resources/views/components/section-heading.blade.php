@@ -23,10 +23,36 @@
     return;
   }
 
-  // Define variant classes for light and dark
-  $eyebrowClasses = $variant === ThemeVariant::DARK ? 'text-primary-lime border-primary-lime' : 'pill-purple';
-  $titleClasses = ($variant === ThemeVariant::DARK ? 'text-primary-light' : 'text-primary-dark') . ' ' . $headingClasses;
-  $subtitleClasses = $variant === ThemeVariant::DARK ? 'text-primary-light' : 'text-primary-dark';
+  // Map eyebrow colors to CSS classes
+  $eyebrowClasses = match ($variant) {
+      ThemeVariant::LIGHT => 'text-primary-dark',
+      ThemeVariant::DARK => 'text-gradient-primary',
+      ThemeVariant::GREEN => 'text-primary-green-neon',
+      ThemeVariant::PURPLE => 'text-secondary-purple',
+      default => 'text-primary-green-neon',
+  };
+
+  // Map title colors to CSS classes
+  $titleClasses = match ($variant) {
+      ThemeVariant::LIGHT => 'text-primary-dark',
+      ThemeVariant::DARK => 'text-gradient-primary',
+      ThemeVariant::GREEN => 'text-primary-green-neon',
+      ThemeVariant::PURPLE => 'text-secondary-purple',
+      default => 'text-primary-green-neon',
+  };
+
+  // Map subtitle colors to CSS classes
+  $subtitleClasses = match ($variant) {
+      ThemeVariant::LIGHT => 'text-primary-dark',
+      ThemeVariant::DARK => 'text-gradient-primary',
+      ThemeVariant::GREEN => 'text-primary-green-neon',
+      ThemeVariant::PURPLE => 'text-secondary-purple',
+      default => 'text-primary-green-neon',
+  };
+
+
+  // Append heading classes
+  $titleClasses .= ' ' . $headingClasses;
 @endphp
 
 @if ($wrapperClasses)
