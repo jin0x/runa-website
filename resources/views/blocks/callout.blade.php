@@ -40,11 +40,11 @@
   // Always use centered layout as per Figma design
   $contentClasses = 'flex flex-col text-center items-center gap-6';
   $textContainerClasses = 'max-w-3xl';
-  $buttonsContainerClasses = 'flex flex-wrap justify-center gap-4 mt-6';
+  $buttonsContainerClasses = 'flex flex-wrap justify-center gap-4';
 
   // Background image styles
   $hasBackgroundImage = !empty($background_image);
-  $sectionClasses = $hasBackgroundImage ? 'relative overflow-hidden' : '';
+  $sectionClasses = $hasBackgroundImage ? 'relative overflow-hidden min-h-[600px]' : '';
   $backgroundImageUrl = $hasBackgroundImage ? $background_image['url'] : null;
 @endphp
 
