@@ -45,6 +45,25 @@
   background: linear-gradient(to left, currentColor, transparent);
 }
 
+/* Marquee fade masks - Dark theme (black background) */
+.marquee-fade-left-dark {
+  background: linear-gradient(
+    to right,
+    var(--color-primary-dark) 50%,
+    var(--color-primary-dark) 20%,
+    transparent 100%
+  );
+}
+
+.marquee-fade-right-dark {
+  background: linear-gradient(
+    to left,
+    var(--color-primary-dark) 50%,
+    var(--color-primary-dark) 20%,
+    transparent 100%
+  )
+}
+
 /* Stacking cards optimizations */
 .stacking-cards-wrapper {
   contain: layout style paint;
