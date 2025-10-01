@@ -11,7 +11,15 @@
     'navigationPosition' => 'sides', // 'sides' or 'bottom-right'
 ])
 
-<div x-data="carouselComponent()" x-init="initSwiper()" class="relative">
+<div x-data="carouselComponent({
+  loop: {{ $loop ? 'true' : 'false' }},
+  autoplayDelay: {{ $autoplayDelay }},
+  slidesPerView: {{ $slidesPerView }},
+  mobileSlidesPerView: {{ $mobileSlidesPerView }},
+  tabletSlidesPerView: {{ $tabletSlidesPerView }},
+  desktopSlidesPerView: {{ $desktopSlidesPerView }},
+  spaceBetween: {{ $spaceBetween }}
+})" x-init="initSwiper()" class="relative">
   <div class="swiper-container" x-ref="container">
     <div class="swiper-wrapper">
       {!! $slot !!}
@@ -70,39 +78,3 @@
       </div>
   @endif
 </div>
-
-<script>
-  function carouselComponent() {
-    return {
-      swiper: null,
-      initSwiper() {
-        if ( typeof Swiper !== 'undefined' ) {
-          this.swiper = new Swiper( this.$refs.container, {
-            @if($loop)
-            loop: true,
-            @endif
-            autoplay: {
-              delay: {{ $autoplayDelay }},
-              disableOnInteraction: false,
-            },
-            slidesPerView: {{ $slidesPerView }},
-            spaceBetween: {{ $spaceBetween }},
-            breakpoints: {
-              640: { slidesPerView: {{ $mobileSlidesPerView }} },
-              768: { slidesPerView: {{ $tabletSlidesPerView }} },
-              1024: { slidesPerView: {{ $desktopSlidesPerView }} },
-            },
-          } );
-
-          if ( this.swiper.autoplay ) {
-            console.log("▶️");
-            this.swiper.autoplay.start();
-          }
-
-        } else {
-          console.error( 'Swiper library not loaded.' );
-        }
-      }
-    }
-  }
-</script>

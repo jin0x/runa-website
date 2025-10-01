@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alpine Timing Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .warning { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+    <h1>Alpine Timing Debug Test</h1>
+
+    <!-- Test 1: Components present before Alpine loads -->
+    <div class="test">
+        <h3>Test 1: Components Present Before Alpine</h3>
+        <div x-data="{ message: 'Alpine found me!' }" x-text="message" class="info"></div>
+        <div x-data="{ count: 0 }">
+            <button @click="count++" x-text="`Clicked ${count} times`"></button>
+        </div>
+    </div>
+
+    <!-- Test 2: FAQ Component Test -->
+    <div class="test">
+        <h3>Test 2: FAQ Component (if available)</h3>
+        <div x-data="faqAccordion" style="padding: 10px; background: #f8f9fa;">
+            <button @click="toggle(0)" x-text="isItemOpen(0) ? 'Close FAQ' : 'Open FAQ'"></button>
+            <div x-show="isItemOpen(0)" style="margin-top: 10px;">FAQ content here!</div>
+        </div>
+    </div>
+
+    <!-- Test 3: Components added after Alpine starts -->
+    <div class="test">
+        <h3>Test 3: Components Added After Alpine Starts</h3>
+        <div id="dynamic-content"></div>
+        <button onclick="addDynamicComponent()">Add Component After Alpine</button>
+    </div>
+
+    <!-- Test 4: WordPress-style late loading -->
+    <div class="test">
+        <h3>Test 4: WordPress-style Late Loading</h3>
+        <div id="wordpress-style"></div>
+    </div>
+
+    <div class="test">
+        <h3>Debug Output</h3>
+        <div id="debug-output"></div>
+    </div>
+
+    <!-- Load our built JS -->
+    <script src="/wp-content/themes/runa/public/build/assets/app-CNoQsifr.js"></script>
+
+    <script>
+        const debugOutput = document.getElementById('debug-output');
+
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.style.cssText = 'margin: 5px 0; padding: 5px;';
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            debugOutput.appendChild(div);
+            console.log(message);
+        }
+
+        // Test adding components dynamically
+        function addDynamicComponent() {
+            const container = document.getElementById('dynamic-content');
+            container.innerHTML = `
+                <div x-data="{ dynamic: 'I was added after Alpine started!' }">
+                    <p x-text="dynamic" class="warning"></p>
+                    <button @click="dynamic = 'Clicked!'" x-text="'Click me'"></button>
+                </div>
+            `;
+
+            // Try to reinitialize Alpine on new content
+            if (window.Alpine) {
+                try {
+                    window.Alpine.initTree(container);
+                    log('✅ Alpine.initTree() called on dynamic content', 'success');
+                } catch (e) {
+                    log('❌ Alpine.initTree() failed: ' + e.message, 'error');
+                }
+            }
+        }
+
+        // Simulate WordPress late content loading
+        setTimeout(() => {
+            const container = document.getElementById('wordpress-style');
+            container.innerHTML = `
+                <div x-data="{ wordpress: 'WordPress-style late content' }">
+                    <p x-text="wordpress" class="warning"></p>
+                </div>
+            `;
+
+            if (window.Alpine) {
+                try {
+                    window.Alpine.initTree(container);
+                    log('✅ WordPress-style content processed', 'success');
+                } catch (e) {
+                    log('❌ WordPress-style content failed: ' + e.message, 'error');
+                }
+            }
+        }, 2000);
+
+        // Monitor Alpine initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            log('DOMContentLoaded fired');
+
+            setTimeout(() => {
+                const components = document.querySelectorAll('[x-data]');
+                log(`Found ${components.length} x-data components after Alpine start`);
+
+                components.forEach((el, i) => {
+                    const hasAlpine = el._x_dataStack || el.__x;
+                    log(`Component ${i}: ${hasAlpine ? 'Alpine active' : 'Alpine NOT active'} - ${el.getAttribute('x-data')}`);
+                });
+            }, 500);
+        });
+
+        // Global error handler
+        window.addEventListener('error', (e) => {
+            log(`❌ Error: ${e.message}`, 'error');
+        });
+
+        log('Debug script loaded');
+    </script>
+</body>
+</html>

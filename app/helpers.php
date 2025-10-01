@@ -7,6 +7,87 @@
 namespace App\Helpers;
 
 /**
+ * Get asset URL from manifest.json
+ * Bypass for Acorn beta Vite::asset() bug
+ *
+ * @param string $resource_path The resource path (e.g., 'resources/css/app.css')
+ * @return string The asset URL or empty string if not found
+ */
+function get_vite_asset($resource_path)
+{
+    static $manifest = null;
+
+    // Defensive check for WordPress functions
+    if (!function_exists('get_template_directory')) {
+        return '';
+    }
+
+    // Load manifest once per request
+    if ($manifest === null) {
+        $manifest_path = get_template_directory() . '/public/build/manifest.json';
+        $manifest = file_exists($manifest_path)
+            ? json_decode(file_get_contents($manifest_path), true)
+            : [];
+    }
+
+    // Return hashed filename from manifest
+    if (isset($manifest[$resource_path]['file'])) {
+        return get_template_directory_uri() . '/public/build/' . $manifest[$resource_path]['file'];
+    }
+
+    // Fallback to direct path (for development or missing assets)
+    return get_template_directory_uri() . '/public/build/' . ltrim($resource_path, '/');
+}
+
+/**
+ * Get entry point with associated CSS chunks
+ * Critical for JavaScript entries that generate CSS
+ *
+ * @param string $entry_path The entry path (e.g., 'resources/js/app.js')
+ * @return array Array with 'js' and 'css' keys
+ */
+function get_vite_entry_with_css($entry_path)
+{
+    static $manifest = null;
+
+    // Defensive check for WordPress functions
+    if (!function_exists('get_template_directory')) {
+        return ['js' => '', 'css' => []];
+    }
+
+    // Load manifest once per request
+    if ($manifest === null) {
+        $manifest_path = get_template_directory() . '/public/build/manifest.json';
+        $manifest = file_exists($manifest_path)
+            ? json_decode(file_get_contents($manifest_path), true)
+            : [];
+    }
+
+    $result = ['js' => '', 'css' => []];
+
+    if (!isset($manifest[$entry_path])) {
+        return $result;
+    }
+
+    $entry = $manifest[$entry_path];
+    $base_url = get_template_directory_uri() . '/public/build/';
+
+    // Get the main JavaScript file
+    if (isset($entry['file'])) {
+        $result['js'] = $base_url . $entry['file'];
+    }
+
+    // Get associated CSS chunks
+    if (isset($entry['css']) && is_array($entry['css'])) {
+        foreach ($entry['css'] as $css_file) {
+            $result['css'][] = $base_url . $css_file;
+        }
+    }
+
+    return $result;
+}
+
+/**
  * Applies specific Tailwind CSS classes to HTML tags within a given content string.
  *
  * This function modifies the provided content by adding predefined CSS classes to
