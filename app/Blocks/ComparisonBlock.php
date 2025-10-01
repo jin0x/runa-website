@@ -84,6 +84,7 @@ class ComparisonBlock extends Block
             'left_side' => $this->getLeftSide(),
             'right_side' => $this->getRightSide(),
             'section_size' => $this->getSectionSize(),
+            'theme' => $this->getTheme(),
         ];
     }
 
@@ -237,5 +238,10 @@ class ComparisonBlock extends Block
     public function getSectionSize()
     {
         return get_field('section_size') ?: 'md';
+    }
+
+    public function getTheme()
+    {
+        return get_field('theme') ?: 'light';
     }
 }

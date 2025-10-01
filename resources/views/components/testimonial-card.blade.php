@@ -55,13 +55,13 @@
 
     {{-- Header with Logo and Company Info --}}
     <div class="flex items-start justify-between mb-6">
-      <div class="flex-1">
+      <div class="flex-1 min-w-0">
         @if($companyLogo)
           <div class="flex items-center justify-start">
             <img
               src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
               alt="{{ $companyName }} logo"
-              class="h-12 w-auto object-contain"
+              class="h-12 w-auto max-w-full object-contain"
             >
           </div>
         @endif
@@ -98,10 +98,10 @@
 
     {{-- Quote --}}
     @if($quote)
-      <div class="flex-1 mb-6">
-        <blockquote class="{{ $featured ? 'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed">
+      <div class="flex-1 mb-6 min-h-32">
+        <x-text :as="TextTag::SPAN" :size="$featured ? TextSize::XLARGE : TextSize::XLARGE" class="{{ $featured ? 'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed">
           "{{ $featured ? $quote : $truncatedQuote }}"
-        </blockquote>
+        </x-text>
       </div>
     @endif
 
