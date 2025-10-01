@@ -23,10 +23,10 @@
         HeadingSize::H4 => 'heading-4',
         HeadingSize::H5 => 'heading-5',
         HeadingSize::H6 => 'heading-6',
-        HeadingSize::H7 => 'heading-7'
-        HeadingSize::HERO => 'heading-hero'
-        HeadingSize::SUPER => 'heading-super'
-        HeadingSize::SUPER_DUPER => 'heading-super-duper'
+        HeadingSize::H7 => 'heading-7',
+        HeadingSize::HERO => 'heading-hero',
+        HeadingSize::SUPER => 'heading-super',
+        HeadingSize::SUPER_DUPER => 'heading-super-duper',
         HeadingSize::DISPLAY_LARGE => 'text-display-large',
         HeadingSize::DISPLAY_MEDIUM => 'text-display-medium',
         HeadingSize::DISPLAY_SMALL => 'text-display-small',
