@@ -44,8 +44,8 @@
 
   {{-- Cards Section --}}
   @if(!empty($pricing_cards))
-    <div class="px-4 lg:px-16 pb-16 bg-primary-dark">
-      <div class="grid {{ $gridClasses }} gap-6 max-w-7xl mx-auto items-start">
+    <div class="pb-16">
+      <div class="grid {{ $gridClasses }} gap-6 items-start">
         @foreach($pricing_cards as $card)
           <x-pricing-card
             :icon="$card['icon'] ?? null"
