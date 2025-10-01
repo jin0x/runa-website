@@ -22,8 +22,8 @@
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // Theme-based color enums
-  $headingColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::GRAY;
+  $headingColor = $themeVariant === ThemeVariant::DARK ? TextColor::DARK : TextColor::LIGHT;
+  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::DARK : TextColor::GRAY;
 
   // Unique ID for this block instance
   $blockId = 'scroll-lock-' . uniqid();
@@ -62,12 +62,22 @@
               <!-- Left Content -->
               <div class="scroll-content-container relative min-h-[400px]">
                 @foreach($sections as $index => $section)
-                  <div class="scroll-section mb-8 transition-all duration-700 ease-in-out {{ $index === 0 ? 'opacity-100' : 'opacity-60' }}" data-section-index="{{ $index }}">
+                  @php
+                    // Cycle through 4 colors: green, cyan, yellow, purple
+                    $titleColor = match($index % 4) {
+                      0 => 'text-primary-green-neon',
+                      1 => 'text-secondary-cyan',
+                      2 => 'text-primary-yellow',
+                      3 => 'text-secondary-purple',
+                    };
+                  @endphp
+
+                  <div class="scroll-section mb-8 transition-all duration-700 ease-in-out {{ $index === 0 ? 'opacity-100 is-active' : 'opacity-60' }}" data-section-index="{{ $index }}" data-color-class="{{ $titleColor }}">
                     <x-heading
                       :as="HeadingTag::H3"
-                      :size="HeadingSize::H5"
+                      :size="HeadingSize::H4"
                       :color="$headingColor"
-                      class="mb-6"
+                      class="mb-6 section-title"
                     >
                       {{ $section['title'] }}
                     </x-heading>
@@ -177,12 +187,25 @@
 
     // Update content sections highlighting
     contentSections.forEach((section, index) => {
+      const title = section.querySelector('.section-title');
+      const colorClass = section.dataset.colorClass;
+
       if (index === newSection) {
         section.classList.remove('opacity-60');
-        section.classList.add('opacity-100');
+        section.classList.add('opacity-100', 'is-active');
+
+        if (title && colorClass) {
+        title.classList.remove('text-white');
+        title.classList.add(colorClass);
+        }
       } else {
-        section.classList.remove('opacity-100');
+        section.classList.remove('opacity-100', 'is-active');
         section.classList.add('opacity-60');
+
+        if (title && colorClass) {
+        title.classList.remove(colorClass);
+        title.classList.remove('text-white');
+        }
       }
     });
 
