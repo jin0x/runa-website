@@ -6,7 +6,8 @@
     @php(do_action('get_header'))
     @php(wp_head())
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
+    <script src="{{ get_template_directory_uri() }}/public/build/assets/app-CNoQsifr.js"></script>
   </head>
 
   <body @php(body_class())>
