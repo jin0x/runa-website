@@ -6,6 +6,7 @@
   use App\Enums\TextSize;
   use App\Enums\TextColor;
   use App\Enums\ThemeVariant;
+  use App\Enums\SectionHeadingVariant;
   use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
@@ -14,10 +15,10 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set text colors based on theme
-  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-  $eyebrowColor = TextColor::GREEN_NEON;
-  $subtitleColor = $themeVariant === ThemeVariant::DARK ? TextColor::GRAY : TextColor::GRAY;
+  // Pricing block special case: Use MIXED_GREEN_LIGHT for dark theme
+  $sectionHeadingVariant = ($themeVariant === ThemeVariant::DARK)
+      ? SectionHeadingVariant::MIXED_GREEN_LIGHT
+      : EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // Grid classes based on card count
   $cardCount = count($pricing_cards);
@@ -30,45 +31,16 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
-  {{-- Title Section --}}
-  <div class="py-16 px-4 lg:px-16 text-center">
-    <div class="max-w-[1100px] mx-auto">
-      {{-- Eyebrow --}}
-      @if($eyebrow)
-        <x-text
-          :as="TextTag::SPAN"
-          :size="TextSize::SMALL"
-          :color="$eyebrowColor"
-          class="block mb-6 uppercase tracking-wider font-medium"
-        >
-          {{ $eyebrow }}
-        </x-text>
-      @endif
-
-      {{-- Main Heading --}}
-      @if($heading)
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H2"
-          :color="$textColor"
-          class="mb-6"
-        >
-          {{ $heading }}
-        </x-heading>
-      @endif
-
-      {{-- Subtitle --}}
-      @if($subtitle)
-        <x-text
-          :as="TextTag::P"
-          :size="TextSize::BASE"
-          class="{{ $subtitleColor }} max-w-4xl mx-auto"
-        >
-          {{ $subtitle }}
-        </x-text>
-      @endif
-    </div>
-  </div>
+  {{-- Section Heading --}}
+  @if($eyebrow || $heading || $subtitle)
+    <x-section-heading
+      :eyebrow="$eyebrow"
+      :heading="$heading"
+      :subtitle="$subtitle"
+      :variant="$sectionHeadingVariant"
+      classes="py-16 px-4 lg:px-16"
+    />
+  @endif
 
   {{-- Cards Section --}}
   @if(!empty($pricing_cards))

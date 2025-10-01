@@ -4,7 +4,7 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextSize;
   use App\Enums\TextTag;
-  use App\Enums\ThemeVariant;
+  use App\Enums\SectionHeadingVariant;
 @endphp
 
 @props([
@@ -25,28 +25,28 @@
 
   // Map eyebrow colors to CSS classes
   $eyebrowClasses = match ($variant) {
-      ThemeVariant::LIGHT => 'text-primary-dark',
-      ThemeVariant::DARK => 'text-primary-green-soft',
-      ThemeVariant::GREEN => 'text-primary-green-neon',
-      ThemeVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::LIGHT => 'text-primary-dark',
+      SectionHeadingVariant::GREEN => 'text-primary-green-neon',
+      SectionHeadingVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::MIXED_GREEN_LIGHT => 'text-gradient-primary',  // Green eyebrow
       default => '',
   };
 
   // Map title colors to CSS classes
   $titleClasses = match ($variant) {
-      ThemeVariant::LIGHT => 'text-primary-dark',
-      ThemeVariant::DARK => 'text-gradient-primary',
-      ThemeVariant::GREEN => 'text-primary-green-neon',
-      ThemeVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::LIGHT => 'text-primary-dark',
+      SectionHeadingVariant::GREEN => 'text-gradient-primary',
+      SectionHeadingVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::MIXED_GREEN_LIGHT => 'text-white',       // Light title
       default => '',
   };
 
   // Map subtitle colors to CSS classes
   $subtitleClasses = match ($variant) {
-      ThemeVariant::LIGHT => 'text-primary-dark',
-      ThemeVariant::DARK => 'text-gradient-primary',
-      ThemeVariant::GREEN => 'text-primary-green-neon',
-      ThemeVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::LIGHT => 'text-primary-dark',
+      SectionHeadingVariant::GREEN => 'text-gradient-primary',
+      SectionHeadingVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::MIXED_GREEN_LIGHT => 'text-white',       // Light subtitle
       default => '',
   };
 

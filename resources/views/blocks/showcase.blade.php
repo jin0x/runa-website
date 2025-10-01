@@ -1,5 +1,6 @@
 @php
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;

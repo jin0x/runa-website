@@ -8,6 +8,7 @@
   use App\Enums\TextSize;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
 

@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Enums\ThemeVariant;
 use App\Enums\SectionSize;
+use App\Enums\SectionHeadingVariant;
 
 class EnumHelper
 {
@@ -27,11 +28,11 @@ class EnumHelper
     public static function getSectionHeadingVariant(string $themeVariant): string
     {
         return match ($themeVariant) {
-            ThemeVariant::LIGHT => ThemeVariant::LIGHT,   // dark text on light bg
-            ThemeVariant::GREEN => ThemeVariant::LIGHT,   // dark text on green bg
-            ThemeVariant::PURPLE => ThemeVariant::LIGHT,  // dark text on purple bg
-            ThemeVariant::DARK => ThemeVariant::GREEN,    // colorful text on dark bg
-            default => ThemeVariant::LIGHT,
+            ThemeVariant::LIGHT => SectionHeadingVariant::LIGHT,   // dark text on light bg
+            ThemeVariant::GREEN => SectionHeadingVariant::LIGHT,   // dark text on green bg
+            ThemeVariant::PURPLE => SectionHeadingVariant::LIGHT,  // dark text on purple bg
+            ThemeVariant::DARK => SectionHeadingVariant::GREEN,    // colorful text on dark bg
+            default => SectionHeadingVariant::LIGHT,
         };
     }
 

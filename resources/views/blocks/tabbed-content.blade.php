@@ -3,6 +3,7 @@
    * Tabbed Content Block
    */
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
   use App\Enums\ContainerSize;
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;

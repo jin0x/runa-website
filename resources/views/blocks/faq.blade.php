@@ -7,6 +7,7 @@
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
   use function App\Helpers\apply_tailwind_classes_to_content;
