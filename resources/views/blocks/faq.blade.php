@@ -57,7 +57,7 @@
           >
             <x-text
               :as="TextTag::SPAN"
-              :size="TextSize::XSMALL"
+              :size="TextSize::SMALL"
               :color="$textColor"
               class="font-bold"
             >

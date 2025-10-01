@@ -88,7 +88,7 @@
                     <x-heading
                         id="main-title"
                         :as="HeadingTag::H4"
-                        :size="HeadingSize::H5"
+                        :size="HeadingSize::H4"
                         :color="$textColor"
                         class="text-left font-extrabold"
                     >

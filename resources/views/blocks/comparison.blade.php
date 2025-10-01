@@ -71,8 +71,8 @@
 
           @if($left_side['title'])
             <x-heading
-              :as="HeadingTag::H3"
-              :size="HeadingSize::H3"
+              :as="HeadingTag::H2"
+              :size="HeadingSize::H2"
               :color="TextColor::DARK"
               class="mb-2"
             >
@@ -112,7 +112,7 @@
                   {{-- Feature Text --}}
                   <x-text
                     :as="TextTag::SPAN"
-                    :size="TextSize::BASE"
+                    :size="TextSize::LARGE"
                     :color="TextColor::DARK"
                   >
                     {{ $feature['feature_text'] }}
@@ -141,8 +141,8 @@
 
           @if($right_side['title'])
             <x-heading
-              :as="HeadingTag::H3"
-              :size="HeadingSize::H3"
+              :as="HeadingTag::H2"
+              :size="HeadingSize::H2"
               :color="TextColor::DARK"
               class="mb-2"
             >
@@ -182,7 +182,7 @@
                   {{-- Feature Text --}}
                   <x-text
                     :as="TextTag::SPAN"
-                    :size="TextSize::BASE"
+                    :size="TextSize::LARGE"
                     :color="TextColor::DARK"
                   >
                     {{ $feature['feature_text'] }}

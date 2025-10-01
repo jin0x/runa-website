@@ -58,7 +58,7 @@
 
         <x-heading
           :as="HeadingTag::H1"
-          :size="HeadingSize::H4"
+          :size="HeadingSize::H1"
           :color="$headingColor"
           class="mb-4"
         >

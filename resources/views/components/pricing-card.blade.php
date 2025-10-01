@@ -72,7 +72,7 @@
     {{-- Title --}}
     @if($title)
       <x-heading
-        :as="HeadingTag::H3"
+        :as="HeadingTag::H4"
         :size="HeadingSize::H4"
         class="text-primary-light mb-3 {{ $is_popular ? 'text-gradient-primary' : '' }}"
       >

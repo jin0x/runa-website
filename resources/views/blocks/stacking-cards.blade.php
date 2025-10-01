@@ -71,8 +71,8 @@
                       <div class="flex flex-col flex-1 p-8 lg:p-12 min-h-[400px] justify-center">
                         <div class="space-y-4">
                           <x-heading
-                            :as="HeadingTag::H3"
-                            :size="HeadingSize::H3"
+                            :as="HeadingTag::H2"
+                            :size="HeadingSize::H2"
                             :font="FontType::SANS"
                             :color="$cardTextColor"
                             class="mb-4"

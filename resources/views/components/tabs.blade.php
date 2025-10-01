@@ -28,21 +28,21 @@
   };
 
   $tabButtonBaseClasses = match($variant) {
-      'underline' => 'px-8 py-6 text-sm font-medium rounded-full whitespace-nowrap transition-all duration-300',
+      'underline' => 'px-8 py-6 text-base rounded-full whitespace-nowrap transition-all duration-300',
       'pills' => 'px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap',
       'buttons' => 'px-4 py-2 text-sm font-medium rounded-md border whitespace-nowrap',
       default => 'px-6 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-all duration-300',
   };
 
   $tabActiveClasses = match($variant) {
-      'underline' => 'tab-active-gradient text-primary-dark',
+      'underline' => 'tab-active-gradient font-bold text-primary-dark',
       'pills' => 'bg-white text-brand-primary shadow-sm',
       'buttons' => 'bg-brand-primary text-white border-brand-primary',
       default => 'bg-white text-primary-dark',
   };
 
   $tabInactiveClasses = match($variant) {
-      'underline' => 'bg-transparent text-primary-dark hover:bg-white/20',
+      'underline' => 'bg-transparent font-regular text-primary-dark hover:bg-white/20',
       'pills' => 'text-neutral-700 hover:text-brand-primary',
       'buttons' => 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-50',
       default => 'bg-transparent text-primary-dark hover:bg-white/20',

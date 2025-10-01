@@ -55,8 +55,8 @@
     <div class="{{ $contentOrder }} {{ $backgroundClasses }} p-8 md:p-12 flex flex-col justify-center">
       @if($heading)
         <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H2"
+          :as="HeadingTag::H1"
+          :size="HeadingSize::H1"
           :color="$textColor"
           class="mb-8"
         >
@@ -105,7 +105,7 @@
               {{-- Feature Text --}}
               <x-text
                 :as="TextTag::SPAN"
-                :size="TextSize::BASE"
+                :size="TextSize::XSMALL"
                 :color="$textColor"
                 class="{{ $fontWeight }}"
               >

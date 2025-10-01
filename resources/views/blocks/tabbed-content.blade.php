@@ -37,8 +37,8 @@
         <div class="order-2 lg:order-1">
           @if(!empty($tab['content_data']['heading']))
             <x-heading
-              :as="HeadingTag::H3"
-              :size="HeadingSize::H3"
+              :as="HeadingTag::H2"
+              :size="HeadingSize::H2"
               :color="$headingColor"
               class="mb-4"
             >
