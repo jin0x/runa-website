@@ -157,3 +157,37 @@ function apply_tailwind_classes_to_content(string $content, array $options = [])
 
     return $content;
 }
+
+/**
+ * Enqueue Vite assets dynamically using WordPress native functions
+ * Reads manifest.json to get current hashed filenames automatically
+ *
+ * @return void
+ */
+function enqueue_vite_assets()
+{
+    $assets = get_vite_entry_with_css('resources/js/app.js');
+
+    if ($assets && !empty($assets['js'])) {
+        // Enqueue the main JavaScript file
+        wp_enqueue_script(
+            'theme-app-js',
+            $assets['js'],
+            [], // No dependencies
+            null, // Use file modification time for version
+            true  // Load in footer
+        );
+
+        // Enqueue any associated CSS files from the JS entry
+        if (!empty($assets['css'])) {
+            foreach ($assets['css'] as $index => $css_url) {
+                wp_enqueue_style(
+                    'theme-app-css-' . $index,
+                    $css_url,
+                    [], // No dependencies
+                    null  // Use file modification time for version
+                );
+            }
+        }
+    }
+}

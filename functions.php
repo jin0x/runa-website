@@ -108,3 +108,11 @@ add_action('wp_head', function () {
  * Change the font name, weights and styles to what you are using as needed.
  */
 define('GOOGLE_FONTS', 'Inter:300,400,500:latin');
+
+/**
+ * Enqueue theme assets using dynamic manifest.json lookup
+ * Automatically handles hashed filenames from Vite builds
+ */
+add_action('wp_enqueue_scripts', function () {
+    App\Helpers\enqueue_vite_assets();
+});
