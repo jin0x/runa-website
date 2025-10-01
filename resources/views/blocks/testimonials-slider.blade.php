@@ -36,7 +36,7 @@
 
 @if($testimonials && count($testimonials) > 0)
   <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="testimonials-slider-block {{ $block->classes ?? '' }}">
-    
+
     {{-- Section Heading --}}
     @if($section_eyebrow || $section_title || $section_description)
       <x-section-heading
@@ -110,7 +110,6 @@
     <x-container :size="$containerSize">
       <div class="text-center">
         <x-text
-          :color="$textColor"
           class="text-lg"
         >
           No testimonials available. Create some testimonials to display them here.

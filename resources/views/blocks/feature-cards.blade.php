@@ -31,7 +31,6 @@
       <x-heading
         :as="HeadingTag::H4"
         :size="HeadingSize::H4"
-        :color="$textColor"
         class="text-center mb-12 max-w-3xl"
       >
         {{ $heading }}

@@ -163,8 +163,6 @@
         // Set initial position for smooth infinite scroll
         window.gsap.set(marqueeInner, { xPercent: -50 });
 
-        console.log('✅ Client logos marquee animation started');
-
         // Return cleanup function
         return () => {
           animation?.kill();
