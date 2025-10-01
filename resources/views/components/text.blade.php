@@ -24,7 +24,7 @@
       TextSize::MEDIUM => 'text-medium',
       TextSize::LARGE => 'text-large',
       TextSize::XLARGE => 'text-xlarge',
-      TextSize::CAPS => 'text-small uppercase',
+      TextSize::CAPS => 'text-caps',
   ];
 
   // Define the font type classes

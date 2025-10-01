@@ -10,6 +10,10 @@ class HeadingSize
     const H4 = 'heading-4';
     const H5 = 'heading-5';
     const H6 = 'heading-6';
+    const H7 = 'heading-7';
+    const HERO = 'heading-hero';
+    const SUPER = 'heading-super';
+    const SUPER_DUPER = 'heading-super-duper';
     const DISPLAY_LARGE = 'text-display-large';
     const DISPLAY_MEDIUM = 'text-display-medium';
     const DISPLAY_SMALL = 'text-display-small';
@@ -22,6 +26,10 @@ class HeadingSize
             self::H4,
             self::H5,
             self::H6,
+            self::H7,
+            self::HERO,
+            self::SUPER,
+            self::SUPER_DUPER,
             self::DISPLAY_LARGE,
             self::DISPLAY_MEDIUM,
             self::DISPLAY_SMALL,
