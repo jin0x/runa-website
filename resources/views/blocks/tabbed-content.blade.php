@@ -19,6 +19,9 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
+
   // Set text color enums based on theme
   $headingColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
   $subtitleColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
@@ -123,7 +126,7 @@
         :eyebrow="$section_heading['eyebrow']"
         :heading="$section_heading['heading']"
         :subtitle="$section_heading['subtitle']"
-        :variant="$themeVariant"
+        :variant="$sectionHeadingVariant"
         classes="mb-12"
       />
     @endif

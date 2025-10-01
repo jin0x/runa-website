@@ -15,6 +15,9 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
+
   // Theme variant is used by section component
 
   // Set grid column values
@@ -30,7 +33,7 @@
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
     />
   @endif

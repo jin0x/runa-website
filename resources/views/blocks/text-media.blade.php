@@ -18,6 +18,9 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
+
   // Media handling
   $media_url = '';
   if ($media_type === 'video' && !empty($video) && is_array($video)) {
@@ -49,7 +52,7 @@
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
     />
   @endif

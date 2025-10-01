@@ -12,6 +12,9 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
+
   // Background color handled by section component via $themeVariant
 
   // Marquee fade gradient classes based on theme
@@ -47,7 +50,7 @@
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
     />
   @endif
