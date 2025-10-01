@@ -53,7 +53,7 @@
   <div class="absolute bottom-0 left-0 right-0 z-20 pb-16 px-4 lg:px-8">
     @if($isFullWidth)
       {{-- Full Width: No container, just padding --}}
-      <x-flex direction="col" gapsize="md">
+      <x-flex direction="col">
         @if ($eyebrow)
           <x-text
             :as="TextTag::SPAN"
@@ -67,7 +67,7 @@
         @if ($title)
           <x-heading
             :as="HeadingTag::H1"
-            :size="HeadingSize::H1"
+            :size="HeadingSize::SUPER_DUPER"
             :color="TextColor::DARK"
             class="mb-3"
           >
@@ -78,9 +78,9 @@
         @if ($content)
           <x-text
             :as="TextTag::SPAN"
-            :size="TextSize::LARGE"
+            :size="TextSize::XLARGE"
             :color="TextColor::DARK"
-            class="opacity-90 mb-8"
+            class="mb-8"
           >
             {!! $content !!}
           </x-text>
@@ -112,7 +112,7 @@
     @else
       {{-- Contained: Within container --}}
       <x-container>
-        <x-flex direction="col" gapsize="md">
+        <x-flex direction="col">
           @if ($eyebrow)
             <x-text
               :as="TextTag::SPAN"
@@ -126,7 +126,7 @@
           @if ($title)
             <x-heading
               :as="HeadingTag::H1"
-              :size="HeadingSize::H1"
+              :size="HeadingSize::SUPER_DUPER"
               :color="TextColor::DARK"
               class="mb-3"
             >
@@ -137,9 +137,9 @@
           @if ($content)
             <x-text
               :as="TextTag::SPAN"
-              :size="TextSize::LARGE"
+              :size="TextSize::XLARGE"
               :color="TextColor::DARK"
-              class="opacity-90 mb-8 max-w-2xl"
+              class="mb-8"
             >
               {!! $content !!}
             </x-text>
