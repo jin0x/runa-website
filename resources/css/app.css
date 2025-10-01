@@ -144,21 +144,21 @@ body {
   --color-background-secondary: #171717;
 
   /* Text Sizes */
-  --text-3xs: 0.75rem; /* 12px - Caption */
-  --text-2xs: 0.875rem; /* 14px - Small Body */
-  --text-xs: 1rem; /* 16px - Body */
-  --text-sm: 1.125rem; /* 18px */
-  --text-base: 1.25rem; /* 20px */
+  --text-3xs: 0.75rem; /* 12px - Caption - B6 */
+  --text-2xs: 0.875rem; /* 14px - Small Body - B5 */
+  --text-xs: 1rem; /* 16px - Body - B4 */
+  --text-sm: 1.125rem; /* 18px - B3/H7 */
+  --text-base: 1.25rem; /* 20px - B2/H6 */
   /* Need a 22px */
-  --text-lg: 1.375rem; /* 22px */
-  --text-xl: 1.5rem; /* 24px */
-  --text-2x: 1.75rem; /* 28px */
-  --text-3xl: 2rem; /* 32px */
-  --text-4xl: 2.5rem; /* 40px */
-  --text-5xl: 3rem; /* 48px */
-  --text-6xl: 4rem; /* 64px */
-  --text-7xl: 4.5rem; /* 88px */
-  --text-8xl: 7.5rem; /* 120px */
+  --text-lg: 1.375rem; /* 22px - B1 */
+  --text-xl: 1.5rem; /* 24px - H5 */
+  --text-2x: 1.75rem; /* 28px - H4 */
+  --text-3xl: 2rem; /* 32px - H3 */
+  --text-4xl: 2.5rem; /* 40px - H2 */
+  --text-5xl: 3rem; /* 48px - H1 */
+  --text-6xl: 4rem; /* 64px - Hero */
+  --text-7xl: 4.5rem; /* 88px - Super */
+  --text-8xl: 7.5rem; /* 120px - Super Duper */
 
   /* Transitions */
   --default-transition-duration: 250ms;
@@ -227,6 +227,27 @@ body {
   font-family: var(--font-body);
 }
 
+.heading-7,
+.widget-title {
+  @apply text-sm md:text-base font-normal leading-[110%];
+  font-family: var(--font-body);
+}
+
+.heading-hero {
+  @apply text-4xl md:text-6xl font-bold leading-[85%];
+  font-family: var(--font-heading);
+}
+
+.heading-super {
+  @apply text-5xl md:text-7xl font-bold leading-[85%];
+  font-family: var(--font-heading);
+}
+
+.heading-super-duper {
+  @apply text-6xl md:text-8xl font-bold leading-[85%];
+  font-family: var(--font-heading);
+}
+
 /* Apply heading styles to native HTML tags */
 h1,
 h1.wp-block-heading {
@@ -264,20 +285,19 @@ h6.wp-block-heading {
   font-family: var(--font-body);
 }
 
-.text-display-lg {
+.text-display-large {
   @apply text-5xl md:text-8xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 
-.text-display-md {
+.text-display-medium {
   @apply text-3xl md:text-7xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 
-.heading-7,
-.widget-title {
-  @apply text-sm md:text-base font-normal leading-[110%];
-  font-family: var(--font-body);
+.text-display-small {
+  @apply text-xl md:text-5xl font-bold leading-[85%];
+  font-family: var(--font-heading);
 }
 
 /* Text size classes */
@@ -290,7 +310,7 @@ h6.wp-block-heading {
 }
 
 .text-small {
-  @apply text-2xs leading-[110%];
+  @apply text-xs leading-[110%];
 }
 
 .text-default {
@@ -298,15 +318,19 @@ h6.wp-block-heading {
 }
 
 .text-medium {
-  @apply text-sm md:text-base leading-[110%];
+  @apply text-sm leading-[110%];
 }
 
 .text-large {
-  @apply text-base md:text-lg leading-[110%];
+  @apply text-base leading-[110%];
 }
 
 .text-xlarge {
-  @apply text-base md:text-xl leading-[110%];
+  @apply text-lg leading-[110%];
+}
+
+.text-caps {
+  @apply text-2xs leading-[110%] uppercase tracking-wider;
 }
 
 /* Apply default text styles to native paragraph tags */
