@@ -91,7 +91,7 @@
                   <div class="scroll-section mb-8 transition-all duration-700 ease-in-out {{ $index === 0 ? 'opacity-100 is-active' : 'opacity-60' }}" data-section-index="{{ $index }}" data-color-class="{{ $titleColor }}" data-bar-color="{{ $barColorClass }}" data-bar-width="{{ $progressWidth }}">
                     <x-heading
                       :as="HeadingTag::H3"
-                      :size="HeadingSize::H4"
+                      :size="HeadingSize::H3"
                       :color="$headingColor"
                       class="mb-6 section-title"
                     >

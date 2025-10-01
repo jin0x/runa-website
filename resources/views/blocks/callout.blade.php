@@ -57,8 +57,8 @@
         </x-text>
 
         <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H3"
+          :as="HeadingTag::H1"
+          :size="HeadingSize::H1"
           :color="$textColor"
           class="mb-4"
         >

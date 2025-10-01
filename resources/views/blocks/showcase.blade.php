@@ -85,7 +85,7 @@
             @if(!empty($card['statistic']))
               <x-heading
                 :as="HeadingTag::H3"
-                :size="HeadingSize::H2"
+                :size="HeadingSize::HERO"
                 :color="TextColor::GREEN_SOFT"
                 class="mb-2"
               >
@@ -97,7 +97,7 @@
             @if(!empty($card['description']))
               <x-text
                 :as="TextTag::P"
-                :size="TextSize::LARGE"
+                :size="TextSize::MEDIUM"
                 :color="TextColor::DARK"
               >
                 {{ $card['description'] }}

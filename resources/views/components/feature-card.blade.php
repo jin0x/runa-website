@@ -67,8 +67,8 @@
     {{-- Title --}}
     @if($title)
       <x-heading
-        :as="HeadingTag::H5"
-        :size="HeadingSize::H5"
+        :as="HeadingTag::H4"
+        :size="HeadingSize::H4"
         class="{{ $textColor }} mb-3"
       >
         {{ $title }}

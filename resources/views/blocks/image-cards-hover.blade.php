@@ -56,14 +56,14 @@
                         <x-heading
                             id="main-title"
                             :as="HeadingTag::H1"
-                            :size="HeadingSize::H4"
+                            :size="HeadingSize::H1"
                             class="text-left font-bold"
                         >
                             {!! $card['title'] !!}
                         </x-heading>
                         <x-text
                             :as="TextTag::P"
-                            :size="TextSize::MEDIUM"
+                            :size="TextSize::XLARGE"
                             class="text-left font-normal text-default mt-3 xl:mt-0
                             overflow-hidden xl:max-h-0 xl:opacity-0 transition-all duration-300 ease-in-out group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-3"
                         >

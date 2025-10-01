@@ -74,7 +74,7 @@
                         <x-heading
                             id="main-title"
                             :as="HeadingTag::H4"
-                            :size="HeadingSize::H5"
+                            :size="HeadingSize::H4"
                             :color="TextColor::DARK"
                             class="text-left font-extrabold
                             relative after:content-['']
