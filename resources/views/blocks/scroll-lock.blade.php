@@ -4,49 +4,39 @@
    */
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'green' => 'scroll-lock-gradient',
-      default => 'bg-white',
-  };
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
-  // Theme-based color classes
-  $eyebrowClasses = $theme === 'dark' ? 'text-primary-lime border-primary-lime' : 'text-primary-purple border-primary-purple';
-  $headingClasses = $theme === 'dark' ? 'text-white' : 'text-primary-navy';
-  $textClasses = $theme === 'dark' ? 'text-primary-light' : 'text-neutral-700';
+  // Theme-based color enums
+  $headingColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
+  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::GRAY;
 
   // Unique ID for this block instance
   $blockId = 'scroll-lock-' . uniqid();
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
     />
   @endif
@@ -76,7 +66,8 @@
                     <x-heading
                       :as="HeadingTag::H3"
                       :size="HeadingSize::H5"
-                      class="mb-6 {{ $headingClasses }}"
+                      :color="$headingColor"
+                      class="mb-6"
                     >
                       {{ $section['title'] }}
                     </x-heading>
@@ -84,7 +75,8 @@
                     <x-text
                       :as="TextTag::DIV"
                       :size="TextSize::SMALL"
-                      class="{{ $textClasses }} leading-relaxed"
+                      :color="$textColor"
+                      class="leading-relaxed"
                     >
                       {!! $section['description'] !!}
                     </x-text>
@@ -120,7 +112,8 @@
                 <x-heading
                   :as="\App\Enums\HeadingTag::H3"
                   :size="\App\Enums\HeadingSize::H4"
-                  class="mb-4 {{ $headingClasses }}"
+                  :color="$headingColor"
+                  class="mb-4"
                 >
                   {{ $section['title'] }}
                 </x-heading>
@@ -128,7 +121,8 @@
                 <x-text
                   :as="\App\Enums\TextTag::DIV"
                   :size="\App\Enums\TextSize::BASE"
-                  class="{{ $textClasses }} leading-relaxed"
+                  :color="$textColor"
+                  class="leading-relaxed"
                 >
                   {!! $section['description'] !!}
                 </x-text>

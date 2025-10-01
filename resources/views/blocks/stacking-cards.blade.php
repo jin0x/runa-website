@@ -8,46 +8,35 @@
   use App\Enums\HeadingSize;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
   use App\Enums\FontType;
+  use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'green' => 'stacking-cards-gradient',
-      default => 'bg-white',
-  };
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // Theme-based color classes
-  $cardBgColor = $theme === 'dark' ? 'bg-primary-light' : 'bg-white';
-  $cardTextColor = $theme === 'dark' ? 'text-primary-dark' : 'text-primary-navy';
-  $eyebrowClasses = $theme === 'dark' ? 'text-primary-lime border-primary-lime' : 'text-primary-purple border-primary-purple';
+  $cardTextColor = $themeVariant === ThemeVariant::DARK ? TextColor::DARK : TextColor::LIGHT;
 
   // Unique ID for this block instance
   $blockId = 'stacking-cards-' . uniqid();
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
     />
   @endif
@@ -75,7 +64,7 @@
                   <div class="stacking-card absolute w-full transition-transform duration-700 ease-out"
                       data-card-index="{{ $index }}"
                       style="z-index: {{ 10 + $index }}; top: 0; left: 0; transform: translateY(100vh);">
-                    <div class="flex flex-row rounded-[32px] overflow-hidden relative {{ $cardBgColor }} shadow-2xl">
+                    <div class="flex flex-row rounded-[32px] overflow-hidden relative bg-white shadow-2xl">
                       <div class="w-2/5 flex-shrink-0">
                         <img src="{{ $card['image']['url'] }}" alt="{{ $card['image']['alt'] ?? $card['title'] }}" class="w-full h-full object-cover min-h-[400px]"/>
                       </div>
@@ -85,7 +74,8 @@
                             :as="HeadingTag::H3"
                             :size="HeadingSize::H3"
                             :font="FontType::SANS"
-                            class="{{ $cardTextColor }} mb-4"
+                            :color="$cardTextColor"
+                            class="mb-4"
                           >
                             {{ $card['title'] }}
                           </x-heading>
@@ -93,7 +83,8 @@
                           <x-text
                             :as="TextTag::P"
                             :size="TextSize::BASE"
-                            class="{{ $cardTextColor }} leading-relaxed"
+                            :color="$cardTextColor"
+                            class="leading-relaxed"
                           >
                             {!! $card['description'] !!}
                           </x-text>
@@ -101,11 +92,16 @@
 
                         @if(!empty($card['cta']))
                           <div class="pt-8">
-                            <a href="{{ $card['cta']['url'] }}"
-                              class="{{ $cardTextColor }} hover:text-primary-orange text-base font-medium underline underline-offset-4"
-                              target="{{ $card['cta']['target'] ?? '_self' }}">
+                            <x-text
+                              :as="TextTag::A"
+                              :size="TextSize::BASE"
+                              :color="$cardTextColor"
+                              class="font-medium underline underline-offset-4 hover:opacity-75 transition-opacity"
+                              href="{{ $card['cta']['url'] }}"
+                              target="{{ $card['cta']['target'] ?? '_self' }}"
+                            >
                               {{ $card['cta']['title'] ?? 'Learn more' }}
-                            </a>
+                            </x-text>
                           </div>
                         @endif
                       </div>
@@ -123,7 +119,7 @@
         <div class="stacking-mobile-container space-y-8">
           @foreach($cards as $card)
             <div class="mobile-card max-w-md mx-auto">
-              <div class="flex flex-col rounded-[32px] overflow-hidden relative {{ $cardBgColor }} shadow-lg">
+              <div class="flex flex-col rounded-[32px] overflow-hidden relative bg-white shadow-lg">
                 <div>
                   <img src="{{ $card['image']['url'] }}" alt="{{ $card['image']['alt'] ?? $card['title'] }}" class="w-full h-auto object-cover rounded-tl-[32px] rounded-tr-[32px]">
                 </div>
@@ -133,7 +129,7 @@
                       :as="HeadingTag::H3"
                       :size="HeadingSize::H4"
                       :font="FontType::SANS"
-                      class="{{ $cardTextColor }}"
+                      :color="$cardTextColor"
                     >
                       {{ $card['title'] }}
                     </x-heading>
@@ -141,7 +137,8 @@
                     <x-text
                       :as="TextTag::P"
                       :size="TextSize::BASE"
-                      class="{{ $cardTextColor }} leading-relaxed"
+                      :color="$cardTextColor"
+                      class="leading-relaxed"
                     >
                       {!! $card['description'] !!}
                     </x-text>
@@ -149,11 +146,16 @@
 
                   @if(!empty($card['cta']))
                     <div class="pt-6">
-                      <a href="{{ $card['cta']['url'] }}"
-                         class="{{ $cardTextColor }} hover:text-primary-orange text-sm font-normal underline underline-offset-4"
-                         target="{{ $card['cta']['target'] ?? '_self' }}">
+                      <x-text
+                        :as="TextTag::A"
+                        :size="TextSize::SMALL"
+                        :color="$cardTextColor"
+                        class="font-normal underline underline-offset-4 hover:opacity-75 transition-opacity"
+                        href="{{ $card['cta']['url'] }}"
+                        target="{{ $card['cta']['target'] ?? '_self' }}"
+                      >
                         {{ $card['cta']['title'] ?? 'Learn more' }}
-                      </a>
+                      </x-text>
                     </div>
                   @endif
                 </div>

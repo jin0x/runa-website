@@ -1,9 +1,11 @@
 @php
   use App\Enums\SectionSize;
+  use App\Enums\ThemeVariant;
 @endphp
 
 @props([
     'size' => SectionSize::MEDIUM, // default size is medium
+    'variant' => null,
     'classes' => '' // allow additional custom classes
 ])
 
@@ -19,7 +21,16 @@
       default => 'px-4 py-12 lg:px-12 lg:py-24', // Default fallback in case of unexpected value
   };
 
-  $sectionClasses = "w-full relative overflow-hidden $sizeClasses $classes";
+  $variantClasses = match ($variant) {
+      ThemeVariant::LIGHT => 'bg-white text-primary-dark',
+      ThemeVariant::DARK => 'bg-primary-dark text-white',
+      ThemeVariant::GREEN => 'bg-gradient-to-b from-primary-yellow to-primary-green-soft text-primary-dark',
+      ThemeVariant::PURPLE => 'bg-secondary-purple text-primary-dark',
+      ThemeVariant::GREEN_GRADIENT => 'bg-gradient-to-b from-primary-yellow to-primary-green-soft text-primary-dark',
+      default => '',
+  };
+
+  $sectionClasses = "w-full relative overflow-hidden $sizeClasses $variantClasses $classes";
 @endphp
 
 <section class="{{ $sectionClasses }}">

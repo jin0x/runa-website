@@ -2,26 +2,18 @@
   use App\Enums\SectionSize;
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;
+  use App\Enums\TextColor;
+  use App\Enums\ThemeVariant;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::LARGE,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-black',
-      default => 'bg-primary-white',
-  };
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
   // Set text color based on theme
-  $textColor = $theme === 'dark' ? 'text-white' : 'text-primary-black';
+  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
 
   // Grid classes based on columns
   $gridClasses = match ($columns) {
@@ -32,14 +24,15 @@
   };
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   <x-container classes="flex flex-col items-center">
     {{-- Section Heading --}}
     @if($heading)
       <x-heading
         :as="HeadingTag::H4"
         :size="HeadingSize::H4"
-        class="text-center mb-12 {{ $textColor }} max-w-3xl"
+        :color="$textColor"
+        class="text-center mb-12 max-w-3xl"
       >
         {{ $heading }}
       </x-heading>

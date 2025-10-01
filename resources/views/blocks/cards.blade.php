@@ -3,30 +3,23 @@
    * Cards Block
    */
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
   use App\Enums\ThemeVariant;
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;
   use App\Enums\FontType;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      default => 'bg-white',
-  };
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
+
+  // Theme variant is used by section component
 
   // Set grid column values
   $gridColumns = $columns === '2' ? '2' : '3';
@@ -35,13 +28,13 @@
   $gapSize = 'lg';
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
     />
   @endif

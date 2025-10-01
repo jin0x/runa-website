@@ -4,18 +4,19 @@ namespace App\Enums;
 
 class ThemeVariant
 {
-    const LIGHT = 'light';
-    const DARK = 'dark';
-
-    const GREEN = 'green';
-
-    const PURPLE = 'purple';
-    public static function getValues(): array {
+    public const LIGHT = 'light';
+    public const DARK = 'dark';
+    public const GREEN = 'green';
+    public const PURPLE = 'purple';
+    public const GREEN_GRADIENT = 'green-gradient';
+    public static function getValues(): array
+    {
         return [
             self::LIGHT,
             self::DARK,
             self::GREEN,
             self::PURPLE,
+            self::GREEN_GRADIENT,
         ];
     }
 }

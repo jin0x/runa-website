@@ -4,28 +4,21 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
+  use App\Enums\ThemeVariant;
+  use App\Enums\SectionHeadingVariant;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'light' => 'bg-white',
-      default => 'bg-primary-dark',
-  };
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set text color based on theme
-  $textColor = $theme === 'dark' ? 'text-white' : 'text-primary-black';
-  $eyebrowColor = $theme === 'dark' ? 'text-primary-green-neon' : 'text-primary-green-neon';
-  $subtitleColor = $theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600';
+  // Pricing block special case: Use MIXED_GREEN_LIGHT for dark theme
+  $sectionHeadingVariant = ($themeVariant === ThemeVariant::DARK)
+      ? SectionHeadingVariant::MIXED_GREEN_LIGHT
+      : EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // Grid classes based on card count
   $cardCount = count($pricing_cards);
@@ -37,49 +30,22 @@
   };
 @endphp
 
-<section class="{{ $bgColor }} {{ $block->classes }}">
-  {{-- Title Section --}}
-  <div class="py-16 px-4 lg:px-16 text-center">
-    <div class="max-w-[1100px] mx-auto">
-      {{-- Eyebrow --}}
-      @if($eyebrow)
-        <x-text
-          :as="TextTag::SPAN"
-          :size="TextSize::SMALL"
-          class="block {{ $eyebrowColor }} mb-6 uppercase tracking-wider font-medium"
-        >
-          {{ $eyebrow }}
-        </x-text>
-      @endif
-
-      {{-- Main Heading --}}
-      @if($heading)
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H2"
-          class="{{ $textColor }} mb-6"
-        >
-          {{ $heading }}
-        </x-heading>
-      @endif
-
-      {{-- Subtitle --}}
-      @if($subtitle)
-        <x-text
-          :as="TextTag::P"
-          :size="TextSize::BASE"
-          class="{{ $subtitleColor }} max-w-4xl mx-auto"
-        >
-          {{ $subtitle }}
-        </x-text>
-      @endif
-    </div>
-  </div>
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
+  {{-- Section Heading --}}
+  @if($eyebrow || $heading || $subtitle)
+    <x-section-heading
+      :eyebrow="$eyebrow"
+      :heading="$heading"
+      :subtitle="$subtitle"
+      :variant="$sectionHeadingVariant"
+      classes="py-16 px-4 lg:px-16"
+    />
+  @endif
 
   {{-- Cards Section --}}
   @if(!empty($pricing_cards))
-    <div class="px-4 lg:px-16 pb-16 bg-primary-dark">
-      <div class="grid {{ $gridClasses }} gap-6 max-w-7xl mx-auto items-start">
+    <div class="pb-16">
+      <div class="grid {{ $gridClasses }} gap-6 items-start">
         @foreach($pricing_cards as $card)
           <x-pricing-card
             :icon="$card['icon'] ?? null"
@@ -96,4 +62,4 @@
       </div>
     </div>
   @endif
-</section>
+</x-section>

@@ -8,27 +8,23 @@
   use App\Enums\TextSize;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
+  use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
-  
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'green' => 'content-media-gradient',
-      'purple' => 'bg-secondary-purple',
-      default => 'bg-white',
+  $themeVariant = EnumHelper::getThemeVariant($theme);
+
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
+
+  // Set heading color based on theme
+  $headingColor = match ($themeVariant) {
+      ThemeVariant::DARK => TextColor::GRADIENT,
+      default => TextColor::DARK,
   };
 
   // Set grid column values
@@ -46,16 +42,15 @@
 
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
-      headingClasses="pb-2 {{ $theme === 'dark' ? 'text-gradient-primary' : '' }}"
     />
   @endif
 
@@ -80,7 +75,8 @@
                             id="main-title"
                             :as="HeadingTag::H4"
                             :size="HeadingSize::H5"
-                            class="text-primary-dark text-left font-extrabold
+                            :color="TextColor::DARK"
+                            class="text-left font-extrabold
                             relative after:content-['']
                             after:absolute after:bottom-[-12px] after:left-0 after:w-full after:h-[1px]
                             after:bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.10)_100%)]"
@@ -90,7 +86,8 @@
                         <x-text
                             :as="TextTag::P"
                             :size="TextSize::SMALL"
-                            class="text-primary-dark text-left font-normal text-default"
+                            :color="TextColor::DARK"
+                            class="text-left font-normal text-default"
                         >
                             {{ $card['text'] }}
                         </x-text>

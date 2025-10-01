@@ -4,14 +4,14 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextSize;
   use App\Enums\TextTag;
-  use App\Enums\ThemeVariant;
+  use App\Enums\SectionHeadingVariant;
 @endphp
 
 @props([
     'eyebrow' => null,
     'heading' => null,
     'subtitle' => null,
-    'variant' => ThemeVariant::LIGHT,
+    'variant' => null,
     'classes' => '', // Extra classes for container
     'wrapperClasses' => null, // Classes for optional wrapper div
     'headingClasses' => '', // Extra classes for heading
@@ -25,29 +25,29 @@
 
   // Map eyebrow colors to CSS classes
   $eyebrowClasses = match ($variant) {
-      ThemeVariant::LIGHT => 'text-primary-dark',
-      ThemeVariant::DARK => 'text-gradient-primary',
-      ThemeVariant::GREEN => 'text-primary-green-neon',
-      ThemeVariant::PURPLE => 'text-secondary-purple',
-      default => 'text-primary-green-neon',
+      SectionHeadingVariant::LIGHT => 'text-primary-dark',
+      SectionHeadingVariant::GREEN => 'text-primary-green-neon',
+      SectionHeadingVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::MIXED_GREEN_LIGHT => 'text-gradient-primary',  // Green eyebrow
+      default => '',
   };
 
   // Map title colors to CSS classes
   $titleClasses = match ($variant) {
-      ThemeVariant::LIGHT => 'text-primary-dark',
-      ThemeVariant::DARK => 'text-gradient-primary',
-      ThemeVariant::GREEN => 'text-primary-green-neon',
-      ThemeVariant::PURPLE => 'text-secondary-purple',
-      default => 'text-primary-green-neon',
+      SectionHeadingVariant::LIGHT => 'text-primary-dark',
+      SectionHeadingVariant::GREEN => 'text-gradient-primary',
+      SectionHeadingVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::MIXED_GREEN_LIGHT => 'text-white',       // Light title
+      default => '',
   };
 
   // Map subtitle colors to CSS classes
   $subtitleClasses = match ($variant) {
-      ThemeVariant::LIGHT => 'text-primary-dark',
-      ThemeVariant::DARK => 'text-gradient-primary',
-      ThemeVariant::GREEN => 'text-primary-green-neon',
-      ThemeVariant::PURPLE => 'text-secondary-purple',
-      default => 'text-primary-green-neon',
+      SectionHeadingVariant::LIGHT => 'text-primary-dark',
+      SectionHeadingVariant::GREEN => 'text-gradient-primary',
+      SectionHeadingVariant::PURPLE => 'text-secondary-purple',
+      SectionHeadingVariant::MIXED_GREEN_LIGHT => 'text-white',       // Light subtitle
+      default => '',
   };
 
 
@@ -59,11 +59,11 @@
   <div class="{{ $wrapperClasses }}">
 @endif
 
-    <x-container :size="ContainerSize::MEDIUM" {{ $attributes->merge(['classes' => 'text-center' . $classes]) }}>
+    <x-container :size="ContainerSize::MEDIUM" {{ $attributes->merge(['classes' => 'text-center ' . $classes]) }}>
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::LARGE"
-          class="block max-w-max mx-auto pill uppercase mb-8 font-extrabold {{ $eyebrowClasses }}"
+          class="block max-w-max mx-auto pill uppercase mb-8 font-bold {{ $eyebrowClasses }}"
         >
           {!! $eyebrow !!}
         </x-text>

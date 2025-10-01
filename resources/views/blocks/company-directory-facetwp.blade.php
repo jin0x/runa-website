@@ -1,34 +1,31 @@
 @php
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\ThemeVariant;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  $themeVariant = EnumHelper::getThemeVariant($theme);
+
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // Set background color based on theme
-  $bgColor = match ($theme) {
-      'light' => 'bg-white',
+  $bgColor = match ($themeVariant) {
+      ThemeVariant::LIGHT => 'bg-white',
       default => 'bg-black',
   };
 
   // Text colors based on theme
-  $textColor = $theme === 'dark' ? 'text-white' : 'text-black';
-  $borderColor = $theme === 'dark' ? 'border-gray-700' : 'border-gray-200';
+  $textColor = $themeVariant === ThemeVariant::DARK ? 'text-white' : 'text-black';
+  $borderColor = $themeVariant === ThemeVariant::DARK ? 'border-gray-700' : 'border-gray-200';
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
@@ -39,7 +36,7 @@
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
     />
   @endif
@@ -53,7 +50,7 @@
       data-theme="{{ $theme }}"
     >
       {{-- Filter Section --}}
-      <div class="mb-8 p-6 rounded-lg {{ $theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50' }} {{ $borderColor }} border">
+      <div class="mb-8 p-6 rounded-lg {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-gray-50' }} {{ $borderColor }} border">
         <form class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
 
           {{-- Country Filter --}}
@@ -130,8 +127,8 @@
             $companies_query = new WP_Query($query_args);
           @endphp
 
-          <table class="w-full {{ $theme === 'dark' ? 'bg-gray-900' : 'bg-white' }} shadow-lg rounded-lg overflow-hidden">
-            <thead class="{{ $theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50' }}">
+          <table class="w-full {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-white' }} shadow-lg rounded-lg overflow-hidden">
+            <thead class="{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }}">
               <tr>
                 <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
                   Company Name
@@ -167,7 +164,7 @@
                     $category_terms = get_the_terms(get_the_ID(), 'company_category');
                   @endphp
 
-                  <tr class="company-row hover:{{ $theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200">
+                  <tr class="company-row hover:{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200">
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm font-medium {{ $textColor }}">
                         {!! get_the_title() !!}

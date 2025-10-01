@@ -2,25 +2,14 @@
   use App\Enums\ContainerSize;
   use App\Enums\SectionSize;
   use App\Enums\ThemeVariant;
+  use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::LARGE,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'light' => 'bg-white',
-      'green' => 'bg-primary-green-neon',
-      default => 'bg-primary-green-neon',
-  };
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
   // Set container size based on section size
   $containerSize = match ($section_size) {
@@ -30,14 +19,14 @@
   };
 
   // Set text color based on theme
-  $textColor = match ($theme) {
-      'light' => 'text-primary-dark',
-      default => 'text-white',
+  $textColor = match ($themeVariant) {
+      ThemeVariant::LIGHT => TextColor::DARK,
+      default => TextColor::LIGHT,
   };
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
-  <x-section :size="$sectionSizeValue" classes="testimonials-slider-block {{ $bgColor }} {{ $block->classes ?? '' }}">
+  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="testimonials-slider-block {{ $block->classes ?? '' }}">
     <x-container :size="$containerSize">
 
       <x-slider
@@ -66,12 +55,15 @@
   </x-section>
 @else
   {{-- No testimonials fallback --}}
-  <x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes ?? '' }}">
+  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes ?? '' }}">
     <x-container :size="$containerSize">
       <div class="text-center">
-        <p class="text-lg {{ $textColor }}">
+        <x-text
+          :color="$textColor"
+          class="text-lg"
+        >
           No testimonials available. Create some testimonials to display them here.
-        </p>
+        </x-text>
       </div>
     </x-container>
   </x-section>
