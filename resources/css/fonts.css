@@ -4,8 +4,7 @@
   font-family: 'Lineca';
   font-style: normal;
   font-weight: 400;
-  src:
-    url('@fonts/Lineca-Regular.woff2') format('woff2'),
+  src: url('@fonts/Lineca-Regular.woff2') format('woff2'),
     url('@fonts/Lineca-Regular.woff') format('woff');
 }
 
@@ -14,7 +13,6 @@
   font-family: 'Lineca';
   font-style: normal;
   font-weight: 700;
-  src:
-    url('@fonts/Lineca-Bold.woff2') format('woff2'),
+  src: url('@fonts/Lineca-Bold.woff2') format('woff2'),
     url('@fonts/Lineca-Bold.woff') format('woff');
 }

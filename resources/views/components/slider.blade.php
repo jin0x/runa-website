@@ -11,7 +11,15 @@
     'navigationPosition' => 'sides', // 'sides' or 'bottom-right'
 ])
 
-<div x-data="carouselComponent()" x-init="initSwiper()" class="relative">
+<div x-data="carouselComponent({
+  loop: {{ $loop ? 'true' : 'false' }},
+  autoplayDelay: {{ $autoplayDelay }},
+  slidesPerView: {{ $slidesPerView }},
+  mobileSlidesPerView: {{ $mobileSlidesPerView }},
+  tabletSlidesPerView: {{ $tabletSlidesPerView }},
+  desktopSlidesPerView: {{ $desktopSlidesPerView }},
+  spaceBetween: {{ $spaceBetween }}
+})" x-init="initSwiper()" class="relative">
   <div class="swiper-container" x-ref="container">
     <div class="swiper-wrapper">
       {!! $slot !!}
@@ -55,14 +63,12 @@
     @endif
     @elseif($navigationPosition === 'bottom-center')
       <div class="flex justify-center gap-2 mt-6">
-        <button @click="swiper && swiper.slidePrev()" class="bg-primary
--dark text-primary-green-soft flex justify-center items-center w-10 h-10 rounded-full shadow focus:outline-none hover:bg-neutral-50 transition-colors">
+        <button @click="swiper && swiper.slidePrev()" class="bg-primary-dark text-primary-green-soft flex justify-center items-center w-10 h-10 rounded-full shadow focus:outline-none hover:bg-neutral-50 transition-colors">
           <svg viewBox="0 0 20 20" fill="currentColor" class="chevron-left w-5 h-5">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-          </svg>  
+          </svg>
         </button>
-        <button @click="swiper && swiper.slideNext()" class="bg-primary-dark text-primary
--green-soft flex justify-center items-center w-10 h-10 rounded-full shadow focus:outline-none hover:bg-neutral-50 transition-colors">
+        <button @click="swiper && swiper.slideNext()" class="bg-primary-dark text-primary-green-soft flex justify-center items-center w-10 h-10 rounded-full shadow focus:outline-none hover:bg-neutral-50 transition-colors">
           <svg viewBox="0 0 20 20" fill="currentColor" class="chevron-right w-5 h-5">
             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
           </svg>
@@ -70,39 +76,3 @@
       </div>
   @endif
 </div>
-
-<script>
-  function carouselComponent() {
-    return {
-      swiper: null,
-      initSwiper() {
-        if ( typeof Swiper !== 'undefined' ) {
-          this.swiper = new Swiper( this.$refs.container, {
-            @if($loop)
-            loop: true,
-            @endif
-            autoplay: {
-              delay: {{ $autoplayDelay }},
-              disableOnInteraction: false,
-            },
-            slidesPerView: {{ $slidesPerView }},
-            spaceBetween: {{ $spaceBetween }},
-            breakpoints: {
-              640: { slidesPerView: {{ $mobileSlidesPerView }} },
-              768: { slidesPerView: {{ $tabletSlidesPerView }} },
-              1024: { slidesPerView: {{ $desktopSlidesPerView }} },
-            },
-          } );
-
-          if ( this.swiper.autoplay ) {
-            console.log("▶️");
-            this.swiper.autoplay.start();
-          }
-
-        } else {
-          console.error( 'Swiper library not loaded.' );
-        }
-      }
-    }
-  }
-</script>
