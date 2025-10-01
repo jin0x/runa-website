@@ -104,7 +104,10 @@
               {{-- :color="$textColor" --}}
               class="mb-8"
             >
-              {!! apply_tailwind_classes_to_content($item['content_text']) !!}
+              {!! apply_tailwind_classes_to_content($item['content_text'], [
+                  'heading' => '!font-normal',
+                  'strong'  => '!font-extrabold',
+              ]) !!}
             </x-text>
           @endif
 
