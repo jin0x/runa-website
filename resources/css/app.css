@@ -410,6 +410,11 @@ strong {
   );
 }
 
+.tab-active-gradient {
+  background: linear-gradient(139deg, rgba(255, 255, 255, 0.90) 2.52%, rgba(255, 255, 255, 0.18) 97.48%);
+  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.14) inset, -1px -1px 0 0 rgba(255, 255, 255, 0.54) inset, 0 0 97px 0 rgba(0, 0, 0, 0.08);
+}
+
 /* Post Card Styles */
 .post-card {
   @apply bg-white rounded-2xl border border-neutral-100 overflow-hidden transition-all duration-300;
