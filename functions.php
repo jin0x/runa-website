@@ -69,38 +69,6 @@ collect(['setup', 'filters', 'helpers'])
 
 
 
-/**
- * Add custom @font-face styles for the Lineca font.
- * Prevents FOUC (Flash of unstyled content)
- *
- * This function adds inline styles to define the ABC Diatype Rounded font family using @font-face,
- * and sets it as the default font for the body element. The font files are located in
- * the theme's assets/fonts directory.
- *
- * @since Runa 1.0
- */
-add_action('wp_head', function () {
-    echo "<style>
-        @font-face {
-            font-family: 'Lineca';
-            src: url('" . App\Helpers\get_vite_asset('resources/fonts/Lineca-Regular.woff2') . "') format('woff2'),
-                url('" . App\Helpers\get_vite_asset('resources/fonts/Lineca-Regular.woff') . "') format('woff');
-            font-weight: 400;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Lineca';
-            src: url('" . App\Helpers\get_vite_asset('resources/fonts/Lineca-Bold.woff2') . "') format('woff2'),
-                url('" . App\Helpers\get_vite_asset('resources/fonts/Lineca-Bold.woff') . "') format('woff');
-            font-weight: 700;
-            font-style: normal;
-        }
-        body {
-            font-family: 'Lineca', sans-serif;
-        }
-    </style>";
-}, 100);
 
 /**
  * Add your Google Fonts here.

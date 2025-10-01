@@ -189,28 +189,28 @@ add_action('widgets_init', function () {
     ];
 
     register_sidebar([
-                          'name' => __('Footer Widget Area 1', TEXT_DOMAIN),
-                          'id'   => 'footer-widget-1',
-                          'description' => __('First footer widget area', TEXT_DOMAIN),
-                      ] + $footer_widget_config);
+                        'name' => __('Footer Widget Area 1', TEXT_DOMAIN),
+                        'id'   => 'footer-widget-1',
+                        'description' => __('First footer widget area', TEXT_DOMAIN),
+                    ] + $footer_widget_config);
 
     register_sidebar([
-                          'name' => __('Footer Widget Area 2', TEXT_DOMAIN),
-                          'id'   => 'footer-widget-2',
-                          'description' => __('Second footer widget area', TEXT_DOMAIN),
-                      ] + $footer_widget_config);
+                        'name' => __('Footer Widget Area 2', TEXT_DOMAIN),
+                        'id'   => 'footer-widget-2',
+                        'description' => __('Second footer widget area', TEXT_DOMAIN),
+                    ] + $footer_widget_config);
 
     register_sidebar([
-                          'name' => __('Footer Widget Area 3', TEXT_DOMAIN),
-                          'id'   => 'footer-widget-3',
-                          'description' => __('Third footer widget area', TEXT_DOMAIN),
-                      ] + $footer_widget_config);
+                        'name' => __('Footer Widget Area 3', TEXT_DOMAIN),
+                        'id'   => 'footer-widget-3',
+                        'description' => __('Third footer widget area', TEXT_DOMAIN),
+                    ] + $footer_widget_config);
 
     register_sidebar([
-                          'name' => __('Footer Widget Area 4', TEXT_DOMAIN),
-                          'id'   => 'footer-widget-4',
-                          'description' => __('Fourth footer widget area', TEXT_DOMAIN),
-                      ] + $footer_widget_config);
+                        'name' => __('Footer Widget Area 4', TEXT_DOMAIN),
+                        'id'   => 'footer-widget-4',
+                        'description' => __('Fourth footer widget area', TEXT_DOMAIN),
+                    ] + $footer_widget_config);
 });
 
 /**
