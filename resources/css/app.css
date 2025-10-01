@@ -574,6 +574,22 @@ strong {
   }
 }
 
+/* Testimonial card height matching */
+.testimonials-slider-block .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.testimonials-slider-block .swiper-slide > * {
+  flex: 1;
+  display: flex;
+}
+
+.testimonial-card,
+.featured-testimonial-card {
+  width: 100%;
+}
+
 .page-header {
   @apply hidden;
 }

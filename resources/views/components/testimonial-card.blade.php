@@ -8,6 +8,9 @@
 @props([
     'featured' => false,
     'post' => null,
+    'cardColor' => 'purple',
+    'showLogo' => true,
+    'showRating' => true,
 ])
 
 @php
@@ -33,25 +36,38 @@
 
   // Limit quote length for cards
   $truncatedQuote = strlen($quote) > 150 ? substr($quote, 0, 150) . '...' : $quote;
+
+    // Map card background colors
+  $cardBgClasses = match ($cardColor) {
+      'cyan' => 'bg-secondary-cyan',
+      'green' => 'bg-primary-green-soft',
+      'yellow' => 'bg-primary-yellow',
+      'purple' => 'bg-secondary-purple',
+      default => 'bg-secondary-purple',
+  };
+
+  // All cards use dark text on these bright backgrounds
+  $textColor = 'text-primary-dark';
 @endphp
 
 <article class="{{ $featured ? 'featured-testimonial-card' : 'testimonial-card' }} group">
-  <div class="{{ $featured ? 'p-8 lg:p-12' : 'p-6' }} bg-white rounded-2xl border border-neutral-200 hover:border-neutral-300 transition-all duration-300 hover:shadow-lg h-full flex flex-col">
+  <div class="{{ $featured ? 'p-8 lg:p-12' : 'p-6' }} {{ $cardBgClasses }} rounded-2xl min-h-full flex flex-col flex-1">
 
     {{-- Header with Logo and Company Info --}}
     <div class="flex items-start justify-between mb-6">
-      <div class="flex-1">
+      <div class="flex-1 min-w-0">
         @if($companyLogo)
-          <div class="mb-4 flex items-center justify-start">
+          <div class="flex items-center justify-start">
             <img
               src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
               alt="{{ $companyName }} logo"
-              class="h-12 w-auto object-contain"
+              class="h-12 w-auto max-w-full object-contain"
             >
           </div>
         @endif
 
-        @if($companyName)
+        @if($companyName && !$companyLogo)
+          {{-- Company Name as link if URL provided --}}
           <x-heading
             :as="HeadingTag::H3"
             :size="$featured ? HeadingSize::H4 : HeadingSize::H5"
@@ -82,15 +98,15 @@
 
     {{-- Quote --}}
     @if($quote)
-      <div class="flex-1 mb-6">
-        <blockquote class="{{ $featured ? 'text-md' : 'text-xs' }} text-neutral-700 leading-relaxed">
+      <div class="flex-1 mb-6 min-h-32">
+        <x-text :as="TextTag::SPAN" :size="$featured ? TextSize::XLARGE : TextSize::XLARGE" class="{{ $featured ? 'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed">
           "{{ $featured ? $quote : $truncatedQuote }}"
-        </blockquote>
+        </x-text>
       </div>
     @endif
 
     {{-- Client Info --}}
-    <div class="mt-auto pt-4 border-t border-neutral-100">
+    <div class="mt-auto pt-4 border-t border-primary-dark">
       @if($clientName)
         <div class="text-sm font-medium text-neutral-900 mb-1">{{ $clientName }}</div>
       @endif

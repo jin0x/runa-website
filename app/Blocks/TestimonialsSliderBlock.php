@@ -2,6 +2,7 @@
 
 namespace App\Blocks;
 
+use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
@@ -109,13 +110,27 @@ class TestimonialsSliderBlock extends Block
     public function with()
     {
         return [
+            // Section Heading Fields
+            'section_eyebrow' => $this->getSectionEyebrow(),
+            'section_title' => $this->getSectionTitle(),
+            'section_description' => $this->getSectionDescription(),
+
+            // Content
             'testimonials' => $this->getTestimonials(),
             'count' => $this->getCount(),
+            
+            // Display Options
+            'display_layout' => $this->getDisplayLayout(),
+            'card_background_color' => $this->getCardBackgroundColor(),
+            'show_company_logos' => $this->getShowCompanyLogos(),
+            'show_ratings' => $this->getShowRatings(),
+            
+            // Slider Settings
             'autoplay' => $this->getAutoplay(),
             'autoplay_delay' => $this->getAutoplayDelay(),
             'show_navigation' => $this->getShowNavigation(),
-            'show_company_logos' => $this->getShowCompanyLogos(),
-            'show_ratings' => $this->getShowRatings(),
+            
+            // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
         ];
@@ -126,11 +141,16 @@ class TestimonialsSliderBlock extends Block
      *
      * @return array
      */
-    public function fields()
+        public function fields()
     {
         $testimonials = Builder::make('testimonials_slider');
 
         $testimonials
+            ->addTab('Section Heading', [
+                'placement' => 'top',
+            ])
+            ->addPartial(SectionHeading::class)
+
             ->addTab('Content', [
                 'placement' => 'top',
             ])
@@ -141,8 +161,32 @@ class TestimonialsSliderBlock extends Block
                 'min' => 0,
                 'max' => 20,
             ])
+            
             ->addTab('Display Options', [
                 'placement' => 'top',
+            ])
+            ->addRadio('display_layout', [
+                'label' => 'Display Layout',
+                'instructions' => 'Choose how to display testimonials',
+                'choices' => [
+                    'slider' => 'Slider (Multiple testimonials)',
+                    'single' => 'Single (One centered testimonial)',
+                ],
+                'default_value' => 'slider',
+                'layout' => 'horizontal',
+                'required' => 1,
+            ])
+            ->addSelect('card_background_color', [
+                'label' => 'Card Background Color',
+                'instructions' => 'Choose the background color for testimonial cards',
+                'choices' => [
+                    'purple' => 'Purple',
+                    'cyan' => 'Cyan',
+                    'green' => 'Green',
+                    'yellow' => 'Yellow',
+                ],
+                'default_value' => 'purple',
+                'required' => 1,
             ])
             ->addTrueFalse('show_company_logos', [
                 'label' => 'Show Company Logos',
@@ -156,8 +200,18 @@ class TestimonialsSliderBlock extends Block
                 'default_value' => 1,
                 'ui' => 1,
             ])
+            
             ->addTab('Slider Settings', [
                 'placement' => 'top',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'display_layout',
+                            'operator' => '==',
+                            'value' => 'slider',
+                        ],
+                    ],
+                ],
             ])
             ->addTrueFalse('autoplay', [
                 'label' => 'Autoplay',
@@ -187,12 +241,31 @@ class TestimonialsSliderBlock extends Block
                 'default_value' => 1,
                 'ui' => 1,
             ])
+            
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
             ->addPartial(SectionOptions::class);
 
         return $testimonials->build();
+    }
+
+    /**
+     * Section heading getters
+     */
+    public function getSectionEyebrow()
+    {
+        return get_field('eyebrow');
+    }
+
+    public function getSectionTitle()
+    {
+        return get_field('heading');
+    }
+
+    public function getSectionDescription()
+    {
+        return get_field('subtitle');
     }
 
     /**
@@ -203,10 +276,14 @@ class TestimonialsSliderBlock extends Block
     public function getTestimonials()
     {
         $count = $this->getCount();
+        $displayLayout = $this->getDisplayLayout();
+
+        // If single layout, only get 1 testimonial
+        $postsPerPage = $displayLayout === 'single' ? 1 : ($count ?: -1);
 
         return get_posts([
             'post_type' => 'testimonial',
-            'posts_per_page' => $count ?: -1,
+            'posts_per_page' => $postsPerPage,
             'post_status' => 'publish',
             'orderby' => 'menu_order',
             'order' => 'ASC',
@@ -221,6 +298,26 @@ class TestimonialsSliderBlock extends Block
     public function getCount()
     {
         return get_field('count') ?: 6;
+    }
+
+    /**
+     * Get the display layout field.
+     *
+     * @return string
+     */
+    public function getDisplayLayout()
+    {
+        return get_field('display_layout') ?: 'slider';
+    }
+
+    /**
+     * Get the card background color field.
+     *
+     * @return string
+     */
+    public function getCardBackgroundColor()
+    {
+        return get_field('card_background_color') ?: 'purple';
     }
 
     /**
@@ -250,7 +347,7 @@ class TestimonialsSliderBlock extends Block
      */
     public function getShowNavigation()
     {
-        return get_field('show_navigation') !== false ? get_field('show_navigation') : true;
+        return get_field('show_navigation') !== null ? get_field('show_navigation') : true;
     }
 
     /**
