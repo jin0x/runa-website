@@ -209,28 +209,22 @@ body {
 
 .heading-3 {
   @apply text-2xl md:text-6xl font-normal leading-[110%];
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
 }
 
 .heading-4 {
   @apply text-xl md:text-4xl font-normal leading-[110%];
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
 }
 
 .heading-5 {
   @apply text-lg md:text-2xl font-normal leading-[110%];
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
 }
 
 .heading-6 {
   @apply text-base md:text-lg font-normal leading-[110%];
-  font-family: var(--font-heading);
-}
-
-.heading-7,
-.widget-title {
-  @apply text-sm md:text-base font-normal leading-[110%];
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
 }
 
 /* Apply heading styles to native HTML tags */
@@ -249,34 +243,40 @@ h2.wp-block-heading {
 h3,
 h3.wp-block-heading {
   @apply text-2xl md:text-6xl font-normal leading-[110%];
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
 }
 
 h4,
 h4.wp-block-heading {
   @apply text-xl md:text-4xl font-normal leading-[110%];
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
 }
 
 h5,
 h5.wp-block-heading {
   @apply text-lg md:text-2xl font-normal leading-[110%];
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
 }
 
 h6,
 h6.wp-block-heading {
   @apply text-base md:text-lg font-normal leading-[110%];
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
 }
 
 .text-display-lg {
   @apply text-5xl md:text-8xl font-bold leading-[85%];
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
 }
 
 .text-display-md {
   @apply text-3xl md:text-7xl font-bold leading-[85%];
+  font-family: var(--font-heading);
+}
+
+.heading-7,
+.widget-title {
+  @apply text-sm md:text-base font-normal leading-[110%];
   font-family: var(--font-body);
 }
 
