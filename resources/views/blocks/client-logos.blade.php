@@ -4,46 +4,32 @@
    */
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
-    // Convert theme string to ThemeVariant enum for section heading
-  $themeVariant = match ($theme) {
-      'dark' => ThemeVariant::DARK,
-      default => ThemeVariant::LIGHT,
-  };
+  // Convert theme string to ThemeVariant enum
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
-    // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      default => 'bg-primary-yellow',
-  };
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
+
+  // Background color handled by section component via $themeVariant
 
   // Marquee fade gradient classes based on theme
-  $fadeLeftClass = match ($theme) {
-      'dark' => 'marquee-fade-left-dark',
+  $fadeLeftClass = match ($themeVariant) {
+      ThemeVariant::DARK => 'marquee-fade-left-dark',
       default => 'marquee-fade-left',
   };
 
-  $fadeRightClass = match ($theme) {
-      'dark' => 'marquee-fade-right-dark',
+  $fadeRightClass = match ($themeVariant) {
+      ThemeVariant::DARK => 'marquee-fade-right-dark',
       default => 'marquee-fade-right',
   };
 
-  // Section heading based on theme
-  $sectionHeadingColor = match ($theme) {
-      'dark' => 'text-gradient-primary ',
-      default => 'text-primary-dark',
-  };
+  // Section heading color is handled by section-heading component itself via theme variant
 
   // Configure logo styles - optimized for both square and wide logos
   $logoContainerClasses = 'flex items-center justify-center w-full min-h-[100px] p-4';
@@ -57,7 +43,7 @@
   $gridGap = !empty($grid_gap) ? $grid_gap : 'lg';
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
 
    {{-- Section Heading --}}
   @if($section_eyebrow || $section_title || $section_description)
@@ -65,7 +51,8 @@
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      classes="mb-12 {{ $sectionHeadingColor }}"
+      :variant="$sectionHeadingVariant"
+      classes="mb-12"
     />
   @endif
 

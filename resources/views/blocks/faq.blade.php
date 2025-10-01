@@ -7,46 +7,37 @@
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
+  use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
   use function App\Helpers\apply_tailwind_classes_to_content;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      'green' => 'content-media-gradient',
-      default => 'bg-white',
-  };
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
-  // FAQ color classes
-  $textClasses = $theme === 'dark' ? 'text-neutral-0' : 'text-primary-dark';
-  $svgClasses  = $theme === 'dark' ? 'white' : 'black';
+  // FAQ text color
+  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
+  $svgClasses  = $themeVariant === ThemeVariant::DARK ? 'white' : 'black';
 
   // Generate unique ID for the accordion
   $faqId = 'faq-' . uniqid();
 
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
 
   @if($section_eyebrow || $section_title || $section_description)
     <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
+      :variant="$sectionHeadingVariant"
       classes="mb-12"
     />
   @endif
@@ -64,7 +55,14 @@
             aria-controls="{{ $faqId }}-{{ $index }}"
             id="{{ $faqId }}-heading-{{ $index }}"
           >
-            <span class="text-xs font-bold {{ $textClasses }}">{{ $item['question'] }}</span>
+            <x-text
+              :as="TextTag::SPAN"
+              :size="TextSize::XSMALL"
+              :color="$textColor"
+              class="font-bold"
+            >
+              {{ $item['question'] }}
+            </x-text>
             <span class=" transition-transform duration-200" :class="{'rotate-180 transform': isItemOpen({{ $index }})}">
               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_308_323)">
@@ -92,9 +90,13 @@
             aria-labelledby="{{ $faqId }}-heading-{{ $index }}"
             {{ $item['initially_open'] ? '' : 'style="display: none;"' }}
           >
-            <div class="{{ $textClasses }}">
+            <x-text
+              :as="TextTag::DIV"
+              :size="TextSize::BASE"
+              :color="$textColor"
+            >
               {!! apply_tailwind_classes_to_content($item['answer']) !!}
-            </div>
+            </x-text>
           </div>
         </div>
       @endforeach

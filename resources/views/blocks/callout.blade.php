@@ -10,45 +10,33 @@
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
+  use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
-
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'dark' => 'bg-primary-dark',
-      default => 'bg-primary-light',
-  };
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
   // Set text color based on theme
-  $textColor = match ($theme) {
-      'dark' => 'text-white',
-      default => 'text-primary-navy',
+  $textColor = match ($themeVariant) {
+      ThemeVariant::DARK => TextColor::LIGHT,
+      default => TextColor::DARK,
   };
 
   // Always use centered layout as per Figma design
   $contentClasses = 'flex flex-col text-center items-center gap-6';
   $textContainerClasses = 'max-w-3xl';
-  $buttonsContainerClasses = 'flex flex-wrap justify-center gap-4 mt-6';
+  $buttonsContainerClasses = 'flex flex-wrap justify-center gap-4';
 
   // Background image styles
   $hasBackgroundImage = !empty($background_image);
-  $sectionClasses = $hasBackgroundImage ? 'relative overflow-hidden' : '';
+  $sectionClasses = $hasBackgroundImage ? 'relative overflow-hidden min-h-[600px]' : '';
   $backgroundImageUrl = $hasBackgroundImage ? $background_image['url'] : null;
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $sectionClasses }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $sectionClasses }} {{ $block->classes }}">
   @if($hasBackgroundImage)
     <div
       class="absolute inset-x-0 bottom-0 h-full bg-cover bg-center bg-no-repeat pointer-events-none"
@@ -71,15 +59,21 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H3"
-          class="mb-4 {{ $textColor }}"
+          :color="$textColor"
+          class="mb-4"
         >
           {{ $title }}
         </x-heading>
 
         @if($content)
-          <div class="prose prose-lg {{ $textColor }} max-w-none">
+          <x-text
+            :as="TextTag::DIV"
+            :size="TextSize::LARGE"
+            :color="$textColor"
+            class="prose prose-lg max-w-none"
+          >
             {!! $content !!}
-          </div>
+          </x-text>
         @endif
       </div>
 

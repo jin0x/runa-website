@@ -1,52 +1,28 @@
 @php
   use App\Enums\SectionSize;
+  use App\Enums\SectionHeadingVariant;
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
+  use App\Enums\TextColor;
+  use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
-  $sectionSizeValue = match ($section_size) {
-      'none' => SectionSize::NONE,
-      'xs' => SectionSize::XSMALL,
-      'sm' => SectionSize::SMALL,
-      'md' => SectionSize::MEDIUM,
-      'lg' => SectionSize::LARGE,
-      'xl' => SectionSize::XLARGE,
-      default => SectionSize::MEDIUM,
-  };
+  $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
   // Convert theme string to ThemeVariant enum
-  $themeVariant = $theme === 'dark' ? ThemeVariant::DARK : ThemeVariant::LIGHT;
+  $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set background color based on theme
-  $bgColor = match ($theme) {
-      'light' => 'bg-white',
-      default => 'bg-black',
-  };
-
-  // Map accent colors to CSS classes
-  $accentClasses = match ($accent_color) {
-      'green-soft' => 'text-primary-green-soft',
-      'yellow' => 'text-primary-yellow',
-      'pink' => 'text-secondary-pink',
-      'purple' => 'text-secondary-purple',
-      'cyan' => 'text-secondary-cyan',
-      default => 'text-primary-green-neon',
-  };
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // Button variant based on accent color
   $buttonVariant = match ($accent_color) {
       'green-soft' => ButtonVariant::PRIMARY,
       default => ButtonVariant::PRIMARY,
-  };
-
-  // Section heading based on theme
-  $sectionHeadingColor = match ($theme) {
-      'dark' => 'text-gradient-primary ',
-      default => 'text-primary-dark',
   };
 
   // Handle media URL
@@ -67,18 +43,16 @@
   $marqueeId = 'showcase-marquee-' . uniqid();
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
 
   @if($section_eyebrow || $section_title || $section_description)
-    <div class="max-w-4xl justify-self-center mb-12 text-center">
-      <x-section-heading
+    <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
       :subtitle="$section_description"
-      :variant="$themeVariant"
-      classes="mb-12 {{ $sectionHeadingColor }}"
-      />
-    </div>
+      :variant="$sectionHeadingVariant"
+      classes="mb-12"
+    />
   @endif
 
   <x-container>
@@ -112,7 +86,8 @@
               <x-heading
                 :as="HeadingTag::H3"
                 :size="HeadingSize::H2"
-                class="mb-2 text-primary-green-soft"
+                :color="TextColor::GREEN_SOFT"
+                class="mb-2"
               >
                 {{ $card['statistic'] }}
               </x-heading>
@@ -123,7 +98,7 @@
               <x-text
                 :as="TextTag::P"
                 :size="TextSize::LARGE"
-                class="text-white"
+                :color="TextColor::DARK"
               >
                 {{ $card['description'] }}
               </x-text>
