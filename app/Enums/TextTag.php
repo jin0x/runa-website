@@ -4,13 +4,16 @@ namespace App\Enums;
 
 class TextTag
 {
-    const P = 'p';
-    const SPAN = 'span';
-    const DIV = 'div';
-    const LI = 'li';
+    public const A = 'a';
+    public const P = 'p';
+    public const SPAN = 'span';
+    public const DIV = 'div';
+    public const LI = 'li';
 
-    public static function getValues(): array {
+    public static function getValues(): array
+    {
         return [
+            self::A,
             self::P,
             self::SPAN,
             self::DIV,
