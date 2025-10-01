@@ -71,8 +71,8 @@
 
           @if($left_side['title'])
             <x-heading
-              :as="HeadingTag::H3"
-              :size="HeadingSize::H3"
+              :as="HeadingTag::H2"
+              :size="HeadingSize::H2"
               :color="TextColor::DARK"
               class="mb-2"
             >
@@ -95,16 +95,26 @@
           @if(!empty($left_side['features']))
             <ul class="space-y-2">
               @foreach($left_side['features'] as $feature)
-                <li class="flex items-center gap-2 py-1.5 bg-black/50 rounded-2xl">
+                <li class="flex items-center gap-2 p-1.5 bg-black/50 rounded-2xl">
                   {{-- Icon --}}
-                  <div class="pl-1.5 flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                  <div class="flex-shrink-0  w-[26px] h-[26px] flex items-center justify-center">
                     @if($left_side['icon_type'] === 'checkmark')
-                      <svg class="w-5 h-5 text-primary-green-neon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="26" height="26" rx="13" fill="url(#paint0_linear_1908_17076)"/>
+                        <path d="M11.6666 15.1145L17.7946 8.98584L18.738 9.92851L11.6666 16.9998L7.42395 12.7572L8.36662 11.8145L11.6666 15.1145Z" fill="#151515"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_1908_17076" x1="0" y1="26" x2="26" y2="0" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#00FFA3"/>
+                          <stop offset="0.48313" stop-color="#93FF82"/>
+                          <stop offset="0.943979" stop-color="#EEFC51"/>
+                        </linearGradient>
+                        </defs>
                       </svg>
+
                     @else
-                      <svg class="pl-1.5 w-6 h-6 text-secondary-pink" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                      <svg class="w-full h-full text-[var(--color-secondary-pink)]" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="26" height="26" rx="13" fill="currentColor"/>
+                        <path d="M14.1301 12.687L18.6873 8.12987L17.7444 7.18701L13.1873 11.7442L8.63011 7.18701L7.68726 8.12987L12.2444 12.687L7.68726 17.2442L8.63011 18.187L13.1873 13.6299L17.7444 18.187L18.6873 17.2442L14.1301 12.687Z" fill="black"/>
                       </svg>
                     @endif
                   </div>
@@ -141,8 +151,8 @@
 
           @if($right_side['title'])
             <x-heading
-              :as="HeadingTag::H3"
-              :size="HeadingSize::H3"
+              :as="HeadingTag::H2"
+              :size="HeadingSize::H2"
               :color="TextColor::DARK"
               class="mb-2"
             >
@@ -165,16 +175,25 @@
           @if(!empty($right_side['features']))
             <ul class="space-y-2">
               @foreach($right_side['features'] as $feature)
-                <li class="flex items-center gap-2 py-1.5 bg-black/50 rounded-2xl">
+                <li class="flex items-center gap-2 p-1.5 bg-black/50 rounded-2xl">
                   {{-- Icon --}}
-                  <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                  <div class="flex-shrink-0 w-[26px] h-[26px] flex items-center justify-center">
                     @if($right_side['icon_type'] === 'checkmark')
-                      <svg class="pl-1.5 w-5 h-5 text-primary-green-neon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="26" height="26" rx="13" fill="url(#paint0_linear_1908_17076)"/>
+                        <path d="M11.6666 15.1145L17.7946 8.98584L18.738 9.92851L11.6666 16.9998L7.42395 12.7572L8.36662 11.8145L11.6666 15.1145Z" fill="#151515"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_1908_17076" x1="0" y1="26" x2="26" y2="0" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#00FFA3"/>
+                          <stop offset="0.48313" stop-color="#93FF82"/>
+                          <stop offset="0.943979" stop-color="#EEFC51"/>
+                        </linearGradient>
+                        </defs>
                       </svg>
                     @else
-                      <svg class="pl-1.5 w-6 h-6 text-secondary-pink" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                      <svg class="w-full h-full text-[var(--color-secondary-pink)]" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="26" height="26" rx="13" fill="currentColor"/>
+                        <path d="M14.1301 12.687L18.6873 8.12987L17.7444 7.18701L13.1873 11.7442L8.63011 7.18701L7.68726 8.12987L12.2444 12.687L7.68726 17.2442L8.63011 18.187L13.1873 13.6299L17.7444 18.187L18.6873 17.2442L14.1301 12.687Z" fill="black"/>
                       </svg>
                     @endif
                   </div>
