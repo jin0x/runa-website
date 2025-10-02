@@ -16,7 +16,7 @@
   };
 
   // Text color for content (always dark on colored backgrounds)
-  $textColor = TextColor::DARK;
+  $textColor = TextColor::LIGHT;
 @endphp
 
 <div class="{{ $backgroundClasses }} p-8 md:p-12 flex flex-col justify-center {{ $attributes->get('class') }}">

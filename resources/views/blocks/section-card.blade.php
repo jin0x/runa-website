@@ -22,12 +22,12 @@
 
 <x-section :size="$sectionSizeValue" classes="{{ $block->classes }}">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden rounded-[2rem]">
-    
+
     {{-- Image Section --}}
     <div class="{{ $imageOrder }}">
       @if(!empty($image_url))
-        <img 
-          src="{{ $image_url }}" 
+        <img
+          src="{{ $image_url }}"
           alt="{{ $image_alt }}"
           class="w-full h-full object-cover min-h-[400px] md:min-h-[500px]"
         />
