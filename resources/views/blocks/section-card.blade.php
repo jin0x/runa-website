@@ -40,7 +40,7 @@
 
     {{-- Content Section --}}
     <x-section-card
-      :theme="$themeVariant"
+      :theme="$card_color"
       :heading="$heading"
       :description="$description"
       :features="$features"

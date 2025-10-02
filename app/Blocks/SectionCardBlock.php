@@ -4,6 +4,7 @@ namespace App\Blocks;
 
 use App\Enums\ThemeVariant;
 use App\Fields\Partials\SectionOptions;
+use App\Fields\Partials\CardOptions;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 
@@ -98,6 +99,7 @@ class SectionCardBlock extends Block
             'description' => $this->getDescriptionText(),
             'features' => $this->getFeatures(),
             'theme' => $this->getTheme(),
+            'card_color' => $this->getCardColor(),
             'reverse_layout' => $this->getReverseLayout(),
             'section_size' => $this->getSectionSize(),
         ];
@@ -174,7 +176,10 @@ class SectionCardBlock extends Block
                 'placement' => 'top',
             ])
             ->addPartial(SectionOptions::withConfig([
-                'themes' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
+                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+            ]))
+            ->addPartial(CardOptions::withConfig([
+                'colors' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
             ]));
 
         return $sectionCard->build();
@@ -226,6 +231,14 @@ class SectionCardBlock extends Block
     public function getReverseLayout()
     {
         return get_field('reverse_layout') ?: false;
+    }
+
+    /**
+     * Get the card color field.
+     */
+    public function getCardColor()
+    {
+        return get_field('card_color') ?: ThemeVariant::CYAN;
     }
 
     /**

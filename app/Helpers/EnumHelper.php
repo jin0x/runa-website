@@ -55,4 +55,18 @@ class EnumHelper
             default => SectionSize::MEDIUM,
         };
     }
+
+    /**
+     * Get background CSS class for card color (using ThemeVariant)
+     */
+    public static function getCardBackgroundClass(string $themeVariant): string
+    {
+        return match ($themeVariant) {
+            ThemeVariant::PURPLE => 'bg-secondary-purple',
+            ThemeVariant::CYAN => 'bg-secondary-cyan',
+            ThemeVariant::YELLOW => 'bg-primary-yellow',
+            ThemeVariant::GREEN => 'bg-primary-green-soft',
+            default => 'bg-secondary-cyan',
+        };
+    }
 }
