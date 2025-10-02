@@ -7,21 +7,21 @@ use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 
-class SplitContentBlock extends Block
+class SectionCardBlock extends Block
 {
     /**
      * The block name.
      *
      * @var string
      */
-    public $name = 'Split Content';
+    public $name = 'Section Card';
 
     /**
      * The block description.
      *
      * @var string
      */
-    public $description = 'A split layout with image and content featuring a feature list.';
+    public $description = 'A split layout with image and themed content card featuring a feature list.';
 
     /**
      * The block category.
@@ -97,7 +97,7 @@ class SplitContentBlock extends Block
             'heading' => $this->getHeading(),
             'description' => $this->getDescriptionText(),
             'features' => $this->getFeatures(),
-            'background_color' => $this->getBackgroundColor(),
+            'theme' => $this->getTheme(),
             'reverse_layout' => $this->getReverseLayout(),
             'section_size' => $this->getSectionSize(),
         ];
@@ -110,9 +110,9 @@ class SplitContentBlock extends Block
      */
     public function fields()
     {
-        $splitContent = Builder::make('split_content');
+        $sectionCard = Builder::make('section_card');
 
-        $splitContent
+        $sectionCard
             ->addTab('Content', [
                 'placement' => 'top',
             ])
@@ -163,18 +163,6 @@ class SplitContentBlock extends Block
             ->addTab('Design', [
                 'placement' => 'top',
             ])
-            ->addSelect('background_color', [
-                'label' => 'Background Color',
-                'instructions' => 'Choose the background color for the content area',
-                'choices' => [
-                    'cyan' => 'Cyan',
-                    'green' => 'Soft Green',
-                    'yellow' => 'Yellow',
-                    'pink' => 'Pink',
-                ],
-                'default_value' => 'cyan',
-                'required' => 1,
-            ])
             ->addTrueFalse('reverse_layout', [
                 'label' => 'Reverse Layout',
                 'instructions' => 'Switch the position of image and content (desktop only)',
@@ -186,10 +174,10 @@ class SplitContentBlock extends Block
                 'placement' => 'top',
             ])
             ->addPartial(SectionOptions::withConfig([
-                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+                'themes' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
             ]));
 
-        return $splitContent->build();
+        return $sectionCard->build();
     }
 
     /**
@@ -225,11 +213,11 @@ class SplitContentBlock extends Block
     }
 
     /**
-     * Get the background color field.
+     * Get the theme field.
      */
-    public function getBackgroundColor()
+    public function getTheme()
     {
-        return get_field('background_color') ?: 'cyan';
+        return get_field('theme') ?: 'cyan';
     }
 
     /**
