@@ -68,7 +68,7 @@
               <x-testimonial-card
                 :post="$testimonial->ID"
                 :featured="true"
-                :cardColor="$card_background_color"
+                :cardColor="$card_color"
                 :showLogo="$show_company_logos"
                 :showRating="$show_ratings"
               />
@@ -94,7 +94,7 @@
               <x-testimonial-card
                 :post="$testimonial->ID"
                 :featured="false"
-                :cardColor="$card_background_color"
+                :cardColor="$card_color"
                 :showLogo="$show_company_logos"
                 :showRating="$show_ratings"
               />

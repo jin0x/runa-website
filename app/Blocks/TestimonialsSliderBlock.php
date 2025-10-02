@@ -3,6 +3,7 @@
 namespace App\Blocks;
 
 use App\Enums\ThemeVariant;
+use App\Fields\Partials\CardOptions;
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
@@ -122,7 +123,7 @@ class TestimonialsSliderBlock extends Block
             
             // Display Options
             'display_layout' => $this->getDisplayLayout(),
-            'card_background_color' => $this->getCardBackgroundColor(),
+            'card_color' => $this->getCardColor(),
             'show_company_logos' => $this->getShowCompanyLogos(),
             'show_ratings' => $this->getShowRatings(),
             
@@ -177,18 +178,9 @@ class TestimonialsSliderBlock extends Block
                 'layout' => 'horizontal',
                 'required' => 1,
             ])
-            ->addSelect('card_background_color', [
-                'label' => 'Card Background Color',
-                'instructions' => 'Choose the background color for testimonial cards',
-                'choices' => [
-                    'purple' => 'Purple',
-                    'cyan' => 'Cyan',
-                    'green' => 'Green',
-                    'yellow' => 'Yellow',
-                ],
-                'default_value' => 'purple',
-                'required' => 1,
-            ])
+            ->addPartial(CardOptions::withConfig([
+                'colors' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
+            ]))
             ->addTrueFalse('show_company_logos', [
                 'label' => 'Show Company Logos',
                 'instructions' => 'Display company logos in testimonials',
@@ -314,13 +306,13 @@ class TestimonialsSliderBlock extends Block
     }
 
     /**
-     * Get the card background color field.
+     * Get the card color field.
      *
      * @return string
      */
-    public function getCardBackgroundColor()
+    public function getCardColor()
     {
-        return get_field('card_background_color') ?: 'purple';
+        return get_field('card_color') ?: ThemeVariant::PURPLE;
     }
 
     /**
