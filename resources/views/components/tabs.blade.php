@@ -67,7 +67,7 @@
   </div>
 
   {{-- Tab Content --}}
-  <div class="mt-6">
+  <div class="mt-16">
     @foreach($tabs as $tab)
       <div
         x-show="activeTab === '{{ $tab['id'] }}'"
