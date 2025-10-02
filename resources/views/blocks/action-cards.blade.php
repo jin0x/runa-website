@@ -15,9 +15,6 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set text color based on theme
-  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-
   // Map card background colors to CSS classes
   $cardBgClasses = match ($card_background_color) {
       'green-neon' => 'bg-primary-green-neon',
@@ -57,7 +54,6 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H2"
-          :color="$textColor"
           class="mb-12"
         >
           {{ $heading }}

@@ -4,7 +4,6 @@
    */
   use App\Enums\TextTag;
   use App\Enums\TextSize;
-  use App\Enums\TextColor;
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
@@ -22,9 +21,6 @@
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // Theme-based color enums
-  $eyebrowColor = $themeVariant === ThemeVariant::DARK ? TextColor::GREEN_NEON : TextColor::GRADIENT;
-  $headingColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
   $buttonVariant = ButtonVariant::PRIMARY;
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
@@ -90,7 +86,6 @@
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::SMALL"
-              :color="$eyebrowColor"
               class="inline-block mb-4"
             >
               {{ $item['content_eyebrow'] }}
@@ -101,7 +96,6 @@
             <x-text
               :as="TextTag::DIV"
               :size="TextSize::BASE"
-              {{-- :color="$textColor" --}}
               class="mb-8"
             >
               {!! apply_tailwind_classes_to_content($item['content_text'], [

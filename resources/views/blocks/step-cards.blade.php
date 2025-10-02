@@ -90,7 +90,6 @@
                             id="main-title"
                             :as="HeadingTag::H4"
                             :size="HeadingSize::H4"
-                            :color="$headingColor"
                             class="text-left font-bold"
                         >
                             {{ $step['title'] }}
@@ -98,7 +97,6 @@
                         <x-text
                             :as="TextTag::P"
                             :size="TextSize::SMALL"
-                            :color="$textColor"
                             class="text-left font-normal text-default"
                         >
                             {{ $step['text'] }}

@@ -37,9 +37,6 @@
   }
 
   // Theme-based text colors
-  $eyebrowColor = $themeVariant === ThemeVariant::DARK ? TextColor::GREEN_NEON : TextColor::GREEN_SOFT;
-  $headingColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::GRAY;
   $buttonVariant = ButtonVariant::PRIMARY;
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
@@ -80,7 +77,6 @@
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::SMALL"
-          :color="$eyebrowColor"
           class="inline-block mb-4"
         >
           {{ $content_eyebrow }}
@@ -91,7 +87,6 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="HeadingSize::H2"
-          :color="$headingColor"
           class="mb-6"
         >
           {!! $content_heading !!}
@@ -102,7 +97,6 @@
         <x-text
           :as="TextTag::DIV"
           :size="TextSize::BASE"
-          :color="$textColor"
           class="mb-8"
         >
           {!! $content_text !!}

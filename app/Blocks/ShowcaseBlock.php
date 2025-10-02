@@ -2,6 +2,7 @@
 
 namespace App\Blocks;
 
+use App\Enums\ThemeVariant;
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
 use App\Fields\Partials\MediaComponent;
@@ -270,7 +271,9 @@ class ShowcaseBlock extends Block
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
-            ->addPartial(SectionOptions::class);
+            ->addPartial(SectionOptions::withConfig([
+                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+            ]));
 
         return $showcase->build();
     }

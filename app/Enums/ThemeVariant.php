@@ -8,7 +8,9 @@ class ThemeVariant
     public const DARK = 'dark';
     public const GREEN = 'green';
     public const PURPLE = 'purple';
-    public const GREEN_GRADIENT = 'green-gradient';
+    public const GRADIENT = 'gradient';
+    public const CYAN = 'cyan';
+
     public static function getValues(): array
     {
         return [
@@ -16,7 +18,8 @@ class ThemeVariant
             self::DARK,
             self::GREEN,
             self::PURPLE,
-            self::GREEN_GRADIENT,
+            self::GRADIENT,
+            self::CYAN,
         ];
     }
 }

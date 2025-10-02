@@ -19,12 +19,6 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set text color based on theme
-  $textColor = match ($themeVariant) {
-      ThemeVariant::DARK => TextColor::LIGHT,
-      default => TextColor::DARK,
-  };
-
   // Always use centered layout as per Figma design
   $contentClasses = 'flex flex-col text-center items-center gap-6';
   $textContainerClasses = 'max-w-3xl';
@@ -59,7 +53,6 @@
         <x-heading
           :as="HeadingTag::H1"
           :size="HeadingSize::H1"
-          :color="$textColor"
           class="mb-4"
         >
           {{ $title }}
@@ -69,7 +62,6 @@
           <x-text
             :as="TextTag::DIV"
             :size="TextSize::LARGE"
-            :color="$textColor"
             class="prose prose-lg max-w-none"
           >
             {!! $content !!}

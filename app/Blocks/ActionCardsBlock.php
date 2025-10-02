@@ -2,6 +2,7 @@
 
 namespace App\Blocks;
 
+use App\Enums\ThemeVariant;
 use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
@@ -158,7 +159,9 @@ class ActionCardsBlock extends Block
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
-            ->addPartial(SectionOptions::class);
+            ->addPartial(SectionOptions::withConfig([
+                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+            ]));
 
         return $actionCards->build();
     }

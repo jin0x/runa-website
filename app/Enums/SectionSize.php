@@ -5,11 +5,9 @@ namespace App\Enums;
 enum SectionSize: string
 {
     case NONE = 'none';
-    case XSMALL = 'xsmall';
-    case SMALL = 'small';
-    case MEDIUM = 'medium';
-    case LARGE = 'large';
-    case XLARGE = 'xlarge';
+    case XSMALL = 'xs';
+    case SMALL = 'sm';
+    case MEDIUM = 'md';
+    case LARGE = 'lg';
+    case XLARGE = 'xl';
 }
-
-

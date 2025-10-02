@@ -8,7 +8,6 @@
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
   use App\Enums\SectionHeadingVariant;
-  use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
   use function App\Helpers\apply_tailwind_classes_to_content;
 
@@ -22,7 +21,6 @@
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // FAQ text color
-  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
   $svgClasses  = $themeVariant === ThemeVariant::DARK ? 'white' : 'black';
 
   // Generate unique ID for the accordion
@@ -41,10 +39,10 @@
       classes="mb-12"
     />
   @endif
-  
+
 <x-container classes="!px-0">
     <div class=" max-w-6xl mx-auto"
-         x-data="faqAccordion"
+        x-data="faqAccordion"
     >
       @foreach($faq_items as $index => $item)
         <div class="mb-4 rounded-lg overflow-hidden bg-[linear-gradient(180deg,rgba(102,102,102,0.40)_0%,rgba(102,102,102,0.20)_100%)]">
@@ -58,7 +56,6 @@
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::SMALL"
-              :color="$textColor"
               class="font-bold"
             >
               {{ $item['question'] }}
@@ -93,7 +90,6 @@
             <x-text
               :as="TextTag::DIV"
               :size="TextSize::BASE"
-              :color="$textColor"
             >
               {!! apply_tailwind_classes_to_content($item['answer']) !!}
             </x-text>
@@ -102,7 +98,7 @@
       @endforeach
     </div>
 </x-container>
-  
+
 </x-section>
 <script>
   document.addEventListener('alpine:init', () => {

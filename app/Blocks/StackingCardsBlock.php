@@ -4,6 +4,7 @@ namespace App\Blocks;
 
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
+use App\Enums\ThemeVariant;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 
@@ -191,7 +192,9 @@ class StackingCardsBlock extends Block
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
-            ->addPartial(SectionOptions::class);
+            ->addPartial(SectionOptions::withConfig([
+                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+            ]));
 
         return $stackingCards->build();
     }

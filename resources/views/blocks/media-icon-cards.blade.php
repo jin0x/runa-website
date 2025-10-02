@@ -21,8 +21,6 @@
   // Convert to optimal section heading variant for contrast
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
-  $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-
   // Media handling
   $media_url = '';
   if ($media_type === 'video' && !empty($video) && is_array($video)) {
@@ -89,7 +87,6 @@
                         id="main-title"
                         :as="HeadingTag::H4"
                         :size="HeadingSize::H4"
-                        :color="$textColor"
                         class="text-left font-extrabold"
                     >
                         {{ $card['title'] }}
@@ -97,7 +94,6 @@
                     <x-text
                         :as="TextTag::P"
                         :size="TextSize::SMALL"
-                        :color="$textColor"
                         class="text-left font-normal"
                     >
                         {{ $card['text'] }}

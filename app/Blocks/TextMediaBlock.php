@@ -2,6 +2,7 @@
 
 namespace App\Blocks;
 
+use App\Enums\ThemeVariant;
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\MediaComponent;
 use App\Fields\Partials\SectionOptions;
@@ -199,7 +200,9 @@ class TextMediaBlock extends Block
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
-            ->addPartial(SectionOptions::class);
+            ->addPartial(SectionOptions::withConfig([
+                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+            ]));
 
         return $textMedia->build();
     }

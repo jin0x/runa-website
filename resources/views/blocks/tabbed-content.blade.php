@@ -23,11 +23,6 @@
   // Convert to optimal section heading variant for contrast
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
-  // Set text color enums based on theme
-  $headingColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-  $subtitleColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-  $contentColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
-
   // Format tabs for the tabs component
   $formattedTabs = [];
   foreach ($tabs as $tab) {
@@ -39,7 +34,6 @@
             <x-heading
               :as="HeadingTag::H2"
               :size="HeadingSize::H2"
-              :color="$headingColor"
               class="mb-4"
             >
               {{ $tab['content_data']['heading'] }}
@@ -50,7 +44,6 @@
             <x-text
               :as="TextTag::P"
               :size="TextSize::MEDIUM"
-              :color="$subtitleColor"
               class="mb-6 opacity-90"
             >
               {{ $tab['content_data']['subtitle'] }}
@@ -61,7 +54,6 @@
             <x-text
               :as="TextTag::DIV"
               :size="TextSize::LARGE"
-              :color="$contentColor"
               class="prose prose-lg max-w-none mb-6"
             >
               {!! $tab['content_data']['text'] !!}

@@ -2,6 +2,7 @@
 
 namespace App\Blocks;
 
+use App\Enums\ThemeVariant;
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
 use League\ISO3166\ISO3166;
@@ -132,7 +133,9 @@ class CompanyDirectoryBlock extends Block
                 'ui' => 1,
                 'instructions' => 'FacetWP provides server-side filtering for better performance with 4K+ records. Disable to use legacy client-side filtering (limited to 500 records).',
             ])
-            ->addPartial(SectionOptions::class);
+            ->addPartial(SectionOptions::withConfig([
+                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+            ]));
 
         return $companyDirectory->build();
     }

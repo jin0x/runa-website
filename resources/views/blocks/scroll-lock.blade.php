@@ -109,8 +109,8 @@
 
                     {{-- Progress Bar --}}
                     <div class="my-8 w-full h-0.5 bg-primary-light/50 rounded-full overflow-hidden">
-                      <div class="section-progress-bar h-full transition-all duration-700 ease-in-out rounded-full {{ $index === 0 ? $barColorClass : 'bg-primary-light/50' }}" 
-                           style="width: {{ $index === 0 ? $progressWidth : '0%' }}"></div>
+                      <div class="section-progress-bar h-full transition-all duration-700 ease-in-out rounded-full {{ $index === 0 ? $barColorClass : 'bg-primary-light/50' }}"
+                          style="width: {{ $index === 0 ? $progressWidth : '0%' }}"></div>
                     </div>
                   </div>
                 @endforeach
