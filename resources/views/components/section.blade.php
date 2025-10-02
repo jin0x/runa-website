@@ -12,7 +12,7 @@
 @php
   // Define section padding sizes for different screen sizes
   $sizeClasses = match ($size)  {
-      SectionSize::NONE => 'px-4 lg:px-8',
+      SectionSize::NONE => '',
       SectionSize::XSMALL => 'px-4 py-4 lg:px-8 lg:py-8',
       SectionSize::SMALL => 'px-4 py-8 lg:px-8 lg:py-12',
       SectionSize::MEDIUM => 'px-4 py-12 lg:px-12 lg:py-24',

@@ -437,6 +437,10 @@ strong {
   background-color: var(--color-background-secondary);
 }
 
+.bg-percentage-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, #FFF 100%);
+}
+
 /* Button hover states */
 .btn-primary:hover {
   background: var(--gradient-4) !important;

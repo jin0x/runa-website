@@ -141,6 +141,9 @@ class ContentMediaRepeater extends Block
             'section_title' => $this->getSectionTitle(),
             'section_description' => $this->getSectionDescription(),
 
+            // Percentage Cards
+            'percentage_cards' => $this->getPercentageCards(),
+
             // Content Fields (repeater)
             'items' => $this->getContentItems(),
 
@@ -164,6 +167,29 @@ class ContentMediaRepeater extends Block
                 'placement' => 'top',
             ])
             ->addPartial(SectionHeading::class)
+
+            ->addTab('Percentage Cards', [
+            'placement' => 'top',
+            ])
+                ->addRepeater('percentage_cards', [
+                    'label' => 'Percentage Cards',
+                    'instructions' => 'Add percentage cards to display above the content items',
+                    'min' => 0,
+                    'max' => 6,
+                    'layout' => 'block',
+                    'button_label' => 'Add Card',
+                ])
+                    ->addText('percentage', [
+                        'label' => 'Percentage',
+                        'instructions' => 'The percentage or value to display (e.g., "40%", "X%")',
+                        'required' => 1,
+                    ])
+                    ->addText('label', [
+                        'label' => 'Label',
+                        'instructions' => 'Small text displayed below the percentage',
+                        'required' => 1,
+                    ])
+                ->endRepeater()
 
             ->addTab('Content', [
                 'placement' => 'top',
@@ -254,5 +280,13 @@ class ContentMediaRepeater extends Block
     public function getTheme()
     {
         return get_field('theme') ?: 'light';
+    }
+
+    /**
+     * Get percentage cards
+     */
+    public function getPercentageCards()
+    {
+        return get_field('percentage_cards') ?: [];
     }
 }
