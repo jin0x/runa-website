@@ -88,13 +88,13 @@
   {{-- CTA --}}
   @if($cta && !empty($cta['url']) && !empty($cta['title']))
     <div class="mt-10">
-      <x-button
-        :href="$cta['url']"
+      <a
+        href="{{ $cta['url'] }}"
         target="{{ $cta['target'] ?? '_self' }}"
-        class="!text-primary-dark hover:!text-primary-dark underline !p-0 !bg-transparent hover:!bg-transparent"
+        class="text-primary-dark hover:opacity-75 transition-opacity duration-200 underline underline-offset-4 font-medium"
       >
         {{ $cta['title'] }}
-      </x-button>
+      </a>
     </div>
   @endif
 </div>
