@@ -11,5 +11,3 @@ enum SectionSize: string
     case LARGE = 'large';
     case XLARGE = 'xlarge';
 }
-
-

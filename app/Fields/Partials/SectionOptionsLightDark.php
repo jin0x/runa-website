@@ -6,7 +6,7 @@ use App\Enums\ThemeVariant;
 use Log1x\AcfComposer\Builder;
 use Log1x\AcfComposer\Partial;
 
-class SectionOptions extends Partial
+class SectionOptionsLightDark extends Partial
 {
     /**
      * The partial field group.
@@ -40,8 +40,6 @@ class SectionOptions extends Partial
                 'choices' => [
                     ThemeVariant::LIGHT => 'Light',
                     ThemeVariant::DARK => 'Dark',
-                    ThemeVariant::GREEN => 'Gradient Green',
-                    ThemeVariant::PURPLE => 'Purple',
                 ],
                 'default_value' => ThemeVariant::LIGHT,
                 'wrapper' => [
