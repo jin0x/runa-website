@@ -27,6 +27,11 @@
       default => TextColor::DARK,
   };
 
+  $cardTextColor = match ($themeVariant) {
+      ThemeVariant::DARK => TextColor::LIGHT,
+      default => TextColor::LIGHT,
+  };
+
   // Set grid column values
   $gridColumns = $columns === '2' ? '2' : '3';
 
@@ -75,7 +80,7 @@
                             id="main-title"
                             :as="HeadingTag::H4"
                             :size="HeadingSize::H4"
-                            :color="TextColor::DARK"
+                            :color="$cardTextColor"
                             class="text-left font-extrabold
                             relative after:content-['']
                             after:absolute after:bottom-[-12px] after:left-0 after:w-full after:h-[1px]
@@ -86,7 +91,7 @@
                         <x-text
                             :as="TextTag::P"
                             :size="TextSize::SMALL"
-                            :color="TextColor::DARK"
+                            :color="$cardTextColor"
                             class="text-left font-normal text-default"
                         >
                             {{ $card['text'] }}
