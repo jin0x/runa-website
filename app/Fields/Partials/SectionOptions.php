@@ -2,6 +2,7 @@
 
 namespace App\Fields\Partials;
 
+use App\Enums\SectionSize;
 use App\Enums\ThemeVariant;
 use Log1x\AcfComposer\Builder;
 use Log1x\AcfComposer\Partial;
@@ -50,7 +51,7 @@ class SectionOptions extends Partial
                 'label' => 'Section Size',
                 'instructions' => 'Choose the vertical padding for this section',
                 'choices' => $this->getSizeChoices(),
-                'default_value' => 'md',
+                'default_value' => SectionSize::MEDIUM->value,
                 'wrapper' => [
                     'width' => '50',
                 ],
@@ -74,12 +75,12 @@ class SectionOptions extends Partial
     private function getSizeChoices(): array
     {
         $allSizes = [
-            'none' => 'None (No Padding)',
-            'xs' => 'Extra Small',
-            'sm' => 'Small',
-            'md' => 'Medium (Default)',
-            'lg' => 'Large',
-            'xl' => 'Extra Large',
+            SectionSize::NONE->value => 'None (No Padding)',
+            SectionSize::XSMALL->value => 'Extra Small',
+            SectionSize::SMALL->value => 'Small',
+            SectionSize::MEDIUM->value => 'Medium (Default)',
+            SectionSize::LARGE->value => 'Large',
+            SectionSize::XLARGE->value => 'Extra Large',
         ];
 
         if (!$this->config || !isset($this->config['sizes'])) {
@@ -97,8 +98,10 @@ class SectionOptions extends Partial
         $allThemes = [
             ThemeVariant::LIGHT => 'Light',
             ThemeVariant::DARK => 'Dark',
-            ThemeVariant::GREEN => 'Gradient Green',
+            ThemeVariant::GREEN => 'Green',
             ThemeVariant::PURPLE => 'Purple',
+            ThemeVariant::GRADIENT => 'Gradient',
+            ThemeVariant::CYAN => 'Cyan',
         ];
 
         if (!$this->config || !isset($this->config['themes'])) {
