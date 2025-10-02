@@ -21,11 +21,13 @@
   // Marquee fade gradient classes based on theme
   $fadeLeftClass = match ($themeVariant) {
       ThemeVariant::DARK => 'marquee-fade-left-dark',
+      ThemeVariant::CYAN => 'marquee-fade-left-cyan',
       default => 'marquee-fade-left',
   };
 
   $fadeRightClass = match ($themeVariant) {
       ThemeVariant::DARK => 'marquee-fade-right-dark',
+      ThemeVariant::CYAN => 'marquee-fade-right-cyan',
       default => 'marquee-fade-right',
   };
 
