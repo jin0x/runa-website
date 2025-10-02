@@ -3,6 +3,7 @@
 namespace App\Blocks;
 
 use App\Enums\ThemeVariant;
+use App\Fields\Partials\CardOptions;
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
@@ -143,6 +144,9 @@ class ImageCardsHover extends Block
             // Content Fields (repeater)
             'cards' => $this->getContentCards(),
 
+            // Card Options
+            'card_color' => $this->getCardColor(),
+
             // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
@@ -188,6 +192,14 @@ class ImageCardsHover extends Block
                         'preview_size' => 'medium',
                     ])
                 ->endRepeater()
+
+            ->addTab('Display Options', [
+                'placement' => 'top',
+            ])
+            ->addPartial(CardOptions::withConfig([
+                'colors' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
+            ]))
+
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
@@ -223,6 +235,16 @@ class ImageCardsHover extends Block
     public function getContentCards()
     {
         return get_field('cards') ?: [];
+    }
+
+    /**
+     * Get the card color field.
+     *
+     * @return string
+     */
+    public function getCardColor()
+    {
+        return get_field('card_color') ?: ThemeVariant::CYAN;
     }
 
     /**
