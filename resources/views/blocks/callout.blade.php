@@ -62,7 +62,7 @@
           <x-text
             :as="TextTag::DIV"
             :size="TextSize::LARGE"
-            class="prose prose-lg max-w-none"
+            class="max-w-none"
           >
             {!! $content !!}
           </x-text>

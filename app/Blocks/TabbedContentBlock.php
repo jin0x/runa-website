@@ -179,7 +179,7 @@ class TabbedContentBlock extends Block
                 'required' => 0,
                 'rows' => 2,
             ])
-            ->addWysiwyg('content', [
+            ->addTextarea('content', [
                 'label' => 'Content',
                 'instructions' => 'Main content text',
                 'required' => 0,

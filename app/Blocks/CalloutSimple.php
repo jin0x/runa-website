@@ -169,7 +169,7 @@ class CalloutSimple extends Block
                     'label' => 'Title',
                     'instructions' => 'Main heading for the callout',
                 ])
-                ->addWysiwyg('content', [
+                ->addTextarea('content', [
                     'label' => 'Content',
                     'instructions' => 'Main content for the callout',
                     'required' => 0,
