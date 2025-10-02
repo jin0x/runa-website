@@ -29,6 +29,12 @@
   $sectionClasses = $hasBackgroundImage ? 'relative overflow-hidden' : '';
   $backgroundImageUrl = $hasBackgroundImage ? $background_image['url'] : null;
 
+  $headingColor = match ($themeVariant) {
+      ThemeVariant::LIGHT => TextColor::DARK,
+      ThemeVariant::DARK => TextColor::LIGHT,
+      default => TextColor::DARK,
+  };
+
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
@@ -55,6 +61,7 @@
         <x-heading
           :as="HeadingTag::H1"
           :size="HeadingSize::H1"
+          :color="$headingColor"
           class="mb-4"
         >
           {{ $title }}
