@@ -207,7 +207,7 @@ class MediaIconCards extends Block
                 'placement' => 'top',
             ])
                 ->addPartial(SectionOptions::withConfig([
-                    'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+                    'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK, ThemeVariant::PURPLE]
                 ]))
                 ->addSelect('columns', [
                     'label' => 'Number of Columns for cards',
