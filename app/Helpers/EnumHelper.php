@@ -19,6 +19,7 @@ class EnumHelper
             'green' => ThemeVariant::GREEN,
             'purple' => ThemeVariant::PURPLE,
             'cyan' => ThemeVariant::CYAN,
+            'yellow' => ThemeVariant::YELLOW,
             default => ThemeVariant::LIGHT,
         };
     }
@@ -34,6 +35,7 @@ class EnumHelper
             ThemeVariant::PURPLE => SectionHeadingVariant::LIGHT,  // dark text on purple bg
             ThemeVariant::DARK => SectionHeadingVariant::GREEN,    // colorful text on dark bg
             ThemeVariant::CYAN => SectionHeadingVariant::LIGHT,    // dark text on cyan bg
+            ThemeVariant::YELLOW => SectionHeadingVariant::LIGHT,  // dark text on yellow bg
             default => SectionHeadingVariant::LIGHT,
         };
     }

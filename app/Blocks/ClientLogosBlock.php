@@ -230,8 +230,8 @@ class ClientLogosBlock extends Block
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
-           ->addPartial(SectionOptions::withConfig([
-                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK, ThemeVariant::CYAN]
+            ->addPartial(SectionOptions::withConfig([
+                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK, ThemeVariant::CYAN, ThemeVariant::YELLOW]
             ]));
 
         return $clientLogos->build();

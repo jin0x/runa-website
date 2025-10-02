@@ -102,6 +102,7 @@ class SectionOptions extends Partial
             ThemeVariant::PURPLE => 'Purple',
             ThemeVariant::GRADIENT => 'Gradient',
             ThemeVariant::CYAN => 'Cyan',
+            ThemeVariant::YELLOW => 'Yellow',
         ];
 
         if (!$this->config || !isset($this->config['themes'])) {
