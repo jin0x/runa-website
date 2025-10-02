@@ -23,7 +23,7 @@
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
   // Theme-based color classes
-  $cardTextColor = $themeVariant === ThemeVariant::DARK ? TextColor::DARK : TextColor::LIGHT;
+  $cardTextColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
 
   // Unique ID for this block instance
   $blockId = 'stacking-cards-' . uniqid();
@@ -61,11 +61,19 @@
             <div class="relative min-h-screen flex items-center justify-center max-w-7xl mx-auto px-4">
               <div class="stacking-cards-wrapper relative w-full" style="height: 800px;">
                 @foreach($cards as $index => $card)
+                @php
+                    // Cycle through 3 colors: cyan, soft green, purple
+                    $bgColor = match($index % 4) {
+                      0 => 'bg-secondary-cyan',
+                      1 => 'bg-primary-green-soft',
+                      2 => 'bg-secondary-purple',
+                    };
+                  @endphp
                   <div class="stacking-card absolute w-full transition-transform duration-700 ease-out"
                       data-card-index="{{ $index }}"
                       style="z-index: {{ 10 + $index }}; top: 0; left: 0; transform: translateY(100vh);">
-                    <div class="flex flex-row rounded-[32px] overflow-hidden relative bg-white shadow-2xl">
-                      <div class="w-2/5 flex-shrink-0">
+                    <div class="flex flex-row rounded-[32px] overflow-hidden relative shadow-2xl  {{ $bgColor }}">
+                      <div class="w-2/5 flex-shrink-0 py-6 pl-6">
                         <img src="{{ $card['image']['url'] }}" alt="{{ $card['image']['alt'] ?? $card['title'] }}" class="w-full h-full object-cover min-h-[400px]"/>
                       </div>
                       <div class="flex flex-col flex-1 p-8 lg:p-12 min-h-[400px] justify-center">

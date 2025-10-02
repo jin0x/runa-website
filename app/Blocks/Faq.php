@@ -144,6 +144,9 @@ class Faq extends Block
             // Content Fields (repeater)
             'faq_items' => $this->getFAQItems(), 
 
+            // Background Image
+            'bottom_background_image' => $this->getBottomBackgroundImage(),
+
             // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
@@ -194,6 +197,17 @@ class Faq extends Block
                     ])
 
                 ->endRepeater()
+
+            ->addTab('Background', [
+            'placement' => 'top',
+            ])
+            ->addImage('bottom_background_image', [
+                'label' => 'Bottom Background Image',
+                'instructions' => 'Optional decorative image displayed at the bottom of the FAQ section',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+            ])
+
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
@@ -242,5 +256,13 @@ class Faq extends Block
     public function getTheme()
     {
         return get_field('theme') ?: 'light';
+    }
+
+    /**
+     * Get the bottom background image
+     */
+    public function getBottomBackgroundImage()
+    {
+        return get_field('bottom_background_image');
     }
 }
