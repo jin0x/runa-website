@@ -82,19 +82,22 @@
                         >
                     </div>
                 @endif
-                <div class="flex flex-col flex-1 gap-y-6 min-h-[153px]">
+                <div class="flex flex-col flex-1 min-h-[153px]">
                     <x-heading
                         id="main-title"
                         :as="HeadingTag::H4"
                         :size="HeadingSize::H4"
-                        class="text-left font-extrabold"
+                        class="text-left"
                     >
                         {{ $card['title'] }}
                     </x-heading>
+
+                    <div class="h-px bg-primary-dark my-3"></div>
+
                     <x-text
                         :as="TextTag::P"
                         :size="TextSize::SMALL"
-                        class="text-left font-normal"
+                        class="text-left"
                     >
                         {{ $card['text'] }}
                     </x-text>
