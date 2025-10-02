@@ -3,6 +3,7 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Helpers\EnumHelper;
 @endphp
 
 @props([
@@ -10,7 +11,7 @@
     'title' => '',
     'description' => '',
     'cta' => null,
-    'theme' => 'light', // 'light' or 'dark'
+    'cardColor' => 'cyan', // ThemeVariant color
     'size' => 'default', // 'default', 'large', 'small'
     'class' => '',
 ])
@@ -27,13 +28,10 @@
       $image_alt = $title;
   }
 
-  // Theme-based styling
-  $cardBgClasses = match ($theme) {
-      'dark' => 'bg-primary-yellow',
-      default => 'bg-primary-green-neon',
-  };
+  // Use EnumHelper for consistent card background colors
+  $cardBgClasses = EnumHelper::getCardBackgroundClass($cardColor);
 
-  $textColor = 'text-primary-black'; // Both themes use dark text
+  $textColor = 'text-primary-dark'; // Consistent dark text on bright backgrounds
 
   // Size-based styling
   $paddingClasses = match ($size) {
@@ -93,7 +91,7 @@
       <x-button
         :href="$cta['url']"
         target="{{ $cta['target'] ?? '_self' }}"
-        class="!text-primary-black hover:!text-primary-black underline !p-0 !bg-transparent hover:!bg-transparent"
+        class="!text-primary-dark hover:!text-primary-dark underline !p-0 !bg-transparent hover:!bg-transparent"
       >
         {{ $cta['title'] }}
       </x-button>

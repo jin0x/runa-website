@@ -3,6 +3,7 @@
 namespace App\Blocks;
 
 use App\Enums\ThemeVariant;
+use App\Fields\Partials\CardOptions;
 use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
@@ -81,7 +82,7 @@ class FeatureCardsBlock extends Block
         return [
             'heading' => $this->getHeading(),
             'cards' => $this->getCards(),
-            'card_theme' => $this->getCardTheme(),
+            'card_color' => $this->getCardColor(),
             'card_size' => $this->getCardSize(),
             'columns' => $this->getColumns(),
             'section_size' => $this->getSectionSize(),
@@ -157,16 +158,9 @@ class FeatureCardsBlock extends Block
                 'default_value' => '3',
                 'required' => 1,
             ])
-            ->addSelect('card_theme', [
-                'label' => 'Card Theme',
-                'instructions' => 'Choose the color theme for the cards',
-                'choices' => [
-                    'light' => 'Light (Green)',
-                    'dark' => 'Dark (Yellow)',
-                ],
-                'default_value' => 'light',
-                'required' => 1,
-            ])
+            ->addPartial(CardOptions::withConfig([
+                'colors' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
+            ]))
             ->addSelect('card_size', [
                 'label' => 'Card Size',
                 'instructions' => 'Choose the size for the cards',
@@ -203,9 +197,9 @@ class FeatureCardsBlock extends Block
         return get_field('cards') ?: [];
     }
 
-    public function getCardTheme()
+    public function getCardColor()
     {
-        return get_field('card_theme') ?: 'light';
+        return get_field('card_color') ?: ThemeVariant::CYAN;
     }
 
     public function getCardSize()

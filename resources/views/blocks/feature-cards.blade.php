@@ -46,7 +46,7 @@
             :title="$card['title'] ?? ''"
             :description="$card['description'] ?? ''"
             :cta="$card['cta'] ?? null"
-            :theme="$card_theme"
+            :cardColor="$card_color"
             :size="$card_size"
           />
         @endforeach
