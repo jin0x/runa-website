@@ -47,6 +47,8 @@
         TextColor::GREEN_NEON => 'text-primary-green-neon',
         TextColor::GRADIENT => 'text-gradient-primary',
         TextColor::GRAY => 'text-gray-600',
+        TextColor::PINK => 'text-secondary-pink',
+        TextColor::CYAN => 'text-secondary-cyan',
     ];
 
   // Validate that the provided "as" and "size" props are valid

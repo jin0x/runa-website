@@ -10,6 +10,9 @@ class TextColor
     public const GREEN_NEON = 'green-neon';
     public const GRADIENT = 'gradient';
     public const GRAY = 'gray';
+    public const PINK = 'pink';
+    public const CYAN = 'cyan';
+    
 
     public static function getValues(): array
     {
@@ -20,6 +23,8 @@ class TextColor
             self::GREEN_NEON,
             self::GRADIENT,
             self::GRAY,
+            self::PINK,
+            self::CYAN,
         ];
     }
 }

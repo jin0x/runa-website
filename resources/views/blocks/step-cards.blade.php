@@ -42,9 +42,8 @@
 
   $headingColors = [
       TextColor::GREEN_SOFT,
-      TextColor::GREEN_NEON, // Using available color instead of pink
-      TextColor::GREEN_NEON, // Using available color instead of cyan
-      TextColor::GREEN_SOFT, // Using available color instead of yellow
+      TextColor::PINK,
+      TextColor::CYAN,
   ];
 
 @endphp
@@ -90,6 +89,7 @@
                             id="main-title"
                             :as="HeadingTag::H4"
                             :size="HeadingSize::H4"
+                            :color="$headingColor"
                             class="text-left font-bold"
                         >
                             {{ $step['title'] }}
