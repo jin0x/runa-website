@@ -2,6 +2,7 @@
 
 namespace App\Blocks;
 
+use App\Enums\ThemeVariant;
 use App\Fields\Partials\SectionHeading;
 use App\Fields\Partials\SectionOptions;
 use Log1x\AcfComposer\Block;
@@ -144,6 +145,7 @@ class ImageCardsHover extends Block
 
             // Section Options
             'section_size' => $this->getSectionSize(),
+            'theme' => $this->getTheme(),
         ];
     }
 
@@ -189,22 +191,9 @@ class ImageCardsHover extends Block
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
-                ->addSelect('section_size', [
-                    'label' => 'Section Size',
-                    'instructions' => 'Choose the vertical padding for this section',
-                    'choices' => [
-                        'none' => 'None (No Padding)',
-                        'xs' => 'Extra Small',
-                        'sm' => 'Small',
-                        'md' => 'Medium (Default)',
-                        'lg' => 'Large',
-                        'xl' => 'Extra Large',
-                    ],
-                    'default_value' => 'md',
-                    'wrapper' => [
-                        'width' => '50',
-                    ],
-                ]);
+                ->addPartial(SectionOptions::withConfig([
+                'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
+            ]));
         return $ImageCardsHover->build();
     }
 
@@ -242,5 +231,9 @@ class ImageCardsHover extends Block
     public function getSectionSize()
     {
         return get_field('section_size') ?: 'md';
+    }
+        public function getTheme()
+    {
+        return get_field('theme') ?: 'light';
     }
 }

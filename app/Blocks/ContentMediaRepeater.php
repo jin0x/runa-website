@@ -210,7 +210,7 @@ class ContentMediaRepeater extends Block
                 'placement' => 'top',
             ])
             ->addPartial(SectionOptions::withConfig([
-                'themes' => [ThemeVariant::GRADIENT, ThemeVariant::LIGHT]
+                'themes' => [ThemeVariant::GREEN, ThemeVariant::LIGHT]
             ]));
         return $contentMediaRepeater->build();
     }

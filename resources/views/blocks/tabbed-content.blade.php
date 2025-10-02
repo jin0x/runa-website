@@ -28,7 +28,7 @@
   foreach ($tabs as $tab) {
       ob_start();
 @endphp
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center justify-self-center max-w-5xl">
         <div class="order-2 lg:order-1">
           @if(!empty($tab['content_data']['heading']))
             <x-heading
