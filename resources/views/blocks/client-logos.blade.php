@@ -42,8 +42,8 @@
 
   // Logo filter styles based on theme - black logos by default, white for dark theme
   $logoFilterClass = match ($themeVariant) {
-      ThemeVariant::DARK => 'brightness-0 invert',
-      default => 'brightness-0',
+      ThemeVariant::DARK => 'logo-white',
+      default => 'logo-black',
   };
 
   $logoClasses = 'h-12 w-auto max-w-full object-contain transition-opacity hover:opacity-80 ' . $logoFilterClass;

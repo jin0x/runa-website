@@ -110,6 +110,15 @@ body {
   );
 }
 
+/* Logo filter styles */
+.logo-black {
+  filter: brightness(0);
+}
+
+.logo-white {
+  filter: brightness(0) invert(1);
+}
+
 .marquee-fade-left-light {
   background: linear-gradient(
     to right,
