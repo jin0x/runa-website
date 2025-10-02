@@ -26,6 +26,7 @@
       ThemeVariant::DARK => 'bg-primary-dark text-white',
       ThemeVariant::GREEN => 'bg-gradient-to-b from-primary-yellow to-primary-green-soft text-primary-dark',
       ThemeVariant::PURPLE => 'bg-secondary-purple text-primary-dark',
+      ThemeVariant::CYAN => 'bg-secondary-cyan text-primary-dark',
       default => '',
   };
 

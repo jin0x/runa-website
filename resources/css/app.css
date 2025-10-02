@@ -75,6 +75,24 @@ body {
   );
 }
 
+.marquee-fade-left-cyan {
+  background: linear-gradient(
+    to right,
+    var(--color-secondary-cyan) 50%,
+    var(--color-secondary-cyan) 20%,
+    transparent 100%
+  );
+}
+
+.marquee-fade-right-cyan {
+  background: linear-gradient(
+    to left,
+    var(--color-secondary-cyan) 50%,
+    var(--color-secondary-cyan) 20%,
+    transparent 100%
+  );
+} 
+
 /* Stacking cards optimizations */
 .stacking-cards-wrapper {
   contain: layout style paint;
