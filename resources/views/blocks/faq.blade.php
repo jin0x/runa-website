@@ -4,10 +4,7 @@
    */
   use App\Enums\TextTag;
   use App\Enums\TextSize;
-  use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
-  use App\Enums\SectionSize;
-  use App\Enums\SectionHeadingVariant;
   use App\Helpers\EnumHelper;
   use function App\Helpers\apply_tailwind_classes_to_content;
 
@@ -25,6 +22,14 @@
 
   // Generate unique ID for the accordion
   $faqId = 'faq-' . uniqid();
+
+  // Handle bottom background image URL
+  $bottom_bg_image_url = '';
+  if (!empty($bottom_background_image) && is_array($bottom_background_image)) {
+      $bottom_bg_image_url = $bottom_background_image['url'] ?? '';
+  } elseif (!empty($bottom_background_image)) {
+      $bottom_bg_image_url = $bottom_background_image;
+  }
 
 @endphp
 
@@ -97,9 +102,21 @@
         </div>
       @endforeach
     </div>
-</x-container>
+  </x-container>
+
+  {{-- Bottom Background Image - Full Width Breakout --}}
+  @if(!empty($bottom_bg_image_url))
+    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-8">
+      <img 
+        src="{{ $bottom_bg_image_url }}" 
+        alt="FAQ background decoration"
+        class="w-full h-auto object-cover"
+      >
+    </div>
+  @endif
 
 </x-section>
+
 <script>
   document.addEventListener('alpine:init', () => {
     Alpine.data('faqAccordion', () => ({
