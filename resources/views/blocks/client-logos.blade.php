@@ -22,12 +22,16 @@
   $fadeLeftClass = match ($themeVariant) {
       ThemeVariant::DARK => 'marquee-fade-left-dark',
       ThemeVariant::CYAN => 'marquee-fade-left-cyan',
+      ThemeVariant::YELLOW => 'marquee-fade-left-yellow',
+      ThemeVariant::LIGHT => 'marquee-fade-left-light',
       default => 'marquee-fade-left',
   };
 
   $fadeRightClass = match ($themeVariant) {
       ThemeVariant::DARK => 'marquee-fade-right-dark',
       ThemeVariant::CYAN => 'marquee-fade-right-cyan',
+      ThemeVariant::YELLOW => 'marquee-fade-right-yellow',
+      ThemeVariant::LIGHT => 'marquee-fade-right-light',
       default => 'marquee-fade-right',
   };
 
@@ -35,7 +39,14 @@
 
   // Configure logo styles - optimized for both square and wide logos
   $logoContainerClasses = 'flex items-center justify-center w-full min-h-[100px] p-4';
-  $logoClasses = 'h-12 w-auto max-w-full object-contain transition-opacity hover:opacity-80';
+
+  // Logo filter styles based on theme - black logos by default, white for dark theme
+  $logoFilterClass = match ($themeVariant) {
+      ThemeVariant::DARK => 'brightness-0 invert',
+      default => 'brightness-0',
+  };
+
+  $logoClasses = 'h-12 w-auto max-w-full object-contain transition-opacity hover:opacity-80 ' . $logoFilterClass;
 
   // Extract just the number from the grid_columns value
   $columnsNumber = is_string($grid_columns) ? preg_replace('/[^0-9]/', '', $grid_columns) : '4';
