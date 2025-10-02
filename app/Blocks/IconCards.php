@@ -4,13 +4,10 @@ namespace App\Blocks;
 
 use App\Enums\ThemeVariant;
 use App\Fields\Partials\SectionHeading;
-use App\Fields\Partials\MediaComponent;
 use App\Fields\Partials\SectionOptions;
-use App\Fields\Partials\GridOptions;
-use App\Fields\Partials\CTALink;
+use App\Fields\Partials\CardOptions;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
-use Log1x\AcfComposer\Partial;
 
 class IconCards extends Block
 {
@@ -151,7 +148,7 @@ class IconCards extends Block
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
             'columns' => $this->getColumns(),
-            'cards_background' => $this->getCardsBackground(),
+            'card_color' => $this->getCardColor(),
         ];
     }
 
@@ -213,18 +210,9 @@ class IconCards extends Block
                     'width' => '50',
                 ],
             ])
-            ->addSelect('cards_background', [
-                'label' => 'Cards Background',
-                'instructions' => 'Choose the color background for the cards',
-                'choices' => [
-                    'cyan' => 'Hyper Cyan',
-                    'green' => 'Green',
-                ],
-                'default_value' => 'cyan',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ]);
+            ->addPartial(CardOptions::withConfig([
+                'colors' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
+            ]));
         return $iconCards->build();
     }
 
@@ -274,8 +262,8 @@ class IconCards extends Block
         return get_field('columns') ?: '3';
     }
 
-    public function getCardsBackground()
+    public function getCardColor()
     {
-        return get_field('cards_background') ?: 'cyan';
+        return get_field('card_color') ?: ThemeVariant::CYAN;
     }
 }

@@ -3,6 +3,7 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextSize;
   use App\Enums\TextTag;
+  use App\Helpers\EnumHelper;
 @endphp
 
 @props([
@@ -37,14 +38,8 @@
   // Limit quote length for cards
   $truncatedQuote = strlen($quote) > 150 ? substr($quote, 0, 150) . '...' : $quote;
 
-    // Map card background colors
-  $cardBgClasses = match ($cardColor) {
-      'cyan' => 'bg-secondary-cyan',
-      'green' => 'bg-primary-green-soft',
-      'yellow' => 'bg-primary-yellow',
-      'purple' => 'bg-secondary-purple',
-      default => 'bg-secondary-purple',
-  };
+    // Map card background colors using EnumHelper
+  $cardBgClasses = EnumHelper::getCardBackgroundClass($cardColor);
 
   // All cards use dark text on these bright backgrounds
   $textColor = 'text-primary-dark';
