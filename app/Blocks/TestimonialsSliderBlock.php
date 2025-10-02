@@ -119,7 +119,6 @@ class TestimonialsSliderBlock extends Block
 
             // Content
             'testimonials' => $this->getTestimonials(),
-            'count' => $this->getCount(),
             
             // Display Options
             'display_layout' => $this->getDisplayLayout(),
@@ -156,12 +155,16 @@ class TestimonialsSliderBlock extends Block
             ->addTab('Content', [
                 'placement' => 'top',
             ])
-            ->addNumber('count', [
-                'label' => 'Number of Testimonials',
-                'instructions' => 'How many testimonials to display (0 = all)',
-                'default_value' => 6,
+            ->addRelationship('selected_testimonials', [
+                'label' => 'Select Testimonials',
+                'instructions' => 'Choose which testimonials to display and reorder them by dragging',
+                'post_type' => ['testimonial'],
+                'taxonomy' => [],
                 'min' => 0,
-                'max' => 20,
+                'max' => 10,
+                'filters' => ['search'],
+                'elements' => [],
+                'return_format' => 'object',
             ])
             
             ->addTab('Display Options', [
@@ -171,8 +174,8 @@ class TestimonialsSliderBlock extends Block
                 'label' => 'Display Layout',
                 'instructions' => 'Choose how to display testimonials',
                 'choices' => [
-                    'slider' => 'Slider (Multiple testimonials)',
-                    'single' => 'Single (One centered testimonial)',
+                    'slider' => 'Multi-Slide (2 testimonials per slide)',
+                    'single' => 'Featured (1 large testimonial per slide)',
                 ],
                 'default_value' => 'slider',
                 'layout' => 'horizontal',
@@ -196,15 +199,6 @@ class TestimonialsSliderBlock extends Block
             
             ->addTab('Slider Settings', [
                 'placement' => 'top',
-                'conditional_logic' => [
-                    [
-                        [
-                            'field' => 'display_layout',
-                            'operator' => '==',
-                            'value' => 'slider',
-                        ],
-                    ],
-                ],
             ])
             ->addTrueFalse('autoplay', [
                 'label' => 'Autoplay',
@@ -264,36 +258,18 @@ class TestimonialsSliderBlock extends Block
     }
 
     /**
-     * Get testimonials from the database.
+     * Get selected testimonials from relationship field.
      *
      * @return array
      */
     public function getTestimonials()
     {
-        $count = $this->getCount();
-        $displayLayout = $this->getDisplayLayout();
+        $selectedTestimonials = get_field('selected_testimonials');
 
-        // If single layout, only get 1 testimonial
-        $postsPerPage = $displayLayout === 'single' ? 1 : ($count ?: -1);
-
-        return get_posts([
-            'post_type' => 'testimonial',
-            'posts_per_page' => $postsPerPage,
-            'post_status' => 'publish',
-            'orderby' => 'menu_order',
-            'order' => 'ASC',
-        ]);
+        // Return the selected testimonials or empty array if none selected
+        return $selectedTestimonials ?: [];
     }
 
-    /**
-     * Get the count field.
-     *
-     * @return int
-     */
-    public function getCount()
-    {
-        return get_field('count') ?: 6;
-    }
 
     /**
      * Get the display layout field.

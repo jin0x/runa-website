@@ -2,7 +2,6 @@
   use App\Enums\ContainerSize;
   use App\Enums\SectionSize;
   use App\Enums\ThemeVariant;
-  use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
 
   // Convert section_size string to SectionSize enum
@@ -11,26 +10,7 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Convert theme string to ThemeVariant enum
-  $themeVariant = match ($theme) {
-      'dark' => ThemeVariant::DARK,
-      'green' => ThemeVariant::DARK,
-      default => ThemeVariant::LIGHT,
-  };
-
-  // Set container size based on section size
-  $containerSize = match ($section_size) {
-      'xl' => ContainerSize::XLARGE,
-      'lg' => ContainerSize::LARGE,
-      default => ContainerSize::MEDIUM,
-  };
-
-  // Set text color based on theme
-  $textColor = match ($themeVariant) {
-      ThemeVariant::LIGHT => TextColor::DARK,
-      default => TextColor::LIGHT,
-  };
-  // Set container size based on layout
+  // Set container size: single layout (featured) uses medium, slider uses xlarge
   $containerSize = $display_layout === 'single' ? ContainerSize::MEDIUM : ContainerSize::XLARGE;
 @endphp
 
