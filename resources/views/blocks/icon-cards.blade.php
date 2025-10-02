@@ -38,12 +38,8 @@
   // Set gap sizes based on columns
   $gapSize = 'lg';
 
-  // Cards Background
-  $bgCards = match ($cards_background) {
-    'cyan' => 'bg-secondary-cyan',
-    'green' => 'bg-primary-green-soft',
-    default => 'bg-secondary-cyan',
-   };
+  // Cards Background using standardized helper with ThemeVariant
+  // (Note: background is now handled by icon-card component)
 
 @endphp
 
@@ -62,42 +58,13 @@
     <x-container classes="!px-0">
         <x-grid :columns="$gridColumns" :rowgapsize="$gapSize" colgapsize="lg" classes="mt-12">
             @foreach($cards as $card)
-                <div class="flex flex-col overflow-hidden gap-y-10 p-6 rounded-lg {{ $bgCards }}">
-                    @if ( $card['icon'] )
-                        <div class="w-full overflow-hidden">
-                            @php
-                                $card_image_alt= !empty($card['icon']['alt']) ? $card['icon']['alt'] : $card['title'];
-                            @endphp
-                            <img
-                                src="{{ $card['icon']['url'] }}"
-                                alt="{{ $card_image_alt }}"
-                                class="object-contain h-12 w-12"
-                            >
-                        </div>
-                    @endif
-                    <div class="flex flex-col flex-1 gap-y-6 min-h-[153px]">
-                        <x-heading
-                            id="main-title"
-                            :as="HeadingTag::H4"
-                            :size="HeadingSize::H4"
-                            :color="$cardTextColor"
-                            class="text-left font-extrabold
-                            relative after:content-['']
-                            after:absolute after:bottom-[-12px] after:left-0 after:w-full after:h-[1px]
-                            after:bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.10)_100%)]"
-                        >
-                            {{ $card['title'] }}
-                        </x-heading>
-                        <x-text
-                            :as="TextTag::P"
-                            :size="TextSize::SMALL"
-                            :color="$cardTextColor"
-                            class="text-left font-normal text-default"
-                        >
-                            {{ $card['text'] }}
-                        </x-text>
-                    </div>
-                </div>
+                <x-icon-card
+                    :icon="$card['icon']"
+                    :title="$card['title']"
+                    :text="$card['text']"
+                    :cardColor="$card_color"
+                    :textColor="$cardTextColor"
+                />
             @endforeach
         </x-grid>
     </x-container>
