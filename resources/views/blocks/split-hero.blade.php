@@ -39,11 +39,11 @@
   $mediaClasses = 'w-full h-full object-cover';
 @endphp
 
-<x-section :size="SectionSize::NONE" classes="relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
+<x-section :size="SectionSize::NONE" classes="bg-primary-dark relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
   <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
     
     {{-- Content Section (Left) --}}
-    <div class="flex items-center justify-center py-16 lg:py-24 bg-primary-dark z-20">
+    <div class="flex items-center justify-center py-16 lg:py-24 z-20">
       <x-container>
         <x-flex direction="col">
           @if ($eyebrow)
@@ -105,7 +105,7 @@
     </div>
 
     {{-- Media Section (Right) --}}
-    <div class="relative overflow-hidden bg-neutral-900">
+    <div class="relative overflow-hidden">
       @if(!empty($media_url))
         <x-media
           :mediaType="$media_type"
