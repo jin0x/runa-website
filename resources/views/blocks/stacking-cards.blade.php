@@ -62,12 +62,14 @@
               <div class="stacking-cards-wrapper relative w-full" style="height: 800px;">
                 @foreach($cards as $index => $card)
                 @php
-                    // Cycle through 3 colors: cyan, soft green, purple
-                    $bgColor = match($index % 4) {
-                      0 => 'bg-secondary-cyan',
-                      1 => 'bg-primary-green-soft',
-                      2 => 'bg-secondary-purple',
+                    // Cycle through 4 colors using ThemeVariant constants
+                    $colorVariant = match($index % 4) {
+                      0 => ThemeVariant::CYAN,
+                      1 => ThemeVariant::GREEN,
+                      2 => ThemeVariant::PURPLE,
+                      3 => ThemeVariant::YELLOW,
                     };
+                    $bgColor = EnumHelper::getCardBackgroundClass($colorVariant);
                   @endphp
                   <div class="stacking-card absolute w-full transition-transform duration-700 ease-out"
                       data-card-index="{{ $index }}"
