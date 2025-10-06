@@ -166,6 +166,18 @@ function apply_tailwind_classes_to_content(string $content, array $options = [])
  */
 function enqueue_vite_assets()
 {
+    // Enqueue the main CSS file
+    $main_css_url = get_vite_asset('resources/css/app.css');
+    if (!empty($main_css_url)) {
+        wp_enqueue_style(
+            'theme-main-css',
+            $main_css_url,
+            [], // No dependencies
+            null  // Use file modification time for version
+        );
+    }
+
+    // Enqueue JavaScript and its associated CSS chunks
     $assets = get_vite_entry_with_css('resources/js/app.js');
 
     if ($assets && !empty($assets['js'])) {
@@ -184,7 +196,7 @@ function enqueue_vite_assets()
                 wp_enqueue_style(
                     'theme-app-css-' . $index,
                     $css_url,
-                    [], // No dependencies
+                    ['theme-main-css'], // Depend on main CSS
                     null  // Use file modification time for version
                 );
             }
