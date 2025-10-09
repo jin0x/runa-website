@@ -21,30 +21,32 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" classes="{{ $block->classes }}">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden rounded-[2rem]">
+  <x-container>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden rounded-[2rem]">
 
-    {{-- Image Section --}}
-    <div class="{{ $imageOrder }}">
-      @if(!empty($image_url))
-        <img
-          src="{{ $image_url }}"
-          alt="{{ $image_alt }}"
-          class="w-full h-full object-cover min-h-[400px] md:min-h-[500px]"
-        />
-      @else
-        <div class="w-full h-full bg-neutral-200 min-h-[400px] md:min-h-[500px] flex items-center justify-center">
-          <span class="text-neutral-400">Image placeholder</span>
-        </div>
-      @endif
+      {{-- Image Section --}}
+      <div class="{{ $imageOrder }}">
+        @if(!empty($image_url))
+          <img
+            src="{{ $image_url }}"
+            alt="{{ $image_alt }}"
+            class="w-full h-full object-cover min-h-[400px] md:min-h-[500px]"
+          />
+        @else
+          <div class="w-full h-full bg-neutral-200 min-h-[400px] md:min-h-[500px]   flex items-center justify-center">
+            <span class="text-neutral-400">Image placeholder</span>
+          </div>
+        @endif
+      </div>
+  
+      {{-- Content Section --}}
+      <x-section-card
+        :theme="$card_color"
+        :heading="$heading"
+        :description="$description"
+        :features="$features"
+        class="{{ $contentOrder }}"
+      />
     </div>
-
-    {{-- Content Section --}}
-    <x-section-card
-      :theme="$card_color"
-      :heading="$heading"
-      :description="$description"
-      :features="$features"
-      class="{{ $contentOrder }}"
-    />
-  </div>
+  </x-container>
 </x-section>

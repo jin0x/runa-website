@@ -32,40 +32,40 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
+  <x-container>
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
+    @endif
 
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      classes="mb-12"
-    />
-  @endif
+    {{-- Percentage Cards --}}
+    @if(!empty($percentage_cards))
+      <div class="flex flex-wrap justify-center gap-6 mb-12 mt-12">
+        @foreach($percentage_cards as $card)
+          <div class="bg-percentage-card rounded-3xl p-6 text-center min-w-3xs  flex-shrink-0">
+            <x-heading
+              :as="HeadingTag::H1"
+              :size="HeadingSize::HERO"
+              class="mb-1"
+            >
+              {{ $card['percentage'] }}
+            </x-heading>
 
-  {{-- Percentage Cards --}}
-  @if(!empty($percentage_cards))
-    <div class="flex flex-wrap justify-center gap-6 mb-12 mt-12">
-      @foreach($percentage_cards as $card)
-        <div class="bg-percentage-card rounded-3xl p-6 text-center min-w-3xs flex-shrink-0">
-          <x-heading
-            :as="HeadingTag::H1"
-            :size="HeadingSize::HERO"
-            class="mb-1"
-          >
-            {{ $card['percentage'] }}
-          </x-heading>
-          
-          <x-text
-            :as="TextTag::SPAN"
-            :size="TextSize::MEDIUM"
-          >
-            {{ $card['label'] }}
-          </x-text>
-        </div>
-      @endforeach
-    </div>
-  @endif
+            <x-text
+              :as="TextTag::SPAN"
+              :size="TextSize::MEDIUM"
+            >
+              {{ $card['label'] }}
+            </x-text>
+          </div>
+        @endforeach
+      </div>
+    @endif
 
     @foreach($items as $item)
       @php
@@ -164,5 +164,5 @@
         />
       </div>
     @endforeach
-
+  </x-container>
 </x-section>

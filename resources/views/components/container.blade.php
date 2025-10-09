@@ -14,10 +14,10 @@
       ContainerSize::SMALL => 'lg:max-w-4xl',
       ContainerSize::MEDIUM => 'lg:max-w-6xl',
       ContainerSize::LARGE => 'lg:max-w-7xl',
-      ContainerSize::XLARGE => 'lg:max-w-8xl',
+      ContainerSize::XLARGE => 'lg:max-w-[1600px]',
       ContainerSize::WIDE => 'lg:max-w-9xl',
       ContainerSize::FULL => 'lg:max-w-full',
-      default => '',
+      default => 'lg:max-w-[1600px]', // Default to XLARGE if invalid value
   };
 
   // Base container classes

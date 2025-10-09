@@ -30,22 +30,22 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
+  <x-container>
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
+    @endif
 
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      classes="mb-12"
-    />
-  @endif
+    @php
+      $hasValidSections = !empty($sections) && is_array($sections) && count ($sections) > 0;
+    @endphp
 
-  @php
-    $hasValidSections = !empty($sections) && is_array($sections) && count($sections) > 0;
-  @endphp
-
-  @if($hasValidSections)
+    @if($hasValidSections)
     <!-- Desktop Scroll Lock Component -->
     <div
       id="{{ $blockId }}"
@@ -164,13 +164,14 @@
         </div>
       </div>
     </div>
-  @else
-    <!-- No sections available -->
-    <div class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-3 rounded">
-      <p><strong>No content sections available.</strong></p>
-      <p>Please add at least 2 sections in the block editor.</p>
-    </div>
-  @endif
+      @else
+        <!-- No sections available -->
+        <div class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-3  rounded">
+          <p><strong>No content sections available.</strong></p>
+          <p>Please add at least 2 sections in the block editor.</p>
+        </div>
+      @endif
+  </x-container>
 </x-section>
 
 @if($hasValidSections)

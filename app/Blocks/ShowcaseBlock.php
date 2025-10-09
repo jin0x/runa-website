@@ -95,6 +95,7 @@ class ShowcaseBlock extends Block
             'marquee_logos' => $this->getMarqueeLogos(),
             'cta' => $this->getCta(),
             'accent_color' => $this->getAccentColor(),
+            'columns' => $this->getColumns(),
 
             // Section Options
             'section_size' => $this->getSectionSize(),
@@ -267,7 +268,21 @@ class ShowcaseBlock extends Block
                 'default_value' => 'green-neon',
                 'required' => 1,
             ])
-
+            ->addSelect('columns', [
+                'label' => 'Number of Columns',
+                'instructions' => 'Select the number of columns to display',
+                'choices' => [
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
+                ],
+                'default_value' => '4',
+                'required' => 1,
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ])
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
@@ -334,6 +349,11 @@ class ShowcaseBlock extends Block
     public function getAccentColor()
     {
         return get_field('accent_color') ?: 'green-neon';
+    }
+
+    public function getColumns()
+    {
+        return get_field('columns') ?: '3';
     }
 
     public function getSectionSize()

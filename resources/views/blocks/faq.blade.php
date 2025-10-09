@@ -34,18 +34,17 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
+  <x-container>
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
+    @endif
 
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      classes="mb-12"
-    />
-  @endif
-
-<x-container classes="!px-0">
     <div class=" max-w-6xl mx-auto"
         x-data="faqAccordion"
     >

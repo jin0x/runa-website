@@ -45,88 +45,91 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      classes="mb-12"
-    />
-  @endif
+  <x-container>
+    {{-- Section Heading --}}
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
+    @endif
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-    @php
-      // Always order-1 for mobile, but on desktop it depends on reverse_layout
-      $media_order = 'order-1 ' . ($reverse_layout ? 'md:order-2' : 'md:order-1');
-      $content_order = 'order-2 ' . ($reverse_layout ? 'md:order-1' : 'md:order-2');
-    @endphp
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      @php
+        // Always order-1 for mobile, but on desktop it depends on reverse_layout
+        $media_order = 'order-1 ' . ($reverse_layout ? 'md:order-2' : 'md:order-1');
+        $content_order = 'order-2 ' . ($reverse_layout ? 'md:order-1' : 'md:order-2');
+      @endphp
 
-    {{-- Media Section --}}
-    <x-media
-      :mediaType="$media_type"
-      :mediaUrl="$media_url"
-      :altText="$content_heading"
-      :classes="$mediaClasses"
-      :containerClasses="$media_order . ' overflow-hidden'"
-    />
+      {{-- Media Section --}}
+      <x-media
+        :mediaType="$media_type"
+        :mediaUrl="$media_url"
+        :altText="$content_heading"
+        :classes="$mediaClasses"
+        :containerClasses="$media_order . ' overflow-hidden'"
+      />
 
-    {{-- Content Section --}}
-    <div class="{{ $content_order }} flex flex-col">
-      @if($content_eyebrow)
-        <x-text
-          :as="TextTag::SPAN"
-          :size="TextSize::SMALL"
-          class="inline-block mb-4"
-        >
-          {{ $content_eyebrow }}
-        </x-text>
-      @endif
+      {{-- Content Section --}}
+      <div class="{{ $content_order }} flex flex-col">
+        @if($content_eyebrow)
+          <x-text
+            :as="TextTag::SPAN"
+            :size="TextSize::SMALL"
+            class="inline-block mb-4"
+          >
+            {{ $content_eyebrow }}
+          </x-text>
+        @endif
 
-      @if($content_heading)
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H2"
-          class="mb-6"
-        >
-          {!! $content_heading !!}
-        </x-heading>
-      @endif
+        @if($content_heading)
+          <x-heading
+            :as="HeadingTag::H2"
+            :size="HeadingSize::H2"
+            class="mb-6"
+          >
+            {!! $content_heading !!}
+          </x-heading>
+        @endif
 
-      @if($content_text)
-        <x-text
-          :as="TextTag::DIV"
-          :size="TextSize::BASE"
-          class="mb-8"
-        >
-          {!! $content_text !!}
-        </x-text>
-      @endif
+        @if($content_text)
+          <x-text
+            :as="TextTag::DIV"
+            :size="TextSize::BASE"
+            class="mb-8"
+          >
+            {!! $content_text !!}
+          </x-text>
+        @endif
 
-      @if(!empty($ctas))
-        <div class="flex flex-wrap gap-4 mt-2">
-          @foreach($ctas as $index => $button)
-            @php
-              $button_label = $button['cta']['title'] ?? null;
-              $button_link = $button['cta']['url'] ?? null;
-              $button_target = $button['cta']['target'] ?? '_self';
+        @if(!empty($ctas))
+          <div class="flex flex-wrap gap-4 mt-2">
+            @foreach($ctas as $index => $button)
+              @php
+                $button_label = $button['cta']['title'] ?? null;
+                $button_link = $button['cta']['url'] ?? null;
+                $button_target = $button['cta']['target'] ?? '_self';
 
-              // First button is primary, others are secondary
-              $currentButtonVariant = $index === 0 ? $buttonVariant : $secondaryButtonVariant;
-            @endphp
+                // First button is primary, others are secondary
+                $currentButtonVariant = $index === 0 ? $buttonVariant :   $secondaryButtonVariant;
+              @endphp
 
-            @if(!empty($button_label) && !empty($button_link))
-              <x-button
-                :variant="$currentButtonVariant"
-                :href="$button_link"
-                target="{{ $button_target }}"
-              >
-                {{ $button_label }}
-              </x-button>
-            @endif
-          @endforeach
-        </div>
-      @endif
+              @if(!empty($button_label) && !empty($button_link))
+                <x-button
+                  :variant="$currentButtonVariant"
+                  :href="$button_link"
+                  target="{{ $button_target }}"
+                >
+                  {{ $button_label }}
+                </x-button>
+              @endif
+            @endforeach
+          </div>
+        @endif
+      </div>
     </div>
-  </div>
+  </x-container>
 </x-section>
