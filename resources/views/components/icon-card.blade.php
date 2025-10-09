@@ -40,7 +40,7 @@
         </div>
     @endif
 
-    <div class="flex flex-col flex-1 gap-y-6 min-h-[200px]">
+    <div class="flex flex-col flex-1 gap-y-3 min-h-[175px]">
         @if($title)
             <x-heading
                 id="main-title"
