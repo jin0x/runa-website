@@ -1,10 +1,5 @@
 @php
-  use App\Enums\SectionSize;
-  use App\Enums\HeadingTag;
-  use App\Enums\HeadingSize;
-  use App\Enums\TextTag;
-  use App\Enums\TextSize;
-  use App\Enums\TextColor;
+  use App\Enums\ContainerSize;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionHeadingVariant;
   use App\Helpers\EnumHelper;
@@ -31,36 +26,38 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
-  {{-- Section Heading --}}
-  @if($eyebrow || $heading || $subtitle)
-    <x-section-heading
-      :eyebrow="$eyebrow"
-      :heading="$heading"
-      :subtitle="$subtitle"
-      :variant="$sectionHeadingVariant"
-      classes="py-16 px-4 lg:px-16"
-      isShowcase="true"
-    />
-  @endif
+  <x-container>
+    {{-- Section Heading --}}
+    @if($eyebrow || $heading || $subtitle)
+      <x-section-heading
+        :eyebrow="$eyebrow"
+        :heading="$heading"
+        :subtitle="$subtitle"
+        :variant="$sectionHeadingVariant"
+        classes="py-16 px-4 lg:px-16"
+        isShowcase="true"
+      />
+    @endif
 
-  {{-- Cards Section --}}
-  @if(!empty($pricing_cards))
-    <div class="pb-16">
-      <div class="grid {{ $gridClasses }} gap-6 items-start">
-        @foreach($pricing_cards as $card)
-          <x-pricing-card
-            :icon="$card['icon'] ?? null"
-            :title="$card['title'] ?? ''"
-            :description="$card['description'] ?? ''"
-            :pricing_items="$card['pricing_items'] ?? []"
-            :cta="$card['cta'] ?? null"
-            :features_title="$card['features_title'] ?? ''"
-            :features="$card['features'] ?? []"
-            :asterisk_note="$card['asterisk_note'] ?? ''"
-            :is_popular="$card['is_popular'] ?? false"
-          />
-        @endforeach
+    {{-- Cards Section --}}
+    @if(!empty($pricing_cards))
+      <div class="pb-16">
+        <div class="grid {{ $gridClasses }} gap-6 items-start">
+          @foreach($pricing_cards as $card)
+            <x-pricing-card
+              :icon="$card['icon'] ?? null"
+              :title="$card['title'] ?? ''"
+              :description="$card['description'] ?? ''"
+              :pricing_items="$card['pricing_items'] ?? []"
+              :cta="$card['cta'] ?? null"
+              :features_title="$card['features_title'] ?? ''"
+              :features="$card['features'] ?? []"
+              :asterisk_note="$card['asterisk_note'] ?? ''"
+              :is_popular="$card['is_popular'] ?? false"
+            />
+          @endforeach
+        </div>
       </div>
-    </div>
-  @endif
+    @endif
+  </x-container>
 </x-section>

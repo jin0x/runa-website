@@ -12,27 +12,30 @@
 
   // Set container size: single layout (featured) uses medium, slider uses xlarge
   $containerSize = $display_layout === 'single' ? ContainerSize::MEDIUM : ContainerSize::XLARGE;
+
+  // Show navigation when show_navigation is true, and there is more than one testimonial
+  $showNavigation = $show_navigation && (count($testimonials) > 1);
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
   <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="testimonials-slider-block {{ $block->classes ?? '' }}">
-
-    {{-- Section Heading --}}
-    @if($section_eyebrow || $section_title || $section_description)
-      <x-section-heading
-        :eyebrow="$section_eyebrow"
-        :heading="$section_title"
-        :subtitle="$section_description"
-        :variant="$themeVariant"
-        classes="mb-12"
-      />
-    @endif
-
     <x-container :size="$containerSize">
+
+      {{-- Section Heading --}}
+      @if($section_eyebrow || $section_title || $section_description)
+        <x-section-heading
+          :eyebrow="$section_eyebrow"
+          :heading="$section_title"
+          :subtitle="$section_description"
+          :variant="$themeVariant"
+          classes="mb-12"
+        />
+      @endif
+
       @if($display_layout === 'single')
         {{-- Single Testimonial Display with Slider --}}
         <x-slider
-          :navigation="$show_navigation"
+          :navigation="$showNavigation"
           :pagination="false"
           :loop="true"
           :autoplayDelay="$autoplay_delay * 1000"

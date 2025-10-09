@@ -41,10 +41,8 @@
 
 <x-section :size="SectionSize::NONE" classes="bg-primary-dark relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
   <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
-    
     {{-- Content Section (Left) --}}
     <div class="flex items-center justify-center py-16 lg:py-24 z-20">
-      <x-container>
         <x-flex direction="col" class="max-w-xl">
           {{-- Eyebrow --}}
           @if ($eyebrow)
@@ -56,7 +54,6 @@
               {{ $eyebrow }}
             </x-text>
           @endif
-
           @if ($title)
             <x-heading
               :as="HeadingTag::H1"
@@ -64,10 +61,9 @@
               :color="TextColor::DARK"
               class="mb-3"
             >
-              {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
+              {!! preg_replace('/<span>(.*?)<\/span>/',  '<span class="' . $accentColor . '">$1</span>',  $title) !!}
             </x-heading>
           @endif
-
           @if ($content)
             <x-text
               :as="TextTag::SPAN"
@@ -78,7 +74,6 @@
               {!! $content !!}
             </x-text>
           @endif
-
           @if (!empty($ctas))
             <div class="flex flex-wrap gap-3">
               @foreach ($ctas as $index => $button)
@@ -86,9 +81,8 @@
                   $button_label = $button['cta']['title'] ?? null;
                   $button_link = $button['cta']['url'] ?? null;
                   $button_target = $button['cta']['target'] ?? '_self';
-                  $buttonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
+                  $buttonVariant = $index === 0 ? $primaryButtonVariant :  $secondaryButtonVariant;
                 @endphp
-
                 @if (!empty($button_label) && !empty($button_link))
                   <x-button
                     :variant="$buttonVariant"
@@ -102,9 +96,7 @@
             </div>
           @endif
         </x-flex>
-      </x-container>
-    </div>
-
+      </div>
     {{-- Media Section (Right) --}}
     <div class="relative overflow-hidden">
       @if(!empty($media_url))
@@ -120,6 +112,5 @@
         <div class="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900"></div>
       @endif
     </div>
-
   </div>
 </x-section>

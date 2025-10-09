@@ -29,37 +29,39 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      classes="mb-12"
-    />
-  @endif
-
-  @if(!empty($cards))
-    <x-grid
-      :columns="$gridColumns"
-      :gapsize="$gapSize"
-    >
-      @foreach($cards as $card)
-        <x-card
-          :title="$card['title']"
-          :eyebrow="$card['eyebrow'] ?? ''"
-          :excerpt="$card['excerpt'] ?? ''"
-          :image="$card['image'] ?? ''"
-          :cta="[
-            'label' => $card['cta']['title'] ?? 'Read more',
-            'url' => $card['cta']['url'] ?? '#',
-            'target' => $card['cta']['target'] ?? '_self'
-          ]"
-          :headingTag="HeadingTag::H3"
-          :headingSize="HeadingSize::H4"
-          :headingFont="FontType::SANS"
-        />
-      @endforeach
-    </x-grid>
-  @endif
+  <x-container>
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
+    @endif
+  
+    @if(!empty($cards))
+      <x-grid
+        :columns="$gridColumns"
+        :gapsize="$gapSize"
+      >
+        @foreach($cards as $card)
+          <x-card
+            :title="$card['title']"
+            :eyebrow="$card['eyebrow'] ?? ''"
+            :excerpt="$card['excerpt'] ?? ''"
+            :image="$card['image'] ?? ''"
+            :cta="[
+              'label' => $card['cta']['title'] ?? 'Read more',
+              'url' => $card['cta']['url'] ?? '#',
+              'target' => $card['cta']['target'] ?? '_self'
+            ]"
+            :headingTag="HeadingTag::H3"
+            :headingSize="HeadingSize::H4"
+            :headingFont="FontType::SANS"
+          />
+        @endforeach
+      </x-grid>
+    @endif
+  </x-container>
 </x-section>

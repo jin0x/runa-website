@@ -21,17 +21,17 @@
 
   // Define variant classes
   $tabContainerClasses = match($variant) {
-      'underline' => 'bg-secondary-purple p-2 rounded-full',
+      'underline' => 'bg-secondary-purple p-2 ',
       'pills' => 'bg-neutral-100 p-1 rounded-lg',
       'buttons' => 'space-x-2',
       default => 'bg-primary-green-neon p-2 rounded-full',
   };
 
   $tabButtonBaseClasses = match($variant) {
-      'underline' => 'px-8 py-6 text-xl rounded-full whitespace-nowrap transition-all duration-300',
-      'pills' => 'px-4 py-2 text-xl font-medium rounded-md whitespace-nowrap',
-      'buttons' => 'px-4 py-2 text-xl font-medium rounded-md border whitespace-nowrap',
-      default => 'px-6 py-2 text-xl font-medium rounded-full whitespace-nowrap transition-all duration-300',
+      'underline' => 'px-12 py-6 text-xl rounded-full whitespace-nowrap transition-all duration-300',
+      'pills' => 'px-6 py-2 text-xl font-medium rounded-md whitespace-nowrap',
+      'buttons' => 'px-6 py-2 text-xl font-medium rounded-md border whitespace-nowrap',
+      default => 'px-8 py-2 text-xl font-medium rounded-full whitespace-nowrap transition-all duration-300',
   };
 
   $tabActiveClasses = match($variant) {
@@ -51,7 +51,7 @@
 
 <div x-data="{ activeTab: '{{ $defaultActiveTab }}' }" class="{{ $class }}">
   {{-- Tab Navigation --}}
-  <div class="overflow-x-auto flex xl:justify-center">
+  <div class="overflow-x-auto flex xl:justify-center rounded-full scrollbar-hide">
     <div class="inline-flex xl:flex xl:w-full xl:min-w-0 {{ $tabContainerClasses }} gap-2 min-w-max">
       @foreach($tabs as $tab)
         <button

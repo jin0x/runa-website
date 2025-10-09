@@ -44,29 +44,27 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
+  <x-container>
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
+    @endif
 
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      classes="mb-12"
-    />
-  @endif
-
-    <x-container>
-        <x-grid :columns="$gridColumns" :rowgapsize="$gapSize" colgapsize="lg" classes="mt-12">
-            @foreach($cards as $card)
-                <x-icon-card
-                    :icon="$card['icon']"
-                    :title="$card['title']"
-                    :text="$card['text']"
-                    :cardColor="$card_color"
-                    :textColor="$cardTextColor"
-                />
-            @endforeach
-        </x-grid>
-    </x-container>
-
+    <x-grid :columns="$gridColumns" :rowgapsize="$gapSize" colgapsize="lg" classes="mt-12">
+        @foreach($cards as $card)
+            <x-icon-card
+                :icon="$card['icon']"
+                :title="$card['title']"
+                :text="$card['text']"
+                :cardColor="$card_color"
+                :textColor="$cardTextColor"
+            />
+        @endforeach
+    </x-grid>
+  </x-container>
 </x-section>
