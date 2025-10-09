@@ -28,7 +28,12 @@
   };
 
   // Set grid column values
-  $gridColumns = $columns === '2' ? '2' : '3';
+  $gridColumns = match($columns) {
+    '2' => '2',
+    '3' => '3',
+    '4' => '4',
+    default => '3', // Default to 3 columns if invalid value
+};
 
   // Set gap sizes based on columns
   $gapSize = 'lg';

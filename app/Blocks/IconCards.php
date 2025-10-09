@@ -203,6 +203,7 @@ class IconCards extends Block
                 'choices' => [
                     '2' => '2',
                     '3' => '3',
+                    '4' => '4',
                 ],
                 'default_value' => '3',
                 'required' => 1,
