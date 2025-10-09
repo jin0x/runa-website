@@ -36,8 +36,8 @@
   ];
 
   $textClasses = [
-      ButtonSize::DEFAULT => '',
-      ButtonSize::SMALL => '',
+      ButtonSize::DEFAULT => 'text-small',
+      ButtonSize::SMALL => 'text-small',
       ButtonSize::LARGE => 'heading-3',
   ];
 

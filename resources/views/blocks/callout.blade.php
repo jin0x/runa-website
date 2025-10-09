@@ -21,7 +21,7 @@
 
   // Always use centered layout as per Figma design
   $contentClasses = 'flex flex-col text-center items-center gap-6';
-  $textContainerClasses = 'max-w-3xl';
+  $textContainerClasses = 'max-w-4xl';
   $buttonsContainerClasses = 'flex flex-wrap justify-center gap-4';
 
   // Background image styles
