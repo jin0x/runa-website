@@ -230,8 +230,8 @@
           @if(!empty($logo_url))
             @if(!empty($logo_link) && !empty($logo_link['url']))
               <a href="{{ $logo_link['url'] }}"
-                 target="{{ $logo_link['target'] ?? '_self' }}"
-                 class="flex items-center justify-center"
+                target="{{ $logo_link['target'] ?? '_self' }}"
+                class="flex items-center justify-center"
               >
                 <img src="{{ $logo_url }}" alt="{{ $alt_text }}" class="{{ $logoClasses }}">
               </a>
