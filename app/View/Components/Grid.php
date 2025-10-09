@@ -50,6 +50,7 @@ class Grid extends Component {
         '2' => 'w-full grid lg:grid-cols-2',
         '3' => 'w-full grid lg:grid-cols-3',
         '4' => 'w-full grid lg:grid-cols-4',
+        '5' => 'w-full grid lg:grid-cols-5',
         '6' => 'w-full grid lg:grid-cols-3 xl:grid-cols-6',
     ];
 
