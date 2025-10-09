@@ -54,7 +54,7 @@
 
   // Append heading classes
   $titleClasses .= ' ' . $headingClasses;
-  $headingSize = $isShowcase ? HeadingSize::HERO : HeadingSize::H2;
+  $headingSize = $isShowcase ? HeadingSize::HERO : HeadingSize::H1;
 @endphp
 
 @if ($wrapperClasses)
@@ -73,15 +73,15 @@
         <x-heading
           :as="HeadingTag::H2"
           :size="$headingSize"
-          class="mb-3 {{ $titleClasses }}"
+          class="mb-3 font-bold {{ $titleClasses }}"
         >
           {!! $heading !!}
         </x-heading>
 
         <x-text
           :as="TextTag::P"
-          :size="TextSize::MEDIUM"
-          class="max-w-[68ch] mx-auto {{ $subtitleClasses }}"
+          :size="TextSize::XLARGE"
+          class="max-w-[80ch] mx-auto {{ $subtitleClasses }}"
         >
           {!! $subtitle !!}
         </x-text>
