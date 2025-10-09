@@ -54,19 +54,19 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
-
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      isShowcase="true"
-      classes="mb-12"
-    />
-  @endif
-
   <x-container>
+
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        isShowcase="true"
+        classes="mb-12"
+      />
+    @endif
+
     <div class="text-center">
 
     {{-- Statistics Cards --}}

@@ -30,158 +30,160 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
+  <x-container>
 
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      classes="mb-12"
-    />
-  @endif
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
+    @endif
 
-  @php
-    $hasValidCards = !empty($cards) && is_array($cards) && count($cards) > 0;
-  @endphp
+    @php
+      $hasValidCards = !empty($cards) && is_array($cards) && count  ($cards) > 0;
+    @endphp
 
-  @if($hasValidCards)
-    <!-- Stacking Cards Container -->
-    <div
-      id="{{ $blockId }}"
-      class="stacking-cards-container"
-      data-cards="{{ base64_encode(json_encode($cards)) }}"
-      data-mobile-breakpoint="{{ $mobile_breakpoint }}"
-    >
-      <!-- Desktop Layout -->
-      <div class="hidden lg:block">
-        <div class="relative">
-          <!-- Cards Container -->
-          <div class="stacking-cards-content">
-            <div class="relative min-h-screen flex items-center justify-center max-w-7xl mx-auto px-4">
-              <div class="stacking-cards-wrapper relative w-full" style="height: 800px;">
-                @foreach($cards as $index => $card)
-                @php
-                    // Cycle through 4 colors using ThemeVariant constants
-                    $colorVariant = match($index % 4) {
-                      0 => ThemeVariant::CYAN,
-                      1 => ThemeVariant::GREEN,
-                      2 => ThemeVariant::PURPLE,
-                      3 => ThemeVariant::YELLOW,
-                    };
-                    $bgColor = EnumHelper::getCardBackgroundClass($colorVariant);
-                  @endphp
-                  <div class="stacking-card absolute w-full transition-transform duration-700 ease-out"
-                      data-card-index="{{ $index }}"
-                      style="z-index: {{ 10 + $index }}; top: 0; left: 0; transform: translateY(100vh);">
-                    <div class="flex flex-row rounded-[32px] overflow-hidden relative shadow-2xl  {{ $bgColor }}">
-                      <div class="w-2/5 flex-shrink-0 py-6 pl-6">
-                        <img src="{{ $card['image']['url'] }}" alt="{{ $card['image']['alt'] ?? $card['title'] }}" class="w-full h-full object-cover min-h-[400px]"/>
-                      </div>
-                      <div class="flex flex-col flex-1 p-8 lg:p-12 min-h-[400px] justify-center">
-                        <div class="space-y-4">
-                          <x-heading
-                            :as="HeadingTag::H2"
-                            :size="HeadingSize::H2"
-                            :font="FontType::SANS"
-                            :color="$cardTextColor"
-                            class="mb-4"
-                          >
-                            {{ $card['title'] }}
-                          </x-heading>
-
-                          <x-text
-                            :as="TextTag::P"
-                            :size="TextSize::BASE"
-                            :color="$cardTextColor"
-                            class="leading-relaxed"
-                          >
-                            {!! $card['description'] !!}
-                          </x-text>
+    @if($hasValidCards)
+      <!-- Stacking Cards Container -->
+      <div
+        id="{{ $blockId }}"
+        class="stacking-cards-container"
+        data-cards="{{ base64_encode(json_encode($cards)) }}"
+        data-mobile-breakpoint="{{ $mobile_breakpoint }}"
+      >
+        <!-- Desktop Layout -->
+        <div class="hidden lg:block">
+          <div class="relative">
+            <!-- Cards Container -->
+            <div class="stacking-cards-content">
+              <div class="relative min-h-screen flex items-center justify-center  max-w-7xl mx-auto px-4">
+                <div class="stacking-cards-wrapper relative w-full" style="height:  800px;">
+                  @foreach($cards as $index => $card)
+                  @php
+                      // Cycle through 4 colors using ThemeVariant constants
+                      $colorVariant = match($index % 4) {
+                        0 => ThemeVariant::CYAN,
+                        1 => ThemeVariant::GREEN,
+                        2 => ThemeVariant::PURPLE,
+                        3 => ThemeVariant::YELLOW,
+                      };
+                      $bgColor = EnumHelper::getCardBackgroundClass ($colorVariant);
+                    @endphp
+                    <div class="stacking-card absolute w-full transition-transform  duration-700 ease-out"
+                        data-card-index="{{ $index }}"
+                        style="z-index: {{ 10 + $index }}; top: 0; left: 0;   transform: translateY(100vh);">
+                      <div class="flex flex-row rounded-[32px] overflow-hidden  relative shadow-2xl  {{ $bgColor }}">
+                        <div class="w-2/5 flex-shrink-0 py-6 pl-6">
+                          <img src="{{ $card['image']['url'] }}" alt="{{ $card  ['image']['alt'] ?? $card['title'] }}" class="w-full h-full   object-cover min-h-[400px]"/>
                         </div>
+                        <div class="flex flex-col flex-1 p-8 lg:p-12 min-h-[400px]  justify-center">
+                          <div class="space-y-4">
+                            <x-heading
+                              :as="HeadingTag::H2"
+                              :size="HeadingSize::H2"
+                              :font="FontType::SANS"
+                              :color="$cardTextColor"
+                              class="mb-4"
+                            >
+                              {{ $card['title'] }}
+                            </x-heading>
 
-                        @if(!empty($card['cta']))
-                          <div class="pt-8">
                             <x-text
-                              :as="TextTag::A"
+                              :as="TextTag::P"
                               :size="TextSize::BASE"
                               :color="$cardTextColor"
-                              class="font-medium underline underline-offset-4 hover:opacity-75 transition-opacity"
-                              href="{{ $card['cta']['url'] }}"
-                              target="{{ $card['cta']['target'] ?? '_self' }}"
+                              class="leading-relaxed"
                             >
-                              {{ $card['cta']['title'] ?? 'Learn more' }}
+                              {!! $card['description'] !!}
                             </x-text>
                           </div>
-                        @endif
+
+                          @if(!empty($card['cta']))
+                            <div class="pt-8">
+                              <x-text
+                                :as="TextTag::A"
+                                :size="TextSize::BASE"
+                                :color="$cardTextColor"
+                                class="font-medium underline underline-offset-4   hover:opacity-75 transition-opacity"
+                                href="{{ $card['cta']['url'] }}"
+                                target="{{ $card['cta']['target'] ?? '_self' }}"
+                              >
+                                {{ $card['cta']['title'] ?? 'Learn more' }}
+                              </x-text>
+                            </div>
+                          @endif
+                        </div>
                       </div>
                     </div>
-                  </div>
-                @endforeach
+                  @endforeach
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Mobile Layout (Simple Stack) -->
-      <div class="block lg:hidden">
-        <div class="stacking-mobile-container space-y-8">
-          @foreach($cards as $card)
-            <div class="mobile-card max-w-md mx-auto">
-              <div class="flex flex-col rounded-[32px] overflow-hidden relative bg-white shadow-lg">
-                <div>
-                  <img src="{{ $card['image']['url'] }}" alt="{{ $card['image']['alt'] ?? $card['title'] }}" class="w-full h-auto object-cover rounded-tl-[32px] rounded-tr-[32px]">
-                </div>
-                <div class="flex flex-col flex-1 p-6 min-h-[250px] rounded-bl-[32px] rounded-br-[32px] overflow-hidden">
-                  <div class="mb-auto space-y-4">
-                    <x-heading
-                      :as="HeadingTag::H3"
-                      :size="HeadingSize::H4"
-                      :font="FontType::SANS"
-                      :color="$cardTextColor"
-                    >
-                      {{ $card['title'] }}
-                    </x-heading>
-
-                    <x-text
-                      :as="TextTag::P"
-                      :size="TextSize::BASE"
-                      :color="$cardTextColor"
-                      class="leading-relaxed"
-                    >
-                      {!! $card['description'] !!}
-                    </x-text>
+        <!-- Mobile Layout (Simple Stack) -->
+        <div class="block lg:hidden">
+          <div class="stacking-mobile-container space-y-8">
+            @foreach($cards as $card)
+              <div class="mobile-card max-w-md mx-auto">
+                <div class="flex flex-col rounded-[32px] overflow-hidden relative   bg-white shadow-lg">
+                  <div>
+                    <img src="{{ $card['image']['url'] }}" alt="{{ $card['image'] ['alt'] ?? $card['title'] }}" class="w-full h-auto object-cover  rounded-tl-[32px] rounded-tr-[32px]">
                   </div>
-
-                  @if(!empty($card['cta']))
-                    <div class="pt-6">
-                      <x-text
-                        :as="TextTag::A"
-                        :size="TextSize::SMALL"
+                  <div class="flex flex-col flex-1 p-6 min-h-[250px] rounded-bl-  [32px] rounded-br-[32px] overflow-hidden">
+                    <div class="mb-auto space-y-4">
+                      <x-heading
+                        :as="HeadingTag::H3"
+                        :size="HeadingSize::H4"
+                        :font="FontType::SANS"
                         :color="$cardTextColor"
-                        class="font-normal underline underline-offset-4 hover:opacity-75 transition-opacity"
-                        href="{{ $card['cta']['url'] }}"
-                        target="{{ $card['cta']['target'] ?? '_self' }}"
                       >
-                        {{ $card['cta']['title'] ?? 'Learn more' }}
+                        {{ $card['title'] }}
+                      </x-heading>
+
+                      <x-text
+                        :as="TextTag::P"
+                        :size="TextSize::BASE"
+                        :color="$cardTextColor"
+                        class="leading-relaxed"
+                      >
+                        {!! $card['description'] !!}
                       </x-text>
                     </div>
-                  @endif
+
+                    @if(!empty($card['cta']))
+                      <div class="pt-6">
+                        <x-text
+                          :as="TextTag::A"
+                          :size="TextSize::SMALL"
+                          :color="$cardTextColor"
+                          class="font-normal underline underline-offset-4   hover:opacity-75 transition-opacity"
+                          href="{{ $card['cta']['url'] }}"
+                          target="{{ $card['cta']['target'] ?? '_self' }}"
+                        >
+                          {{ $card['cta']['title'] ?? 'Learn more' }}
+                        </x-text>
+                      </div>
+                    @endif
+                  </div>
                 </div>
               </div>
-            </div>
-          @endforeach
+            @endforeach
+          </div>
         </div>
       </div>
-    </div>
-  @else
-    <!-- No cards available -->
-    <div class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-3 rounded max-w-md mx-auto">
-      <p><strong>No cards available.</strong></p>
-      <p>Please add at least 1 card in the block editor.</p>
-    </div>
-  @endif
+    @else
+      <!-- No cards available -->
+      <div class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-3 rounded  max-w-md mx-auto">
+        <p><strong>No cards available.</strong></p>
+        <p>Please add at least 1 card in the block editor.</p>
+      </div>
+    @endif
+  </x-container>
 </x-section>
 
 @if($hasValidCards)

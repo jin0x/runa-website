@@ -19,19 +19,19 @@
 
 @if($testimonials && count($testimonials) > 0)
   <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="testimonials-slider-block {{ $block->classes ?? '' }}">
-
-    {{-- Section Heading --}}
-    @if($section_eyebrow || $section_title || $section_description)
-      <x-section-heading
-        :eyebrow="$section_eyebrow"
-        :heading="$section_title"
-        :subtitle="$section_description"
-        :variant="$themeVariant"
-        classes="mb-12"
-      />
-    @endif
-
     <x-container :size="$containerSize">
+
+      {{-- Section Heading --}}
+      @if($section_eyebrow || $section_title || $section_description)
+        <x-section-heading
+          :eyebrow="$section_eyebrow"
+          :heading="$section_title"
+          :subtitle="$section_description"
+          :variant="$themeVariant"
+          classes="mb-12"
+        />
+      @endif
+
       @if($display_layout === 'single')
         {{-- Single Testimonial Display with Slider --}}
         <x-slider

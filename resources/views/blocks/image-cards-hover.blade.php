@@ -19,28 +19,26 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
+  <x-container>
+    @if($section_eyebrow || $section_title || $section_description)
+      <x-section-heading
+        :eyebrow="$section_eyebrow"
+        :heading="$section_title"
+        :subtitle="$section_description"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
+    @endif
 
-  @if($section_eyebrow || $section_title || $section_description)
-    <x-section-heading
-      :eyebrow="$section_eyebrow"
-      :heading="$section_title"
-      :subtitle="$section_description"
-      :variant="$sectionHeadingVariant"
-      classes="mb-12"
-    />
-  @endif
-
-    <x-container classes="!px-0">
-        <x-grid columns="2" classes="mt-12">
-            @foreach($cards as $card)
-                <x-image-hover-card
-                    :title="$card['title']"
-                    :text="$card['text']"
-                    :image="$card['image']"
-                    :cardColor="$card_color"
-                />
-            @endforeach
-        </x-grid>
-    </x-container>
-
+    <x-grid columns="2" classes="mt-12">
+        @foreach($cards as $card)
+            <x-image-hover-card
+                :title="$card['title']"
+                :text="$card['text']"
+                :image="$card['image']"
+                :cardColor="$card_color"
+            />
+        @endforeach
+    </x-grid>
+  </x-container>
 </x-section>
