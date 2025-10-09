@@ -65,7 +65,6 @@
       :heading="$section_title"
       :subtitle="$section_description"
       :variant="$sectionHeadingVariant"
-      classes="mb-12"
     />
   @endif
 
