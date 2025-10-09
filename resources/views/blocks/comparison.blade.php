@@ -31,7 +31,7 @@
     @endif
 
     {{-- Comparison Cards --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-secondary rounded-2xl p-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-secondary rounded-2xl p-8 md:p-12">
       {{-- Left Side Card --}}
       @if($left_side)
         <div class="text-left">
@@ -96,7 +96,7 @@
                       </svg>
                     @endif
                   </div>
-                  
+
                   {{-- Feature Text --}}
                   <x-text
                     :as="TextTag::SPAN"
@@ -175,7 +175,7 @@
                       </svg>
                     @endif
                   </div>
-                  
+
                   {{-- Feature Text --}}
                   <x-text
                     :as="TextTag::SPAN"

@@ -203,3 +203,27 @@ function enqueue_vite_assets()
         }
     }
 }
+
+/**
+ * Check if current page/post has any ACF blocks
+ *
+ * @return bool True if ACF blocks are found, false otherwise
+ */
+function has_acf_blocks()
+{
+    global $post;
+
+    $hasAcfBlocks = false;
+
+    if (has_blocks() && isset($post->post_content)) {
+        $blocks = parse_blocks($post->post_content);
+        foreach ($blocks as $block) {
+            if (strpos($block['blockName'] ?? '', 'acf/') !== false) {
+                $hasAcfBlocks = true;
+                break;
+            }
+        }
+    }
+
+    return $hasAcfBlocks;
+}
