@@ -45,11 +45,12 @@
     {{-- Content Section (Left) --}}
     <div class="flex items-center justify-center py-16 lg:py-24 z-20">
       <x-container>
-        <x-flex direction="col">
+        <x-flex direction="col" class="max-w-xl">
+          {{-- Eyebrow --}}
           @if ($eyebrow)
             <x-text
               :as="TextTag::SPAN"
-              :size="TextSize::SMALL"
+              :size="TextSize::LARGE"
               class="inline-block text-gradient-primary uppercase mb-3"
             >
               {{ $eyebrow }}
@@ -59,7 +60,7 @@
           @if ($title)
             <x-heading
               :as="HeadingTag::H1"
-              :size="HeadingSize::SUPER_DUPER"
+              :size="HeadingSize::SUPER"
               :color="TextColor::DARK"
               class="mb-3"
             >

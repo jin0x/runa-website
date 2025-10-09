@@ -27,7 +27,7 @@
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
   // Media classes
-  $mediaClasses = 'w-full object-cover h-full min-h-[294px] xl:min-h-[640px]';
+  $mediaClasses = 'object-cover h-[294px] xl:h-[650px] xl:max-w-[866px]';
 
 @endphp
 
@@ -58,8 +58,7 @@
           
           <x-text
             :as="TextTag::SPAN"
-            :size="TextSize::BASE"
-            class="text-primary-black"
+            :size="TextSize::MEDIUM"
           >
             {{ $card['label'] }}
           </x-text>
@@ -106,7 +105,7 @@
             $grid_layout = $is_even ? 'xl:grid-cols-[6.7fr_3.3fr]' : 'xl:grid-cols-[3.3fr_6.7fr]';
         }
       @endphp
-      <div class="grid grid-cols-1 md:grid-cols-2 {{ $grid_layout }} gap-12 lg:gap-18 items-center {{ !$loop->last ? 'mb-12' : '' }}">
+      <div class="max-w-7xl grid grid-cols-1 md:grid-cols-2 {{ $grid_layout }} gap-12 lg:gap-18 items-center justify-center  mx-auto {{ !$loop->last ? 'mb-12' : '' }}">
         {{-- Content Section --}}
         <div class="{{ $content_order }} flex flex-col">
           @if(!empty($item['content_eyebrow']))

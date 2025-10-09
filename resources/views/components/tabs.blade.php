@@ -28,10 +28,10 @@
   };
 
   $tabButtonBaseClasses = match($variant) {
-      'underline' => 'px-8 py-6 text-base rounded-full whitespace-nowrap transition-all duration-300',
-      'pills' => 'px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap',
-      'buttons' => 'px-4 py-2 text-sm font-medium rounded-md border whitespace-nowrap',
-      default => 'px-6 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-all duration-300',
+      'underline' => 'px-8 py-6 text-xl rounded-full whitespace-nowrap transition-all duration-300',
+      'pills' => 'px-4 py-2 text-xl font-medium rounded-md whitespace-nowrap',
+      'buttons' => 'px-4 py-2 text-xl font-medium rounded-md border whitespace-nowrap',
+      default => 'px-6 py-2 text-xl font-medium rounded-full whitespace-nowrap transition-all duration-300',
   };
 
   $tabActiveClasses = match($variant) {
@@ -52,12 +52,12 @@
 <div x-data="{ activeTab: '{{ $defaultActiveTab }}' }" class="{{ $class }}">
   {{-- Tab Navigation --}}
   <div class="overflow-x-auto flex xl:justify-center">
-    <div class="inline-flex {{ $tabContainerClasses }} gap-2 min-w-max">
+    <div class="inline-flex xl:flex xl:w-full xl:min-w-0 {{ $tabContainerClasses }} gap-2 min-w-max">
       @foreach($tabs as $tab)
         <button
           @click="activeTab = '{{ $tab['id'] }}'"
           :class="activeTab === '{{ $tab['id'] }}' ? '{{ $tabActiveClasses }}' : '{{ $tabInactiveClasses }}'"
-          class="{{ $tabButtonBaseClasses }}"
+          class="{{ $tabButtonBaseClasses }} xl:flex-1"
           type="button"
         >
           {{ $tab['label'] }}

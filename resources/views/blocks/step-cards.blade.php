@@ -60,7 +60,7 @@
     />
   @endif
 
-    <x-container classes="!px-0">
+    <x-container>
         <x-grid columns="3" classes="mt-12">
             @foreach($steps as $step)
                 @php
@@ -68,7 +68,7 @@
                     $cardBgColor = $cardColors[$loop->index % 4];
                 @endphp
 
-                <div class="flex flex-col overflow-hidden gap-y-6 p-6">
+                <div class="flex flex-col overflow-hidden gap-y-10 p-6">
                     @if ( $step['image'] )
                         <div class="w-full overflow-hidden rounded-3xl {{ $cardBgColor }}">
                             @php

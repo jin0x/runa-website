@@ -11,45 +11,23 @@
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = EnumHelper::getSectionSize($section_size);
 
+  // Convert to optimal section heading variant for contrast
+  $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($theme);
+
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   <x-container>
-    <div class="text-center">
-      {{-- Section Heading --}}
-    @if($eyebrow)
-      <x-text
-        :as="TextTag::SPAN"
-        :size="TextSize::SMALL"
-        :color="TextColor::GRAY"
-        class="block mb-3"
-      >
-        {{ $eyebrow }}
-      </x-text>
-    @endif
-
-    @if($heading)
-      <x-heading
-        :as="HeadingTag::H3"
-        :size="HeadingSize::H3"
-        :color="TextColor::DARK"
-        class="mb-3"
-      >
-        {{ $heading }}
-      </x-heading>
-    @endif
-
-    @if($subtitle)
-      <x-text
-        :as="TextTag::P"
-        :size="TextSize::MEDIUM"
-        :color="TextColor::DARK"
-        class="mb-16"
-      >
-        {{ $subtitle }}
-      </x-text>
+    @if($eyebrow || $heading || $subtitle)
+      <x-section-heading
+        :eyebrow="$eyebrow"
+        :heading="$heading"
+        :subtitle="$subtitle"
+        :variant="$sectionHeadingVariant"
+        classes="mb-12"
+      />
     @endif
 
     {{-- Comparison Cards --}}
@@ -73,8 +51,8 @@
             <x-heading
               :as="HeadingTag::H2"
               :size="HeadingSize::H2"
-              :color="TextColor::DARK"
-              class="mb-2"
+              :color="TextColor::GRADIENT"
+              class="mb-4"
             >
               {{ $left_side['title'] }}
             </x-heading>
@@ -154,7 +132,7 @@
               :as="HeadingTag::H2"
               :size="HeadingSize::H2"
               :color="TextColor::DARK"
-              class="mb-2"
+              class="mb-6"
             >
               {{ $right_side['title'] }}
             </x-heading>

@@ -2,15 +2,10 @@
   /**
    * Icon Cards
    */
-  use App\Enums\HeadingTag;
-  use App\Enums\HeadingSize;
-  use App\Enums\TextTag;
-  use App\Enums\TextSize;
   use App\Enums\ThemeVariant;
-  use App\Enums\SectionSize;
-  use App\Enums\SectionHeadingVariant;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
+  use App\Enums\ContainerSize;
 
   // Convert section_size string to SectionSize enum
   $sectionSizeValue = EnumHelper::getSectionSize($section_size);
@@ -33,7 +28,12 @@
   };
 
   // Set grid column values
-  $gridColumns = $columns === '2' ? '2' : '3';
+  $gridColumns = match($columns) {
+    '2' => '2',
+    '3' => '3',
+    '4' => '4',
+    default => '3', // Default to 3 columns if invalid value
+};
 
   // Set gap sizes based on columns
   $gapSize = 'lg';
@@ -55,7 +55,7 @@
     />
   @endif
 
-    <x-container classes="!px-0">
+    <x-container>
         <x-grid :columns="$gridColumns" :rowgapsize="$gapSize" colgapsize="lg" classes="mt-12">
             @foreach($cards as $card)
                 <x-icon-card

@@ -111,14 +111,11 @@
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
   <x-container :size="ContainerSize::XLARGE">
 
-    @if(!empty($section_heading['eyebrow']) || !empty($section_heading['heading']) || !empty($section_heading['subtitle']))
+    @if(!empty($section_eyebrow) || !empty($section_title) || !empty($section_description))
       <x-section-heading
         :eyebrow="$section_eyebrow"
         :heading="$section_title"
         :subtitle="$section_description"
-        :eyebrow="$section_heading['eyebrow']"
-        :heading="$section_heading['heading']"
-        :subtitle="$section_heading['subtitle']"
         :variant="$sectionHeadingVariant"
         classes="mb-12"
       />

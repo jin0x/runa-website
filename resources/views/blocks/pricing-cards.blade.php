@@ -39,6 +39,7 @@
       :subtitle="$subtitle"
       :variant="$sectionHeadingVariant"
       classes="py-16 px-4 lg:px-16"
+      isShowcase="true"
     />
   @endif
 

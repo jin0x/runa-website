@@ -29,7 +29,7 @@
   }
 @endphp
 
-<div class="flex flex-col overflow-hidden gap-y-10 p-6 rounded-lg {{ $backgroundClass }} {{ $class }}">
+<div class="flex flex-col overflow-hidden gap-y-10 p-6 rounded-xl {{ $backgroundClass }} {{ $class }}">
     @if($iconUrl)
         <div class="w-full overflow-hidden">
             <img
@@ -40,20 +40,20 @@
         </div>
     @endif
 
-    <div class="flex flex-col flex-1 gap-y-6 min-h-[153px]">
+    <div class="flex flex-col flex-1 gap-y-3 min-h-[175px]">
         @if($title)
             <x-heading
                 id="main-title"
                 :as="HeadingTag::H4"
                 :size="HeadingSize::H4"
                 :color="$textColor"
-                class="text-left font-extrabold
-                relative after:content-['']
-                after:absolute after:bottom-[-12px] after:left-0 after:w-full after:h-[1px]
-                after:bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.10)_100%)]"
+                class="text-left font-extrabold"
             >
                 {{ $title }}
             </x-heading>
+
+            {{-- Divider --}}
+            <div class="w-full h-[1px] bg-[linear-gradient(180deg,rgba(0,0,0,004)_0%,rgba(0,0,0,0.10)_100%)] mt-3 mb-3"></div>
         @endif
 
         @if($text)

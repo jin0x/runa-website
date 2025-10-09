@@ -15,6 +15,7 @@
     'classes' => '', // Extra classes for container
     'wrapperClasses' => null, // Classes for optional wrapper div
     'headingClasses' => '', // Extra classes for heading
+    'isShowcase' => false, // Special styling for showcase block
 ])
 
 @php
@@ -26,7 +27,7 @@
   // Map eyebrow colors to CSS classes
   $eyebrowClasses = match ($variant) {
       SectionHeadingVariant::LIGHT => 'text-primary-dark',
-      SectionHeadingVariant::GREEN => 'text-primary-green-neon',
+      SectionHeadingVariant::GREEN => 'text-primary-green-soft',
       SectionHeadingVariant::PURPLE => 'text-secondary-purple',
       SectionHeadingVariant::MIXED_GREEN_LIGHT => 'text-gradient-primary',  // Green eyebrow
       default => '',
@@ -53,13 +54,14 @@
 
   // Append heading classes
   $titleClasses .= ' ' . $headingClasses;
+  $headingSize = $isShowcase ? HeadingSize::HERO : HeadingSize::H1;
 @endphp
 
 @if ($wrapperClasses)
   <div class="{{ $wrapperClasses }}">
 @endif
 
-    <x-container :size="ContainerSize::MEDIUM" {{ $attributes->merge(['classes' => 'text-center ' . $classes]) }}>
+    <x-container :size="ContainerSize::LARGE" {{ $attributes->merge(['classes' => 'text-center ' . $classes]) }}>
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::LARGE"
@@ -69,17 +71,17 @@
         </x-text>
 
         <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H2"
-          class="mb-3 {{ $titleClasses }}"
+          :as="HeadingTag::H1"
+          :size="$headingSize"
+          class="mb-3 font-bold {{ $titleClasses }}"
         >
           {!! $heading !!}
         </x-heading>
 
         <x-text
           :as="TextTag::P"
-          :size="TextSize::MEDIUM"
-          class="max-w-[68ch] mx-auto {{ $subtitleClasses }}"
+          :size="TextSize::XLARGE"
+          class="max-w-[80ch] mx-auto {{ $subtitleClasses }}"
         >
           {!! $subtitle !!}
         </x-text>
