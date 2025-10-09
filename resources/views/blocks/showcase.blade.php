@@ -6,6 +6,7 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
+  use App\Enums\ButtonSize;
   use App\Enums\ThemeVariant;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
@@ -51,6 +52,7 @@
       :heading="$section_title"
       :subtitle="$section_description"
       :variant="$sectionHeadingVariant"
+      isShowcase="true"
       classes="mb-12"
     />
   @endif
@@ -62,7 +64,7 @@
     @if(!empty($statistics_cards))
       <div class="grid grid-cols-2 md:grid-cols-5 p-6 mb-12">
         @foreach($statistics_cards as $card)
-          <div class="text-center p-6">
+          <div class="text-center p-6 max-w-52 justify-self-center">
             @php
               $card_image = $card['icon'] ?? null;
               $card_link = $card['link'] ?? null;
@@ -286,6 +288,7 @@
           <x-button
             :variant="$buttonVariant"
             :href="$cta['url']"
+            :size="ButtonSize::LARGE"
             target="{{ $cta['target'] ?? '_self' }}"
           >
             {{ $cta['title'] }}

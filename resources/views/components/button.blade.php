@@ -32,6 +32,13 @@
   $sizeClasses = [
       ButtonSize::DEFAULT => 'px-6 py-3',
       ButtonSize::SMALL => 'px-6 py-2',
+      ButtonSize::LARGE => 'px-10 py-6',
+  ];
+
+  $textClasses = [
+      ButtonSize::DEFAULT => '',
+      ButtonSize::SMALL => '',
+      ButtonSize::LARGE => 'heading-3',
   ];
 
   // Validate the provided "variant" prop
@@ -45,19 +52,24 @@
   }
 
   // Combine the base button class with the variant class, size class and any additional classes
-  $buttonClass = trim("inline-flex items-center gap-2 rounded-full font-normal font-sans !no-underline {$variantClasses[$variant]} {$sizeClasses[$size]} {$class}");
+  $buttonClass = trim("inline-flex items-center gap-2 rounded-full !no-underline {$variantClasses[$variant]} {$sizeClasses[$size]} {$class}");
 
   // Get the background style for the current variant
   $backgroundStyle = $backgroundStyles[$variant];
+
+  // Get the text class for the current size
+  $textClass = $textClasses[$size];
 @endphp
 
 @if ($as === ButtonType::BUTTON)
   <button {{ $attributes->merge(['class' => $buttonClass, 'type' => 'button', 'style' => $backgroundStyle]) }}>
-    {{ $slot }}
+    <span class="{{ $textClass }}">
+      {{ $slot }}
+    </span>
   </button>
 @else
   <a href="{{ $href }}" {{ $attributes->merge(['class' => $buttonClass, 'style' => $backgroundStyle]) }}>
-    <span>{{ $slot }}</span>
+    <span class="{{ $textClass }}">{{ $slot }}</span>
 
     @if ($icon)
       <span class="flex-shrink-0">

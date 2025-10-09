@@ -15,6 +15,7 @@
     'classes' => '', // Extra classes for container
     'wrapperClasses' => null, // Classes for optional wrapper div
     'headingClasses' => '', // Extra classes for heading
+    'isShowcase' => false, // Special styling for showcase block
 ])
 
 @php
@@ -53,13 +54,14 @@
 
   // Append heading classes
   $titleClasses .= ' ' . $headingClasses;
+  $headingSize = $isShowcase ? HeadingSize::HERO : HeadingSize::H2;
 @endphp
 
 @if ($wrapperClasses)
   <div class="{{ $wrapperClasses }}">
 @endif
 
-    <x-container :size="ContainerSize::XLARGE" {{ $attributes->merge(['classes' => 'text-center ' . $classes]) }}>
+    <x-container :size="ContainerSize::LARGE" {{ $attributes->merge(['classes' => 'text-center ' . $classes]) }}>
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::LARGE"
@@ -70,7 +72,7 @@
 
         <x-heading
           :as="HeadingTag::H2"
-          :size="HeadingSize::H2"
+          :size="$headingSize"
           class="mb-3 {{ $titleClasses }}"
         >
           {!! $heading !!}
