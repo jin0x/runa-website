@@ -190,16 +190,19 @@
 <script>
 (function() {
   const blockId = '{{ $blockId }}';
-  const container = document.getElementById(blockId);
 
-  if (!container) {
-    console.error('Stacking cards container not found:', blockId);
-    return;
-  }
+  // Wait for GSAP to be available
+  function initStackingCards() {
+    const container = document.getElementById(blockId);
 
-  // Decode data from base64
-  const encodedData = container.dataset.cards;
-  const mobileBreakpoint = parseInt(container.dataset.mobileBreakpoint) || 996;
+    if (!container) {
+      console.error('Stacking cards container not found:', blockId);
+      return;
+    }
+
+    // Decode data from base64
+    const encodedData = container.dataset.cards;
+    const mobileBreakpoint = parseInt(container.dataset.mobileBreakpoint) || 1024;
 
   let cards;
   try {
@@ -272,19 +275,10 @@
   // Initialize
   checkMobile();
 
-  // Debug: Log card elements found
-  console.log('Stacking Cards Debug:', {
-    blockId,
-    cardElements: cardElements.length,
-    cards: cards.length,
-    isMobile,
-    container
-  });
 
   // Show animation progression for testing
   setTimeout(() => {
     if (!isMobile && cardElements.length > 1) {
-      console.log('Test: Showing cards animation');
       // Animate through 50% progress
       updateActiveCard(0.5);
     }
@@ -327,6 +321,35 @@
           initScrollTrigger();
         }
       }, 1000);
+    }
+  }
+  }
+
+  // Check if GSAP is already loaded
+  if (window.gsap && window.ScrollTrigger) {
+    initStackingCards();
+  } else {
+    // Wait for DOMContentLoaded and then check again
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        // Wait a bit more for app.js to load
+        setTimeout(() => {
+          if (window.gsap && window.ScrollTrigger) {
+            initStackingCards();
+          } else {
+            console.error('GSAP/ScrollTrigger not loaded for stacking cards. Make sure Vite is running or assets are built.');
+          }
+        }, 500);
+      });
+    } else {
+      // DOM already loaded, wait a bit for scripts
+      setTimeout(() => {
+        if (window.gsap && window.ScrollTrigger) {
+          initStackingCards();
+        } else {
+          console.error('GSAP/ScrollTrigger not loaded for stacking cards. Make sure Vite is running or assets are built.');
+        }
+      }, 500);
     }
   }
 })();

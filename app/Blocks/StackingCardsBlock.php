@@ -182,8 +182,8 @@ class StackingCardsBlock extends Block
             ])
             ->addNumber('mobile_breakpoint', [
                 'label' => 'Mobile Breakpoint (px)',
-                'instructions' => 'Below this width, the stacking effect will be disabled',
-                'default_value' => 996,
+                'instructions' => 'Below this width, the stacking effect will be disabled. Default 1024px matches Tailwind\'s lg breakpoint.',
+                'default_value' => 1024,
                 'min' => 320,
                 'max' => 1200,
                 'step' => 1,
@@ -227,7 +227,7 @@ class StackingCardsBlock extends Block
 
     public function getMobileBreakpoint()
     {
-        return get_field('mobile_breakpoint') ?: 996;
+        return get_field('mobile_breakpoint') ?: 1024;
     }
 
     /**
