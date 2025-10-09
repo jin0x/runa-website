@@ -96,7 +96,7 @@
 
                     <x-text
                         :as="TextTag::P"
-                        :size="TextSize::SMALL"
+                        :size="TextSize::BASE"
                         class="text-left"
                     >
                         {{ $card['text'] }}

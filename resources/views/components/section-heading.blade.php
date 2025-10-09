@@ -71,7 +71,7 @@
         </x-text>
 
         <x-heading
-          :as="HeadingTag::H2"
+          :as="HeadingTag::H1"
           :size="$headingSize"
           class="mb-3 font-bold {{ $titleClasses }}"
         >

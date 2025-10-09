@@ -24,7 +24,7 @@
         :heading="$section_title"
         :subtitle="$section_description"
         :variant="$themeVariant"
-        classes="mb-24"
+        classes="mb-12"
       />
     @endif
 
