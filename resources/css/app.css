@@ -413,7 +413,7 @@ strong {
 }
 
 .bg-percentage-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, #FFF 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, #fff 100%);
 }
 
 /* Button hover states */

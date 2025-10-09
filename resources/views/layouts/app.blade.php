@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @php(do_action('get_header'))
     @php(wp_head())
+
+    @if(env('APP_ENVIRONMENT') === 'development')
+      @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
   </head>
 
   <body @php(body_class())>
