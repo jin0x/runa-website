@@ -34,6 +34,11 @@
       ThemeVariant::DARK => TextColor::LIGHT,
       default => TextColor::DARK,
   };
+  $subtitleColor = match ($themeVariant) {
+      ThemeVariant::LIGHT => TextColor::DARK,
+      ThemeVariant::DARK => TextColor::LIGHT,
+      default => TextColor::DARK,
+  };
 
 @endphp
 
@@ -71,6 +76,7 @@
           <x-text
             :as="TextTag::DIV"
             :size="TextSize::LARGE"
+            :color="$subtitleColor"
             class="max-w-none"
           >
             {!! $content !!}
