@@ -127,9 +127,9 @@
 
         <!-- Mobile Layout (Simple Stack) -->
         <div class="block lg:hidden">
-          <div class="stacking-mobile-container space-y-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             @foreach($cards as $card)
-              <div class="mobile-card max-w-md mx-auto">
+              <div class="mobile-card">
                 <div class="flex flex-col rounded-[32px] overflow-hidden relative   bg-white shadow-lg">
                   <div>
                     <img src="{{ $card['image']['url'] }}" alt="{{ $card['image'] ['alt'] ?? $card['title'] }}" class="w-full h-auto object-cover  rounded-tl-[32px] rounded-tr-[32px]">

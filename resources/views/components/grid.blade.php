@@ -9,7 +9,7 @@ $component_classes   = [ $classes, $gapsize, $rowgapsize, $colgapsize, $columns 
 ?>
 
 <div {{ $attributes->merge([
-	  'class' => implode(' ', $component_classes)
+	'class' => implode(' ', $component_classes)
 	]) }}
 >
   {!! $slot !!}
