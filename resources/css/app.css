@@ -244,6 +244,7 @@ body {
   );
 
   /* Grid Template Columns */
+  --grid-cols-4: repeat(4, minmax(0, 1fr));
   --grid-cols-5: repeat(5, minmax(0, 1fr));
 }
 
