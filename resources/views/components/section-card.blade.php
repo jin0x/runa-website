@@ -25,7 +25,7 @@
       :as="HeadingTag::H1"
       :size="HeadingSize::H1"
       :color="$textColor"
-      class="mb-8"
+      class="mb-6"
     >
       {{ $heading }}
     </x-heading>
