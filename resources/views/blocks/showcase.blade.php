@@ -43,7 +43,14 @@
   // Generate unique ID for marquee
   $marqueeId = 'showcase-marquee-' . uniqid();
 
-  $card_count = is_array($statistics_cards) ? count($statistics_cards) : 0;
+    // Set grid column values
+  $gridColumns = match($columns) {
+    '2' => '2',
+    '3' => '3',
+    '4' => '4',
+    '5' => '5',
+    default => '4', // Default to 3 columns if invalid value
+  };
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
@@ -64,7 +71,7 @@
 
     {{-- Statistics Cards --}}
     @if(!empty($statistics_cards))
-      <div class="grid grid-cols-2 md:grid-cols-{{ $card_count }} p-6 mb-12">
+      <x-grid :columns="$gridColumns" class="p-6 mb-12">
         @foreach($statistics_cards as $card)
           <div class="text-center p-6 max-w-52 justify-self-center">
             @php
@@ -109,7 +116,7 @@
             @endif
           </div>
         @endforeach
-      </div>
+      </x-grid>
     @endif
 
         {{-- Media Section --}}
