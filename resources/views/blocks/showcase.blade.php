@@ -60,9 +60,9 @@
 
     {{-- Statistics Cards --}}
     @if(!empty($statistics_cards))
-      <div class="grid grid-cols-2 md:grid-cols-4 p-6 mb-12">
+      <div class="grid grid-cols-2 md:grid-cols-5 p-6 mb-12">
         @foreach($statistics_cards as $card)
-          <div class="text-center">
+          <div class="text-center p-6">
             @php
               $card_image = $card['icon'] ?? null;
               $card_link = $card['link'] ?? null;

@@ -108,7 +108,7 @@
     {{-- Marquee Layout --}}
     @php $marqueeId = 'marquee-' . uniqid(); @endphp
 
-    <div class="py-6 overflow-hidden">
+    <div class="{{ $section_title ? 'py-6' : '' }} overflow-hidden">
       {{-- Fade gradients --}}
       <div class="absolute left-0 top-0 bottom-0 w-16 {{ $fadeLeftClass }} z-10 pointer-events-none"></div>
       <div class="absolute right-0 top-0 bottom-0 w-16 {{ $fadeRightClass }} z-10 pointer-events-none"></div>

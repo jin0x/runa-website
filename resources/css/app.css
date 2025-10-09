@@ -242,6 +242,9 @@ body {
     var(--color-primary-dark) 0%,
     var(--color-neutral-dark-40) 299.21%
   );
+
+  /* Grid Template Columns */
+  --grid-cols-5: repeat(5, minmax(0, 1fr));
 }
 
 /* Gradient text utility class */

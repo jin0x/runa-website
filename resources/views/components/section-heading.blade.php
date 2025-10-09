@@ -26,7 +26,7 @@
   // Map eyebrow colors to CSS classes
   $eyebrowClasses = match ($variant) {
       SectionHeadingVariant::LIGHT => 'text-primary-dark',
-      SectionHeadingVariant::GREEN => 'text-primary-green-neon',
+      SectionHeadingVariant::GREEN => 'text-primary-green-soft',
       SectionHeadingVariant::PURPLE => 'text-secondary-purple',
       SectionHeadingVariant::MIXED_GREEN_LIGHT => 'text-gradient-primary',  // Green eyebrow
       default => '',
@@ -59,7 +59,7 @@
   <div class="{{ $wrapperClasses }}">
 @endif
 
-    <x-container :size="ContainerSize::MEDIUM" {{ $attributes->merge(['classes' => 'text-center ' . $classes]) }}>
+    <x-container :size="ContainerSize::XLARGE" {{ $attributes->merge(['classes' => 'text-center ' . $classes]) }}>
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::LARGE"
