@@ -233,6 +233,13 @@ body {
   var(--color-primary-yellow) 94.4%
   );
 
+  --gradient-2: linear-gradient(
+    180deg,
+    var(--color-primary-yellow) 0.04%,
+    var(--color-primary-green-soft) 50%,
+    var(--color-primary-green-neon) 99.96%
+  );
+
   --gradient-3: linear-gradient(
     143deg,
     var(--color-neutral-dark-40) 0%,
@@ -413,6 +420,10 @@ strong {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+.bg-gradient-2 {
+  background: var(--gradient-2);
 }
 
 .bg-gradient-3 {

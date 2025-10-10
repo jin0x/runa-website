@@ -57,7 +57,7 @@
             </x-heading>
 
             <x-text
-              :as="TextTag::SPAN"
+              :as="TextTag::P"
               :size="TextSize::MEDIUM"
             >
               {{ $card['label'] }}
@@ -119,16 +119,16 @@
           @endif
 
           @if(!empty($item['content_text']))
-            <x-text
-              :as="TextTag::DIV"
-              :size="TextSize::BASE"
+            <x-heading
+              :as="HeadingTag::H1"
+              :size="HeadingSize::H1"
               class="mb-8"
             >
               {!! apply_tailwind_classes_to_content($item['content_text'], [
                   'heading' => '!font-normal',
                   'strong'  => '!font-extrabold',
               ]) !!}
-            </x-text>
+            </x-heading>
           @endif
 
           @if(!empty($item['ctas']))
