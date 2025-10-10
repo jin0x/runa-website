@@ -1301,6 +1301,11 @@
           "color": "#ffffff52"
         },
         {
+          "name": "Neutral (Dark 10)",
+          "slug": "neutral-dark-10",
+          "color": "#6666661a"
+        },
+        {
           "name": "Neutral (Dark 40)",
           "slug": "neutral-dark-40",
           "color": "#6666"
