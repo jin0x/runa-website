@@ -43,7 +43,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
     {{-- Content Section (Left) --}}
     <div class="flex items-center justify-center px-6 py-20 lg:py-24 z-20">
-        <x-flex direction="col" class="max-w-xl">
+        <x-flex direction="col" class="max-w-2xl">
           {{-- Eyebrow --}}
           @if ($eyebrow)
             <x-text

@@ -15,12 +15,12 @@
   // Set text color based on theme
   $textColor = $themeVariant === ThemeVariant::DARK ? TextColor::LIGHT : TextColor::DARK;
 
-  // Grid classes based on columns
-  $gridClasses = match ($columns) {
-      '1' => 'grid-cols-1 max-w-md mx-auto',
-      '2' => 'grid-cols-1 md:grid-cols-2',
-      '4' => 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-      default => 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+  // Map columns to grid component values
+  $gridColumns = match ($columns) {
+      '1' => null, // Will use custom wrapper for single column
+      '2' => '2',
+      '4' => '4',
+      default => '3',
   };
 @endphp
 
@@ -39,18 +39,35 @@
 
     {{-- Feature Cards Grid --}}
     @if(!empty($cards))
-      <div class="grid {{ $gridClasses }} gap-6">
-        @foreach($cards as $card)
-          <x-feature-card
-            :image="$card['image'] ?? null"
-            :title="$card['title'] ?? ''"
-            :description="$card['description'] ?? ''"
-            :cta="$card['cta'] ?? null"
-            :cardColor="$card_color"
-            :size="$card_size"
-          />
-        @endforeach
-      </div>
+      @if($columns === '1')
+        {{-- Single column layout with centered max-width --}}
+        <div class="w-full max-w-md mx-auto">
+          @foreach($cards as $card)
+            <x-feature-card
+              :image="$card['image'] ?? null"
+              :title="$card['title'] ?? ''"
+              :description="$card['description'] ?? ''"
+              :cta="$card['cta'] ?? null"
+              :cardColor="$card_color"
+              :size="$card_size"
+            />
+          @endforeach
+        </div>
+      @else
+        {{-- Multi-column grid layout --}}
+        <x-grid :columns="$gridColumns" gapsize="lg">
+          @foreach($cards as $card)
+            <x-feature-card
+              :image="$card['image'] ?? null"
+              :title="$card['title'] ?? ''"
+              :description="$card['description'] ?? ''"
+              :cta="$card['cta'] ?? null"
+              :cardColor="$card_color"
+              :size="$card_size"
+            />
+          @endforeach
+        </x-grid>
+      @endif
     @endif
   </x-container>
 </x-section>

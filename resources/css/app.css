@@ -483,6 +483,12 @@ strong {
   box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.14) inset,
     -1px -1px 0 0 rgba(255, 255, 255, 0.54) inset,
     0 0 97px 0 rgba(0, 0, 0, 0.08);
+  letter-spacing: -1px;
+}
+
+.tabbed-content ul {
+  @apply pl-4 mt-2 space-y-2;
+  list-style: initial;
 }
 
 /* Post Card Styles */
@@ -658,12 +664,12 @@ strong {
 
 /* Hide scrollbar but keep scroll functionality */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari, Opera */
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .page-header {
