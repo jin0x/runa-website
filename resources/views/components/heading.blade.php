@@ -25,6 +25,7 @@
         HeadingSize::H6 => 'heading-6',
         HeadingSize::H7 => 'heading-7',
         HeadingSize::HERO => 'heading-hero',
+        HeadingSize::HERO_MEDIUM => 'heading-hero-medium',
         HeadingSize::SUPER => 'heading-super',
         HeadingSize::SUPER_DUPER => 'heading-super-duper',
         HeadingSize::DISPLAY_LARGE => 'text-display-large',

@@ -294,6 +294,11 @@ body {
   font-family: var(--font-heading);
 }
 
+.heading-hero-medium {
+  @apply text-4xl md:text-6xl font-medium leading-[85%];
+  font-family: var(--font-heading);
+}
+
 .heading-1 {
   @apply text-3xl md:text-5xl font-bold leading-[85%];
   font-family: var(--font-heading);

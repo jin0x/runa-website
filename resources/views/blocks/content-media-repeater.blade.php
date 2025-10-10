@@ -50,7 +50,7 @@
           <div class="bg-percentage-card rounded-3xl p-6 text-center min-w-3xs  flex-shrink-0">
             <x-heading
               :as="HeadingTag::H1"
-              :size="HeadingSize::HERO"
+              :size="HeadingSize::HERO_MEDIUM"
               class="mb-1"
             >
               {{ $card['percentage'] }}

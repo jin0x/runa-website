@@ -96,7 +96,7 @@
             @if(!empty($card['statistic']))
               <x-heading
                 :as="HeadingTag::H3"
-                :size="HeadingSize::HERO"
+                :size="HeadingSize::HERO_MEDIUM"
                 :color="TextColor::GREEN_SOFT"
                 class="mb-2"
               >
