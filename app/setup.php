@@ -13,17 +13,17 @@ use Illuminate\Support\Facades\Vite;
  *
  * @return array
  */
-add_filter('block_editor_settings_all', function ($settings) {
-    $style = Vite::asset('resources/css/editor.css');
+// add_filter('block_editor_settings_all', function ($settings) {
+//     $style = Vite::asset('resources/css/editor.css');
 
-    $settings['styles'][] = [
-        'css' => Vite::isRunningHot()
-            ? "@import url('{$style}')"
-            : Vite::content('resources/css/editor.css'),
-    ];
+//     $settings['styles'][] = [
+//         'css' => Vite::isRunningHot()
+//             ? "@import url('{$style}')"
+//             : Vite::content('resources/css/editor.css'),
+//     ];
 
-    return $settings;
-});
+//     return $settings;
+// });
 
 /**
  * Inject scripts into the block editor.
@@ -62,20 +62,25 @@ add_action('enqueue_block_assets', function () {
         return;
     }
 
-    $script = sprintf(
-        <<<'JS'
-        window.__vite_client_url = '%s';
+    try {
+        $script = sprintf(
+            <<<'JS'
+            window.__vite_client_url = '%s';
 
-        window.self !== window.top && document.head.appendChild(
-            Object.assign(document.createElement('script'), { type: 'module', src: '%s' })
+            window.self !== window.top && document.head.appendChild(
+                Object.assign(document.createElement('script'), { type: 'module', src: '%s' })
+            );
+            JS
+            ,
+            untrailingslashit(Vite::asset('')),
+            Vite::asset('@vite/client')
         );
-        JS
-        ,
-        untrailingslashit(Vite::asset('')),
-        Vite::asset('@vite/client')
-    );
 
-    wp_add_inline_script('wp-blocks', $script);
+        wp_add_inline_script('wp-blocks', $script);
+    } catch (\Exception $e) {
+        // Silently fail if Vite assets can't be loaded
+        error_log('Vite HMR client error: ' . $e->getMessage());
+    }
 });
 
 /**
