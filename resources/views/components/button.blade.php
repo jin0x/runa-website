@@ -23,7 +23,7 @@
 
   // Define background styles (using CSS custom properties for gradients)
   $backgroundStyles = [
-      ButtonVariant::PRIMARY => 'background: linear-gradient(135deg, var(--color-primary-green-soft), var(--color-primary-yellow));',
+      ButtonVariant::PRIMARY => 'background: var(--gradient-1);',
       ButtonVariant::SECONDARY => 'background: var(--gradient-4);',
       ButtonVariant::LIGHT => 'background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);',
   ];

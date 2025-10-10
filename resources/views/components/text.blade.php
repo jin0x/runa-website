@@ -25,6 +25,7 @@
       TextSize::LARGE => 'text-large',
       TextSize::XLARGE => 'text-xlarge',
       TextSize::CAPS => 'text-caps',
+      TextSize::EYEBROW => 'text-eyebrow',
   ];
 
   // Define the font type classes

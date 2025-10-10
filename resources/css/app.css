@@ -181,7 +181,7 @@ body {
   --color-primary-green-neon: #00ffa3;
   --color-primary-green-soft: #93ff82;
   --color-primary-yellow: #eefc51;
-  --color-primary-gradient: linear-gradient(90deg, #00ffa3 0%, #eefc51 100%);
+  --color-primary-gradient: linear-gradient(180deg, #00ffa3 0%, #eefc51 100%);
 
   /* Secondary Colors */
   --color-secondary-pink: #fc18b0;
@@ -226,6 +226,13 @@ body {
   --default-transition-duration: 250ms;
 
   /* Gradients */
+  --gradient-1: linear-gradient(
+  45deg,
+  var(--color-primary-green-neon) 0%,
+  var(--color-primary-green-soft) 48.31%,
+  var(--color-primary-yellow) 94.4%
+  );
+
   --gradient-3: linear-gradient(
     143deg,
     var(--color-neutral-dark-40) 0%,
@@ -252,7 +259,7 @@ body {
 /* Gradient text utility class */
 .text-gradient-primary {
   background: linear-gradient(
-    90deg,
+    45deg,
     theme('colors.primary.green.neon') 0%,
     theme('colors.primary.yellow') 100%
   );
@@ -260,6 +267,15 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
+}
+
+.primary-button-gradient {
+    background: linear-gradient(
+    45deg,
+    var(--color-primary-green-neon) 0%,
+    var(--color-primary-green-soft) 48.31%,
+    var(--color-primary-yellow) 94.4%
+  );
 }
 
 /* Heading classes */
@@ -368,6 +384,11 @@ body {
 .text-caps {
   @apply text-2xs leading-[110%] uppercase tracking-wider;
   font-family: var(--font-body);
+}
+
+.text-eyebrow {
+  @apply text-base leading-[110%];
+  font-family: var(--font-heading);
 }
 
 /* Apply default text styles to native paragraph tags */
