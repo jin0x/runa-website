@@ -681,6 +681,12 @@ strong {
 .testimonials-slider-block .swiper-slide {
   height: auto;
   display: flex;
+  max-width: 600px;
+}
+
+.testimonials-slider-block-featured .swiper-slide-featured {
+  height: auto;
+  display: flex;
 }
 
 .testimonials-slider-block .swiper-slide > * {
@@ -688,7 +694,10 @@ strong {
   display: flex;
 }
 
-.testimonial-card,
+.testimonial-card {
+  max-width: 600px;
+}
+
 .featured-testimonial-card {
   width: 100%;
 }

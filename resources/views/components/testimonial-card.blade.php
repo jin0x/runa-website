@@ -46,7 +46,7 @@
 @endphp
 
 <article class="{{ $featured ? 'featured-testimonial-card' : 'testimonial-card' }} group">
-  <div class="{{ $featured ? 'p-8 lg:p-12' : 'p-6' }} {{ $cardBgClasses }} rounded-2xl min-h-full flex flex-col flex-1">
+  <div class="{{ $featured ? 'p-8 lg:p-12' : 'py-6 px-12' }} {{ $cardBgClasses }} rounded-2xl min-h-full flex flex-col flex-1">
 
     {{-- Header with Logo and Company Info --}}
     <div class="flex items-start justify-between mb-6">
@@ -94,9 +94,11 @@
     {{-- Quote --}}
     @if($quote)
       <div class="flex-1 mb-6 min-h-32">
-        <x-text :as="TextTag::SPAN" :size="$featured ? TextSize::XLARGE : TextSize::XLARGE" class="{{ $featured ? 'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed">
-          "{{ $featured ? $quote : $truncatedQuote }}"
-        </x-text>
+        <x-heading :as="HeadingTag::H3" :size="HeadingSize::H3" class="{{ $featured ? 'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed">
+          <strong>
+            "{{ $featured ? $quote : $truncatedQuote }}"
+          </strong>
+        </x-heading>
       </div>
     @endif
 
