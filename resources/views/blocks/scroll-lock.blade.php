@@ -216,28 +216,19 @@
   const contentSections = container.querySelectorAll('.scroll-section[data-section-index]');
   const imageSections = container.querySelectorAll('[data-image-index]');
 
-  let activeSection = 0;
+  let activeSection = -1; // Start at -1 to force initial activation
   let isMobile = window.innerWidth <= mobileBreakpoint;
   let autoScrollInterval = null;
   let isUserInteracting = false;
   const AUTO_SCROLL_DELAY = 3500; // 3.5 seconds per item
 
   function updateActiveSection(newSection, fromUser = false) {
-    console.log('[Scroll Lock] updateActiveSection called:', {
-      newSection,
-      activeSection,
-      fromUser,
-      isMobile
-    });
-
     if (newSection === activeSection) {
-      console.log('[Scroll Lock] Same section, skipping update');
       return;
     }
 
     // If user interaction, pause auto-scroll temporarily
     if (fromUser) {
-      console.log('[Scroll Lock] User interaction detected, pausing auto-scroll');
       isUserInteracting = true;
       clearAutoScroll();
       // Resume after 10 seconds of inactivity
@@ -256,19 +247,13 @@
       const duration = parseInt(progressBar?.dataset.duration || AUTO_SCROLL_DELAY);
 
       if (index === newSection) {
-        console.log(`[Scroll Lock] Activating section ${index}:`, {
-          colorClass,
-          barColor,
-          duration
-        });
-
+        // Active section styles
         section.classList.remove('opacity-60');
         section.classList.add('opacity-100', 'is-active');
 
         if (title && colorClass) {
           title.classList.remove('text-white');
           title.classList.add(colorClass);
-          console.log(`[Scroll Lock] Added color class "${colorClass}" to title`);
         }
 
         // Animate progress bar from 0 to 100%
@@ -286,7 +271,6 @@
           // Animate to 100%
           progressBar.style.transition = `width ${duration}ms linear`;
           progressBar.style.width = '100%';
-          console.log(`[Scroll Lock] Progress bar animating with ${barColor}`);
         }
       } else {
         section.classList.remove('opacity-100', 'is-active');
@@ -317,7 +301,6 @@
     });
 
     activeSection = newSection;
-    console.log(`[Scroll Lock] Active section updated to: ${activeSection}`);
   }
 
   function checkMobile() {
@@ -326,19 +309,15 @@
 
   // Auto-scroll functions
   function startAutoScroll() {
-    console.log('[Scroll Lock] startAutoScroll called:', { isMobile, isUserInteracting });
 
     if (isMobile || isUserInteracting) {
-      console.log('[Scroll Lock] Auto-scroll not started (mobile or user interacting)');
       return;
     }
 
     clearAutoScroll();
-    console.log('[Scroll Lock] Auto-scroll interval started');
     autoScrollInterval = setInterval(() => {
       if (!isUserInteracting) {
         const nextSection = (activeSection + 1) % sections.length;
-        console.log(`[Scroll Lock] Auto-scroll: moving from ${activeSection} to ${nextSection}`);
         updateActiveSection(nextSection, false);
       }
     }, AUTO_SCROLL_DELAY);
@@ -346,7 +325,6 @@
 
   function clearAutoScroll() {
     if (autoScrollInterval) {
-      console.log('[Scroll Lock] Clearing auto-scroll interval');
       clearInterval(autoScrollInterval);
       autoScrollInterval = null;
     }
@@ -362,25 +340,20 @@
   }
 
   function initScrollTrigger() {
-    console.log('[Scroll Lock] initScrollTrigger called');
 
     if (isMobile) {
-      console.log('[Scroll Lock] Skipping ScrollTrigger - mobile mode');
       return;
     }
 
     if (!window.gsap || !window.ScrollTrigger) {
-      console.log('[Scroll Lock] GSAP or ScrollTrigger not available');
       return;
     }
 
     const scrollContent = container.querySelector('.scroll-lock-content');
     if (!scrollContent) {
-      console.log('[Scroll Lock] scroll-lock-content not found');
       return;
     }
 
-    console.log('[Scroll Lock] Creating ScrollTrigger');
 
     // Create ScrollTrigger without pinning - just track when in view
     window.ScrollTrigger.create({
@@ -388,54 +361,37 @@
       start: "top center",
       end: "bottom center",
       onEnter: () => {
-        console.log('[Scroll Lock] ScrollTrigger: onEnter');
         // Start auto-scroll when entering the section
         if (!isUserInteracting) {
           startAutoScroll();
         }
       },
       onLeave: () => {
-        console.log('[Scroll Lock] ScrollTrigger: onLeave');
         // Stop auto-scroll when leaving the section
         clearAutoScroll();
       },
       onEnterBack: () => {
-        console.log('[Scroll Lock] ScrollTrigger: onEnterBack');
         // Restart auto-scroll when scrolling back into view
         if (!isUserInteracting) {
           startAutoScroll();
         }
       },
       onLeaveBack: () => {
-        console.log('[Scroll Lock] ScrollTrigger: onLeaveBack');
         // Stop auto-scroll when scrolling back out
         clearAutoScroll();
       }
     });
   }
 
-  // Initialize
-  console.log('[Scroll Lock] Initializing...', {
-    blockId,
-    sections: sections.length,
-    contentSections: contentSections.length,
-    imageSections: imageSections.length,
-    isMobile
-  });
-
   checkMobile();
   initClickHandlers();
 
   // Trigger initial state on desktop
   if (!isMobile) {
-    console.log('[Scroll Lock] Desktop mode - triggering initial activation');
     // Small delay to ensure DOM is ready
     setTimeout(() => {
-      console.log('[Scroll Lock] Calling updateActiveSection(0) for initial state');
       updateActiveSection(0, false);
     }, 100);
-  } else {
-    console.log('[Scroll Lock] Mobile mode - skipping auto-scroll setup');
   }
 
   window.addEventListener('resize', () => {
