@@ -3,6 +3,7 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextSize;
   use App\Enums\TextTag;
+  use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
 @endphp
 
@@ -103,29 +104,48 @@
     @endif
 
     {{-- Client Info --}}
-    <div class="mt-auto pt-4 border-t border-primary-dark">
-      @if($clientName)
-        <div class="text-sm font-medium text-neutral-900 mb-1">{{ $clientName }}</div>
-      @endif
+    <div class="flex justify-between mt-auto pt-6 border-t border-primary-dark">
+      <div class="flex flex-col gap-y-1">
+        {{-- Client Name --}}
+        @if($clientName)
+          <x-text 
+            :as="TextTag::P" 
+            :size="TextSize::XSMALL" 
+            :color="TextColor::LIGHT">  
+            <strong>
+              {{ $clientName }}
+            </strong>
+          </x-text>
+        @endif
 
-      @if($clientPosition)
-        <div class="text-sm text-neutral-600">{{ $clientPosition }}</div>
-      @endif
+        @if($clientPosition)
+          <x-text 
+            :as="TextTag::P" 
+            :size="TextSize::SMALL" 
+            :color="TextColor::GRAY">
+            {{ $clientPosition }}
+          </x-text>
+        @endif
 
-      @if($testimonialDate)
-        <div class="text-xs text-neutral-400 mt-2">
-          {{ date('F j, Y', strtotime($testimonialDate)) }}
-        </div>
-      @endif
-    </div>
-
-    {{-- Read More Link for non-featured cards --}}
-    @if(!$featured && strlen($quote) > 150)
-      <div class="mt-4">
-        <a href="{{ $permalink }}" class="text-sm text-primary-green-neon hover:text-primary-green-dark transition-colors font-medium">
-          Read full testimonial →
-        </a>
+        @if($testimonialDate)
+          <div class="text-xs text-neutral-400 mt-2">
+            {{ date('F j, Y', strtotime($testimonialDate)) }}
+          </div>
+        @endif
       </div>
-    @endif
+
+      {{-- Read More Link for non-featured cards --}}
+        @if($websiteUrl)
+        <div class="mt-4">
+          <x-text 
+            href="{{ $websiteUrl }}"
+            :as="TextTag::A" 
+            :size="TextSize::XSMALL" 
+            :color="TextColor::LIGHT">
+            Read more →
+          </x-text>
+        </div>
+        @endif
+    </div>
   </div>
 </article>
