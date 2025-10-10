@@ -32,6 +32,14 @@
   // Text colors based on theme
   $textColor = $themeVariant === ThemeVariant::DARK ? 'text-white' : 'text-black';
   $borderColor = $themeVariant === ThemeVariant::DARK ? 'border-gray-700' : 'border-gray-200';
+
+  // Input/select field colors and SVG Decoration for dropdown
+
+  $form_classes = 'w-full px-6 py-6 pr-12 flex items-center justify-between gap-3 '.($themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-gray-50').' rounded-md appearance-none focus:outline-none';
+
+  $svg_dropdown = '<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 absolute top-1/2 -translate-y-1/2 pointer-events-none '.$textColor.' right-6"><g clip-path="url(#clip0_3437_54696)"><path d="M19.3435 9.31081L12.2725 16.3819L5.20139 9.31081" stroke="currentColor" stroke-width="2"/></g><defs><clipPath id="clip0_3437_54696"><rect width="24" height="24" fill="white" transform="translate(0.333008 0.5)"/></clipPath></defs></svg>';
+  $svg_search = '<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 absolute top-1/2 -translate-y-1/2 pointer-events-none '.$textColor.' right-6"><g clip-path="url(#clip0_3437_42119)"><path d="M15.5 14.5H14.71L14.43 14.23C15.41 13.09 16 11.61 16 10C16 6.41 13.09 3.5 9.5 3.5C5.91 3.5 3 6.41 3 10C3 13.59 5.91 16.5 9.5 16.5C11.11 16.5 12.59 15.91 13.73 14.93L14 15.21V16L19 20.99L20.49 19.5L15.5 14.5ZM9.5 14.5C7.01 14.5 5 12.49 5 10C5 7.51 7.01 5.5 9.5 5.5C11.99 5.5 14 7.51 14 10C14 12.49 11.99 14.5 9.5 14.5Z" fill="currentColor"/></g><defs><clipPath id="clip0_3437_42119"><rect width="24" height="24" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg>';
+  $svg_reset = '<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 '.$textColor.' transition-transform duration-500 ease-in-out group-hover:rotate-360"><g clip-path="url(#clip0_3437_54923)"><path d="M14.7085 5.79183C13.5001 4.5835 11.8418 3.8335 10.0001 3.8335C6.3168 3.8335 3.3418 6.81683 3.3418 10.5002C3.3418 14.1835 6.3168 17.1668 10.0001 17.1668C13.1085 17.1668 15.7001 15.0418 16.4418 12.1668H14.7085C14.0251 14.1085 12.1751 15.5002 10.0001 15.5002C7.2418 15.5002 5.00013 13.2585 5.00013 10.5002C5.00013 7.74183 7.2418 5.50016 10.0001 5.50016C11.3835 5.50016 12.6168 6.07516 13.5168 6.9835L10.8335 9.66683H16.6668V3.8335L14.7085 5.79183Z" fill="currentColor"/></g><defs><clipPath id="clip0_3437_54923"><rect width="20" height="20" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg>';
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
@@ -56,19 +64,16 @@
       data-theme="{{ $theme }}"
     >
       {{-- Filter Section --}}
-      <div class="mb-8 p-6 rounded-lg {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-gray-50' }} {{ $borderColor }} border">
-        <form data-filters-form class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+      <div class="mb-8">
+        <form data-filters-form class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-4 items-end">
 
           {{-- Country Filter --}}
-          <div>
-            <label for="{{ $block_id }}-country" class="block text-sm font-medium mb-2 {{ $textColor }}">
-              Filter by Country
-            </label>
+          <div class="relative">
             <select
               id="{{ $block_id }}-country"
               name="country"
               data-country-filter
-              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800 text-white' : 'bg-white text-black' }}"
+              class="{{ $textColor }} {{$form_classes}}"
               aria-label="Filter companies by country"
             >
               <option value="">All Countries</option>
@@ -78,18 +83,16 @@
                 @endforeach
               @endif
             </select>
+            {!! $svg_dropdown !!}
           </div>
 
           {{-- Category Filter --}}
-          <div>
-            <label for="{{ $block_id }}-category" class="block text-sm font-medium mb-2 {{ $textColor }}">
-              Filter by Category
-            </label>
+          <div class="relative">
             <select
               id="{{ $block_id }}-category"
               name="category"
               data-category-filter
-              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800 text-white' : 'bg-white text-black' }}"
+              class="{{ $textColor }} {{$form_classes}}"
               aria-label="Filter companies by category"
             >
               <option value="">All Categories</option>
@@ -99,46 +102,35 @@
                 @endforeach
               @endif
             </select>
+            {!! $svg_dropdown !!}
           </div>
 
           {{-- Search Input --}}
-          <div>
-            <label for="{{ $block_id }}-search" class="block text-sm font-medium mb-2 {{ $textColor }}">
-              Search Companies
-            </label>
+          <div class="relative">
             <input
               type="text"
               id="{{ $block_id }}-search"
               name="search"
               data-search-filter
-              placeholder="Search by company name..."
-              class="w-full px-3 py-2 border {{ $borderColor }} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-500' }}"
-              aria-label="Search companies by name"
+              placeholder="Search"
+              class="{{ $textColor }} {{$form_classes}}"
+              aria-label="Search"
             />
+            {!! $svg_search !!}
           </div>
 
-          {{-- Submit Button --}}
-          <div>
+          {{-- Clear Filters --}}
+          <div class="mt-4">
             <button
-              type="submit"
-              class="w-full px-6 py-2 bg-primary-green-neon text-black font-medium rounded-md hover:bg-primary-green-soft transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:ring-offset-2"
-              aria-label="Apply filters"
+              data-clear-filters
+              class="group text-sm {{ $textColor }} w-full px-6 py-6 pr-12 flex items-center justify-between gap-3 transition-colors duration-200"
+              aria-label="Clear all filters"
             >
-              Filter
+              Reset Filter
+              {!! $svg_reset !!}
             </button>
           </div>
         </form>
-
-        {{-- Clear Filters --}}
-        <div class="mt-4">
-          <button
-            data-clear-filters
-            class="text-sm {{ $textColor }} hover:text-primary-green-neon underline transition-colors duration-200"
-            aria-label="Clear all filters"
-          >
-            Clear All Filters
-          </button>
-        </div>
       </div>
 
       {{-- Results Count --}}
@@ -150,27 +142,27 @@
 
       {{-- Companies Table --}}
       <div class="overflow-x-auto" data-table-container>
-        <table class="w-full {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-white' }} shadow-lg rounded-lg overflow-hidden">
-          <thead class="{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }}">
+        <table class="w-full shadow-lg rounded-lg overflow-hidden">
+          <thead class="green-horizontal-gradient">
             <tr>
-              <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
-                Company Name
+              <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
+                Name
               </th>
-              <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+              <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
                 Country
               </th>
-              <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+              <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
                 Country Code
               </th>
-              <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+              <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
                 Currency
               </th>
-              <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
-                Categories
+              <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
+                Category
               </th>
             </tr>
           </thead>
-          <tbody data-companies-table class="divide-y {{ $borderColor }}">
+          <tbody data-companies-table class="divide-y {{ $themeVariant === ThemeVariant::DARK ? 'divide-neutral-0-32' : 'divide-neutral-dark-10' }} {{ $borderColor }}">
             @if(!empty($companies))
               @foreach($companies as $company)
                 <tr

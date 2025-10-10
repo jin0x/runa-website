@@ -199,6 +199,7 @@ body {
   /* Custom Gradient Colors */
   --color-primary-dark-32: rgba(0, 0, 0, 0.32);
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
+  --color-neutral-dark-10: rgba(102, 102, 102, 0.1);
   --color-neutral-dark-40: rgba(102, 102, 102, 0.4);
 
   /* Background Colors */
@@ -451,6 +452,18 @@ strong {
 
 .testimonial-gradient {
   background: var(--gradient-4);
+}
+
+.green-horizontal-gradient {
+  background: var(
+    --gradients-color-01-vertical,
+    linear-gradient(
+      270deg,
+      var(--color-primary-yellow) 0.04%,
+      var(--color-primary-green-soft) 50%,
+      var(--color-primary-green-neon) 99.96%
+    )
+  );
 }
 
 .content-media-gradient {

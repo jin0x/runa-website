@@ -17,18 +17,26 @@
   // Convert to optimal section heading variant for contrast
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
-  // Set background color based on theme
-  $bgColor = match ($themeVariant) {
-      ThemeVariant::LIGHT => 'bg-white',
-      default => 'bg-black',
-  };
-
   // Text colors based on theme
   $textColor = $themeVariant === ThemeVariant::DARK ? 'text-white' : 'text-black';
   $borderColor = $themeVariant === ThemeVariant::DARK ? 'border-gray-700' : 'border-gray-200';
+  $form_classes = 'w-full px-6 py-6 flex items-center justify-between gap-3 '.($themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-gray-50').' rounded-md appearance-none focus:outline-none';
+  $svg_reset = '<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 '.$textColor.' transition-transform duration-500 ease-in-out group-hover:rotate-360"><g clip-path="url(#clip0_3437_54923)"><path d="M14.7085 5.79183C13.5001 4.5835 11.8418 3.8335 10.0001 3.8335C6.3168 3.8335 3.3418 6.81683 3.3418 10.5002C3.3418 14.1835 6.3168 17.1668 10.0001 17.1668C13.1085 17.1668 15.7001 15.0418 16.4418 12.1668H14.7085C14.0251 14.1085 12.1751 15.5002 10.0001 15.5002C7.2418 15.5002 5.00013 13.2585 5.00013 10.5002C5.00013 7.74183 7.2418 5.50016 10.0001 5.50016C11.3835 5.50016 12.6168 6.07516 13.5168 6.9835L10.8335 9.66683H16.6668V3.8335L14.7085 5.79183Z" fill="currentColor"/></g><defs><clipPath id="clip0_3437_54923"><rect width="20" height="20" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg>';
 @endphp
 
-<x-section :size="$sectionSizeValue" classes="{{ $bgColor }} {{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
+
+  {{-- Section Heading --}}
+  @if($section_eyebrow || $section_title || $section_description)
+    <x-section-heading
+      :eyebrow="$section_eyebrow"
+      :heading="$section_title"
+      :subtitle="$section_description"
+      :variant="$sectionHeadingVariant"
+      classes="mb-12"
+    />
+  @endif
+
   <x-container>
 
     {{-- Section Heading --}}
@@ -50,51 +58,45 @@
       data-theme="{{ $theme }}"
     >
       {{-- Filter Section --}}
-      <div class="mb-8 p-6 rounded-lg {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-gray-50' }} {{ $borderColor }} border">
-        <form class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-
+      <div class="mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-4 items-end">
           {{-- Country Filter --}}
-          <div>
-            <label for="{{ $block_id }}-country" class="block text-sm font-medium mb-2 {{ $textColor }}">
-              Filter by Country
-            </label>
-            <div class="facetwp-facet-container">
-              {!! facetwp_display('facet', 'company_country') !!}
+          <div class="relative">
+            <div class="{{ $textColor }} {{$form_classes}}">
+              <div class="w-full facetwp-facet-container">
+                {!! facetwp_display('facet', 'company_country') !!}
+              </div>
             </div>
           </div>
-
           {{-- Category Filter --}}
-          <div>
-            <label for="{{ $block_id }}-category" class="block text-sm font-medium mb-2 {{ $textColor }}">
-              Filter by Category
-            </label>
-            <div class="facetwp-facet-container">
-              {!! facetwp_display('facet', 'company_category') !!}
+          <div class="relative">
+            <div class="{{ $textColor }} {{$form_classes}}">
+              <div class="w-full facetwp-facet-container">
+                {!! facetwp_display('facet', 'company_category') !!}
+              </div>
             </div>
           </div>
-
           {{-- Search Input --}}
-          <div>
-            <label for="{{ $block_id }}-search" class="block text-sm font-medium mb-2 {{ $textColor }}">
-              Search Companies
-            </label>
-            <div class="facetwp-facet-container">
-              {!! facetwp_display('facet', 'company_search') !!}
+          <div class="relative">
+            <div class="{{ $textColor }} {{$form_classes}}">
+              <div class="w-full facetwp-facet-container">
+                {!! facetwp_display('facet', 'company_search') !!}
+              </div>
             </div>
           </div>
-
           {{-- Clear Filters Button --}}
-          <div>
+          <div class="mt-4">
             <button
               type="button"
               onclick="FWP.reset()"
-              class="w-full px-6 py-2 bg-primary-green-neon text-black font-medium rounded-md hover:bg-primary-green-soft transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:ring-offset-2"
+              class="group text-sm {{ $textColor }} w-full px-6 py-6 pr-12 flex items-center justify-between gap-3 transition-colors duration-200"
               aria-label="Clear all filters"
             >
-              Clear Filters
+              Reset Filter
+              {!! $svg_reset !!}
             </button>
           </div>
-        </form>
+        </div>
       </div>
 
       {{-- Results Count --}}
@@ -128,26 +130,26 @@
           @endphp
 
           <table class="w-full {{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-white' }} shadow-lg rounded-lg overflow-hidden">
-            <thead class="{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }}">
+            <thead class="green-horizontal-gradient">
               <tr>
-                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
                   Company Name
                 </th>
-                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
                   Country
                 </th>
-                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
                   Country Code
                 </th>
-                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
                   Currency
                 </th>
-                <th class="px-6 py-4 text-left text-sm font-semibold {{ $textColor }} uppercase tracking-wider">
+                <th class="px-6 py-4 text-left text-sm font-semibold text-black capitalize tracking-wider">
                   Categories
                 </th>
               </tr>
             </thead>
-            <tbody class="divide-y {{ $borderColor }}">
+            <tbody class="divide-y {{ $themeVariant === ThemeVariant::DARK ? 'divide-neutral-0-32' : 'divide-neutral-dark-10' }} {{ $borderColor }}">
               @if($companies_query->have_posts())
                 @while($companies_query->have_posts())
                   @php
@@ -281,20 +283,20 @@ CompanyDirectoryFacetWP.prototype.init = function() {
 CompanyDirectoryFacetWP.prototype.styleFacetWPElements = function() {
     const isDark = this.theme === 'dark';
     const borderColor = isDark ? 'border-gray-700' : 'border-gray-200';
-    const bgColor = isDark ? 'bg-gray-800' : 'bg-white';
+    const bgColor = isDark ? 'bg-gray-900' : 'bg-gray-50';
     const textColor = isDark ? 'text-white' : 'text-black';
     const placeholderColor = isDark ? 'placeholder-gray-400' : 'placeholder-gray-500';
 
     // Style dropdowns
     const selects = this.block.querySelectorAll('.facetwp-dropdown select');
     selects.forEach(select => {
-        select.className = `w-full px-3 py-2 border ${borderColor} ${bgColor} ${textColor} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent`;
+        select.className = `w-full px-0 py-0 border-0 bg-transparent ${textColor} focus:outline-none focus:ring-0 focus:border-transparent`;
     });
 
     // Style search input
     const searchInputs = this.block.querySelectorAll('.facetwp-search input');
     searchInputs.forEach(input => {
-        input.className = `w-full px-3 py-2 border ${borderColor} ${bgColor} ${textColor} ${placeholderColor} rounded-md focus:outline-none focus:ring-2 focus:ring-primary-green-neon focus:border-transparent`;
+        input.className = `w-full px-0 py-0 border-0 bg-transparent ${textColor} ${placeholderColor} focus:outline-none focus:ring-0 focus:border-transparent`;
     });
 };
 
@@ -307,6 +309,9 @@ CompanyDirectoryFacetWP.prototype.setupFacetWPEvents = function() {
             FWP.facets.company_country = ['united-states'];
             FWP.refresh();
         }
+
+        // Replace default "Any" label with placeholders
+        this.replaceDropdownPlaceholders();
 
         this.removeLoadingState();
         this.styleFacetWPElements(); // Re-apply styles after AJAX
@@ -333,6 +338,33 @@ CompanyDirectoryFacetWP.prototype.removeLoadingState = function() {
     if (template) {
         template.style.opacity = '1';
         template.style.pointerEvents = 'auto';
+    }
+};
+CompanyDirectoryFacetWP.prototype.replaceDropdownPlaceholders = function() {
+    // removing "any"
+    const countryPlaceholder = 'Country';
+    const categoryPlaceholder = 'Category';
+    const searchPlaceholder = 'Search';
+
+    // pais
+    const countrySelect = this.block.querySelector('.facetwp-facet-company_country select option[value=""]');
+    if (countrySelect && countrySelect.textContent.trim().toLowerCase() === 'any') {
+        countrySelect.textContent = countryPlaceholder;
+    }
+
+    // category
+    const categorySelect = this.block.querySelector('.facetwp-facet-company_category select option[value=""]');
+    if (categorySelect && categorySelect.textContent.trim().toLowerCase() === 'any') {
+        categorySelect.textContent = categoryPlaceholder;
+    }
+
+    // search
+    const searchInput = this.block.querySelector('.facetwp-facet-company_search input');
+    if (searchInput) {
+        const current = (searchInput.placeholder || '').trim().toLowerCase();
+        if (current === 'enter keywords') {
+            searchInput.placeholder = searchPlaceholder;
+        }
     }
 };
 </script>
@@ -380,5 +412,10 @@ CompanyDirectoryFacetWP.prototype.removeLoadingState = function() {
 /* Results count styling */
 .facetwp-counts {
     font-weight: 400;
+}
+
+/* Remove margin */
+.facetwp-facet {
+  margin-bottom: 0!important;
 }
 </style>
