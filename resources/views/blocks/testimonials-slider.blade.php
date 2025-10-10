@@ -18,7 +18,7 @@
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
-  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="testimonials-slider-block {{ $block->classes ?? '' }}">
+  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ count($testimonials) > 1 ? 'testimonials-slider-block' : 'testimonials-slider-block-featured' }} {{ $block->classes ?? '' }}">
     <x-container :size="$containerSize">
 
       {{-- Section Heading --}}

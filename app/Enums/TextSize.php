@@ -12,6 +12,7 @@ class TextSize
     const LARGE = 'text-large';
     const XLARGE = 'text-xlarge';
     const CAPS = 'text-caps';
+    const EYEBROW = 'text-eyebrow';
 
     public static function getValues(): array {
         return [
@@ -23,6 +24,7 @@ class TextSize
             self::LARGE,
             self::XLARGE,
             self::CAPS,
+            self::EYEBROW,
         ];
     }
 }

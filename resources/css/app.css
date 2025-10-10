@@ -181,7 +181,7 @@ body {
   --color-primary-green-neon: #00ffa3;
   --color-primary-green-soft: #93ff82;
   --color-primary-yellow: #eefc51;
-  --color-primary-gradient: linear-gradient(90deg, #00ffa3 0%, #eefc51 100%);
+  --color-primary-gradient: linear-gradient(180deg, #00ffa3 0%, #eefc51 100%);
 
   /* Secondary Colors */
   --color-secondary-pink: #fc18b0;
@@ -226,6 +226,20 @@ body {
   --default-transition-duration: 250ms;
 
   /* Gradients */
+  --gradient-1: linear-gradient(
+  45deg,
+  var(--color-primary-green-neon) 0%,
+  var(--color-primary-green-soft) 48.31%,
+  var(--color-primary-yellow) 94.4%
+  );
+
+  --gradient-2: linear-gradient(
+    180deg,
+    var(--color-primary-yellow) 0.04%,
+    var(--color-primary-green-soft) 50%,
+    var(--color-primary-green-neon) 99.96%
+  );
+
   --gradient-3: linear-gradient(
     143deg,
     var(--color-neutral-dark-40) 0%,
@@ -252,14 +266,24 @@ body {
 /* Gradient text utility class */
 .text-gradient-primary {
   background: linear-gradient(
-    90deg,
-    theme('colors.primary.green.neon') 0%,
-    theme('colors.primary.yellow') 100%
+    45deg,
+    var(--color-primary-green-neon) 0%,
+    var(--color-primary-green-soft) 48.31%,
+    var(--color-primary-yellow) 94.4%
   );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
+}
+
+.primary-button-gradient {
+    background: linear-gradient(
+    45deg,
+    var(--color-primary-green-neon) 0%,
+    var(--color-primary-green-soft) 48.31%,
+    var(--color-primary-yellow) 94.4%
+  );
 }
 
 /* Heading classes */
@@ -275,6 +299,11 @@ body {
 
 .heading-hero {
   @apply text-4xl md:text-6xl font-bold leading-[85%];
+  font-family: var(--font-heading);
+}
+
+.heading-hero-medium {
+  @apply text-4xl md:text-6xl font-medium leading-[85%];
   font-family: var(--font-heading);
 }
 
@@ -370,6 +399,11 @@ body {
   font-family: var(--font-body);
 }
 
+.text-eyebrow {
+  @apply text-base leading-[110%];
+  font-family: var(--font-heading);
+}
+
 /* Apply default text styles to native paragraph tags */
 p {
   @apply text-xs leading-[110%];
@@ -387,6 +421,10 @@ strong {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+.bg-gradient-2 {
+  background: var(--gradient-2);
 }
 
 .bg-gradient-3 {
@@ -643,6 +681,12 @@ strong {
 .testimonials-slider-block .swiper-slide {
   height: auto;
   display: flex;
+  max-width: 600px;
+}
+
+.testimonials-slider-block-featured .swiper-slide-featured {
+  height: auto;
+  display: flex;
 }
 
 .testimonials-slider-block .swiper-slide > * {
@@ -650,7 +694,10 @@ strong {
   display: flex;
 }
 
-.testimonial-card,
+.testimonial-card {
+  max-width: 600px;
+}
+
 .featured-testimonial-card {
   width: 100%;
 }

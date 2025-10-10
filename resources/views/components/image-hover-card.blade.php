@@ -32,9 +32,10 @@
         </div>
     @endif
 
-    <div class="flex flex-col flex-1 p-6 xl:p-12 {{ $cardBgClass }} xl:min-h-[188px]
+    <div class="flex flex-col flex-1 p-6 xl:p-12 {{ $cardBgClass }}
       relative
-      xl:absolute xl:left-0 xl:right-0 xl:w-full xl:bottom-0">
+      xl:absolute xl:left-0 xl:right-0 xl:w-full xl:bottom-0
+      transition-all duration-300 ease-in-out">
         @if($title)
             <x-heading
                 :as="HeadingTag::H3"
@@ -50,7 +51,7 @@
                 :as="TextTag::P"
                 :size="TextSize::XLARGE"
                 class="text-left font-normal text-primary-dark mt-3 xl:mt-0
-                overflow-hidden xl:max-h-0 xl:opacity-0 transition-all duration-300 ease-in-out group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-3"
+                overflow-hidden xl:max-h-0 xl:opacity-0 transition-all duration-300 ease-in-out group-hover:max-h-[200px] group-hover:opacity-100 group-hover:mt-3"
             >
                 {{ $text }}
             </x-text>

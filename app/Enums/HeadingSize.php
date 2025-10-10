@@ -12,6 +12,7 @@ class HeadingSize
     const H6 = 'heading-6';
     const H7 = 'heading-7';
     const HERO = 'heading-hero';
+    const HERO_MEDIUM = 'heading-hero-medium';
     const SUPER = 'heading-super';
     const SUPER_DUPER = 'heading-super-duper';
     const DISPLAY_LARGE = 'text-display-large';
@@ -28,6 +29,7 @@ class HeadingSize
             self::H6,
             self::H7,
             self::HERO,
+            self::HERO_MEDIUM,
             self::SUPER,
             self::SUPER_DUPER,
             self::DISPLAY_LARGE,

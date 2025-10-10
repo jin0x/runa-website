@@ -64,7 +64,7 @@
     <x-container :size="ContainerSize::LARGE" {{ $attributes->merge(['classes' => 'text-center ' . $classes]) }}>
         <x-text
           :as="TextTag::SPAN"
-          :size="TextSize::LARGE"
+          :size="TextSize::EYEBROW"
           class="block max-w-max mx-auto pill uppercase mb-8 font-bold {{ $eyebrowClasses }}"
         >
           {!! $eyebrow !!}
