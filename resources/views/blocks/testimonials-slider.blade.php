@@ -35,7 +35,7 @@
       @if($display_layout === 'single')
         {{-- Single Testimonial Display with Slider --}}
         <x-slider
-          :navigation="$showNavigation"
+          :navigation="$show_navigation"
           :pagination="false"
           :loop="true"
           :autoplayDelay="$autoplay_delay * 1000"
@@ -45,6 +45,7 @@
           :desktopSlidesPerView="1"
           :spaceBetween="24"
           :navigationPosition="'bottom-right'"
+          :slideCount="count($testimonials)"
         >
           @foreach($testimonials as $testimonial)
             <div class="swiper-slide">
@@ -71,6 +72,7 @@
           :desktopSlidesPerView="2"
           :spaceBetween="24"
           :navigationPosition="'bottom-right'"
+          :slideCount="count($testimonials)"
         >
           @foreach($testimonials as $testimonial)
             <div class="swiper-slide">

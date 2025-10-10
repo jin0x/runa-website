@@ -21,7 +21,7 @@
       1 => 'grid-cols-1 max-w-md mx-auto',
       2 => 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto',
       4 => 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-      default => 'grid-cols-1 md:grid-cols-3',
+      default => 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
   };
 @endphp
 

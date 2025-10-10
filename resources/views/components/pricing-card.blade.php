@@ -32,24 +32,24 @@
   }
 
   // Popular card styling
-  $cardClasses = $is_popular 
-    ? 'bg-gradient-5 border-2 border-primary-green-soft' 
+  $cardClasses = $is_popular
+    ? 'bg-gradient-5 border-2 border-primary-green-soft'
     : 'bg-neutral-500 border-2 border-transparent';
-    
+
   $buttonVariant = $is_popular ? ButtonVariant::PRIMARY : ButtonVariant::SECONDARY;
-  $buttonClasses = $is_popular 
-    ? '!bg-primary-green-neon !text-primary-black hover:!bg-primary-green-soft' 
+  $buttonClasses = $is_popular
+    ? '!bg-primary-green-neon !text-primary-black hover:!bg-primary-green-soft'
     : '!bg-transparent !text-white !border !border-white hover:!bg-white hover:!text-primary-black';
 @endphp
 
 
-<div class="{{ $cardClasses }} rounded-2xl p-6 relative {{ $class }} bg-neutral-700">
+<div class="{{ $cardClasses }} rounded-2xl p-6 relative h-full {{ $class }} bg-neutral-700">
   <div class="flex justify-between items-center mb-6">
     {{-- Icon --}}
     @if($icon_url)
     <div class="">
-      <img 
-      src="{{ $icon_url }}" 
+      <img
+      src="{{ $icon_url }}"
       alt="{{ $icon_alt }}"
       class="w-12 h-12 object-contain"
       loading="lazy"
@@ -162,7 +162,7 @@
                   </defs>
                 </svg>
               </div>
-              
+
               {{-- Feature Text --}}
               <x-text
                 :as="TextTag::SPAN"

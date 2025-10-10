@@ -4,8 +4,8 @@ namespace App\View\Components;
 
 use Roots\Acorn\View\Component;
 
-class Grid extends Component {
-
+class Grid extends Component
+{
     /**
      * The section additional classes.
      *
@@ -48,8 +48,8 @@ class Grid extends Component {
      */
     public $grid = [
         '2' => 'w-full grid lg:grid-cols-2',
-        '3' => 'w-full grid lg:grid-cols-3',
-        '4' => 'w-full grid lg:grid-cols-4',
+        '3' => 'w-full grid md:grid-cols-2 lg:grid-cols-3',
+        '4' => 'w-full grid md:grid-cols-2 lg:grid-cols-4',
         '5' => 'w-full grid lg:grid-cols-5',
         '6' => 'w-full grid lg:grid-cols-3 xl:grid-cols-6',
     ];
@@ -131,7 +131,8 @@ class Grid extends Component {
      *
      * @return \Illuminate\View\View|string
      */
-    public function render(): string|\Illuminate\View\View {
-        return $this->view( 'components.grid' );
+    public function render(): string|\Illuminate\View\View
+    {
+        return $this->view('components.grid');
     }
 }

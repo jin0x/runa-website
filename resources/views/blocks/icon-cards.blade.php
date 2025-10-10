@@ -36,7 +36,7 @@
 };
 
   // Set gap sizes based on columns
-  $gapSize = 'lg';
+$gapSize = 'lg';
 
   // Cards Background using standardized helper with ThemeVariant
   // (Note: background is now handled by icon-card component)

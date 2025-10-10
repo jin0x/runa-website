@@ -9,6 +9,7 @@
     'desktopSlidesPerView' => 1,
     'spaceBetween' => 20,
     'navigationPosition' => 'sides', // 'sides' or 'bottom-right'
+    'slideCount' => null, // Optional: number of slides
 ])
 
 <div x-data="carouselComponent({
@@ -26,11 +27,11 @@
     </div>
   </div>
 
-  @if($pagination)
+  @if($pagination && (!$slideCount || $slideCount > 1))
     <div class="swiper-pagination"></div>
   @endif
 
-  @if($navigation)
+  @if($navigation && (!$slideCount || $slideCount > 1))
     @if($navigationPosition === 'sides')
       <div class="absolute inset-y-0 left-0 z-10 flex items-center">
         <button @click="swiper && swiper.slidePrev()" class="bg-primary-dark text-dark -ml-2 lg:-ml-4 flex justify-center items-center w-10 h-10 rounded-full shadow focus:outline-none">
