@@ -88,12 +88,12 @@
                     };
                   @endphp
 
-                  <div class="scroll-section mb-8 transition-all duration-700 ease-in-out {{ $index === 0 ? 'opacity-100 is-active' : 'opacity-60' }}" data-section-index="{{ $index }}" data-color-class="{{ $titleColor }}" data-bar-color="{{ $barColorClass }}" data-bar-width="{{ $progressWidth }}">
+                  <div class="scroll-section mb-8 transition-all duration-700 ease-in-out cursor-pointer hover:opacity-100 {{ $index === 0 ? 'opacity-100 is-active' : 'opacity-60' }}" data-section-index="{{ $index }}" data-color-class="{{ $titleColor }}" data-bar-color="{{ $barColorClass }}" data-bar-width="{{ $progressWidth }}">
                     <x-heading
                       :as="HeadingTag::H3"
                       :size="HeadingSize::H3"
                       :color="$headingColor"
-                      class="mb-6 section-title"
+                      class="mb-6 section-title {{ $index === 0 ? $titleColor : '' }}"
                     >
                       {{ $section['title'] }}
                     </x-heading>
@@ -107,10 +107,24 @@
                       {!! $section['description'] !!}
                     </x-text>
 
-                    {{-- Progress Bar --}}
-                    <div class="my-8 w-full h-0.5 bg-primary-light/50 rounded-full overflow-hidden">
-                      <div class="section-progress-bar h-full transition-all duration-700 ease-in-out rounded-full {{ $index === 0 ? $barColorClass : 'bg-primary-light/50' }}"
-                          style="width: {{ $index === 0 ? $progressWidth : '0%' }}"></div>
+                    @if(!empty($section['link']) && !empty($section['link']['url']))
+                      <div class="mt-6">
+                        <x-button
+                          :href="$section['link']['url']"
+                          :target="$section['link']['target'] ?? '_self'"
+                          variant="primary"
+                          size="md"
+                        >
+                          {{ $section['link']['title'] ?? 'Learn More' }}
+                        </x-button>
+                      </div>
+                    @endif
+
+                    {{-- Animated Progress Bar --}}
+                    <div class="my-8 w-full h-1 bg-white/20 rounded-full overflow-hidden">
+                      <div class="section-progress-bar h-full rounded-full {{ $barColorClass }}"
+                          style="width: 0%; transition: none;"
+                          data-duration="2500"></div>
                     </div>
                   </div>
                 @endforeach
@@ -204,9 +218,34 @@
 
   let activeSection = 0;
   let isMobile = window.innerWidth <= mobileBreakpoint;
+  let autoScrollInterval = null;
+  let isUserInteracting = false;
+  const AUTO_SCROLL_DELAY = 3500; // 3.5 seconds per item
 
-  function updateActiveSection(newSection) {
-    if (newSection === activeSection) return;
+  function updateActiveSection(newSection, fromUser = false) {
+    console.log('[Scroll Lock] updateActiveSection called:', {
+      newSection,
+      activeSection,
+      fromUser,
+      isMobile
+    });
+
+    if (newSection === activeSection) {
+      console.log('[Scroll Lock] Same section, skipping update');
+      return;
+    }
+
+    // If user interaction, pause auto-scroll temporarily
+    if (fromUser) {
+      console.log('[Scroll Lock] User interaction detected, pausing auto-scroll');
+      isUserInteracting = true;
+      clearAutoScroll();
+      // Resume after 10 seconds of inactivity
+      setTimeout(() => {
+        isUserInteracting = false;
+        startAutoScroll();
+      }, 10000);
+    }
 
     // Update content sections highlighting
     contentSections.forEach((section, index) => {
@@ -214,22 +253,40 @@
       const progressBar = section.querySelector('.section-progress-bar');
       const colorClass = section.dataset.colorClass;
       const barColor = section.dataset.barColor;
-      const barWidth = section.dataset.barWidth;
+      const duration = parseInt(progressBar?.dataset.duration || AUTO_SCROLL_DELAY);
 
       if (index === newSection) {
+        console.log(`[Scroll Lock] Activating section ${index}:`, {
+          colorClass,
+          barColor,
+          duration
+        });
+
         section.classList.remove('opacity-60');
         section.classList.add('opacity-100', 'is-active');
 
         if (title && colorClass) {
           title.classList.remove('text-white');
           title.classList.add(colorClass);
+          console.log(`[Scroll Lock] Added color class "${colorClass}" to title`);
         }
 
-        // Update progress bar
-        if (progressBar && barColor && barWidth) {
-          progressBar.classList.remove('bg-white/20', 'bg-primary-green-neon', 'bg-secondary-cyan',   'bg-primary-yellow', 'bg-secondary-purple');
+        // Animate progress bar from 0 to 100%
+        if (progressBar && barColor) {
+          progressBar.classList.remove('bg-white/20', 'bg-primary-green-neon', 'bg-secondary-cyan', 'bg-primary-yellow', 'bg-secondary-purple');
           progressBar.classList.add(barColor);
-          progressBar.style.width = barWidth;
+
+          // Reset to 0
+          progressBar.style.transition = 'none';
+          progressBar.style.width = '0%';
+
+          // Force reflow
+          progressBar.offsetHeight;
+
+          // Animate to 100%
+          progressBar.style.transition = `width ${duration}ms linear`;
+          progressBar.style.width = '100%';
+          console.log(`[Scroll Lock] Progress bar animating with ${barColor}`);
         }
       } else {
         section.classList.remove('opacity-100', 'is-active');
@@ -240,9 +297,9 @@
           title.classList.remove('text-white');
         }
 
-        if (progressBar && barColor) {
-          progressBar.classList.remove('bg-primary-green-neon', 'bg-secondary-cyan',  'bg-primary-yellow', 'bg-secondary-purple');
-          progressBar.classList.add('bg-white/20');
+        // Reset progress bar
+        if (progressBar) {
+          progressBar.style.transition = 'width 300ms ease-out';
           progressBar.style.width = '0%';
         }
       }
@@ -260,48 +317,139 @@
     });
 
     activeSection = newSection;
+    console.log(`[Scroll Lock] Active section updated to: ${activeSection}`);
   }
 
   function checkMobile() {
     isMobile = window.innerWidth <= mobileBreakpoint;
   }
 
+  // Auto-scroll functions
+  function startAutoScroll() {
+    console.log('[Scroll Lock] startAutoScroll called:', { isMobile, isUserInteracting });
+
+    if (isMobile || isUserInteracting) {
+      console.log('[Scroll Lock] Auto-scroll not started (mobile or user interacting)');
+      return;
+    }
+
+    clearAutoScroll();
+    console.log('[Scroll Lock] Auto-scroll interval started');
+    autoScrollInterval = setInterval(() => {
+      if (!isUserInteracting) {
+        const nextSection = (activeSection + 1) % sections.length;
+        console.log(`[Scroll Lock] Auto-scroll: moving from ${activeSection} to ${nextSection}`);
+        updateActiveSection(nextSection, false);
+      }
+    }, AUTO_SCROLL_DELAY);
+  }
+
+  function clearAutoScroll() {
+    if (autoScrollInterval) {
+      console.log('[Scroll Lock] Clearing auto-scroll interval');
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    }
+  }
+
+  // Add click handlers to sections
+  function initClickHandlers() {
+    contentSections.forEach((section, index) => {
+      section.addEventListener('click', () => {
+        updateActiveSection(index, true);
+      });
+    });
+  }
+
   function initScrollTrigger() {
-    if (isMobile || !window.gsap || !window.ScrollTrigger) {
+    console.log('[Scroll Lock] initScrollTrigger called');
+
+    if (isMobile) {
+      console.log('[Scroll Lock] Skipping ScrollTrigger - mobile mode');
+      return;
+    }
+
+    if (!window.gsap || !window.ScrollTrigger) {
+      console.log('[Scroll Lock] GSAP or ScrollTrigger not available');
       return;
     }
 
     const scrollContent = container.querySelector('.scroll-lock-content');
-    if (!scrollContent) return;
+    if (!scrollContent) {
+      console.log('[Scroll Lock] scroll-lock-content not found');
+      return;
+    }
 
+    console.log('[Scroll Lock] Creating ScrollTrigger');
+
+    // Create ScrollTrigger without pinning - just track when in view
     window.ScrollTrigger.create({
       trigger: scrollContent,
-      start: "top top",
-      end: `+=${sections.length * window.innerHeight * 1.5}`,
-      scrub: 2,
-      pin: true,
-      anticipatePin: 1,
-      onUpdate: (self) => {
-        const progress = self.progress;
-        const rawSectionProgress = progress * sections.length;
-        const currentSectionIndex = Math.floor(rawSectionProgress);
-        const sectionProgress = rawSectionProgress - currentSectionIndex;
-
-        let targetSection = currentSectionIndex;
-        if (sectionProgress > 0.25) {
-          targetSection = Math.min(currentSectionIndex + 1, sections.length - 1);
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => {
+        console.log('[Scroll Lock] ScrollTrigger: onEnter');
+        // Start auto-scroll when entering the section
+        if (!isUserInteracting) {
+          startAutoScroll();
         }
-
-        updateActiveSection(targetSection);
+      },
+      onLeave: () => {
+        console.log('[Scroll Lock] ScrollTrigger: onLeave');
+        // Stop auto-scroll when leaving the section
+        clearAutoScroll();
+      },
+      onEnterBack: () => {
+        console.log('[Scroll Lock] ScrollTrigger: onEnterBack');
+        // Restart auto-scroll when scrolling back into view
+        if (!isUserInteracting) {
+          startAutoScroll();
+        }
+      },
+      onLeaveBack: () => {
+        console.log('[Scroll Lock] ScrollTrigger: onLeaveBack');
+        // Stop auto-scroll when scrolling back out
+        clearAutoScroll();
       }
     });
   }
 
   // Initialize
+  console.log('[Scroll Lock] Initializing...', {
+    blockId,
+    sections: sections.length,
+    contentSections: contentSections.length,
+    imageSections: imageSections.length,
+    isMobile
+  });
+
   checkMobile();
+  initClickHandlers();
+
+  // Trigger initial state on desktop
+  if (!isMobile) {
+    console.log('[Scroll Lock] Desktop mode - triggering initial activation');
+    // Small delay to ensure DOM is ready
+    setTimeout(() => {
+      console.log('[Scroll Lock] Calling updateActiveSection(0) for initial state');
+      updateActiveSection(0, false);
+    }, 100);
+  } else {
+    console.log('[Scroll Lock] Mobile mode - skipping auto-scroll setup');
+  }
 
   window.addEventListener('resize', () => {
+    const wasMobile = isMobile;
     checkMobile();
+
+    // If switching between mobile and desktop
+    if (wasMobile !== isMobile) {
+      clearAutoScroll();
+      if (!isMobile) {
+        startAutoScroll();
+      }
+    }
+
     // Refresh ScrollTrigger on resize
     if (window.ScrollTrigger) {
       window.ScrollTrigger.refresh();
@@ -316,6 +464,7 @@
         initScrollTrigger();
         // Return cleanup function
         return () => {
+          clearAutoScroll();
           if (window.ScrollTrigger) {
             window.ScrollTrigger.getAll().forEach(trigger => {
               if (trigger.trigger && trigger.trigger.closest(`#${blockId}`)) {
@@ -339,6 +488,11 @@
       }, 1000);
     }
   }
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    clearAutoScroll();
+  });
 })();
 </script>
 @endif

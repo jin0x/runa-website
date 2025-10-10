@@ -170,6 +170,12 @@ class ScrollLockBlock extends Block
                 'preview_size' => 'medium',
                 'required' => 1,
             ])
+            ->addLink('link', [
+                'label' => 'Link',
+                'instructions' => 'Optional link for this section',
+                'return_format' => 'array',
+                'required' => 0,
+            ])
             ->endRepeater()
 
             ->addTab('Behavior Settings', [
