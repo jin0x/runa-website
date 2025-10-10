@@ -268,21 +268,6 @@ class ShowcaseBlock extends Block
                 'default_value' => 'green-neon',
                 'required' => 1,
             ])
-            ->addSelect('columns', [
-                'label' => 'Number of Columns',
-                'instructions' => 'Select the number of columns to display',
-                'choices' => [
-                    '2' => '2',
-                    '3' => '3',
-                    '4' => '4',
-                    '5' => '5',
-                ],
-                'default_value' => '4',
-                'required' => 1,
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ])
             ->addTab('Settings', [
                 'placement' => 'top',
             ])
@@ -353,7 +338,19 @@ class ShowcaseBlock extends Block
 
     public function getColumns()
     {
-        return get_field('columns') ?: '3';
+        $statistics = $this->getStatisticsCards();
+        $count = count($statistics);
+
+        // Automatically determine columns based on number of statistics (max 5)
+        if ($count <= 2) {
+            return '2';
+        } elseif ($count === 3) {
+            return '3';
+        } elseif ($count === 4) {
+            return '4';
+        } else {
+            return '5'; // 5 or more items
+        }
     }
 
     public function getSectionSize()
