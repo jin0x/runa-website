@@ -1316,6 +1316,11 @@
           "color": "#171717"
         },
         {
+          "name": "Primary (Green Neon)0%,var(  Color Primary Green Soft)48.31%,var(  Color Primary Yellow)94.4%);  Gradient 2)",
+          "slug": "primary-green-neon)0%,var(--color-primary-green-soft)48.31%,var(--color-primary-yellow)94.4%);--gradient-2",
+          "color": "linear-gradient(180deg,var(--color-primary-yellow)0.04%,var(--color-primary-green-soft)50%,var(--color-primary-green-neon)99.96%)"
+        },
+        {
           "name": "Neutral (Dark 40)0%,var(  Color Primary Dark)100%);  Gradient 4)",
           "slug": "neutral-dark-40)0%,var(--color-primary-dark)100%);--gradient-4",
           "color": "linear-gradient(180deg,var(--color-primary-dark-32)57.95%,var(--color-neutral-0-32)178.8%)"
