@@ -93,6 +93,7 @@ class ShowcaseBlock extends Block
             'video' => $this->getVideo(),
             'lottie' => $this->getLottie(),
             'marquee_logos' => $this->getMarqueeLogos(),
+            'grid_items' => $this->getGridItems(),
             'cta' => $this->getCta(),
             'accent_color' => $this->getAccentColor(),
             'columns' => $this->getColumns(),
@@ -158,7 +159,8 @@ class ShowcaseBlock extends Block
                     'image' => 'Image',
                     'video' => 'Video',
                     'lottie' => 'Lottie Animation',
-                    'logo-marquee' => 'Logo Marquee (3 Lanes)'
+                    'logo-marquee' => 'Logo Marquee (3 Lanes)',
+                    'grid' => 'Grid Layout (4 Items)'
                 ],
                 'default_value' => 'image',
                 'required' => 1,
@@ -238,6 +240,42 @@ class ShowcaseBlock extends Block
                 'label' => 'Alt Text',
                 'instructions' => 'Alternative text for the logo (for accessibility)',
                 'required' => 0,
+            ])
+            ->endRepeater()
+            ->addRepeater('grid_items', [
+                'label' => 'Grid Items',
+                'instructions' => 'Add 4 items for the grid layout',
+                'min' => 4,
+                'max' => 4,
+                'layout' => 'block',
+                'button_label' => 'Add Grid Item',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'media_type',
+                            'operator' => '==',
+                            'value' => 'grid',
+                        ],
+                    ],
+                ],
+            ])
+            ->addImage('grid_image', [
+                'label' => 'Image',
+                'instructions' => 'Upload or select an image',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'required' => 1,
+            ])
+            ->addText('grid_title', [
+                'label' => 'Title',
+                'instructions' => 'Enter the title for this grid item',
+                'required' => 1,
+            ])
+            ->addTextarea('grid_description', [
+                'label' => 'Description',
+                'instructions' => 'Enter the description for this grid item',
+                'rows' => 3,
+                'required' => 1,
             ])
             ->endRepeater()
 
@@ -324,6 +362,11 @@ class ShowcaseBlock extends Block
     public function getMarqueeLogos()
     {
         return get_field('marquee_logos') ?: [];
+    }
+
+    public function getGridItems()
+    {
+        return get_field('grid_items') ?: [];
     }
 
     public function getCta()

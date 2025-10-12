@@ -277,6 +277,102 @@
       </script>
     @endif
 
+    {{-- Grid Layout Section --}}
+    @if($media_type === 'grid' && !empty($grid_items) && count($grid_items) === 4)
+      <div class="mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          @foreach($grid_items as $index => $item)
+            @php
+              $item_image = $item['grid_image'] ?? null;
+              $item_title = $item['grid_title'] ?? '';
+              $item_description = $item['grid_description'] ?? '';
+              $image_url = is_array($item_image) ? ($item_image['url'] ?? '') : '';
+              $image_alt = is_array($item_image) ? ($item_image['alt'] ?? $item_title) : $item_title;
+
+              // Determine if this is left column (0, 1) or right column (2, 3)
+              $isLeftColumn = $index < 2;
+            @endphp
+
+            <div class="showcase-grid-item group relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 transition-all duration-300 hover:bg-gray-900">
+              @if($isLeftColumn)
+                {{-- Left Column: Text then Image --}}
+                <div class="flex flex-col gap-4">
+                  <div class="showcase-grid-text">
+                    @if(!empty($item_title))
+                      <x-heading
+                        :as="HeadingTag::H3"
+                        :size="HeadingSize::H3"
+                        :color="TextColor::GREEN_SOFT"
+                        class="mb-3"
+                      >
+                        {{ $item_title }}
+                      </x-heading>
+                    @endif
+
+                    @if(!empty($item_description))
+                      <x-text
+                        :as="TextTag::P"
+                        :size="TextSize::MEDIUM"
+                        :color="TextColor::LIGHT"
+                      >
+                        {{ $item_description }}
+                      </x-text>
+                    @endif
+                  </div>
+
+                  @if(!empty($image_url))
+                    <div class="showcase-grid-image">
+                      <img
+                        src="{{ $image_url }}"
+                        alt="{{ $image_alt }}"
+                        class="w-full h-auto rounded-lg object-cover"
+                      />
+                    </div>
+                  @endif
+                </div>
+              @else
+                {{-- Right Column: Image then Text --}}
+                <div class="flex flex-col gap-4">
+                  @if(!empty($image_url))
+                    <div class="showcase-grid-image">
+                      <img
+                        src="{{ $image_url }}"
+                        alt="{{ $image_alt }}"
+                        class="w-full h-auto rounded-lg object-cover"
+                      />
+                    </div>
+                  @endif
+
+                  <div class="showcase-grid-text">
+                    @if(!empty($item_title))
+                      <x-heading
+                        :as="HeadingTag::H3"
+                        :size="HeadingSize::H3"
+                        :color="TextColor::GREEN_SOFT"
+                        class="mb-3"
+                      >
+                        {{ $item_title }}
+                      </x-heading>
+                    @endif
+
+                    @if(!empty($item_description))
+                      <x-text
+                        :as="TextTag::P"
+                        :size="TextSize::MEDIUM"
+                        :color="TextColor::LIGHT"
+                      >
+                        {{ $item_description }}
+                      </x-text>
+                    @endif
+                  </div>
+                </div>
+              @endif
+            </div>
+          @endforeach
+        </div>
+      </div>
+    @endif
+
     {{-- Media Section --}}
     @if(!empty($media_url))
       <div class="mb-12 flex justify-center">

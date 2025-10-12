@@ -739,3 +739,20 @@ strong {
 .footer a {
   @apply no-underline hover:underline;
 }
+
+/* Showcase Grid Hover Effect */
+.showcase-grid-item {
+  opacity: 0.8;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.showcase-grid-item:hover {
+  opacity: 1;
+}
+
+/* Disable hover effect on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .showcase-grid-item {
+    opacity: 1;
+  }
+}
