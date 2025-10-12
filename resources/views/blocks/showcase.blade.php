@@ -295,9 +295,9 @@
 
             <div class="showcase-grid-item group relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 transition-all duration-300 hover:bg-gray-900">
               @if($isLeftColumn)
-                {{-- Left Column: Text then Image --}}
-                <div class="flex flex-col gap-4">
-                  <div class="showcase-grid-text">
+                {{-- Left Column: Text then Image (side by side on desktop, stacked on mobile) --}}
+                <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
+                  <div class="showcase-grid-text flex-1">
                     @if(!empty($item_title))
                       <x-heading
                         :as="HeadingTag::H3"
@@ -321,7 +321,7 @@
                   </div>
 
                   @if(!empty($image_url))
-                    <div class="showcase-grid-image">
+                    <div class="showcase-grid-image flex-1">
                       <img
                         src="{{ $image_url }}"
                         alt="{{ $image_alt }}"
@@ -331,10 +331,10 @@
                   @endif
                 </div>
               @else
-                {{-- Right Column: Image then Text --}}
-                <div class="flex flex-col gap-4">
+                {{-- Right Column: Image then Text (side by side on desktop, stacked on mobile) --}}
+                <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
                   @if(!empty($image_url))
-                    <div class="showcase-grid-image">
+                    <div class="showcase-grid-image flex-1">
                       <img
                         src="{{ $image_url }}"
                         alt="{{ $image_alt }}"
@@ -343,7 +343,7 @@
                     </div>
                   @endif
 
-                  <div class="showcase-grid-text">
+                  <div class="showcase-grid-text flex-1">
                     @if(!empty($item_title))
                       <x-heading
                         :as="HeadingTag::H3"
