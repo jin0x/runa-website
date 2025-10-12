@@ -227,10 +227,10 @@ body {
 
   /* Gradients */
   --gradient-1: linear-gradient(
-  45deg,
-  var(--color-primary-green-neon) 0%,
-  var(--color-primary-green-soft) 48.31%,
-  var(--color-primary-yellow) 94.4%
+    45deg,
+    var(--color-primary-green-neon) 0%,
+    var(--color-primary-green-soft) 48.31%,
+    var(--color-primary-yellow) 94.4%
   );
 
   --gradient-2: linear-gradient(
@@ -278,7 +278,7 @@ body {
 }
 
 .primary-button-gradient {
-    background: linear-gradient(
+  background: linear-gradient(
     45deg,
     var(--color-primary-green-neon) 0%,
     var(--color-primary-green-soft) 48.31%,
@@ -742,7 +742,7 @@ strong {
 
 /* Showcase Grid Hover Effect */
 .showcase-grid-item {
-  opacity: 0.8;
+  opacity: 0.6;
   transition: opacity 0.3s ease, background-color 0.3s ease;
 }
 

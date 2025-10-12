@@ -289,15 +289,15 @@
               $image_url = is_array($item_image) ? ($item_image['url'] ?? '') : '';
               $image_alt = is_array($item_image) ? ($item_image['alt'] ?? $item_title) : $item_title;
 
-              // Determine if this is left column (0, 1) or right column (2, 3)
-              $isLeftColumn = $index < 2;
+              // Determine layout: even index (0, 2) = Text left, Image right | odd index (1, 3) = Image left, Text right
+              $isTextFirst = $index % 2 === 0;
             @endphp
 
-            <div class="showcase-grid-item group relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 transition-all duration-300 hover:bg-gray-900">
-              @if($isLeftColumn)
-                {{-- Left Column: Text then Image (side by side on desktop, stacked on mobile) --}}
+            <div class="showcase-grid-item group relative overflow-hidden">
+              @if($isTextFirst)
+                {{-- Even index (0, 2): Text then Image (side by side on desktop, stacked on mobile) --}}
                 <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
-                  <div class="showcase-grid-text flex-1">
+                  <div class="showcase-grid-text flex-1 text-left">
                     @if(!empty($item_title))
                       <x-heading
                         :as="HeadingTag::H3"
@@ -313,7 +313,6 @@
                       <x-text
                         :as="TextTag::P"
                         :size="TextSize::MEDIUM"
-                        :color="TextColor::LIGHT"
                       >
                         {{ $item_description }}
                       </x-text>
@@ -331,7 +330,7 @@
                   @endif
                 </div>
               @else
-                {{-- Right Column: Image then Text (side by side on desktop, stacked on mobile) --}}
+                {{-- Odd index (1, 3): Image then Text (side by side on desktop, stacked on mobile) --}}
                 <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
                   @if(!empty($image_url))
                     <div class="showcase-grid-image flex-1">
@@ -343,7 +342,7 @@
                     </div>
                   @endif
 
-                  <div class="showcase-grid-text flex-1">
+                  <div class="showcase-grid-text flex-1 text-left">
                     @if(!empty($item_title))
                       <x-heading
                         :as="HeadingTag::H3"
@@ -359,7 +358,6 @@
                       <x-text
                         :as="TextTag::P"
                         :size="TextSize::MEDIUM"
-                        :color="TextColor::LIGHT"
                       >
                         {{ $item_description }}
                       </x-text>
