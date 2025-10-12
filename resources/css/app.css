@@ -343,6 +343,32 @@ body {
   font-family: var(--font-heading);
 }
 
+.heading-3-bold {
+  @apply text-xl md:text-3xl font-bold leading-[110%];
+  font-family: var(--font-heading);
+}
+
+.heading-4-bold {
+  @apply text-lg md:text-2xl font-bold leading-[110%];
+  font-family: var(--font-heading);
+}
+
+.heading-5-bold {
+  @apply text-base md:text-xl font-bold leading-[110%];
+  font-family: var(--font-heading);
+}
+
+.heading-6-bold {
+  @apply text-xs md:text-base font-bold leading-[110%];
+  font-family: var(--font-heading);
+}
+
+.heading-7-bold,
+.widget-title-bold {
+  @apply text-2xs md:text-sm font-bold leading-[110%];
+  font-family: var(--font-heading);
+}
+
 .text-display-large {
   @apply text-5xl md:text-8xl font-bold leading-[85%];
   font-family: var(--font-heading);

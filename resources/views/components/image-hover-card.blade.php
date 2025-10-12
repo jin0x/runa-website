@@ -38,8 +38,8 @@
       transition-all duration-300 ease-in-out">
         @if($title)
             <x-heading
-                :as="HeadingTag::H3"
-                :size="HeadingSize::H3"
+                :as="HeadingTag::H1"
+                :size="HeadingSize::H1"
                 class="text-left font-bold text-primary-dark"
             >
                 {!! $title !!}

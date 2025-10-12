@@ -85,7 +85,7 @@
                     <x-heading
                         id="main-title"
                         :as="HeadingTag::H4"
-                        :size="HeadingSize::H4"
+                        :size="HeadingSize::H4_BOLD"
                         class="text-left"
                     >
                         {{ $card['title'] }}
