@@ -131,10 +131,10 @@
                       target="{{ $logo_link['target'] ?? '_self' }}"
                       class="flex items-center justify-center"
                     >
-                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="h-20 w-auto max-w-full object-contain">
+                      <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class=" w-52 h-auto max-w-full object-contain">
                     </a>
                   @else
-                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class="h-20 w-auto max-w-full object-contain">
+                    <img src="{{ $logo_url }}" alt="{{ $alt_text }}"  class=" w-52 h-auto max-w-full object-contain">
                   @endif
                 </div>
               @endif
