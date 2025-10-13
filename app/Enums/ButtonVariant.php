@@ -7,12 +7,14 @@ class ButtonVariant
     const PRIMARY = 'primary';
     const SECONDARY = 'secondary';
     const LIGHT = 'light';
+    const NAV = 'nav';
 
     public static function getValues(): array {
         return [
             self::PRIMARY,
             self::SECONDARY,
             self::LIGHT,
+            self::NAV,
         ];
     }
 }
