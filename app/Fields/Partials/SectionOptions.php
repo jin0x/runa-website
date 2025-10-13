@@ -4,6 +4,7 @@ namespace App\Fields\Partials;
 
 use App\Enums\SectionSize;
 use App\Enums\ThemeVariant;
+use App\Enums\ArchPosition;
 use Log1x\AcfComposer\Builder;
 use Log1x\AcfComposer\Partial;
 
@@ -61,6 +62,19 @@ class SectionOptions extends Partial
                 'instructions' => 'Choose the color theme for this section',
                 'choices' => $this->getThemeChoices(),
                 'default_value' => ThemeVariant::LIGHT,
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ])
+            ->addSelect('arch_position', [
+                'label' => 'Arch Divider',
+                'instructions' => 'Add an arch divider that extends the section background color',
+                'choices' => [
+                    ArchPosition::NONE->value => 'None',
+                    ArchPosition::TOP->value => 'Top (extends upward)',
+                    ArchPosition::BOTTOM->value => 'Bottom (extends downward)',
+                ],
+                'default_value' => ArchPosition::NONE->value,
                 'wrapper' => [
                     'width' => '50',
                 ],
