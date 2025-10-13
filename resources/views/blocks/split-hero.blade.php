@@ -48,8 +48,9 @@
           @if ($eyebrow)
             <x-text
               :as="TextTag::SPAN"
-              :size="TextSize::LARGE"
-              class="inline-block text-gradient-primary uppercase mb-3"
+              :size="TextSize::EYEBROW"
+              :color="TextColor::GRADIENT"
+              class="inline-block uppercase mb-3"
             >
               {{ $eyebrow }}
             </x-text>

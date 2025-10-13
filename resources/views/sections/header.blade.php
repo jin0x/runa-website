@@ -38,7 +38,7 @@
   <div class="{{ is_admin_bar_showing() ? 'lg:pt-[40px]' : 'lg:pt-[60px]' }}">
     @endif
 
-    <header class="absolute bg-transparent bg-opacity-30 z-[100] w-full" role="banner">
+    <header class="absolute z-[100] w-full" role="banner">
       <div class="relative pt-6">
 
         <div class="mx-auto w-full px-4 lg:px-12 hidden lg:block">
@@ -61,8 +61,10 @@
             <div class="hidden lg:absolute lg:flex lg:items-center lg:justify-end lg:inset-y-0 lg:right-0 gap-2">
               @if (!empty($primary_cta_url) && !empty($primary_cta_label))
                 <x-button
-                  :variant="ButtonVariant::PRIMARY"
-                  :size="ButtonSize::SMALL"
+                  :size="ButtonSize::DEFAULT"
+                  :variant="ButtonVariant::NAV"
+                  :iconPosition="'left'"
+                  :iconType="'user'"
                   :href="$primary_cta_url"
                   target="{{ $primary_cta_target }}"
                 >
@@ -71,8 +73,7 @@
               @endif
               @if (!empty($secondary_cta_url) && !empty($secondary_cta_label))
                 <x-button
-                  :variant="ButtonVariant::SECONDARY"
-                  :size="ButtonSize::SMALL"
+                  :variant="ButtonVariant::PRIMARY"
                   :href="$secondary_cta_url"
                   target="{{ $secondary_cta_target }}"
                 >

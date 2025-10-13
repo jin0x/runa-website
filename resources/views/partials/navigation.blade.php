@@ -1,20 +1,29 @@
+@php
+  use App\Enums\TextSize;
+  use App\Enums\TextTag;
+  use App\Enums\TextColor;
+@endphp
+
 @if ($navigation)
   <nav x-data="navigation" aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-10 bg-gradient-3 rounded-full">
-    <ul class="flex md:space-x-1">
+    <ul class="flex gap-2">
       @foreach ($navigation as $item)
         <li class="menu-item relative {{ $item->classes ?? '' }} {{ $item->active ? 'active' : '' }}">
-          <div class="flex items-center h-16">
-            <a
+          <div class="flex items-center justify-center h-16 p-2 gap-1 min-h-[40px] min-w-[105px]">
+            <x-text
+              :size="TextSize::BASE"
+              :as="TextTag::A"
+              :color="TextColor::DARK"
               href="{{ $item->url }}"
-              class="block p-2 text-sm font-medium text-white hover:text-primary-green-neon transition-colors duration-200"
+              class="block hover:text-primary-green-neon transition-colors duration-200 !no-underline"
             >
               {{ $item->label }}
-            </a>
+            </x-text>
             @if ($item->children)
               <button
                 @click="toggleDropdown($event, '{{ $loop->index }}')"
                 @keydown.escape.window="closeDropdown()"
-                class="ml-1 p-1 rounded-md bg-transparent text-white hover:text-primary-green-neon focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green-neon"
+                class="rounded-md bg-transparent text-white hover:text-primary-green-neon focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green-neon"
                 aria-expanded="false"
               >
                 <span class="sr-only">Toggle dropdown</span>

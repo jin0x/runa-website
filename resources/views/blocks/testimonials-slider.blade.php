@@ -10,16 +10,14 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
-  // Set container size: single layout (featured) uses medium, slider uses xlarge
-  $containerSize = $display_layout === 'single' ? ContainerSize::MEDIUM : ContainerSize::XLARGE;
-
   // Show navigation when show_navigation is true, and there is more than one testimonial
   $showNavigation = $show_navigation && (count($testimonials) > 1);
+  $singleDisplay = $display_layout === 'single';
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
-  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ count($testimonials) > 1 ? 'testimonials-slider-block' : 'testimonials-slider-block-featured' }} {{ $block->classes ?? '' }}">
-    <x-container :size="$containerSize">
+  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ !$singleDisplay  ? 'testimonials-slider-block' : 'testimonials-slider-block-featured' }} {{ $block->classes ?? '' }}">
+    <x-container :size="ContainerSize::XLARGE">
 
       {{-- Section Heading --}}
       @if($section_eyebrow || $section_title || $section_description)
@@ -43,7 +41,7 @@
           :mobileSlidesPerView="1"
           :tabletSlidesPerView="1"
           :desktopSlidesPerView="1"
-          :spaceBetween="24"
+          :spaceBetween="256"
           :navigationPosition="'bottom-right'"
           :slideCount="count($testimonials)"
         >

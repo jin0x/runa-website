@@ -29,8 +29,8 @@
     {{-- Section Heading --}}
     @if($heading)
       <x-heading
-        :as="HeadingTag::H4"
-        :size="HeadingSize::H4"
+        :as="HeadingTag::H1"
+        :size="HeadingSize::H1"
         class="text-center mb-12 max-w-3xl"
       >
         {{ $heading }}
