@@ -35,15 +35,15 @@
 
   // Add data attribute for arch position (used by CSS)
   $archAttr = match ($archPosition) {
-      ArchPosition::TOP => 'data-arch="top"',
-      ArchPosition::BOTTOM => 'data-arch="bottom"',
+      ArchPosition::OUTER => 'data-arch="outer"',
+      ArchPosition::INNER => 'data-arch="inner"',
       default => '',
   };
 
   // Add arch CSS classes for clip-path and padding compensation
   $archClasses = match ($archPosition) {
-      ArchPosition::TOP => 'arch-top',
-      ArchPosition::BOTTOM => 'arch-bottom',
+      ArchPosition::OUTER => 'arch-outer',
+      ArchPosition::INNER => 'arch-inner',
       default => '',
   };
 

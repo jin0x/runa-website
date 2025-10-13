@@ -71,8 +71,8 @@ class SectionOptions extends Partial
                 'instructions' => 'Add an arch divider that extends the section background color',
                 'choices' => [
                     ArchPosition::NONE->value => 'None',
-                    ArchPosition::TOP->value => 'Top (extends upward)',
-                    ArchPosition::BOTTOM->value => 'Bottom (extends downward)',
+                    ArchPosition::OUTER->value => 'Outer (positioned at top)',
+                    ArchPosition::INNER->value => 'Inner (positioned at top)',
                 ],
                 'default_value' => ArchPosition::NONE->value,
                 'wrapper' => [

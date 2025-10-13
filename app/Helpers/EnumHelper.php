@@ -67,8 +67,8 @@ class EnumHelper
         }
 
         return match ($position) {
-            'top' => ArchPosition::TOP,
-            'bottom' => ArchPosition::BOTTOM,
+            'outer' => ArchPosition::OUTER,
+            'inner' => ArchPosition::INNER,
             'none' => ArchPosition::NONE,
             default => ArchPosition::NONE,
         };
