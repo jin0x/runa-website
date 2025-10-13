@@ -38,7 +38,7 @@
   <div class="{{ is_admin_bar_showing() ? 'lg:pt-[40px]' : 'lg:pt-[60px]' }}">
     @endif
 
-    <header class="absolute bg-transparent bg-opacity-30 z-[100] w-full" role="banner">
+    <header class="absolute z-[100] w-full" role="banner">
       <div class="relative pt-6">
 
         <div class="mx-auto w-full px-4 lg:px-12 hidden lg:block">
