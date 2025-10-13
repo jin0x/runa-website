@@ -849,18 +849,21 @@ strong {
   );
   /* Add padding to compensate for the masked area */
   padding-top: 72px;
+  @apply pt-32;
 }
 
 /* Adjacent section handling - reduce bottom margin when section comes before arch-outer */
 section:has(+ .arch-outer),
 section:has(+ * > .arch-outer:first-child) {
   margin-bottom: -72px;
+  @apply -mb-24;
 }
 
 /* Adjacent section handling - reduce bottom margin when section comes before arch-inner */
 section:has(+ .arch-inner),
 section:has(+ * > .arch-inner:first-child) {
   margin-bottom: -72px;
+  @apply -mb-24 pb-40;
 }
 
 /* Responsive arch height for mobile devices */
@@ -921,6 +924,7 @@ section:has(+ * > .arch-inner:first-child) {
       0% 100%
     );
     padding-top: 48px;
+    @apply pt-16;
   }
 
   section:has(+ .arch-outer),
