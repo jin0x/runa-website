@@ -11,8 +11,6 @@
     'classes' => '' // allow additional custom classes
 ])
 
-
-
 @php
   // Define section padding sizes for different screen sizes
   $sizeClasses = match ($size)  {
@@ -35,48 +33,23 @@
       default => '',
   };
 
-  // Get background color for arch SVG
-  $archColor = match ($variant) {
-      ThemeVariant::LIGHT => '#ffffff',
-      ThemeVariant::DARK => '#000000', // Adjust to your primary-dark color
-      ThemeVariant::GREEN => '#00ffa3', // Adjust to your gradient-2 color
-      ThemeVariant::PURPLE => '#af44ec', // Adjust to your secondary-purple color
-      ThemeVariant::CYAN => '#0ce3f8', // Adjust to your secondary-cyan color
-      ThemeVariant::YELLOW => '#eefc51', // Adjust to your primary-yellow color
-      default => '#ffffff',
-  };
-
-  // Add extra spacing when arch is present
-  $archSpacing = match ($archPosition) {
-      ArchPosition::TOP => '!after:pt-[72px]',
-      ArchPosition::BOTTOM => '!after:pb-[72px]',
+  // Add data attribute for arch position (used by CSS)
+  $archAttr = match ($archPosition) {
+      ArchPosition::TOP => 'data-arch="top"',
+      ArchPosition::BOTTOM => 'data-arch="bottom"',
       default => '',
   };
 
-  $isOverflowVisible = $archPosition === ArchPosition::NONE ? '' : 'overflow-visible';
+  // Add arch CSS classes for clip-path and padding compensation
+  $archClasses = match ($archPosition) {
+      ArchPosition::TOP => 'arch-top',
+      ArchPosition::BOTTOM => 'arch-bottom',
+      default => '',
+  };
 
-  $sectionClasses = "w-full relative $isOverflowVisible $sizeClasses $variantClasses $archSpacing $classes";
-
+  $sectionClasses = "w-full relative $sizeClasses $variantClasses $archClasses $classes";
 @endphp
 
-<section class="{{ $sectionClasses }}">
-    {{-- Top Arch --}}
-  @if($archPosition === ArchPosition::TOP)
-    <div class="absolute top-0 left-0 w-full h-[72px] -translate-y-full pointer-events-none">
-      <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 72C0 72 360 0 720 0C1080 0 1440 72 1440 72V72H0V72Z" fill="{{ $archColor }}"/>
-      </svg>
-    </div>
-  @endif
-
+<section class="{{ $sectionClasses }}" {!! $archAttr !!}>
   {{ $slot }}
-
-  {{-- Bottom Arch --}}
-  @if($archPosition === ArchPosition::BOTTOM)
-    <div class="absolute bottom-0 left-0 w-full h-[72px] translate-y-full pointer-events-none z-10">
-      <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-       <path d="M0 0C0 0 360 72 720 72C1080 72 1440 0 1440 0V0H0V0Z" fill="{{ $archColor }}"/>
-      </svg>
-    </div>
-  @endif
 </section>
