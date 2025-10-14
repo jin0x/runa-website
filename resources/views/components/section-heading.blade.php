@@ -73,7 +73,7 @@
         <x-heading
           :as="HeadingTag::H1"
           :size="$headingSize"
-          class="mb-3 font-bold {{ $titleClasses }}"
+          class="pb-[0.25rem] mb-3 font-bold {{ $titleClasses }}"
         >
           {!! $heading !!}
         </x-heading>
@@ -81,7 +81,7 @@
         <x-text
           :as="TextTag::P"
           :size="TextSize::XLARGE"
-          class="max-w-[80ch] mx-auto {{ $subtitleClasses }}"
+          class="pb-[0.25rem] max-w-[80ch] mx-auto {{ $subtitleClasses }}"
         >
           {!! $subtitle !!}
         </x-text>
