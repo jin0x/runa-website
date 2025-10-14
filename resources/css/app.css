@@ -782,3 +782,158 @@ strong {
     opacity: 1;
   }
 }
+
+/* =============================================================================
+   SECTION ARCH DIVIDERS - Subtractive Masking Approach
+   Both outer and inner arches are positioned at the top of the section
+   ============================================================================= */
+
+/* Base arch styles with clip-path masking */
+.arch-outer {
+  /* Outer arch - larger curve at the top that extends outward */
+  clip-path: polygon(
+    0% 0px,
+    5% 12px,
+    10% 24px,
+    15% 34px,
+    20% 42px,
+    25% 48px,
+    30% 52px,
+    35% 56px,
+    40% 60px,
+    45% 64px,
+    50% 66px,
+    55% 64px,
+    60% 60px,
+    65% 56px,
+    70% 52px,
+    75% 48px,
+    80% 42px,
+    85% 34px,
+    90% 24px,
+    95% 12px,
+    100% 0px,
+    100% 100%,
+    0% 100%
+  );
+  /* Add padding to compensate for the masked area */
+  padding-top: 72px;
+}
+
+.arch-inner {
+  /* Inner arch - smaller curve at the top that creates a subtle indent */
+  clip-path: polygon(
+    0% 0px,
+    5% 12px,
+    10% 24px,
+    15% 34px,
+    20% 42px,
+    25% 48px,
+    30% 52px,
+    35% 56px,
+    40% 60px,
+    45% 64px,
+    50% 66px,
+    55% 64px,
+    60% 60px,
+    65% 56px,
+    70% 52px,
+    75% 48px,
+    80% 42px,
+    85% 34px,
+    90% 24px,
+    95% 12px,
+    100% 0px,
+    100% 100%,
+    0% 100%
+  );
+  /* Add padding to compensate for the masked area */
+  padding-top: 72px;
+  @apply pt-32;
+}
+
+/* Adjacent section handling - reduce bottom margin when section comes before arch-outer */
+section:has(+ .arch-outer),
+section:has(+ * > .arch-outer:first-child) {
+  margin-bottom: -72px;
+  @apply -mb-24;
+}
+
+/* Adjacent section handling - reduce bottom margin when section comes before arch-inner */
+section:has(+ .arch-inner),
+section:has(+ * > .arch-inner:first-child) {
+  margin-bottom: -72px;
+  @apply -mb-24 pb-40;
+}
+
+/* Responsive arch height for mobile devices */
+@media (max-width: 768px) {
+  .arch-outer {
+    clip-path: polygon(
+      0% 0px,
+      5% 8px,
+      10% 16px,
+      15% 23px,
+      20% 28px,
+      25% 32px,
+      30% 35px,
+      35% 37px,
+      40% 40px,
+      45% 43px,
+      50% 44px,
+      55% 43px,
+      60% 40px,
+      65% 37px,
+      70% 35px,
+      75% 32px,
+      80% 28px,
+      85% 23px,
+      90% 16px,
+      95% 8px,
+      100% 0px,
+      100% 100%,
+      0% 100%
+    );
+    padding-top: 48px;
+  }
+
+  .arch-inner {
+    clip-path: polygon(
+      0% 0px,
+      5% 8px,
+      10% 16px,
+      15% 23px,
+      20% 28px,
+      25% 32px,
+      30% 35px,
+      35% 37px,
+      40% 40px,
+      45% 43px,
+      50% 44px,
+      55% 43px,
+      60% 40px,
+      65% 37px,
+      70% 35px,
+      75% 32px,
+      80% 28px,
+      85% 23px,
+      90% 16px,
+      95% 8px,
+      100% 0px,
+      100% 100%,
+      0% 100%
+    );
+    padding-top: 48px;
+    @apply pt-16;
+  }
+
+  section:has(+ .arch-outer),
+  section:has(+ * > .arch-outer:first-child) {
+    margin-bottom: -48px;
+  }
+
+  section:has(+ .arch-inner),
+  section:has(+ * > .arch-inner:first-child) {
+    margin-bottom: -48px;
+  }
+}

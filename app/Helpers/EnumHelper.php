@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Enums\ThemeVariant;
 use App\Enums\SectionSize;
 use App\Enums\SectionHeadingVariant;
+use App\Enums\ArchPosition;
 
 class EnumHelper
 {
@@ -53,6 +54,23 @@ class EnumHelper
             'lg' => SectionSize::LARGE,
             'xl' => SectionSize::XLARGE,
             default => SectionSize::MEDIUM,
+        };
+    }
+
+        /**
+     * Convert arch position string to ArchPosition enum
+     */
+    public static function getArchPosition(?string $position): ArchPosition
+    {
+        if (empty($position)) {
+            return ArchPosition::NONE;
+        }
+
+        return match ($position) {
+            'outer' => ArchPosition::OUTER,
+            'inner' => ArchPosition::INNER,
+            'none' => ArchPosition::NONE,
+            default => ArchPosition::NONE,
         };
     }
 

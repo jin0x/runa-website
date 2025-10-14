@@ -9,6 +9,7 @@
   use App\Enums\ButtonVariant;
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
+  use App\Enums\ArchPosition;
   use App\Enums\SectionHeadingVariant;
   use App\Helpers\EnumHelper;
   use function App\Helpers\apply_tailwind_classes_to_content;
@@ -18,6 +19,9 @@
 
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
+
+  // Convert arch position string to ArchPosition enum
+  $archPositionValue = EnumHelper::getArchPosition($arch_position ?? 'none');
 
   // Convert to optimal section heading variant for contrast
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
@@ -31,7 +35,7 @@
 
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" :archPosition="$archPositionValue" classes="{{ $block->classes }} overflow-visible">
   <x-container>
     @if($section_eyebrow || $section_title || $section_description)
       <x-section-heading

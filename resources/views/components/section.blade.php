@@ -1,11 +1,13 @@
 @php
   use App\Enums\SectionSize;
   use App\Enums\ThemeVariant;
+  use App\Enums\ArchPosition;
 @endphp
 
 @props([
     'size' => SectionSize::MEDIUM, // default size is medium
     'variant' => null,
+    'archPosition' => ArchPosition::NONE,
     'classes' => '' // allow additional custom classes
 ])
 
@@ -31,9 +33,23 @@
       default => '',
   };
 
-  $sectionClasses = "w-full relative overflow-hidden $sizeClasses $variantClasses $classes";
+  // Add data attribute for arch position (used by CSS)
+  $archAttr = match ($archPosition) {
+      ArchPosition::OUTER => 'data-arch="outer"',
+      ArchPosition::INNER => 'data-arch="inner"',
+      default => '',
+  };
+
+  // Add arch CSS classes for clip-path and padding compensation
+  $archClasses = match ($archPosition) {
+      ArchPosition::OUTER => 'arch-outer',
+      ArchPosition::INNER => 'arch-inner',
+      default => '',
+  };
+
+  $sectionClasses = "w-full relative $sizeClasses $variantClasses $archClasses $classes";
 @endphp
 
-<section class="{{ $sectionClasses }}">
+<section class="{{ $sectionClasses }}" {!! $archAttr !!}>
   {{ $slot }}
 </section>

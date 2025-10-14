@@ -150,6 +150,7 @@ class ContentMediaRepeater extends Block
             // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
+            'arch_position' => $this->getArchPosition(),
         ];
     }
 
@@ -288,5 +289,10 @@ class ContentMediaRepeater extends Block
     public function getPercentageCards()
     {
         return get_field('percentage_cards') ?: [];
+    }
+
+    public function getArchPosition()
+    {
+        return get_field('arch_position') ?: 'none';
     }
 }
