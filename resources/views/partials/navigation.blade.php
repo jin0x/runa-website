@@ -15,8 +15,18 @@
   <nav x-data="navigation" aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-10 bg-gradient-3 rounded-full">
     <ul class="flex gap-2">
       @foreach ($navigation as $item)
-        <li class="menu-item relative {{ $item->classes ?? '' }} {{ $item->active ? 'active' : '' }}">
-          <div class="flex items-center justify-center h-16 p-2 gap-1 min-h-[40px] min-w-[105px]">
+        <li class="menu-item relative {{ $item->classes ?? '' }} {{ $item->active ? 'active' : '' }}"
+            @if($item->children)
+              @mouseenter="toggleDropdown($event, '{{ $loop->index }}')"
+              @mouseleave="closeDropdown()"
+            @endif
+        >
+          <div class="flex items-center justify-center h-16 p-2 gap-3 min-h-[40px] min-w-[105px]      relative">
+            {{-- Active state bottom border --}}
+            @if($item->active)
+              <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-primary-green-neon"></div>
+            @endif
+
             <x-text
               :size="TextSize::BASE"
               :as="TextTag::A"
@@ -26,21 +36,17 @@
             >
               {{ $item->label }}
             </x-text>
+
             @if ($item->children)
-              <button
-                @click="toggleDropdown($event, '{{ $loop->index }}')"
-                @keydown.escape.window="closeDropdown()"
-                class="rounded-md bg-transparent text-white hover:text-primary-green-neon focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green-neon"
-                aria-expanded="false"
-              >
-                <span class="sr-only">Toggle dropdown</span>
-                <svg x-show="activeDropdown !== '{{ $loop->index }}'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+              {{-- Chevron (visual only, hover works on entire li) --}}
+              <div class="pointer-events-none">
+                <svg x-show="activeDropdown !== '{{ $loop->index }}'" xmlns="http://www.w3.org/2000/svg"      width="13" height="8" viewBox="0 0 13 8" fill="none" class="transition-transform      duration-200 rotate-180">
+                  <path d="M6.5 0L0.5 6L1.91 7.41L6.5 2.83L11.09 7.41L12.5 6L6.5 0Z" fill="white"/>
                 </svg>
-                <svg x-show="activeDropdown === '{{ $loop->index }}'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5"/>
+                <svg x-show="activeDropdown === '{{ $loop->index }}'" xmlns="http://www.w3.org/2000/svg"      width="13" height="8" viewBox="0 0 13 8" fill="none" class="transition-transform      duration-200">
+                  <path d="M6.5 0L0.5 6L1.91 7.41L6.5 2.83L11.09 7.41L12.5 6L6.5 0Z" fill="white"/>
                 </svg>
-              </button>
+              </div>
             @endif
           </div>
 
@@ -48,7 +54,8 @@
   <!-- Dropdown Panel -->
   <div class="w-full absolute left-0"
       x-show="activeDropdown === '{{ $loop->index }}'"
-      @click.away="closeDropdown()"
+      @mouseenter="cancelClose()"
+      @mouseleave="closeDropdown()"
       x-cloak
       x-transition:enter="transition ease-out duration-300 ease-out"
       x-transition:enter-start="opacity-0 transform scale-95"
@@ -73,7 +80,7 @@
     }
   @endphp
 
-  <div class="mt-2 bg-primary-dark rounded-xl {{ $widthClass }} left-1/2 -translate-x-1/2">
+  <div class="mt-3 bg-primary-dark rounded-xl {{ $widthClass }} left-1/2 -translate-x-1/2">
     <div class="px-8 py-8">
       
       @if (!empty($item->submenu_groups))
@@ -238,17 +245,50 @@
   document.addEventListener( 'alpine:init', () => {
     Alpine.data( 'navigation', () => ({
       activeDropdown: null,
+      closeTimeout: null,
       toggleDropdown( event, id ) {
-        event.stopPropagation();
-        this.activeDropdown = this.activeDropdown === id ? null : id;
+        // Clear any pending close timeout immediately
+        if (this.closeTimeout) {
+          clearTimeout(this.closeTimeout);
+          this.closeTimeout = null;
+        }
+        // Set the new active dropdown
+        this.activeDropdown = id;
       },
       closeDropdown() {
-        this.activeDropdown = null;
+        // Add small delay before closing
+        this.closeTimeout = setTimeout(() => {
+          this.activeDropdown = null;
+          this.closeTimeout = null;
+        }, 150);
+      },
+      cancelClose() {
+        // Cancel any pending close
+        if (this.closeTimeout) {
+          clearTimeout(this.closeTimeout);
+          this.closeTimeout = null;
+        }
       },
       init() {
+        // Close dropdown on scroll
         window.addEventListener( 'scroll', () => {
-          this.closeDropdown();
+          if (this.closeTimeout) {
+            clearTimeout(this.closeTimeout);
+            this.closeTimeout = null;
+          }
+          this.activeDropdown = null;
         } );
+        
+        // Close dropdown on ESC key
+        window.addEventListener( 'keydown', (e) => {
+          if (e.key === 'Escape') {
+            if (this.closeTimeout) {
+              clearTimeout(this.closeTimeout);
+              this.closeTimeout = null;
+            }
+            this.activeDropdown = null;
+          }
+        });
       }
     }) );
   } );
