@@ -6,7 +6,9 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\Vite;
+use function App\Helpers\enqueue_vite_assets;
+use function App\Helpers\enqueue_editor_assets;
+use function App\Helpers\get_vite_asset;
 
 /**
  * Inject styles into the block editor.
@@ -35,83 +37,45 @@ add_filter('admin_head', function () {
         return;
     }
 
-    // Load dependencies
-    $manifest_path = get_template_directory() . '/public/build/manifest.json';
-    if (file_exists($manifest_path)) {
-        $manifest = json_decode(file_get_contents($manifest_path), true);
-
-        // Enqueue dependencies
-        if (isset($manifest['editor.deps.json']['file'])) {
-            $deps_file = get_template_directory() . '/public/build/' . $manifest['editor.deps.json']['file'];
-            if (file_exists($deps_file)) {
-                $dependencies = json_decode(file_get_contents($deps_file), true);
-                foreach ($dependencies as $dependency) {
-                    if (! wp_script_is($dependency)) {
-                        wp_enqueue_script($dependency);
-                    }
-                }
-            }
-        }
-
-        // Enqueue editor CSS
-        if (isset($manifest['resources/css/editor.css']['file'])) {
-            $css_url = get_template_directory_uri() . '/public/build/' . $manifest['resources/css/editor.css']['file'];
-            wp_enqueue_style('theme-editor-css', $css_url, [], null);
-        }
-
-        // Enqueue editor JS and its associated CSS
-        if (isset($manifest['resources/js/editor.js'])) {
-            $entry = $manifest['resources/js/editor.js'];
-            $base_url = get_template_directory_uri() . '/public/build/';
-
-            // Enqueue JS
-            if (isset($entry['file'])) {
-                wp_enqueue_script('theme-editor-js', $base_url . $entry['file'], [], null, true);
-            }
-
-            // Enqueue associated CSS chunks
-            if (isset($entry['css']) && is_array($entry['css'])) {
-                foreach ($entry['css'] as $index => $css_file) {
-                    wp_enqueue_style('theme-editor-js-css-' . $index, $base_url . $css_file, ['theme-editor-css'], null);
-                }
-            }
-        }
-    }
+    enqueue_editor_assets();
 });
 
 /**
- * Add Vite's HMR client to the block editor.
+ * Fallback font loading for production environments
+ * Ensures fonts load even if CSS compilation issues occur
  *
  * @return void
  */
-add_action('enqueue_block_assets', function () {
-    if (! is_admin() || ! get_current_screen()?->is_block_editor()) {
-        return;
-    }
+add_action('wp_head', function () {
+    echo "<style>
+        @font-face {
+            font-family: 'Lineca';
+            font-display: swap;
+            src: url('" . get_vite_asset('resources/fonts/Lineca-Regular.woff2') . "') format('woff2'),
+                url('" . get_vite_asset('resources/fonts/Lineca-Regular.woff') . "') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
 
-    if (! Vite::isRunningHot()) {
-        return;
-    }
+        @font-face {
+            font-family: 'Lineca';
+            font-display: swap;
+            src: url('" . get_vite_asset('resources/fonts/Lineca-Bold.woff2') . "') format('woff2'),
+                url('" . get_vite_asset('resources/fonts/Lineca-Bold.woff') . "') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+    </style>";
+}, 1); // Very high priority to load before other styles
 
-    try {
-        $script = sprintf(
-            <<<'JS'
-            window.__vite_client_url = '%s';
-
-            window.self !== window.top && document.head.appendChild(
-                Object.assign(document.createElement('script'), { type: 'module', src: '%s' })
-            );
-            JS
-            ,
-            untrailingslashit(Vite::asset('')),
-            Vite::asset('@vite/client')
-        );
-
-        wp_add_inline_script('wp-blocks', $script);
-    } catch (\Exception $e) {
-        // Silently fail if Vite assets can't be loaded
-        error_log('Vite HMR client error: ' . $e->getMessage());
-    }
+/**
+ * Enqueue theme assets using dynamic manifest.json lookup
+ * Automatically handles hashed filenames from Vite builds
+ *
+ * @return void
+ */
+add_action('wp_enqueue_scripts', function () {
+    enqueue_vite_assets();
 });
 
 /**
