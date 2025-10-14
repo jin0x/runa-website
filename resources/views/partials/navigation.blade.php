@@ -52,20 +52,32 @@
     
 @if ($is_mega_menu && $item->has_submenu)
   {{-- Mega Menu Layout --}}
-  <div class="mt-2 bg-primary-dark rounded-xl min-w-[600px] left-1/2 -translate-x-1/2">
-    <div class="max-w-7xl mx-auto px-8 py-8">
+  @php
+    // Determine width based on content
+    $groupCount = count($item->submenu_groups ?? []);
+    $hasFeatured = collect($item->submenu_groups ?? [])->contains('type', 'featured');
+    
+    if ($groupCount === 1) {
+        $widthClass = 'w-[400px]'; // Single group - narrow
+    } elseif ($hasFeatured) {
+        $widthClass = 'w-[1000px]'; // Regular + Featured - wider
+    } else {
+        $widthClass = 'w-[800px]'; // Two regular groups - medium
+    }
+  @endphp
+
+  <div class="mt-2 bg-primary-dark rounded-bl-xl rounded-br-xl {{ $widthClass }} left-1/2 -translate-x-1/2">
+    <div class="px-8 py-8">
       
       @if (!empty($item->submenu_groups))
-        <div class="grid {{ count($item->submenu_groups) === 2 ? 'grid-cols-2' : 'grid-cols-1' }} gap-12 mb-6">
+        <div class="grid {{ count($item->submenu_groups) === 2 ? 'grid-cols-2' : 'grid-cols-1' }} gap-3">
           @foreach ($item->submenu_groups as $group)
-            <div class="min-w-[280px]">
-              @if ($group['type'] === 'regular')
-                {{-- Regular Group --}}
-                <div class="flex items-center gap-3 mb-6">
+            @if ($group['type'] === 'regular')
+              {{-- Regular Group with Gray Box --}}
+              <div class="bg-neutral-dark-10 rounded-xl p-6">
+                <div class="flex items-center gap-6 mb-4">
                   @if (!empty($group['icon']['url']))
-                    <div class="w-10 h-10 flex items-center justify-center bg-primary-green-neon rounded-lg flex-shrink-0">
-                      <img src="{{ $group['icon']['url'] }}" alt="{{ $group['icon']['alt'] ?? '' }}" class="w-6 h-6">
-                    </div>
+                    <img src="{{ $group['icon']['url'] }}" alt="{{ $group['icon']['alt'] ?? '' }}" class="w-10 h-10 flex-shrink-0">
                   @endif
                   @if (!empty($group['title']))
                     <h3 class="text-lg font-semibold text-white">{{ $group['title'] }}</h3>
@@ -78,28 +90,43 @@
                       <li>
                         <a href="{{ $link['url'] ?? '#' }}" 
                            target="{{ $link['target'] ?? '_self' }}" 
-                           class="block group">
-                          <div class="font-medium text-white group-hover:text-primary-green-neon transition-colors">
-                            {{ $link['label'] ?? '' }}
-                          </div>
-                          @if (!empty($link['description']))
-                            <div class="text-sm text-neutral-400 mt-1 group-hover:text-neutral-300 transition-colors">
-                              {{ $link['description'] }}
+                           class="group flex items-center justify-between">
+                          <div class="flex-1">
+                            <div class="font-medium text-white group-hover:text-primary-green-neon transition-colors">
+                              {{ $link['label'] ?? '' }}
                             </div>
-                          @endif
+                            @if (!empty($link['description']))
+                              <div class="text-sm text-neutral-400 mt-1 group-hover:text-neutral-300 transition-colors">
+                                {{ $link['description'] }}
+                              </div>
+                            @endif
+                          </div>
+                          {{-- Hover Arrow (right side, centered) --}}
+                          <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-4 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <g clip-path="url(#clip0_3657_9862)">
+                              <path d="M7.99984 4.66675L7.05984 5.60675L10.7798 9.33342H2.6665V10.6667H10.7798L7.05984 14.3934L7.99984 15.3334L13.3332 10.0001L7.99984 4.66675Z" fill="#00FFA3"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_3657_9862">
+                                <rect width="16" height="16" fill="white" transform="translate(0 2)"/>
+                              </clipPath>
+                            </defs>
+                          </svg>
                         </a>
                       </li>
                     @endforeach
                   </ul>
                 @endif
-                
-              @elseif ($group['type'] === 'featured')
-                {{-- Featured Group --}}
+              </div>
+              
+            @elseif ($group['type'] === 'featured')
+              {{-- Featured Group --}}
+              <div class="bg-neutral-dark-10 rounded-xl">
                 <div class="relative rounded-xl overflow-hidden min-h-[280px] flex flex-col justify-end group"
                      @if(!empty($group['background']['url']))
                        style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%), url('{{ $group['background']['url'] }}'); background-size: cover; background-position: center;"
                      @else
-                       style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);"
+                       style="background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);"
                      @endif
                 >
                   <div class="relative z-10 p-6">
@@ -125,20 +152,18 @@
                     @endif
                   </div>
                 </div>
-              @endif
-            </div>
+              </div>
+            @endif
           @endforeach
         </div>
       @endif
 
       @if (!empty($item->callout) && !empty($item->callout['title']))
         {{-- Callout Section --}}
-        <div class="border-t border-neutral-700 pt-6 mt-2">
-          <div class="relative rounded-xl overflow-hidden"
+        <div class="pt-3">
+          <div class="relative rounded-xl overflow-hidden bg-neutral-dark-10"
                @if(!empty($item->callout['background']['url']))
                  style="background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url('{{ $item->callout['background']['url'] }}'); background-size: cover; background-position: center;"
-               @else
-                 style="background: linear-gradient(90deg, #1a1a1a 0%, #2d2d2d 100%);"
                @endif
           >
             <div class="relative z-10 flex items-center justify-between p-6">
