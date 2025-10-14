@@ -106,7 +106,7 @@
                            target="{{ $link['target'] ?? '_self' }}" 
                            class="group flex items-center justify-between">
                           <div class="flex-1">
-                            <x-text :size="TextSize::MEDIUM" :color="TextColor::DARK"  class="group-hover:text-primary-green-neon transition-colors">
+                            <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK"  class="group-hover:text-primary-green-neon transition-colors">
                               {{ $link['label'] ?? '' }}
                             </x-text>
                             @if (!empty($link['description']))
@@ -136,7 +136,7 @@
             @elseif ($group['type'] === 'featured')
               {{-- Featured Group --}}
               <div class="bg-neutral-dark-10 rounded-xl">
-                <div class="relative rounded-xl overflow-hidden min-h-[280px] flex flex-col justify-end group"
+                <div class="relative rounded-xl overflow-hidden min-h-[280px] flex flex-col justify-start group"
                      @if(!empty($group['background']['url']))
                        style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%), url('{{ $group['background']['url'] }}'); background-size: cover; background-position: center;"
                      @else
