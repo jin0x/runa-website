@@ -2,6 +2,13 @@
   use App\Enums\TextSize;
   use App\Enums\TextTag;
   use App\Enums\TextColor;
+
+  use App\Enums\HeadingSize;
+  use App\Enums\HeadingTag;
+
+  use App\Enums\ButtonSize;
+  use App\Enums\ButtonVariant;
+
 @endphp
 
 @if ($navigation)
@@ -66,7 +73,7 @@
     }
   @endphp
 
-  <div class="mt-2 bg-primary-dark rounded-bl-xl rounded-br-xl {{ $widthClass }} left-1/2 -translate-x-1/2">
+  <div class="mt-2 bg-primary-dark rounded-xl {{ $widthClass }} left-1/2 -translate-x-1/2">
     <div class="px-8 py-8">
       
       @if (!empty($item->submenu_groups))
@@ -80,7 +87,7 @@
                     <img src="{{ $group['icon']['url'] }}" alt="{{ $group['icon']['alt'] ?? '' }}" class="w-10 h-10 flex-shrink-0">
                   @endif
                   @if (!empty($group['title']))
-                    <h3 class="text-lg font-semibold text-white">{{ $group['title'] }}</h3>
+                    <x-heading :as="HeadingTag::H4" :size="HeadingSize::H4" :color="TextColor::DARK">{{ $group['title'] }}</x-heading>
                   @endif
                 </div>
                 
@@ -92,9 +99,9 @@
                            target="{{ $link['target'] ?? '_self' }}" 
                            class="group flex items-center justify-between">
                           <div class="flex-1">
-                            <div class="font-medium text-white group-hover:text-primary-green-neon transition-colors">
+                            <x-text :size="TextSize::MEDIUM" :color="TextColor::DARK"  class="group-hover:text-primary-green-neon transition-colors">
                               {{ $link['label'] ?? '' }}
-                            </div>
+                            </x-text>
                             @if (!empty($link['description']))
                               <div class="text-sm text-neutral-400 mt-1 group-hover:text-neutral-300 transition-colors">
                                 {{ $link['description'] }}
@@ -169,7 +176,7 @@
             <div class="relative z-10 flex items-center justify-between p-6">
               <div class="flex-1">
                 @if (!empty($item->callout['title']))
-                  <h4 class="text-xl font-bold text-white mb-1">{{ $item->callout['title'] }}</h4>
+                  <x-text :size="TextSize::MEDIUM" :color="TextColor::DARK" class="mb-1">{{ $item->callout['title'] }}</x-text>
                 @endif
                 @if (!empty($item->callout['description']))
                   <p class="text-sm text-neutral-300">{{ $item->callout['description'] }}</p>
