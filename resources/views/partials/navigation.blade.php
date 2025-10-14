@@ -106,7 +106,7 @@
                            target="{{ $link['target'] ?? '_self' }}" 
                            class="group flex items-center justify-between">
                           <div class="flex-1">
-                            <x-text :size="TextSize::MEDIUM" :color="TextColor::DARK"  class="group-hover:text-primary-green-neon transition-colors">
+                            <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK"  class="group-hover:text-primary-green-neon transition-colors">
                               {{ $link['label'] ?? '' }}
                             </x-text>
                             @if (!empty($link['description']))

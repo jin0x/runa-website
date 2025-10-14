@@ -430,6 +430,52 @@ body {
   font-family: var(--font-heading);
 }
 
+/* Text size bold classes */
+.text-caption-bold {
+  @apply text-3xs font-bold leading-[110%] inline-block;
+  font-family: var(--font-body);
+}
+
+.text-xsmall-bold {
+  @apply text-2xs font-bold leading-[110%];
+  font-family: var(--font-body);
+}
+
+.text-small-bold {
+  @apply text-xs font-bold leading-[110%];
+  font-family: var(--font-body);
+}
+
+.text-default-bold {
+  @apply text-xs font-bold leading-[110%];
+  font-family: var(--font-body);
+}
+
+.text-medium-bold {
+  @apply text-sm font-bold leading-[110%];
+  font-family: var(--font-body);
+}
+
+.text-large-bold {
+  @apply text-base font-bold leading-[110%];
+  font-family: var(--font-body);
+}
+
+.text-xlarge-bold {
+  @apply text-lg font-bold leading-[110%];
+  font-family: var(--font-body);
+}
+
+.text-caps-bold {
+  @apply text-2xs font-bold leading-[110%] uppercase tracking-wider;
+  font-family: var(--font-body);
+}
+
+.text-eyebrow-bold {
+  @apply text-base font-bold leading-[110%];
+  font-family: var(--font-heading);
+}
+
 /* Apply default text styles to native paragraph tags */
 p {
   @apply text-xs leading-[110%];
