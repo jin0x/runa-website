@@ -50,101 +50,120 @@
       x-transition:leave-start="opacity-100 transform scale-100"
       x-transition:leave-end="opacity-0 transform scale-95">
     
-    @if ($is_mega_menu && $item->has_submenu)
-      {{-- Mega Menu Layout --}}
-      <div class="mt-2 bg-primary-dark p-8 rounded-bl-xl rounded-br-xl mx-auto max-w-fit">
-        
-        @if (!empty($item->submenu_groups))
-          <div class="grid grid-cols-{{ count($item->submenu_groups) }} gap-8 mb-6">
-            @foreach ($item->submenu_groups as $group)
-              <div class="min-w-[200px]">
-                @if ($group['type'] === 'regular')
-                  {{-- Regular Group --}}
-                  <div class="flex items-center gap-2 mb-4">
-                    @if (!empty($group['icon']['url']))
+@if ($is_mega_menu && $item->has_submenu)
+  {{-- Mega Menu Layout --}}
+  <div class="mt-2 bg-primary-dark rounded-xl min-w-[600px] left-1/2 -translate-x-1/2">
+    <div class="max-w-7xl mx-auto px-8 py-8">
+      
+      @if (!empty($item->submenu_groups))
+        <div class="grid {{ count($item->submenu_groups) === 2 ? 'grid-cols-2' : 'grid-cols-1' }} gap-12 mb-6">
+          @foreach ($item->submenu_groups as $group)
+            <div class="min-w-[280px]">
+              @if ($group['type'] === 'regular')
+                {{-- Regular Group --}}
+                <div class="flex items-center gap-3 mb-6">
+                  @if (!empty($group['icon']['url']))
+                    <div class="w-10 h-10 flex items-center justify-center bg-primary-green-neon rounded-lg flex-shrink-0">
                       <img src="{{ $group['icon']['url'] }}" alt="{{ $group['icon']['alt'] ?? '' }}" class="w-6 h-6">
-                    @endif
-                    @if (!empty($group['title']))
-                      <h3 class="text-base font-medium text-white">{{ $group['title'] }}</h3>
-                    @endif
-                  </div>
-                  
-                  @if (!empty($group['items']))
-                    <ul class="space-y-3">
-                      @foreach ($group['items'] as $link)
-                        <li>
-                          <a href="{{ $link['url'] ?? '#' }}" target="{{ $link['target'] ?? '_self' }}" class="block text-white hover:text-primary-green-neon">
-                            <div class="font-medium">{{ $link['label'] ?? '' }}</div>
-                            @if (!empty($link['description']))
-                              <div class="text-sm text-neutral-400 mt-1">{{ $link['description'] }}</div>
-                            @endif
-                          </a>
-                        </li>
-                      @endforeach
-                    </ul>
-                  @endif
-                  
-                @elseif ($group['type'] === 'featured')
-                  {{-- Featured Group --}}
-                  <div class="relative rounded-lg overflow-hidden p-6 min-h-[200px] flex flex-col justify-end"
-                       @if(!empty($group['background']['url']))
-                         style="background-image: url('{{ $group['background']['url'] }}'); background-size: cover; background-position: center;"
-                       @endif
-                  >
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="relative z-10">
-                      @if (!empty($group['title']))
-                        <h3 class="text-xl font-bold text-white mb-2">{{ $group['title'] }}</h3>
-                      @endif
-                      @if (!empty($group['description']))
-                        <p class="text-sm text-neutral-200 mb-4">{{ $group['description'] }}</p>
-                      @endif
-                      @if (!empty($group['cta']['url']))
-                        <a href="{{ $group['cta']['url'] }}" 
-                           target="{{ $group['cta']['target'] ?? '_self' }}"
-                           class="inline-block px-4 py-2 bg-primary-green-neon text-black rounded-md hover:bg-primary-green-soft transition">
-                          {{ $group['cta']['label'] ?? 'Learn More' }}
-                        </a>
-                      @endif
                     </div>
-                  </div>
-                @endif
-              </div>
-            @endforeach
-          </div>
-        @endif
-
-        @if (!empty($item->callout))
-          {{-- Callout Section --}}
-          <div class="border-t border-neutral-700 pt-6">
-            <div class="relative rounded-lg overflow-hidden p-6"
-                 @if(!empty($item->callout['background']['url']))
-                   style="background-image: url('{{ $item->callout['background']['url'] }}'); background-size: cover; background-position: center;"
-                 @endif
-            >
-              <div class="absolute inset-0 bg-black/60"></div>
-              <div class="relative z-10 flex items-center justify-between">
-                <div>
-                  @if (!empty($item->callout['title']))
-                    <h4 class="text-lg font-bold text-white">{{ $item->callout['title'] }}</h4>
                   @endif
-                  @if (!empty($item->callout['description']))
-                    <p class="text-sm text-neutral-200">{{ $item->callout['description'] }}</p>
+                  @if (!empty($group['title']))
+                    <h3 class="text-lg font-semibold text-white">{{ $group['title'] }}</h3>
                   @endif
                 </div>
-                @if (!empty($item->callout['cta']['url']))
-                  <a href="{{ $item->callout['cta']['url'] }}" 
-                     target="{{ $item->callout['cta']['target'] ?? '_self' }}"
-                     class="px-4 py-2 bg-white text-black rounded-md hover:bg-neutral-100 transition whitespace-nowrap">
-                    {{ $item->callout['cta']['label'] ?? 'Learn More' }}
-                  </a>
+                
+                @if (!empty($group['items']))
+                  <ul class="space-y-4">
+                    @foreach ($group['items'] as $link)
+                      <li>
+                        <a href="{{ $link['url'] ?? '#' }}" 
+                           target="{{ $link['target'] ?? '_self' }}" 
+                           class="block group">
+                          <div class="font-medium text-white group-hover:text-primary-green-neon transition-colors">
+                            {{ $link['label'] ?? '' }}
+                          </div>
+                          @if (!empty($link['description']))
+                            <div class="text-sm text-neutral-400 mt-1 group-hover:text-neutral-300 transition-colors">
+                              {{ $link['description'] }}
+                            </div>
+                          @endif
+                        </a>
+                      </li>
+                    @endforeach
+                  </ul>
+                @endif
+                
+              @elseif ($group['type'] === 'featured')
+                {{-- Featured Group --}}
+                <div class="relative rounded-xl overflow-hidden min-h-[280px] flex flex-col justify-end group"
+                     @if(!empty($group['background']['url']))
+                       style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%), url('{{ $group['background']['url'] }}'); background-size: cover; background-position: center;"
+                     @else
+                       style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);"
+                     @endif
+                >
+                  <div class="relative z-10 p-6">
+                    @if (!empty($group['title']))
+                      <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-primary-green-neon transition-colors">
+                        {{ $group['title'] }}
+                      </h3>
+                    @endif
+                    @if (!empty($group['description']))
+                      <p class="text-base text-neutral-200 mb-6 leading-relaxed">
+                        {{ $group['description'] }}
+                      </p>
+                    @endif
+                    @if (!empty($group['cta']['url']))
+                      <a href="{{ $group['cta']['url'] }}" 
+                         target="{{ $group['cta']['target'] ?? '_self' }}"
+                         class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-green-neon text-black font-medium rounded-lg hover:bg-primary-green-soft transition-all transform hover:scale-105">
+                        {{ $group['cta']['label'] ?? 'Learn More' }}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        </svg>
+                      </a>
+                    @endif
+                  </div>
+                </div>
+              @endif
+            </div>
+          @endforeach
+        </div>
+      @endif
+
+      @if (!empty($item->callout) && !empty($item->callout['title']))
+        {{-- Callout Section --}}
+        <div class="border-t border-neutral-700 pt-6 mt-2">
+          <div class="relative rounded-xl overflow-hidden"
+               @if(!empty($item->callout['background']['url']))
+                 style="background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url('{{ $item->callout['background']['url'] }}'); background-size: cover; background-position: center;"
+               @else
+                 style="background: linear-gradient(90deg, #1a1a1a 0%, #2d2d2d 100%);"
+               @endif
+          >
+            <div class="relative z-10 flex items-center justify-between p-6">
+              <div class="flex-1">
+                @if (!empty($item->callout['title']))
+                  <h4 class="text-xl font-bold text-white mb-1">{{ $item->callout['title'] }}</h4>
+                @endif
+                @if (!empty($item->callout['description']))
+                  <p class="text-sm text-neutral-300">{{ $item->callout['description'] }}</p>
                 @endif
               </div>
+              @if (!empty($item->callout['cta']['url']))
+                <a href="{{ $item->callout['cta']['url'] }}" 
+                   target="{{ $item->callout['cta']['target'] ?? '_self' }}"
+                   class="ml-6 px-6 py-3 bg-white text-black font-medium rounded-lg hover:bg-neutral-100 transition-all whitespace-nowrap">
+                  {{ $item->callout['cta']['label'] ?? 'Learn More' }}
+                </a>
+              @endif
             </div>
           </div>
-        @endif
+        </div>
+      @endif
 
-      </div>
+    </div>
+  </div>
     @elseif (!$is_mega_menu && is_array($item->children))
       {{-- Standard WordPress Menu Layout --}}
       <ul class="
