@@ -136,7 +136,7 @@
             @elseif ($group['type'] === 'featured')
               {{-- Featured Group --}}
               <div class="bg-neutral-dark-10 rounded-xl">
-                <div class="relative rounded-xl overflow-hidden min-h-[280px] flex flex-col justify-end group"
+                <div class="relative rounded-xl overflow-hidden min-h-[280px] flex flex-col justify-start group"
                      @if(!empty($group['background']['url']))
                        style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%), url('{{ $group['background']['url'] }}'); background-size: cover; background-position: center;"
                      @else
