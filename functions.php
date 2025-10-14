@@ -1,7 +1,6 @@
 <?php
 
 use Roots\Acorn\Application;
-use Illuminate\Support\Facades\Vite;
 
 define("TEXT_DOMAIN", "runa");
 

@@ -35,17 +35,48 @@ add_filter('admin_head', function () {
         return;
     }
 
-    $dependencies = json_decode(Vite::content('editor.deps.json'));
+    // Load dependencies
+    $manifest_path = get_template_directory() . '/public/build/manifest.json';
+    if (file_exists($manifest_path)) {
+        $manifest = json_decode(file_get_contents($manifest_path), true);
 
-    foreach ($dependencies as $dependency) {
-        if (! wp_script_is($dependency)) {
-            wp_enqueue_script($dependency);
+        // Enqueue dependencies
+        if (isset($manifest['editor.deps.json']['file'])) {
+            $deps_file = get_template_directory() . '/public/build/' . $manifest['editor.deps.json']['file'];
+            if (file_exists($deps_file)) {
+                $dependencies = json_decode(file_get_contents($deps_file), true);
+                foreach ($dependencies as $dependency) {
+                    if (! wp_script_is($dependency)) {
+                        wp_enqueue_script($dependency);
+                    }
+                }
+            }
+        }
+
+        // Enqueue editor CSS
+        if (isset($manifest['resources/css/editor.css']['file'])) {
+            $css_url = get_template_directory_uri() . '/public/build/' . $manifest['resources/css/editor.css']['file'];
+            wp_enqueue_style('theme-editor-css', $css_url, [], null);
+        }
+
+        // Enqueue editor JS and its associated CSS
+        if (isset($manifest['resources/js/editor.js'])) {
+            $entry = $manifest['resources/js/editor.js'];
+            $base_url = get_template_directory_uri() . '/public/build/';
+
+            // Enqueue JS
+            if (isset($entry['file'])) {
+                wp_enqueue_script('theme-editor-js', $base_url . $entry['file'], [], null, true);
+            }
+
+            // Enqueue associated CSS chunks
+            if (isset($entry['css']) && is_array($entry['css'])) {
+                foreach ($entry['css'] as $index => $css_file) {
+                    wp_enqueue_style('theme-editor-js-css-' . $index, $base_url . $css_file, ['theme-editor-css'], null);
+                }
+            }
         }
     }
-
-    echo Vite::withEntryPoints([
-        'resources/js/editor.js',
-    ])->toHtml();
 });
 
 /**
