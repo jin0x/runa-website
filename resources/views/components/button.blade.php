@@ -21,7 +21,7 @@
       ButtonVariant::PRIMARY => 'btn-primary text-primary-dark border-1 border-transparent hover:text-primary-light hover:border-primary-green-neon',
       ButtonVariant::SECONDARY => 'btn-secondary text-primary-light border-1 border-primary-green-neon transition-all duration-300 hover:text-primary-dark hover:border-transparent',
       ButtonVariant::LIGHT => 'btn-light text-primary-dark border-1 border-white transition-all duration-300 hover:bg-white hover:bg-opacity-100',
-      ButtonVariant::NAV => 'btn-nav border-1 border-transparent transition-all duration-300',
+      ButtonVariant::NAV => 'btn-nav transition-all duration-300',
   ];
 
   // Define background styles (using CSS custom properties for gradients)
