@@ -43,6 +43,18 @@
         alt="{{ $title ? strip_tags($title) : get_bloginfo('name') }}"
         class="absolute inset-0 object-cover w-full h-full"
       >
+      @if (!empty($overlay_color))
+        <div
+          class="absolute inset-0 pointer-events-none"
+          style="
+            background: linear-gradient(
+              to right,
+              {{ $overlay_color }} 0%,
+              rgba(0, 0, 0, 0) {{ ($overlay_opacity ?? 50) }}%
+            );
+          ">
+        </div>
+      @endif
     @else
       {{-- Fallback background if no image is provided --}}
       <div class="absolute inset-0 bg-primary-dark"></div>
