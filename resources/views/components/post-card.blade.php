@@ -35,12 +35,12 @@
   <a href="{{ $permalink }}" class="block">
     <div class="{{ $featured ? 'flex flex-col lg:flex-row gap-8' : 'flex flex-col h-full' }}">
       {{-- Image --}}
-      <div class="{{ $featured ? 'lg:w-1/2' : 'w-full' }} relative overflow-hidden rounded-2xl bg-neutral-100">
+      <div class="{{ $featured ? 'lg:w-1/2 rounded-2xl' : 'w-full' }} relative overflow-hidden bg-neutral-100 rounded-t-2xl">
         @if($thumbnail)
           <img
             src="{{ $thumbnail }}"
             alt="{{ $title }}"
-            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 {{ $featured ? 'aspect-[16/10]' : 'aspect-[4/3]' }}"
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 {{ $featured ? 'aspect-[16/8]' : 'aspect-[4/2]' }}"
             loading="lazy"
           >
         @else
@@ -49,11 +49,12 @@
       </div>
 
       {{-- Content --}}
-      <div class="{{ $featured ? 'lg:w-1/2 flex flex-col justify-center py-6' : 'flex-1 p-6' }}">
+      <div class="{{ $featured ? 'lg:w-1/2 flex flex-col justify-center py-6 pr-6' : 'flex-1 p-6' }}">
         {{-- Tag Badge --}}
         @if($primaryTag)
           <div class="mb-4">
-            <x-badge variant="default" size="sm" rounded="full">
+            <x-badge variant="default" size="sm" rounded="full"
+              class="bg-primary-green-neon text-primary-dark">
               {{ $primaryTag->name }}
             </x-badge>
           </div>
@@ -65,7 +66,7 @@
           :size="$featured ? HeadingSize::H3 : HeadingSize::H5"
           class="mb-3 line-clamp-2 group-hover:text-primary-green-neon transition-colors duration-200"
         >
-          {{ $title }}
+          {!! $title !!}
         </x-heading>
 
         {{-- Excerpt --}}

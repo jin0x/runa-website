@@ -1,10 +1,10 @@
-<article @php(post_class('h-entry max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'))>
+<article @php(post_class('h-entry max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:pt-40 md:pb-30'))>
   <header class="text-center mb-8">
     <div class="mb-4">
       @include('partials.entry-meta')
     </div>
 
-    <h1 class="p-name text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+    <h1 class="p-name text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 pt-">
       {!! $title !!}
     </h1>
   </header>
@@ -15,7 +15,7 @@
     </div>
   @endif
 
-  <div class="e-content prose prose-lg max-w-none">
+  <div class="e-content prose max-w-none">
     @php(the_content())
   </div>
 
