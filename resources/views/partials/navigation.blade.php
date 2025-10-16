@@ -12,7 +12,7 @@
 @endphp
 
 @if ($navigation)
-  <nav x-data="navigation" aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-10 bg-gradient-3 rounded-full">
+  <nav x-data="navigation" x-cloak aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-10 bg-gradient-3 rounded-full">
     <ul class="flex gap-2">
       @foreach ($navigation as $item)
         <li class="menu-item relative {{ $item->classes ?? '' }} {{ $item->active ? 'active' : '' }}"
