@@ -92,8 +92,8 @@
               :mediaType="$tab['media']['type']"
               :mediaUrl="$tab['media']['url']"
               :altText="$tab['media']['alt'] ?? ''"
-              classes="w-full h-auto rounded-lg"
-              containerClasses="overflow-hidden rounded-lg"
+              classes="w-full h-full rounded-lg"
+              containerClasses="overflow-hidden rounded-lg h-[460px]"
             />
           @endif
         </div>
