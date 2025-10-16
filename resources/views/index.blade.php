@@ -7,9 +7,9 @@
 @extends('layouts.app')
 
 @section('content')
-  <x-container :size="ContainerSize::LARGE" class="py-16 md:py-24">
+  <x-container :size="ContainerSize::LARGE" classes="py-16 md:pt-40 md:pb-30">
     {{-- Blog Title --}}
-    <div class="mb-12">
+    <div class="mb-12 flex flex-col items-center gap-y-6">
       <x-heading
         :as="HeadingTag::H1"
         :size="HeadingSize::DISPLAY_LARGE"
@@ -35,7 +35,7 @@
               variant="default"
               size="lg"
               rounded="full"
-              class="hover:bg-primary-green-neon hover:text-primary-dark transition-colors cursor-pointer"
+              class="btn-secondary text-primary-dark border-1 border-primary-green-neon transition-all duration-300 hover:text-primary-dark hover:border-transparent"
             >
               All Posts
             </x-badge>
@@ -46,7 +46,7 @@
                 variant="default"
                 size="lg"
                 rounded="full"
-                class="hover:bg-primary-green-neon hover:text-primary-dark transition-colors cursor-pointer"
+                class="btn-secondary text-primary-dark border-1 border-primary-green-neon transition-all duration-300 hover:text-primary-dark hover:border-transparent"
               >
                 {{ $category->name }}
               </x-badge>
