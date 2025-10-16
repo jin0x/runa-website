@@ -65,7 +65,7 @@
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::EYEBROW"
-          class="block max-w-max mx-auto pill uppercase mb-3 font-bold {{ $eyebrowClasses }}"
+          class="block max-w-max mx-auto pill uppercase {{ $isShowcase ? 'mb-6' : 'mb-3' }} font-bold {{ $eyebrowClasses }}"
         >
           {!! $eyebrow !!}
         </x-text>
@@ -73,7 +73,7 @@
         <x-heading
           :as="HeadingTag::H1"
           :size="$headingSize"
-          class="pb-[0.25rem] mb-3 font-bold {{ $titleClasses }}"
+          class="pb-[0.25rem] {{ $isShowcase ? 'mb-6' : 'mb-3' }} font-bold {{ $titleClasses }}"
         >
           {!! $heading !!}
         </x-heading>
