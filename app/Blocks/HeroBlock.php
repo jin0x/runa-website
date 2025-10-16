@@ -119,6 +119,7 @@ class HeroBlock extends Block
             'video' => $this->getVideo(),
             'lottie' => $this->getLottie(),
             'background_image' => $this->getBackgroundImage(),
+            'background_position' => $this->getBackgroundPosition(),
             'overlay_color' => $this->getOverlayColor(),
             'overlay_opacity' => $this->getOverlayOpacity(),
             'content_width' => $this->getContentWidth(),
@@ -192,14 +193,34 @@ class HeroBlock extends Block
                 'return_format' => 'array',
                 'preview_size' => 'medium',
                 'wrapper' => [
-                    'width' => '33',
+                    'width' => '25',
+                ],
+            ])
+            ->addSelect('background_position', [
+                'label' => 'Background Image Focus',
+                'instructions' => 'Adjust how the background image is positioned within the hero.',
+                'choices' => [
+                    'top left' => 'Top Left',
+                    'top center' => 'Top Center',
+                    'top right' => 'Top Right',
+                    'center left' => 'Center Left',
+                    'center center' => 'Center',
+                    'center right' => 'Center Right',
+                    'bottom left' => 'Bottom Left',
+                    'bottom center' => 'Bottom Center',
+                    'bottom right' => 'Bottom Right',
+                ],
+                'default_value' => 'center center',
+                'ui' => 1,
+                'wrapper' => [
+                    'width' => '25',
                 ],
             ])
             ->addColorPicker('overlay_color', [
                 'label' => 'Overlay Color',
                 'default_value' => '#000000',
                 'wrapper' => [
-                    'width' => '33',
+                    'width' => '25',
                 ],
             ])
             ->addRange('overlay_opacity', [
@@ -211,7 +232,7 @@ class HeroBlock extends Block
                 'step' => 5,
                 'append' => '%',
                 'wrapper' => [
-                    'width' => '33',
+                    'width' => '25',
                 ],
             ])
             ->addTab('Media', [
@@ -290,6 +311,16 @@ class HeroBlock extends Block
     public function getBackgroundImage()
     {
         return get_field('background_image');
+    }
+
+    /**
+     * Get the background position value.
+     *
+     * @return string
+     */
+    public function getBackgroundPosition()
+    {
+        return get_field('background_position') ?: 'center center';
     }
 
     /**
