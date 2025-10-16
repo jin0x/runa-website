@@ -345,6 +345,7 @@ body {
 
 .widget-title {
   @apply text-3xs md:text-3xs font-normal leading-[110%];
+  font-family: var(--font-heading);
 }
 
 .heading-1-medium {
