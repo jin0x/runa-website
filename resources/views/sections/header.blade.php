@@ -47,7 +47,7 @@
               <div class="flex items-center flex-1 lg:absolute lg:inset-y-0 lg:left-0">
                 <a href="{{ home_url('/') }}">
                   <span class="sr-only">{{ $siteName }}</span>
-                  <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class="w-48 h-auto">
+                  <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class="w-31 h-auto">
                 </a>
               </div>
             @endif

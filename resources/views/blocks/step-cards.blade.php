@@ -88,9 +88,9 @@
                         <x-heading
                             id="main-title"
                             :as="HeadingTag::H4"
-                            :size="HeadingSize::H4"
+                            :size="HeadingSize::H4_BOLD"
                             :color="$headingColor"
-                            class="text-left font-bold"
+                            class="text-left"
                         >
                             {{ $step['title'] }}
                         </x-heading>
