@@ -97,7 +97,7 @@
       {{-- Quote --}}
       @if($quote)
         <div class="flex-1 mb-6 min-h-32">
-          <x-heading :as="HeadingTag::H3" :size="HeadingSize::H3" class="{{ $featured ?   'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed">
+          <x-heading :as="HeadingTag::H3" :size="HeadingSize::H3" class="{{ $featured ?   'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed leading-relaxed indent-[-0.45em] pl-[0.45em]">
             <strong>
               "{{ $featured ? $quote : $truncatedQuote }}"
             </strong>
