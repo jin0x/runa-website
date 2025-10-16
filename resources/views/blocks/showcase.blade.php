@@ -300,8 +300,11 @@
 
     {{-- Grid Layout Section --}}
     @if($media_type === 'grid' && !empty($grid_items) && count($grid_items) === 4)
+      @php
+        $gridId = 'showcase-grid-' . uniqid();
+      @endphp
       <div class="mb-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div id="{{ $gridId }}" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3">
           @foreach($grid_items as $index => $item)
             @php
               $item_image = $item['grid_image'] ?? null;
@@ -321,8 +324,8 @@
                   <div class="showcase-grid-text flex-1 text-left">
                     @if(!empty($item_title))
                       <x-heading
-                        :as="HeadingTag::H3"
-                        :size="HeadingSize::H3"
+                        :as="HeadingTag::H2"
+                        :size="HeadingSize::H2_MEDIUM"
                         :color="TextColor::GREEN_SOFT"
                         class="mb-3"
                       >
@@ -366,8 +369,8 @@
                   <div class="showcase-grid-text flex-1 text-left">
                     @if(!empty($item_title))
                       <x-heading
-                        :as="HeadingTag::H3"
-                        :size="HeadingSize::H3"
+                        :as="HeadingTag::H2"
+                        :size="HeadingSize::H2_MEDIUM"
                         :color="TextColor::GREEN_SOFT"
                         class="mb-3"
                       >
@@ -422,3 +425,142 @@
     </div>
   </x-container>
 </x-section>
+
+{{-- Grid Highlight Animation - Must be at bottom after GSAP loads --}}
+@if($media_type === 'grid' && !empty($grid_items) && count($grid_items) === 4)
+<script>
+(function() {
+  const gridId = '{{ $gridId }}';
+  
+  // Wait for GSAP to be available
+  const waitForGSAP = (callback, maxAttempts = 50) => {
+    let attempts = 0;
+    const checkGSAP = () => {
+      attempts++;
+      if (window.gsap && window.GSAPManager) {
+        callback();
+      } else if (attempts < maxAttempts) {
+        setTimeout(checkGSAP, 100);
+      } else {
+        console.error('🎨 GSAP failed to load after', attempts, 'attempts');
+      }
+    };
+    checkGSAP();
+  };
+
+  const initGridHighlight = () => {
+    const gridContainer = document.getElementById(gridId);
+    if (!gridContainer) {
+      return;
+    }
+
+    const items = gridContainer.querySelectorAll('.showcase-grid-item');
+    if (items.length === 0) {
+      return;
+    }
+
+    // Remove CSS transitions that might conflict
+    items.forEach(item => {
+      item.style.transition = 'none';
+    });
+
+    // Create timeline
+    const timeline = window.gsap.timeline({ 
+      repeat: -1,
+      repeatDelay: 0
+    });
+
+    // Cycle through each item
+    items.forEach((item, index) => {
+      timeline.to(item, {
+        opacity: 1,
+        duration: 0.5,
+        ease: "power2.inOut"
+      }, index * 3);
+    
+      timeline.to(item, {
+        opacity: 0.6,
+        duration: 0.5,
+        ease: "power2.inOut"
+      }, index * 3 + 2.5);
+    });
+
+    // Set initial state
+    items.forEach((item, index) => {
+      window.gsap.set(item, { opacity: index === 0 ? 1 : 0.6 });
+    });
+
+
+    // Hover handlers
+    let leaveTimeout;
+
+    items.forEach((item, index) => {
+    item.addEventListener('mouseenter', () => {
+    // Clear any pending leave timeout
+    if (leaveTimeout) {
+      clearTimeout(leaveTimeout);
+      leaveTimeout = null;
+    }
+    
+    timeline.pause();
+    
+    // Dim ALL items first
+    items.forEach(i => {
+      window.gsap.to(i, {
+        opacity: 0.6,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    });
+    
+    // Then highlight only the hovered item
+    window.gsap.to(item, {
+      opacity: 1,
+      duration: 0.3,
+      ease: "power2.out"
+    });
+  });
+
+    item.addEventListener('mouseleave', () => {
+      // Add delay before resetting
+      leaveTimeout = setTimeout(() => {
+        // Animate all items to initial state
+        items.forEach((i, idx) => {
+          window.gsap.to(i, {
+            opacity: idx === 0 ? 1 : 0.6,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+        
+        // Restart timeline after animation completes
+        setTimeout(() => {
+          timeline.restart();
+        }, 300); // Match the animation duration
+      }, 400); // Delay before reset starts
+    });
+  });
+
+    return () => {
+      timeline.kill();
+      items.forEach(item => {
+        item.style.transition = '';
+        window.gsap.set(item, { clearProps: 'opacity' });
+      });
+    };
+  };
+
+  // Wait for GSAP then initialize
+  waitForGSAP(() => {
+    if (window.GSAPManager) {
+      window.GSAPManager.register(
+        `showcase-grid-${gridId}`,
+        initGridHighlight
+      );
+    } else {
+      initGridHighlight();
+    }
+  });
+})();
+</script>
+@endif
