@@ -51,6 +51,23 @@
     '5' => '5',
     default => '4', // Default to 3 columns if invalid value
   };
+
+  // Marquee fade gradient classes based on theme
+  $fadeLeftClass = match ($themeVariant) {
+      ThemeVariant::DARK => 'marquee-fade-left-dark',
+      ThemeVariant::CYAN => 'marquee-fade-left-cyan',
+      ThemeVariant::YELLOW => 'marquee-fade-left-yellow',
+      ThemeVariant::LIGHT => 'marquee-fade-left-light',
+      default => 'marquee-fade-left',
+  };
+
+  $fadeRightClass = match ($themeVariant) {
+      ThemeVariant::DARK => 'marquee-fade-right-dark',
+      ThemeVariant::CYAN => 'marquee-fade-right-cyan',
+      ThemeVariant::YELLOW => 'marquee-fade-right-yellow',
+      ThemeVariant::LIGHT => 'marquee-fade-right-light',
+      default => 'marquee-fade-right',
+  };
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
@@ -123,10 +140,14 @@
     @if($media_type === 'logo-marquee' && !empty($marquee_logos))
       {{-- 3-Lane Logo Marquee --}}
       <div class="mb-12 py-8 overflow-hidden">
+        {{-- Fade gradients --}}
+      <div class="absolute left-0 top-0 bottom-0 w-16 {{ $fadeLeftClass }} z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 {{ $fadeRightClass }} z-10 pointer-events-none"></div>
+
         {{-- Lane 1: Left to Right --}}
         <div class="marquee__lane mb-3.5 overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane1">
-            @for ($i = 0; $i < 2; $i++)
+            @for ($i = 0; $i < 3; $i++)
               <div class="marquee__part flex items-center gap-7">
                 @foreach($marquee_logos as $logo)
                   @php
@@ -153,7 +174,7 @@
         {{-- Lane 2: Right to Left --}}
         <div class="marquee__lane mb-3.5 overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane2">
-            @for ($i = 0; $i < 2; $i++)
+            @for ($i = 0; $i < 3; $i++)
               <div class="marquee__part flex items-center gap-7 mr-3.5">
                 @foreach($marquee_logos as $logo)
                   @php
@@ -180,7 +201,7 @@
         {{-- Lane 3: Left to Right --}}
         <div class="marquee__lane overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane3">
-            @for ($i = 0; $i < 2; $i++)
+            @for ($i = 0; $i < 3; $i++)
               <div class="marquee__part flex items-center gap-7">
                 @foreach($marquee_logos as $logo)
                   @php
