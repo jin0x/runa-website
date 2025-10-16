@@ -80,7 +80,7 @@
 @endphp
 
 @if(trim($slot) !== '')
-  <{{ $as }} id="{{ $id }}" class="{{ $textClass }}">
+  <{{ $as }} {{ $attributes->merge(['id' => $id, 'class' => $textClass]) }}>
     {{ $slot }}
   </{{ $as }}>
 @endif
