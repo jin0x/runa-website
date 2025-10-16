@@ -32,6 +32,20 @@
 
   // Determine if content should be full-width or contained
   $isFullWidth = $content_width === 'full-width';
+
+  // background position (focus area of the image)
+  $positionClass = match($background_position) {
+    'top left' => 'object-left-top',
+    'top center' => 'object-top',
+    'top right' => 'object-right-top',
+    'center left' => 'object-left',
+    'center center' => 'object-center',
+    'center right' => 'object-right',
+    'bottom left' => 'object-left-bottom',
+    'bottom center' => 'object-bottom',
+    'bottom right' => 'object-right-bottom',
+    default => 'object-center',
+  };
 @endphp
 
 <x-section :size="SectionSize::NONE" classes="relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
@@ -41,7 +55,7 @@
       <img
         src="{{ $bg_image_url }}"
         alt="{{ $title ? strip_tags($title) : get_bloginfo('name') }}"
-        class="absolute inset-0 object-cover w-full h-full"
+        class="absolute inset-0 object-cover w-full h-full {{ $positionClass }}"
       >
       @if (!empty($overlay_color))
         <div
