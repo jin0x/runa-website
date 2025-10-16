@@ -61,7 +61,7 @@
         @if($content)
           <x-text
             :as="TextTag::DIV"
-            :size="TextSize::LARGE"
+            :size="TextSize::XLARGE"
             class="max-w-none"
           >
             {!! $content !!}
