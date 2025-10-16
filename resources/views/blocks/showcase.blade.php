@@ -303,7 +303,7 @@
       @php
         $gridId = 'showcase-grid-' . uniqid();
       @endphp
-      <div class="mb-12">
+      <div class="mb-24">
         <div id="{{ $gridId }}" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3">
           @foreach($grid_items as $index => $item)
             @php
@@ -344,7 +344,7 @@
                   </div>
 
                   @if(!empty($image_url))
-                    <div class="showcase-grid-image flex-1">
+                    <div class="showcase-grid-image flex-1 max-w-3xs">
                       <img
                         src="{{ $image_url }}"
                         alt="{{ $image_alt }}"
@@ -357,7 +357,7 @@
                 {{-- Odd index (1, 3): Image then Text (side by side on desktop, stacked on mobile) --}}
                 <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
                   @if(!empty($image_url))
-                    <div class="showcase-grid-image flex-1">
+                    <div class="showcase-grid-image flex-1 max-w-3xs">
                       <img
                         src="{{ $image_url }}"
                         alt="{{ $image_alt }}"
