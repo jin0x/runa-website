@@ -201,6 +201,7 @@ body {
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
   --color-neutral-dark-10: rgba(102, 102, 102, 0.1);
   --color-neutral-dark-40: rgba(102, 102, 102, 0.4);
+  --color-neutral-gray-05: rgba(102, 102, 102, 0.05);
 
   /* Background Colors */
   --color-background-secondary: #171717;
@@ -579,9 +580,9 @@ strong {
     --gradients-color-01-vertical,
     linear-gradient(
       270deg,
-      var(--color-primary-yellow) 0.04%,
-      var(--color-primary-green-soft) 50%,
-      var(--color-primary-green-neon) 99.96%
+      var(--color-primary-yellow) 0%,
+      var(--color-primary-green-soft) 51.92%,
+      var(--color-primary-green-neon) 100%
     )
   );
 }
