@@ -67,14 +67,16 @@
       {{-- Full Width: No container, just padding --}}
       <x-flex direction="col">
         @if ($eyebrow)
+        <div>
           <x-text
             :as="TextTag::SPAN"
             :size="TextSize::EYEBROW"
             :color="TextColor::GRADIENT"
             class="inline-block uppercase mb-3"
-          >
+            >
             {{ $eyebrow }}
           </x-text>
+        </div>
         @endif
 
         @if ($title)
@@ -127,14 +129,16 @@
       <x-container>
         <x-flex direction="col">
           @if ($eyebrow)
+          <div>
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::EYEBROW"
               :color="TextColor::GRADIENT"
               class="inline-block uppercase mb-3"
-            >
+              >
               {{ $eyebrow }}
             </x-text>
+          </div>
           @endif
 
           @if ($title)

@@ -266,7 +266,7 @@ body {
 /* Gradient text utility class */
 .text-gradient-primary {
   background: linear-gradient(
-    45deg,
+    365deg,
     var(--color-primary-green-neon) 0%,
     var(--color-primary-green-soft) 48.31%,
     var(--color-primary-yellow) 94.4%
