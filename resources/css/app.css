@@ -201,6 +201,7 @@ body {
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
   --color-neutral-dark-10: rgba(102, 102, 102, 0.1);
   --color-neutral-dark-40: rgba(102, 102, 102, 0.4);
+  --color-neutral-dark-60: rgba(51, 51, 51, 0.6);
 
   /* Background Colors */
   --color-background-secondary: #171717;
