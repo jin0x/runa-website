@@ -65,7 +65,7 @@
         <x-text
           :as="TextTag::SPAN"
           :size="TextSize::EYEBROW"
-          class="block max-w-max mx-auto pill uppercase mb-8 font-bold {{ $eyebrowClasses }}"
+          class="block max-w-max mx-auto pill uppercase mb-3 font-bold {{ $eyebrowClasses }}"
         >
           {!! $eyebrow !!}
         </x-text>

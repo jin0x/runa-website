@@ -5,6 +5,7 @@
   use App\Enums\TextTag;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
+  use App\Enums\ThemeVariant;
 @endphp
 
 @props([
@@ -44,7 +45,13 @@
   $cardBgClasses = EnumHelper::getCardBackgroundClass($cardColor);
 
   // All cards use dark text on these bright backgrounds
-  $textColor = 'text-primary-dark';
+  $positionTextColor = match ($cardColor) {
+      ThemeVariant::PURPLE => TextColor::LIGHT,
+      ThemeVariant::CYAN => TextColor::LIGHT,
+      ThemeVariant::GREEN => TextColor::GRAY,
+      ThemeVariant::YELLOW => TextColor::GRAY,
+  };
+  
 @endphp
 
 <article class="{{ $featured ? 'featured-testimonial-card' : 'testimonial-card' }} group">
@@ -124,7 +131,7 @@
             <x-text 
               :as="TextTag::P" 
               :size="TextSize::SMALL" 
-              :color="TextColor::GRAY">
+              :color="$positionTextColor">
               {{ $clientPosition }}
             </x-text>
           @endif
