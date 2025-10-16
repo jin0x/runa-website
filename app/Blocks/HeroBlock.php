@@ -119,6 +119,8 @@ class HeroBlock extends Block
             'video' => $this->getVideo(),
             'lottie' => $this->getLottie(),
             'background_image' => $this->getBackgroundImage(),
+            'overlay_color' => $this->getOverlayColor(),
+            'overlay_opacity' => $this->getOverlayOpacity(),
             'content_width' => $this->getContentWidth(),
             'compact' => $this->getCompact(),
         ];
@@ -189,6 +191,28 @@ class HeroBlock extends Block
                 'instructions' => 'Background image for the hero section',
                 'return_format' => 'array',
                 'preview_size' => 'medium',
+                'wrapper' => [
+                    'width' => '33',
+                ],
+            ])
+            ->addColorPicker('overlay_color', [
+                'label' => 'Overlay Color',
+                'default_value' => '#000000',
+                'wrapper' => [
+                    'width' => '33',
+                ],
+            ])
+            ->addRange('overlay_opacity', [
+                'label' => 'Overlay Opacity',
+                'instructions' => 'Controls the vertical fade of the overlay. The value defines how far the gradient extends from solid color (0%) to transparent (100%).',
+                'default_value' => 50,
+                'min' => 0,
+                'max' => 100,
+                'step' => 5,
+                'append' => '%',
+                'wrapper' => [
+                    'width' => '33',
+                ],
             ])
             ->addTab('Media', [
                 'placement' => 'top',
@@ -266,6 +290,31 @@ class HeroBlock extends Block
     public function getBackgroundImage()
     {
         return get_field('background_image');
+    }
+
+    /**
+     * Get the overlay color field.
+     *
+     * @return string|null
+     */
+    public function getOverlayColor()
+    {
+        return get_field('overlay_color') ?: null;
+    }
+
+    /**
+     * Get the overlay opacity field (normalized to 0–1).
+     *
+     * @return float
+     */
+    public function getOverlayOpacity()
+    {
+        $opacity = get_field('overlay_opacity');
+        if ($opacity === null) {
+            return 0;
+        }
+
+        return max(0, min(100, intval($opacity)));
     }
 
     /**
