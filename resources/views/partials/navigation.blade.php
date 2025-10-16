@@ -21,34 +21,43 @@
               @mouseleave="closeDropdown()"
             @endif
         >
-          <div class="flex items-center justify-center h-16 p-2 gap-3 min-h-[40px] min-w-[105px]      relative">
+          <a href="{{ $item->url }}" 
+             class="flex items-center justify-center h-16 p-2 gap-3 min-h-[40px] min-w-[105px] relative group cursor-pointer !no-underline transition-colors duration-200 ease-in-out">
             {{-- Active state bottom border --}}
-            @if($item->active)
-              <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-primary-green-neon"></div>
-            @endif
+              <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-primary-green-neon opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out"></div>
 
-            <x-text
-              :size="TextSize::BASE"
-              :as="TextTag::A"
-              :color="TextColor::DARK"
-              href="{{ $item->url }}"
-              class="block hover:text-primary-green-neon transition-colors duration-200 !no-underline"
-            >
+            <span class="text-default font-sans text-white ease-in-out">
               {{ $item->label }}
-            </x-text>
+            </span>
 
             @if ($item->children)
-              {{-- Chevron (visual only, hover works on entire li) --}}
+              {{-- Chevron with unified hover state --}}
               <div class="pointer-events-none">
-                <svg x-show="activeDropdown !== '{{ $loop->index }}'" xmlns="http://www.w3.org/2000/svg"      width="13" height="8" viewBox="0 0 13 8" fill="none" class="transition-transform      duration-200 rotate-180">
-                  <path d="M6.5 0L0.5 6L1.91 7.41L6.5 2.83L11.09 7.41L12.5 6L6.5 0Z" fill="white"/>
+                <svg x-show="activeDropdown !== '{{ $loop->index }}'" 
+                     xmlns="http://www.w3.org/2000/svg" 
+                     width="13" 
+                     height="8" 
+                     viewBox="0 0 13 8" 
+                     fill="none" 
+                     class="transition-all duration-200 ease-in-out rotate-180">
+                  <path d="M6.5 0L0.5 6L1.91 7.41L6.5 2.83L11.09 7.41L12.5 6L6.5 0Z" 
+                        fill="white" 
+                        class="transition-colors duration-200 ease-in-out"/>
                 </svg>
-                <svg x-show="activeDropdown === '{{ $loop->index }}'" xmlns="http://www.w3.org/2000/svg"      width="13" height="8" viewBox="0 0 13 8" fill="none" class="transition-transform      duration-200">
-                  <path d="M6.5 0L0.5 6L1.91 7.41L6.5 2.83L11.09 7.41L12.5 6L6.5 0Z" fill="white"/>
+                <svg x-show="activeDropdown === '{{ $loop->index }}'" 
+                     xmlns="http://www.w3.org/2000/svg" 
+                     width="13" 
+                     height="8" 
+                     viewBox="0 0 13 8" 
+                     fill="none" 
+                     class="transition-all duration-200 ease-in-out">
+                  <path d="M6.5 0L0.5 6L1.91 7.41L6.5 2.83L11.09 7.41L12.5 6L6.5 0Z" 
+                        fill="white" 
+                        class="transition-colors duration-200 ease-in-out"/>
                 </svg>
               </div>
             @endif
-          </div>
+          </a>
 
 @if ($item->children)
   <!-- Dropdown Panel -->
@@ -106,13 +115,13 @@
                            target="{{ $link['target'] ?? '_self' }}" 
                            class="group flex items-center justify-between">
                           <div class="flex-1">
-                            <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK"  class="group-hover:text-primary-green-neon transition-colors">
+                            <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK">
                               {{ $link['label'] ?? '' }}
                             </x-text>
                             @if (!empty($link['description']))
-                              <div class="text-sm text-neutral-400 mt-1 group-hover:text-neutral-300 transition-colors">
+                              <x-text :size="TextSize::XSMALL" :color="TextColor::DARK" class="mt-1">
                                 {{ $link['description'] }}
-                              </div>
+                              </x-text>
                             @endif
                           </div>
                           {{-- Hover Arrow (right side, centered) --}}
