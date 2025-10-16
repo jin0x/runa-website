@@ -1,3 +1,4 @@
+{{-- Update slider.blade.php --}}
 @props([
     'navigation' => true,
     'pagination' => false,
@@ -9,17 +10,30 @@
     'desktopSlidesPerView' => 1,
     'spaceBetween' => 20,
     'navigationPosition' => 'sides', // 'sides' or 'bottom-right'
-    'slideCount' => null, // Optional: number of slides
+    'slideCount' => null, // Required: number of slides
 ])
 
+@php
+  // Calculate if we have enough slides for loop mode
+  $maxSlidesPerView = max($slidesPerView, $mobileSlidesPerView, $tabletSlidesPerView, $desktopSlidesPerView);
+  $hasEnoughSlidesForLoop = $slideCount && $slideCount >= ($maxSlidesPerView + 1);
+  
+  // Only enable loop if we have enough slides
+  $enableLoop = $loop && $hasEnoughSlidesForLoop;
+  
+  // Only show navigation if we have more than 1 slide
+  $showNavigation = $navigation && $slideCount && $slideCount > 1;
+@endphp
+
 <div x-data="carouselComponent({
-  loop: {{ $loop ? 'true' : 'false' }},
+  loop: {{ $enableLoop ? 'true' : 'false' }},
   autoplayDelay: {{ $autoplayDelay }},
   slidesPerView: {{ $slidesPerView }},
   mobileSlidesPerView: {{ $mobileSlidesPerView }},
   tabletSlidesPerView: {{ $tabletSlidesPerView }},
   desktopSlidesPerView: {{ $desktopSlidesPerView }},
-  spaceBetween: {{ $spaceBetween }}
+  spaceBetween: {{ $spaceBetween }},
+  slideCount: {{ $slideCount ?: 0 }}
 })" x-init="initSwiper()" class="relative">
   <div class="swiper-container" x-ref="container">
     <div class="swiper-wrapper">
@@ -27,11 +41,11 @@
     </div>
   </div>
 
-  @if($pagination && (!$slideCount || $slideCount > 1))
+  @if($pagination && $slideCount && $slideCount > 1)
     <div class="swiper-pagination"></div>
   @endif
 
-  @if($navigation && (!$slideCount || $slideCount > 1))
+  @if($showNavigation)
     @if($navigationPosition === 'sides')
       <div class="absolute inset-y-0 left-0 z-10 flex items-center">
         <button @click="swiper && swiper.slidePrev()" class="bg-primary-dark text-dark -ml-2 lg:-ml-4 flex justify-center items-center w-10 h-10 rounded-full shadow focus:outline-none">
@@ -61,7 +75,6 @@
           </svg>
         </button>
       </div>
-    @endif
     @elseif($navigationPosition === 'bottom-center')
       <div class="flex justify-center gap-2 mt-6">
         <button @click="swiper && swiper.slidePrev()" class="bg-primary-dark text-primary-green-soft flex justify-center items-center w-10 h-10 rounded-full shadow focus:outline-none hover:bg-neutral-50 transition-colors">
@@ -75,6 +88,7 @@
           </svg>
         </button>
       </div>
+    @endif
   @endif
 </div>
 
@@ -99,12 +113,19 @@
               : false,
             slidesPerView: options.slidesPerView || 1,
             spaceBetween: options.spaceBetween || 20,
+            watchSlidesProgress: true,
+            watchOverflow: true,
             breakpoints: {
               640: { slidesPerView: options.mobileSlidesPerView || 1 },
               768: { slidesPerView: options.tabletSlidesPerView || 1 },
               1024: { slidesPerView: options.desktopSlidesPerView || 1 },
             },
           };
+
+          // Add additional slides for loop mode if needed
+          if (config.loop && options.slideCount) {
+            config.loopAdditionalSlides = Math.max(2, Math.ceil(options.slidesPerView));
+          }
 
           this.swiper = new Swiper(this.$refs.container, config);
 

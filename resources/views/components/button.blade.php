@@ -21,6 +21,7 @@
       ButtonVariant::PRIMARY => 'btn-primary text-primary-dark border-1 border-transparent hover:text-primary-light hover:border-primary-green-neon',
       ButtonVariant::SECONDARY => 'btn-secondary text-primary-light border-1 border-primary-green-neon transition-all duration-300 hover:text-primary-dark hover:border-transparent',
       ButtonVariant::LIGHT => 'btn-light text-primary-dark border-1 border-white transition-all duration-300 hover:bg-white hover:bg-opacity-100',
+      ButtonVariant::DARK => 'btn-dark text-white border-1 border-transparent hover:text-primary-light hover:border-primary-green-neon',
       ButtonVariant::NAV => 'btn-nav transition-all duration-300',
   ];
 
@@ -29,6 +30,7 @@
       ButtonVariant::PRIMARY => 'background: var(--gradient-1);',
       ButtonVariant::SECONDARY => 'background: var(--gradient-3);',
       ButtonVariant::LIGHT => 'background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);',
+      ButtonVariant::DARK => 'background: var(--color-primary-dark);',
       ButtonVariant::NAV => 'background: var(--gradient-3);',
   ];
 
