@@ -21,7 +21,7 @@
 
   // Define variant classes
   $tabContainerClasses = match($variant) {
-      'underline' => 'bg-secondary-purple p-2 px-4 rounded-full',
+      'underline' => 'bg-secondary-purple p-2 px-2 rounded-full',
       'pills' => 'bg-neutral-100 p-1 rounded-lg',
       'buttons' => 'space-x-2',
       default => 'bg-primary-green-neon p-2 rounded-full',
@@ -49,14 +49,14 @@
   };
 @endphp
 
-<div 
+<div
   x-data="tabsComponent('{{ $defaultActiveTab }}')"
   x-init="init()"
   class="{{ $class }}"
 >
   {{-- Tab Navigation --}}
-  <div class="overflow-x-auto flex xl:justify-center {{ $tabContainerClasses }}">
-    <div class="inline-flex xl:flex xl:w-full xl:min-w-0 gap-2 min-w-max h-[88px] items-center rounded-full px-2">
+  <div class="flex xl:justify-center {{ $tabContainerClasses }}">
+    <div class="overflow-x-auto inline-flex xl:flex xl:w-full xl:min-w-0 gap-2 h-[88px] items-center rounded-full px-2">
       @foreach($tabs as $tab)
         <button
           @click="switchTab('{{ $tab['id'] }}')"
@@ -72,7 +72,7 @@
 
   {{-- Tab Content with Height Transition --}}
   <div class="mt-16">
-    <div 
+    <div
       x-ref="contentWrapper"
       class="relative overflow-hidden transition-all duration-500 ease-in-out"
       :style="'height: ' + contentHeight"
@@ -106,20 +106,20 @@ function tabsComponent(defaultTab) {
   return {
     activeTab: defaultTab,
     contentHeight: 'auto',
-    
+
     init() {
       this.$nextTick(() => {
         this.updateHeight();
       });
     },
-    
+
     switchTab(tabId) {
       this.activeTab = tabId;
       this.$nextTick(() => {
         this.updateHeight();
       });
     },
-    
+
     updateHeight() {
       const activePanel = this.$refs.contentWrapper.querySelector('[data-tab-id="' + this.activeTab + '"]');
       if (activePanel) {
