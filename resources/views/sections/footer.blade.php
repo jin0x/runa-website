@@ -56,14 +56,9 @@ foreach ($social_networks_array as $network) {
       <div class="lg:col-span-3 max-w-xs">
         <!-- Newsletter Signup Section -->
         <div class="mb-6">
-          <x-text
-            :as="TextTag::P"
-            :size="TextSize::CAPTION"
-            :color="TextColor::GREEN_SOFT"
-            class="mb-6"
-          >
+          <p class="widget-title uppercase text-primary-green-neon mb-6">
             SIGN UP FOR OUR NEWSLETTER
-          </x-text>
+          </p>
           
           <form action="#" method="POST" class="flex gap-2 items-center mb-8 max-w-3xs">
             <?php wp_nonce_field('newsletter_signup', 'newsletter_nonce'); ?>
@@ -96,14 +91,9 @@ foreach ($social_networks_array as $network) {
         </div>
 
         <div>
-          <x-text
-            :as="TextTag::P"
-            :size="TextSize::CAPTION"
-            :color="TextColor::GREEN_SOFT"
-            class="mb-4"
-          >
+          <p class="widget-title widget-title uppercase text-primary-green-neon mb-4">
             JOIN US
-          </x-text>
+          </p>
 
         <div class="flex gap-3">
           @if ( $github_url )
