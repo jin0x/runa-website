@@ -5,7 +5,9 @@ namespace App\Enums;
 class HeadingSize
 {
     const H1 = 'heading-1';
+    const H1_MEDIUM = 'heading-1-medium';
     const H2 = 'heading-2';
+    const H2_MEDIUM = 'heading-2-medium';
     const H3 = 'heading-3';
     const H3_BOLD = 'heading-3-bold';
     const H4 = 'heading-4';
@@ -27,7 +29,9 @@ class HeadingSize
     public static function getValues(): array {
         return [
             self::H1,
+            self::H1_MEDIUM,
             self::H2,
+            self::H2_MEDIUM,
             self::H3,
             self::H3_BOLD,
             self::H4,

@@ -5,6 +5,7 @@
   use App\Enums\TextTag;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
+  use App\Enums\ThemeVariant;
 @endphp
 
 @props([
@@ -28,6 +29,7 @@
   $quote = get_field('quote', $postId);
   $companyLogo = get_field('company_logo', $postId);
   $websiteUrl = get_field('website_url', $postId);
+  $testimonialUrl = get_field('testimonial_url', $postId);
   $rating = get_field('rating', $postId);
   $testimonialDate = get_field('testimonial_date', $postId);
 
@@ -43,7 +45,13 @@
   $cardBgClasses = EnumHelper::getCardBackgroundClass($cardColor);
 
   // All cards use dark text on these bright backgrounds
-  $textColor = 'text-primary-dark';
+  $positionTextColor = match ($cardColor) {
+      ThemeVariant::PURPLE => TextColor::LIGHT,
+      ThemeVariant::CYAN => TextColor::LIGHT,
+      ThemeVariant::GREEN => TextColor::GRAY,
+      ThemeVariant::YELLOW => TextColor::GRAY,
+  };
+  
 @endphp
 
 <article class="{{ $featured ? 'featured-testimonial-card' : 'testimonial-card' }} group">
@@ -96,7 +104,7 @@
       {{-- Quote --}}
       @if($quote)
         <div class="flex-1 mb-6 min-h-32">
-          <x-heading :as="HeadingTag::H3" :size="HeadingSize::H3" class="{{ $featured ?   'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed">
+          <x-heading :as="HeadingTag::H3" :size="HeadingSize::H3" class="{{ $featured ?   'text-xl' : 'text-lg' }} text-primary-dark leading-relaxed leading-relaxed indent-[-0.45em] pl-[0.45em]">
             <strong>
               "{{ $featured ? $quote : $truncatedQuote }}"
             </strong>
@@ -123,7 +131,7 @@
             <x-text 
               :as="TextTag::P" 
               :size="TextSize::SMALL" 
-              :color="TextColor::GRAY">
+              :color="$positionTextColor">
               {{ $clientPosition }}
             </x-text>
           @endif
@@ -136,14 +144,18 @@
         </div>
 
         {{-- Read More Link for non-featured cards --}}
-          @if($websiteUrl)
+          @if($testimonialUrl)
           <div class="mt-4">
             <x-text 
-              href="{{ $websiteUrl }}"
+              href="{{ $testimonialUrl }}"
               :as="TextTag::A" 
               :size="TextSize::XSMALL" 
-              :color="TextColor::LIGHT">
-              Read more →
+              :color="TextColor::LIGHT"
+              class="inline-flex items-center gap-1 !no-underline hover:underline transition-all duration-200 ease-in-out">
+                <span>Read more</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M7.00016 0.663574L5.82516 1.83857L10.4752 6.49691H0.333496V8.16357H10.4752L5.82516 12.8219L7.00016 13.9969L13.6668 7.33024L7.00016 0.663574Z" fill="black"/>
+                </svg>
             </x-text>
           </div>
           @endif

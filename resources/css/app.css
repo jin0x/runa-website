@@ -266,7 +266,7 @@ body {
 /* Gradient text utility class */
 .text-gradient-primary {
   background: linear-gradient(
-    45deg,
+    365deg,
     var(--color-primary-green-neon) 0%,
     var(--color-primary-green-soft) 48.31%,
     var(--color-primary-yellow) 94.4%
@@ -340,6 +340,16 @@ body {
 .heading-7,
 .widget-title {
   @apply text-2xs md:text-sm font-normal leading-[110%];
+  font-family: var(--font-heading);
+}
+
+.heading-1-medium {
+  @apply text-3xl md:text-5xl font-normal leading-[85%];
+  font-family: var(--font-heading);
+}
+
+.heading-2-medium {
+  @apply text-2xl md:text-4xl font-normal leading-[85%];
   font-family: var(--font-heading);
 }
 

@@ -21,7 +21,7 @@
 
   // Define variant classes
   $tabContainerClasses = match($variant) {
-      'underline' => 'bg-secondary-purple p-2 ',
+      'underline' => 'bg-secondary-purple p-2 px-4 rounded-full',
       'pills' => 'bg-neutral-100 p-1 rounded-lg',
       'buttons' => 'space-x-2',
       default => 'bg-primary-green-neon p-2 rounded-full',
@@ -55,8 +55,8 @@
   class="{{ $class }}"
 >
   {{-- Tab Navigation --}}
-  <div class="overflow-x-auto flex xl:justify-center rounded-full scrollbar-hide">
-    <div class="inline-flex xl:flex xl:w-full xl:min-w-0 {{ $tabContainerClasses }} gap-2 min-w-max">
+  <div class="overflow-x-auto flex xl:justify-center {{ $tabContainerClasses }}">
+    <div class="inline-flex xl:flex xl:w-full xl:min-w-0 gap-2 min-w-max h-[88px] items-center rounded-full px-2">
       @foreach($tabs as $tab)
         <button
           @click="switchTab('{{ $tab['id'] }}')"

@@ -49,7 +49,7 @@
         x-data="faqAccordion"
     >
       @foreach($faq_items as $index => $item)
-        <div class="mb-1 rounded-lg overflow-hidden bg-[linear-gradient(180deg,rgba(102,102,102,0.40)_0%,rgba(102,102,102,0.20)_100%)]">
+        <div class="mb-1 rounded-lg overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.14)_100%)]">
           <button
             @click="toggle({{ $index }})"
             class="w-full text-left p-6 flex justify-between items-center focus:outline-none"

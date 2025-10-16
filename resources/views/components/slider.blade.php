@@ -77,3 +77,85 @@
       </div>
   @endif
 </div>
+
+<script>
+(function() {
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('carouselComponent', (options = {}) => ({
+      swiper: null,
+      observer: null,
+      hasStarted: false,
+
+      initSwiper() {        
+        if (typeof Swiper !== 'undefined') {
+          const config = {
+            loop: options.loop !== false,
+            autoplay: options.autoplayDelay
+              ? {
+                  delay: options.autoplayDelay,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }
+              : false,
+            slidesPerView: options.slidesPerView || 1,
+            spaceBetween: options.spaceBetween || 20,
+            breakpoints: {
+              640: { slidesPerView: options.mobileSlidesPerView || 1 },
+              768: { slidesPerView: options.tabletSlidesPerView || 1 },
+              1024: { slidesPerView: options.desktopSlidesPerView || 1 },
+            },
+          };
+
+          this.swiper = new Swiper(this.$refs.container, config);
+
+          if (this.swiper.autoplay && config.autoplay) {
+            this.setupViewportObserver();
+          }
+        } else {
+          console.error('🎠 Swiper is not defined!');
+        }
+      },
+
+      setupViewportObserver() {        
+        this.observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {              
+              if (entry.isIntersecting) {
+                if (!this.hasStarted && this.swiper.autoplay) {
+                  this.swiper.autoplay.start();
+                  this.hasStarted = true;
+                }
+              } else {
+                if (this.swiper.autoplay && this.hasStarted) {
+                  this.swiper.autoplay.stop();
+                }
+              }
+            });
+          },
+          {
+            threshold: 0.2,
+            rootMargin: '50px',
+          }
+        );
+
+        if (this.$refs.container) {
+          this.observer.observe(this.$refs.container);
+        } else {
+          console.error('🎠 No container ref!');
+        }
+      },
+
+      destroy() {
+        if (this.observer) {
+          this.observer.disconnect();
+          this.observer = null;
+        }
+        if (this.swiper) {
+          this.swiper.destroy(true, true);
+          this.swiper = null;
+        }
+      },
+    }));
+  });
+})();
+</script>

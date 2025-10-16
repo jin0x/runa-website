@@ -46,14 +46,16 @@
         <x-flex direction="col" class="max-w-2xl">
           {{-- Eyebrow --}}
           @if ($eyebrow)
+          <div>
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::EYEBROW"
               :color="TextColor::GRADIENT"
               class="inline-block uppercase mb-3"
-            >
+              >
               {{ $eyebrow }}
             </x-text>
+          </div>
           @endif
           @if ($title)
             <x-heading
