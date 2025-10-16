@@ -48,19 +48,19 @@
       {{-- Filter Section --}}
       <div class="mb-8">
         <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-4 items-end">
-          {{-- Country Filter --}}
-          <div class="relative">
-            <div class="{{ $textColor }} {{$form_classes}}">
-              <div class="w-full facetwp-facet-container">
-                {!! facetwp_display('facet', 'company_country') !!}
-              </div>
-            </div>
-          </div>
           {{-- Category Filter --}}
           <div class="relative">
             <div class="{{ $textColor }} {{$form_classes}}">
               <div class="w-full facetwp-facet-container">
                 {!! facetwp_display('facet', 'company_category') !!}
+              </div>
+            </div>
+          </div>
+          {{-- Country Filter --}}
+          <div class="relative">
+            <div class="{{ $textColor }} {{$form_classes}}">
+              <div class="w-full facetwp-facet-container">
+                {!! facetwp_display('facet', 'company_country') !!}
               </div>
             </div>
           </div>
