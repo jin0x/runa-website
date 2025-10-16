@@ -18,7 +18,9 @@
   // Define size classes for heading (mapped to the abstract classes from Tailwind)
  $sizeClasses = [
         HeadingSize::H1 => 'heading-1',
+        HeadingSize::H1_MEDIUM => 'heading-1-medium',
         HeadingSize::H2 => 'heading-2',
+        HeadingSize::H2_MEDIUM => 'heading-2-medium',
         HeadingSize::H3 => 'heading-3',
         HeadingSize::H3_BOLD => 'heading-3-bold',
         HeadingSize::H4 => 'heading-4',

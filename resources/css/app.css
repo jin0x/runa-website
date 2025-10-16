@@ -343,6 +343,16 @@ body {
   font-family: var(--font-heading);
 }
 
+.heading-1-medium {
+  @apply text-3xl md:text-5xl font-normal leading-[85%];
+  font-family: var(--font-heading);
+}
+
+.heading-2-medium {
+  @apply text-2xl md:text-4xl font-normal leading-[85%];
+  font-family: var(--font-heading);
+}
+
 .heading-3-bold {
   @apply text-xl md:text-3xl font-bold leading-[110%];
   font-family: var(--font-heading);
