@@ -53,7 +53,7 @@
             </x-heading>
 
             {{-- Divider --}}
-            <div class="w-full h-[1px] bg-[linear-gradient(180deg,rgba(0,0,0,004)_0%,rgba(0,0,0,0.10)_100%)] mt-3 mb-3"></div>
+            <div class="w-full h-[1px] bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.10)_100%)] mt-3 mb-3"></div>
         @endif
 
         @if($text)
