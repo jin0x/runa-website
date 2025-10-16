@@ -153,7 +153,7 @@
               :color="TextColor::LIGHT"
               class="inline-flex items-center gap-1 !no-underline hover:underline transition-all duration-200 ease-in-out">
                 <span>Read more</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none" class="pt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M7.00016 0.663574L5.82516 1.83857L10.4752 6.49691H0.333496V8.16357H10.4752L5.82516 12.8219L7.00016 13.9969L13.6668 7.33024L7.00016 0.663574Z" fill="black"/>
                 </svg>
             </x-text>
