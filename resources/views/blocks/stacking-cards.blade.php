@@ -9,6 +9,8 @@
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
   use App\Enums\SectionHeadingVariant;
+  use App\Enums\ButtonType;
+  use App\Enums\ButtonVariant;
   use App\Enums\FontType;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
@@ -102,17 +104,17 @@
                           </div>
 
                           @if(!empty($card['cta']))
-                            <div class="pt-8">
-                              <x-text
-                                :as="TextTag::A"
-                                :size="TextSize::BASE"
+                            <div class="pt-3">
+                              <x-button
+                                :as="ButtonType::LINK"
+                                :variant="ButtonVariant::DARK"
                                 :color="$cardTextColor"
-                                class="font-medium underline underline-offset-4   hover:opacity-75 transition-opacity"
+                                class="opacity-100"
                                 href="{{ $card['cta']['url'] }}"
                                 target="{{ $card['cta']['target'] ?? '_self' }}"
                               >
                                 {{ $card['cta']['title'] ?? 'Learn more' }}
-                              </x-text>
+                              </x-button>
                             </div>
                           @endif
                         </div>
