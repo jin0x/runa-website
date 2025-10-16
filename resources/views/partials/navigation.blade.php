@@ -42,7 +42,7 @@
                      class="transition-all duration-200 ease-in-out rotate-180">
                   <path d="M6.5 0L0.5 6L1.91 7.41L6.5 2.83L11.09 7.41L12.5 6L6.5 0Z" 
                         fill="white" 
-                        class="transition-colors duration-200 ease-in-out"/>
+                        class="transition-colors duration-600 ease-in-out"/>
                 </svg>
                 <svg x-show="activeDropdown === '{{ $loop->index }}'" 
                      xmlns="http://www.w3.org/2000/svg" 
@@ -50,10 +50,10 @@
                      height="8" 
                      viewBox="0 0 13 8" 
                      fill="none" 
-                     class="transition-all duration-200 ease-in-out">
+                     class="transition-all duration-600 ease-in-out">
                   <path d="M6.5 0L0.5 6L1.91 7.41L6.5 2.83L11.09 7.41L12.5 6L6.5 0Z" 
                         fill="white" 
-                        class="transition-colors duration-200 ease-in-out"/>
+                        class="transition-colors duration-600 ease-in-out"/>
                 </svg>
               </div>
             @endif
@@ -113,7 +113,7 @@
                       <li>
                         <a href="{{ $link['url'] ?? '#' }}" 
                            target="{{ $link['target'] ?? '_self' }}" 
-                           class="group flex items-center justify-between px-3 py-2 rounded-lg hover:bg-neutral-400/10 transition-all duration-200 ease-in-out">
+                           class="group flex items-center justify-between px-3 py-2 rounded-lg hover:bg-neutral-400/10 transition-all duration-200 ease-in-out !no-underline">
                           <div class="flex-1">
                             <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK">
                               {{ $link['label'] ?? '' }}
