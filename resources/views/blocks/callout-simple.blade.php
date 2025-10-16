@@ -43,12 +43,14 @@
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
-  <x-container classes="relative z-10 !px-0 min-h-[380px] flex items-end rounded-3xl overflow-hidden">
+  <x-container classes="relative z-10 !px-0 min-h-[463px] flex items-end rounded-3xl overflow-hidden">
     @if($hasBackgroundImage)
-      <div
-        class="absolute inset-x-0 bottom-0 h-full bg-cover bg-center bg-no-repeat pointer-events-none"
-        style="background-image: url('{{ $backgroundImageUrl }}'); background-position: center bottom; z-index:-1;"
-      ></div>
+      <img
+        src="{{ $backgroundImageUrl }}"
+        alt=""
+        class="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style="z-index:-1;"
+      />
     @else
       <div class="absolute inset-x-0 bottom-0 h-full pointer-events-none" style="z-index:-1;"></div>
     @endif
