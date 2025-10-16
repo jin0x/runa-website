@@ -39,7 +39,7 @@
     @endif
 
     <header class="absolute z-[100] w-full" role="banner">
-      <div class="relative pt-6">
+      <div class="container mx-auto relative pt-6">
 
         <div class="mx-auto w-full px-4 lg:px-12 hidden lg:block">
           <div class="relative flex items-center justify-between sm:h-10 lg:justify-center" aria-label="Global">
