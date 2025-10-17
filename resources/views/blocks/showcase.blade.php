@@ -437,7 +437,7 @@
 <script>
 (function() {
   const gridId = '{{ $gridId }}';
-  
+
   // Wait for GSAP to be available
   const waitForGSAP = (callback, maxAttempts = 50) => {
     let attempts = 0;
@@ -471,7 +471,7 @@
     });
 
     // Create timeline
-    const timeline = window.gsap.timeline({ 
+    const timeline = window.gsap.timeline({
       repeat: -1,
       repeatDelay: 0
     });
@@ -483,7 +483,7 @@
         duration: 0.5,
         ease: "power2.inOut"
       }, index * 3);
-    
+
       timeline.to(item, {
         opacity: 0.6,
         duration: 0.5,
@@ -507,9 +507,9 @@
       clearTimeout(leaveTimeout);
       leaveTimeout = null;
     }
-    
+
     timeline.pause();
-    
+
     // Dim ALL items first
     items.forEach(i => {
       window.gsap.to(i, {
@@ -518,7 +518,7 @@
         ease: "power2.out"
       });
     });
-    
+
     // Then highlight only the hovered item
     window.gsap.to(item, {
       opacity: 1,
@@ -538,7 +538,7 @@
             ease: "power2.out"
           });
         });
-        
+
         // Restart timeline after animation completes
         setTimeout(() => {
           timeline.restart();
