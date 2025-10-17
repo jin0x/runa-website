@@ -273,6 +273,17 @@ CompanyDirectoryFacetWP.prototype.styleFacetWPElements = function() {
     const selects = this.block.querySelectorAll('.facetwp-dropdown select');
     selects.forEach(select => {
         select.className = `w-full px-0 py-0 border-0 bg-transparent ${textColor} focus:outline-none focus:ring-0 focus:border-transparent`;
+
+        // Debug: Log select interactions
+        select.addEventListener('focus', function() {
+            console.log('🎯 Select focused:', select.name);
+        });
+        select.addEventListener('blur', function() {
+            console.log('👋 Select blurred:', select.name);
+        });
+        select.addEventListener('change', function() {
+            console.log('🔄 Select changed:', select.name, select.value);
+        });
     });
 
     // Style search input
@@ -283,10 +294,20 @@ CompanyDirectoryFacetWP.prototype.styleFacetWPElements = function() {
 };
 
 CompanyDirectoryFacetWP.prototype.setupFacetWPEvents = function() {
+    console.log('🔧 Setting up FacetWP events');
+
     // Set default country to US on initial load
     document.addEventListener('facetwp-loaded', function() {
+        console.log('✅ facetwp-loaded event fired', {
+            facets: FWP.facets,
+            paged: FWP.paged,
+            loaded: FWP.loaded,
+            soft_refresh: FWP.soft_refresh
+        });
+
         // Check if this is the initial load (no filters set yet)
         if (typeof FWP.facets.company_country === 'undefined' || FWP.facets.company_country.length === 0) {
+            console.log('🌍 Setting default country to united-states');
             // Set default country to 'united-states' (FacetWP uses term slug)
             FWP.facets.company_country = ['united-states'];
             FWP.refresh();
@@ -301,10 +322,28 @@ CompanyDirectoryFacetWP.prototype.setupFacetWPEvents = function() {
 
     // Add loading state when filtering
     document.addEventListener('facetwp-refresh', function() {
+        console.log('🔄 facetwp-refresh event fired', {
+            facets: FWP.facets,
+            paged: FWP.paged,
+            loaded: FWP.loaded
+        });
         if (FWP.loaded) {
             this.addLoadingState();
         }
     }.bind(this));
+
+    // Debug: Log when facets change
+    document.addEventListener('facetwp-facets-updated', function() {
+        console.log('🎯 facetwp-facets-updated', FWP.facets);
+    });
+
+    // Debug: Log before refresh
+    document.addEventListener('facetwp-before-refresh', function() {
+        console.log('⏳ facetwp-before-refresh', {
+            facets: FWP.facets,
+            paged: FWP.paged
+        });
+    });
 };
 
 CompanyDirectoryFacetWP.prototype.addLoadingState = function() {
