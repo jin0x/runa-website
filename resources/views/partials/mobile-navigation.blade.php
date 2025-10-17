@@ -35,7 +35,7 @@
                   x-transition:leave-start="opacity-100 transform scale-100"
                   x-transition:leave-end="opacity-0 transform scale-95"
                   style="display: none;">
-                
+
                 @if (!empty($item->submenu_groups))
                   @foreach ($item->submenu_groups as $group)
                     <div class="py-2 border-b border-neutral-700 last:border-b-0">
@@ -49,14 +49,14 @@
                             <div class="text-sm font-semibold text-white">{{ $group['title'] }}</div>
                           @endif
                         </div>
-                        
+
                         @if (!empty($group['items']))
                           <ul class="space-y-1">
                             @foreach ($group['items'] as $link)
                               <li>
-                                <a href="{{ $link['url'] ?? '#' }}" 
-                                   target="{{ $link['target'] ?? '_self' }}"
-                                   class="block px-3 py-2 text-base font-medium text-white hover:text-primary-lime">
+                                <a href="{{ $link['url'] ?? '#' }}"
+                                  target="{{ $link['target'] ?? '_self' }}"
+                                  class="block px-3 py-2 text-base font-medium text-white hover:text-primary-lime">
                                   {{ $link['label'] ?? '' }}
                                   @if (!empty($link['description']))
                                     <span class="block text-xs text-neutral-400 mt-1">{{ $link['description'] }}</span>
@@ -66,10 +66,10 @@
                             @endforeach
                           </ul>
                         @endif
-                        
+
                       @elseif ($group['type'] === 'featured')
                         {{-- Featured Group (Simplified for Mobile) --}}
-                        <div class="p-3 bg-neutral-800 rounded">
+                        <div class="p-3 rounded">
                           @if (!empty($group['title']))
                             <div class="text-base font-bold text-white mb-1">{{ $group['title'] }}</div>
                           @endif
@@ -77,9 +77,9 @@
                             <p class="text-sm text-neutral-300 mb-3">{{ $group['description'] }}</p>
                           @endif
                           @if (!empty($group['cta']['url']))
-                            <a href="{{ $group['cta']['url'] }}" 
-                               target="{{ $group['cta']['target'] ?? '_self' }}"
-                               class="inline-block px-4 py-2 bg-primary-green-neon text-black rounded-md text-sm font-medium">
+                            <a href="{{ $group['cta']['url'] }}"
+                              target="{{ $group['cta']['target'] ?? '_self' }}"
+                              class="inline-block px-4 py-2 bg-primary-green-neon text-black rounded-md text-sm font-medium">
                               {{ $group['cta']['label'] ?? 'Learn More' }}
                             </a>
                           @endif
@@ -91,7 +91,7 @@
 
                 @if (!empty($item->callout))
                   {{-- Callout Section --}}
-                  <div class="mt-3 p-3 bg-neutral-800 rounded">
+                  <div class="mt-3 p-3 rounded">
                     @if (!empty($item->callout['title']))
                       <div class="text-base font-bold text-white mb-1">{{ $item->callout['title'] }}</div>
                     @endif
@@ -99,9 +99,9 @@
                       <p class="text-sm text-neutral-300 mb-3">{{ $item->callout['description'] }}</p>
                     @endif
                     @if (!empty($item->callout['cta']['url']))
-                      <a href="{{ $item->callout['cta']['url'] }}" 
-                         target="{{ $item->callout['cta']['target'] ?? '_self' }}"
-                         class="inline-block px-4 py-2 bg-white text-black rounded-md text-sm font-medium">
+                      <a href="{{ $item->callout['cta']['url'] }}"
+                        target="{{ $item->callout['cta']['target'] ?? '_self' }}"
+                        class="inline-block px-4 py-2 bg-white text-black rounded-md text-sm font-medium">
                         {{ $item->callout['cta']['label'] ?? 'Learn More' }}
                       </a>
                     @endif
