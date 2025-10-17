@@ -135,7 +135,7 @@
                 <th class="px-6 py-4 text-left text-xs font-normal text-black capitalize tracking-wider ">
                   <span class="relative w-full pb-5 text-caption font-normal {{ $textColor }}"></span>
                   Country
-                </th>                
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y {{ $themeVariant === ThemeVariant::DARK ? 'divide-neutral-0-32' : 'divide-neutral-dark-10' }} {{ $borderColor }}">
@@ -207,8 +207,8 @@
                         <span>N/A</span>
                       @endif
                     </td>
-                    
-                    
+
+
                   </tr>
                 @endwhile
                 @php(wp_reset_postdata())
@@ -283,10 +283,16 @@ CompanyDirectoryFacetWP.prototype.styleFacetWPElements = function() {
 };
 
 CompanyDirectoryFacetWP.prototype.setupFacetWPEvents = function() {
+    // Flag to prevent infinite loop when setting default country
+    let hasSetDefaultCountry = false;
+
     // Set default country to US on initial load
     document.addEventListener('facetwp-loaded', function() {
         // Check if this is the initial load (no filters set yet)
-        if (typeof FWP.facets.company_country === 'undefined' || FWP.facets.company_country.length === 0) {
+        // Only set default once to prevent infinite loop
+        if (!hasSetDefaultCountry &&
+            (typeof FWP.facets.company_country === 'undefined' || FWP.facets.company_country.length === 0)) {
+            hasSetDefaultCountry = true;
             // Set default country to 'united-states' (FacetWP uses term slug)
             FWP.facets.company_country = ['united-states'];
             FWP.refresh();

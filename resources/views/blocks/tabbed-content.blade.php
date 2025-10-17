@@ -28,7 +28,7 @@
   foreach ($tabs as $tab) {
       ob_start();
 @endphp
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center justify-self-center max-w-5xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center justify-self-center max-w-5xl mx-auto">
         <div class="order-2 lg:order-1">
           @if(!empty($tab['content_data']['heading']))
             <x-heading
@@ -92,8 +92,8 @@
               :mediaType="$tab['media']['type']"
               :mediaUrl="$tab['media']['url']"
               :altText="$tab['media']['alt'] ?? ''"
-              classes="w-full h-full rounded-lg"
-              containerClasses="overflow-hidden rounded-lg h-[460px]"
+              classes="w-full h-auto rounded-lg"
+              containerClasses="overflow-hidden rounded-lg h-[460px] inline-flex items-center"
             />
           @endif
         </div>

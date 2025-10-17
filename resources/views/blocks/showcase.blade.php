@@ -230,13 +230,19 @@
       <script>
         document.addEventListener('DOMContentLoaded', function() {
           const marqueeId = '{{ $marqueeId }}';
+          const logoCount = {{ count($marquee_logos) }};
+
+          // Calculate duration: base speed + (logos * speed per logo)
+          // Formula: 20 seconds base + (logoCount * 0.6 seconds per logo)
+          // This gives ~60s for 68 logos, ~26s for 10 logos
+          const baseDuration = 20 + (logoCount * 0.6);
 
           // Modern GSAP initialization using centralized manager
           const initShowcaseMarquee = () => {
             const lanes = [
-              { selector: `#${marqueeId}-lane1`, direction: 1, duration: 20 },
-              { selector: `#${marqueeId}-lane2`, direction: -1, duration: 22 },
-              { selector: `#${marqueeId}-lane3`, direction: 1, duration: 20 }
+              { selector: `#${marqueeId}-lane1`, direction: 1, duration: baseDuration },
+              { selector: `#${marqueeId}-lane2`, direction: -1, duration: baseDuration + 5 },
+              { selector: `#${marqueeId}-lane3`, direction: 1, duration: baseDuration }
             ];
 
             const animations = [];
@@ -431,7 +437,7 @@
 <script>
 (function() {
   const gridId = '{{ $gridId }}';
-  
+
   // Wait for GSAP to be available
   const waitForGSAP = (callback, maxAttempts = 50) => {
     let attempts = 0;
@@ -465,7 +471,7 @@
     });
 
     // Create timeline
-    const timeline = window.gsap.timeline({ 
+    const timeline = window.gsap.timeline({
       repeat: -1,
       repeatDelay: 0
     });
@@ -477,7 +483,7 @@
         duration: 0.5,
         ease: "power2.inOut"
       }, index * 3);
-    
+
       timeline.to(item, {
         opacity: 0.6,
         duration: 0.5,
@@ -501,9 +507,9 @@
       clearTimeout(leaveTimeout);
       leaveTimeout = null;
     }
-    
+
     timeline.pause();
-    
+
     // Dim ALL items first
     items.forEach(i => {
       window.gsap.to(i, {
@@ -512,7 +518,7 @@
         ease: "power2.out"
       });
     });
-    
+
     // Then highlight only the hovered item
     window.gsap.to(item, {
       opacity: 1,
@@ -532,7 +538,7 @@
             ease: "power2.out"
           });
         });
-        
+
         // Restart timeline after animation completes
         setTimeout(() => {
           timeline.restart();
