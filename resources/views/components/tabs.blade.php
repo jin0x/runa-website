@@ -28,14 +28,14 @@
   };
 
   $tabButtonBaseClasses = match($variant) {
-      'underline' => 'px-12 py-6 text-xl rounded-full whitespace-nowrap transition-colors duration-300',
+      'underline' => 'px-8 py-6 text-xl rounded-full whitespace-nowrap transition-colors duration-300',
       'pills' => 'px-6 py-2 text-xl font-medium rounded-md whitespace-nowrap transition-colors duration-200',
       'buttons' => 'px-6 py-2 text-xl font-medium rounded-md border whitespace-nowrap transition-colors duration-200',
-      default => 'px-8 py-2 text-xl font-medium rounded-full whitespace-nowrap transition-colors duration-300',
+      default => 'px-6 py-2 text-xl font-medium rounded-full whitespace-nowrap transition-colors duration-300',
   };
 
   $tabActiveClasses = match($variant) {
-      'underline' => 'tab-active-gradient text-primary-dark',
+      'underline' => 'tab-active-gradient text-primary-dark font-bold',
       'pills' => 'bg-white text-brand-primary shadow-sm',
       'buttons' => 'bg-brand-primary text-white border-brand-primary',
       default => 'bg-white text-primary-dark',
@@ -56,12 +56,12 @@
 >
   {{-- Tab Navigation --}}
   <div class="flex xl:justify-center {{ $tabContainerClasses }}">
-    <div class="overflow-x-auto inline-flex xl:flex xl:w-full xl:min-w-0 gap-2 h-[88px] items-center rounded-full px-2">
+    <div class="overflow-x-auto overflow-y-hidden inline-flex xl:flex xl:w-full xl:min-w-0 gap-2 max-h-[88px] items-center rounded-full px-2">
       @foreach($tabs as $tab)
         <button
           @click="switchTab('{{ $tab['id'] }}')"
           :class="activeTab === '{{ $tab['id'] }}' ? '{{ $tabActiveClasses }}' : '{{ $tabInactiveClasses }}'"
-          class="{{ $tabButtonBaseClasses }} xl:flex-1 cursor-pointer"
+          class="{{ $tabButtonBaseClasses }} xl:flex-1 cursor-pointer font-heading"
           type="button"
         >
           {{ $tab['label'] }}
