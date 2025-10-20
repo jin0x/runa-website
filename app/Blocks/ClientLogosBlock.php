@@ -126,6 +126,9 @@ class ClientLogosBlock extends Block
             'grid_columns' => $this->getGridColumns(),
             'grid_gap' => $this->getGridGap(),
 
+            // Marquee Options
+            'large_marquee_gap' => $this->getLargeMarqueeGap(),
+
             // Slider Options
             'slider_navigation' => $this->getSliderNavigation(),
             'slider_pagination' => $this->getSliderPagination(),
@@ -213,6 +216,27 @@ class ClientLogosBlock extends Block
             ])
             ->addPartial(GridOptions::class)
 
+           ->addTab('Marquee Options', [
+                'placement' => 'top',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'layout_type',
+                            'operator' => '==',
+                            'value' => 'marquee',
+                        ],
+                    ],
+                ],
+            ])
+            ->addTrueFalse('large_marquee_gap', [
+                'label' => 'Large Gap',
+                'instructions' => 'Enable larger spacing between logos in the marquee',
+                'default_value' => 0,
+                'ui' => 1,
+                'ui_on_text' => 'Large Gap',
+                'ui_off_text' => 'Normal Gap',
+            ])
+
             ->addTab('Slider Options', [
                 'placement' => 'top',
                 'conditional_logic' => [
@@ -279,6 +303,14 @@ class ClientLogosBlock extends Block
     public function getGridGap()
     {
         return get_field('grid_gap') ?: 'lg';
+    }
+
+    /**
+     * Marquee options getters
+     */
+    public function getLargeMarqueeGap()
+    {
+        return get_field('large_marquee_gap') ?? false;
     }
 
     /**
