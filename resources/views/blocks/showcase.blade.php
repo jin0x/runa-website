@@ -148,7 +148,7 @@
         <div class="marquee__lane mb-3.5 overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane1">
             @for ($i = 0; $i < 3; $i++)
-              <div class="marquee__part flex items-center gap-7">
+              <div class="marquee__part flex items-center gap-3.5">
                 @foreach($marquee_logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
@@ -161,7 +161,7 @@
                       <img
                         src="{{ $logo_url }}"
                         alt="{{ $alt_text }}"
-                        class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
+                        class="h-28 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
                       >
                     </div>
                   @endif
@@ -175,7 +175,7 @@
         <div class="marquee__lane mb-3.5 overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane2">
             @for ($i = 0; $i < 3; $i++)
-              <div class="marquee__part flex items-center gap-7 mr-3.5">
+              <div class="marquee__part flex items-center gap-3.5 mr-3.5">
                 @foreach($marquee_logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
@@ -188,7 +188,7 @@
                       <img
                         src="{{ $logo_url }}"
                         alt="{{ $alt_text }}"
-                        class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
+                        class="h-28 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
                       >
                     </div>
                   @endif
@@ -202,7 +202,7 @@
         <div class="marquee__lane overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane3">
             @for ($i = 0; $i < 3; $i++)
-              <div class="marquee__part flex items-center gap-7">
+              <div class="marquee__part flex items-center gap-3.5">
                 @foreach($marquee_logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
@@ -215,7 +215,7 @@
                       <img
                         src="{{ $logo_url }}"
                         alt="{{ $alt_text }}"
-                        class="h-12 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
+                        class="h-28 w-auto max-w-full object-contain opacity-90 hover:opacity-100 transition-opacity"
                       >
                     </div>
                   @endif

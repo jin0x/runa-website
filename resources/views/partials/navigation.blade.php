@@ -182,33 +182,53 @@
       @endif
 
       @if (!empty($item->callout) && !empty($item->callout['title']))
-        {{-- Callout Section --}}
-        <div class="pt-3">
-          <div class="relative rounded-xl overflow-hidden bg-neutral-dark-10"
-               @if(!empty($item->callout['background']['url']))
-                 style="background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url('{{ $item->callout['background']['url'] }}'); background-size: cover; background-position: center;"
-               @endif
+      {{-- Callout Section --}}
+      <div class="pt-3">
+        @if (!empty($item->callout['cta']['url']))
+          {{-- Entire section is clickable --}}
+          <a href="{{ $item->callout['cta']['url'] }}" 
+             target="{{ $item->callout['cta']['target'] ?? '_self' }}"
+             class="group relative rounded-xl overflow-hidden bg-neutral-dark-10 transition-all duration-200 cursor-pointer !no-underline hover:bg-neutral-400/10 flex items-center justify-between px-3 py-2 ease-in-out"
           >
+            <div class="relative z-10 flex items-center justify-between p-6 w-full">
+              <div class="flex-1">
+                @if (!empty($item->callout['title']))
+                  <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK">{{ $item->callout['title'] }}</x-text>
+                @endif
+                @if (!empty($item->callout['description']))
+                  <x-text :size="TextSize::XSMALL" :color="TextColor::DARK" class="mt-1">{{ $item->callout['description'] }}</x-text>
+                @endif
+              </div>
+              {{-- Hover Arrow (right side, centered) - Same as regular submenu items --}}
+              <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                <g clip-path="url(#clip0_3657_9862)">
+                  <path d="M7.99984 4.66675L7.05984 5.60675L10.7798 9.33342H2.6665V10.6667H10.7798L7.05984 14.3934L7.99984 15.3334L13.3332 10.0001L7.99984 4.66675Z" fill="#00FFA3"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_3657_9862">
+                    <rect width="16" height="16" fill="white" transform="translate(0 2)"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+          </a>
+        @else
+          {{-- Fallback: No CTA, not clickable --}}
+          <div class="relative rounded-xl overflow-hidden bg-neutral-dark-10">
             <div class="relative z-10 flex items-center justify-between p-6">
               <div class="flex-1">
                 @if (!empty($item->callout['title']))
-                  <x-text :size="TextSize::MEDIUM" :color="TextColor::DARK" class="mb-1">{{ $item->callout['title'] }}</x-text>
+                  <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK">{{ $item->callout['title'] }}</x-text>
                 @endif
                 @if (!empty($item->callout['description']))
-                  <p class="text-sm text-neutral-300">{{ $item->callout['description'] }}</p>
+                  <x-text :size="TextSize::XSMALL" :color="TextColor::DARK" class="mt-1">{{ $item->callout['description'] }}</x-text>
                 @endif
               </div>
-              @if (!empty($item->callout['cta']['url']))
-                <a href="{{ $item->callout['cta']['url'] }}" 
-                   target="{{ $item->callout['cta']['target'] ?? '_self' }}"
-                   class="ml-6 px-6 py-3 bg-white text-black font-medium rounded-lg hover:bg-neutral-100 transition-all whitespace-nowrap">
-                  {{ $item->callout['cta']['label'] ?? 'Learn More' }}
-                </a>
-              @endif
             </div>
           </div>
-        </div>
-      @endif
+        @endif
+      </div>
+    @endif
 
     </div>
   </div>

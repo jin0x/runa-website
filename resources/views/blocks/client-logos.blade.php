@@ -54,6 +54,9 @@
   // Ensure we have valid values for all grid properties
   $columnsNumber = !empty($columnsNumber) ? $columnsNumber : '4';
   $gridGap = !empty($grid_gap) ? $grid_gap : 'lg';
+
+  // Marquee gap classes based on toggle
+  $marqueeGapClass = $large_marquee_gap ? 'gap-37 pr-37' : 'gap-6 pr-6';
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
@@ -115,7 +118,7 @@
       <div class="marquee__inner" id="{{ $marqueeId }}" aria-hidden="true">
         {{-- Create multiple parts for smooth scrolling --}}
         @for ($i = 0; $i < 6; $i++)
-          <div class="marquee__part flex items-center gap-6 flex-shrink-0 pr-6">
+          <div class="marquee__part flex items-center {{ $marqueeGapClass }} flex-shrink-0">
             @foreach($logos as $logo)
               @php
                 $logo_image = $logo['logo'] ?? null;
@@ -163,10 +166,13 @@
           part.style.willChange = 'transform';
         });
 
+        // Adjust duration based on gap size for consistent visual speed
+        const duration = {{ $large_marquee_gap ? '35' : '20' }};
+
         // Modern GSAP animation with better performance
         const animation = window.gsap.to(parts, {
           xPercent: -100,
-          duration: 20,
+          duration: duration,
           ease: "none",
           repeat: -1,
           force3D: true
