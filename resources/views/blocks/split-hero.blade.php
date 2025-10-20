@@ -40,9 +40,26 @@
 @endphp
 
 <x-section :size="SectionSize::NONE" classes="bg-primary-dark relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
-  <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
-    {{-- Content Section (Left) --}}
-    <div class="flex items-center justify-center px-6 py-20 lg:py-24 z-20">
+  {{-- Media Section (Right) - Positioned absolutely to extend to screen edge --}}
+  <div class="absolute inset-y-0 right-0 w-1/2 lg:w-1/2 overflow-hidden">
+    @if(!empty($media_url))
+      <x-media
+        :mediaType="$media_type"
+        :mediaUrl="$media_url"
+        :altText="$title ?? 'Split Hero media'"
+        :classes="$mediaClasses"
+        containerClasses="w-full h-full"
+      />
+    @else
+      {{-- Fallback if no media provided --}}
+      <div class="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900"></div>
+    @endif
+  </div>
+
+  {{-- Content Section (Left) - Constrained by container --}}
+  <x-container classes="h-full">
+    <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
+      <div class="flex items-center justify-center px-6 py-20 lg:py-24 z-20 relative">
         <x-flex direction="col" class="max-w-2xl">
           {{-- Eyebrow --}}
           @if ($eyebrow)
@@ -64,7 +81,7 @@
               :color="TextColor::DARK"
               class="mb-3"
             >
-              {!! preg_replace('/<span>(.*?)<\/span>/',  '<span class="' . $accentColor . '">$1</span>',  $title) !!}
+              {!! preg_replace('/<span>(.*?)<\/span>/',  '<span class="' .  $accentColor . '">$1</span>',  $title) !!}
             </x-heading>
           @endif
           @if ($content)
@@ -100,20 +117,8 @@
           @endif
         </x-flex>
       </div>
-    {{-- Media Section (Right) --}}
-    <div class="relative overflow-hidden">
-      @if(!empty($media_url))
-        <x-media
-          :mediaType="$media_type"
-          :mediaUrl="$media_url"
-          :altText="$title ?? 'Split Hero media'"
-          :classes="$mediaClasses"
-          containerClasses="w-full h-full"
-        />
-      @else
-        {{-- Fallback if no media provided --}}
-        <div class="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900"></div>
-      @endif
+      {{-- Empty second column to maintain grid spacing --}}
+      <div class="hidden lg:block"></div>
     </div>
-  </div>
+  </x-container>
 </x-section>
