@@ -8,6 +8,7 @@
   use App\Enums\ButtonVariant;
   use App\Enums\ButtonSize;
   use App\Enums\ThemeVariant;
+  use App\Enums\ArchPosition;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
 
@@ -16,6 +17,8 @@
 
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
+
+  $archPositionValue = EnumHelper::getArchPosition($arch_position ?? 'none');
 
   // Convert to optimal section heading variant for contrast
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
@@ -70,7 +73,7 @@
   };
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}" :archPosition="$archPositionValue">
   <x-container>
 
     @if($section_eyebrow || $section_title || $section_description)

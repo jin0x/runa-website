@@ -101,6 +101,7 @@ class ShowcaseBlock extends Block
             // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
+            'arch_position' => $this->getArchPosition(),
         ];
     }
 
@@ -405,4 +406,10 @@ class ShowcaseBlock extends Block
     {
         return get_field('theme') ?: 'light';
     }
+
+    public function getArchPosition()
+    {
+        return get_field('arch_position') ?: 'none';
+    }
+
 }

@@ -844,6 +844,167 @@ strong {
   }
 }
 
+/* =============================================================================
+   SECTION ARCH DIVIDERS - Subtractive Masking Approach
+   Both outer and inner arches are positioned at the top of the section
+   ============================================================================= */
+
+/* Base arch styles with clip-path masking */
+.arch-outer {
+  /* Add padding to compensate for the masked area */
+  padding-top: 72px;
+}
+
+.arch-inner {
+  /* Add padding to compensate for the masked area */
+  padding-top: 72px;
+  @apply pt-32;
+}
+
+/* Adjacent section handling - reduce bottom margin when section comes before arch-outer */
+section:has(+ .arch-outer),
+section:has(+ * > .arch-outer:first-child) {
+  margin-bottom: -72px;
+  @apply -mb-1 pb-40;
+}
+
+/* Adjacent section handling - reduce bottom margin when section comes before arch-inner */
+section:has(+ .arch-inner),
+section:has(+ * > .arch-inner:first-child) {
+  margin-bottom: -72px;
+  @apply -mb-1 pb-40;
+}
+
+/* Color the inner arch based on the PREVIOUS section's variant */
+section[data-variant="light"] + section .arch-inner-path {
+  fill: #ffffff;
+}
+
+section[data-variant="dark"] + section .arch-inner-path {
+  fill: var(--color-primary-dark);
+}
+
+section[data-variant="green"] + section .arch-inner-path {
+  fill: var(--color-primary-green-soft);
+}
+
+section[data-variant="purple"] + section .arch-inner-path {
+  fill: var(--color-secondary-purple);
+}
+
+section[data-variant="cyan"] + section .arch-inner-path {
+  fill: var(--color-secondary-cyan);
+}
+
+section[data-variant="yellow"] + section .arch-inner-path {
+  fill: var(--color-primary-yellow);
+}
+
+section[data-variant="default"] + section .arch-inner-path {
+  fill: #ffffff;
+}
+
+/* Handle cases where there's a wrapper element between sections */
+section[data-variant="light"] + * > section .arch-inner-path {
+  fill: #ffffff;
+}
+
+section[data-variant="dark"] + * > section .arch-inner-path {
+  fill: var(--color-primary-dark);
+}
+
+section[data-variant="green"] + * > section .arch-inner-path {
+  fill: var(--color-primary-green-soft);
+}
+
+section[data-variant="purple"] + * > section .arch-inner-path {
+  fill: var(--color-secondary-purple);
+}
+
+section[data-variant="cyan"] + * > section .arch-inner-path {
+  fill: var(--color-secondary-cyan);
+}
+
+section[data-variant="yellow"] + * > section .arch-inner-path {
+  fill: var(--color-primary-yellow);
+}
+
+section[data-variant="default"] + * > section .arch-inner-path {
+  fill: #ffffff;
+}
+
+/* Responsive arch height for mobile devices */
+@media (max-width: 768px) {
+  .arch-outer {
+    clip-path: polygon(
+      0% 0px,
+      5% 8px,
+      10% 16px,
+      15% 23px,
+      20% 28px,
+      25% 32px,
+      30% 35px,
+      35% 37px,
+      40% 40px,
+      45% 43px,
+      50% 44px,
+      55% 43px,
+      60% 40px,
+      65% 37px,
+      70% 35px,
+      75% 32px,
+      80% 28px,
+      85% 23px,
+      90% 16px,
+      95% 8px,
+      100% 0px,
+      100% 100%,
+      0% 100%
+    );
+    padding-top: 48px;
+  }
+
+  .arch-inner {
+    clip-path: polygon(
+      0% 0px,
+      5% 8px,
+      10% 16px,
+      15% 23px,
+      20% 28px,
+      25% 32px,
+      30% 35px,
+      35% 37px,
+      40% 40px,
+      45% 43px,
+      50% 44px,
+      55% 43px,
+      60% 40px,
+      65% 37px,
+      70% 35px,
+      75% 32px,
+      80% 28px,
+      85% 23px,
+      90% 16px,
+      95% 8px,
+      100% 0px,
+      100% 100%,
+      0% 100%
+    );
+    padding-top: 48px;
+    @apply pt-16;
+  }
+
+  section:has(+ .arch-outer),
+  section:has(+ * > .arch-outer:first-child) {
+    margin-bottom: -48px;
+  }
+
+  section:has(+ .arch-inner),
+  section:has(+ * > .arch-inner:first-child) {
+    margin-bottom: -48px;
+  }
+}
+
 [x-cloak] {
   display: none !important;
 }

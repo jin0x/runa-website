@@ -10,12 +10,16 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
+  // Convert arch position string to ArchPosition enum
+  $archPositionValue = EnumHelper::getArchPosition($arch_position ?? 'none');
+
   // Show navigation when show_navigation is true, and there is more than one testimonial
   $showNavigation = $show_navigation && (count($testimonials) > 1);
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
-  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="testimonials-slider-block-featured {{ $block->classes ?? '' }}">
+  <x-section :size="$sectionSizeValue" :variant="$themeVariant" :archPosition="$archPositionValue" classes="testimonials-slider-block-featured {{ $block->classes ?? '' }}">
+
     <x-container :size="ContainerSize::XLARGE">
 
       {{-- Section Heading --}}
