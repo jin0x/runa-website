@@ -88,6 +88,12 @@ class Testimonials extends Field
                 'required' => 0,
                 'placeholder' => 'https://example.com',
             ])
+            ->addUrl('testimonial_url', [
+                'label' => 'Testimonial URL',
+                'instructions' => 'Enter the full testimonial URL (optional)',
+                'required' => 0,
+                'placeholder' => 'https://example.com',
+            ])
             ->addNumber('rating', [
                 'label' => 'Rating',
                 'instructions' => 'Optional rating out of 5 stars',

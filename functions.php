@@ -1,7 +1,6 @@
 <?php
 
 use Roots\Acorn\Application;
-use Illuminate\Support\Facades\Vite;
 
 define("TEXT_DOMAIN", "runa");
 
@@ -76,37 +75,3 @@ collect(['setup', 'filters', 'helpers'])
  * Change the font name, weights and styles to what you are using as needed.
  */
 define('GOOGLE_FONTS', 'Inter:300,400,500:latin');
-
-/**
- * Fallback font loading for production environments
- * Ensures fonts load even if CSS compilation issues occur
- */
-add_action('wp_head', function () {
-    echo "<style>
-        @font-face {
-            font-family: 'Lineca';
-            font-display: swap;
-            src: url('" . App\Helpers\get_vite_asset('resources/fonts/Lineca-Regular.woff2') . "') format('woff2'),
-                url('" . App\Helpers\get_vite_asset('resources/fonts/Lineca-Regular.woff') . "') format('woff');
-            font-weight: 400;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Lineca';
-            font-display: swap;
-            src: url('" . App\Helpers\get_vite_asset('resources/fonts/Lineca-Bold.woff2') . "') format('woff2'),
-                url('" . App\Helpers\get_vite_asset('resources/fonts/Lineca-Bold.woff') . "') format('woff');
-            font-weight: 700;
-            font-style: normal;
-        }
-    </style>";
-}, 1); // Very high priority to load before other styles
-
-/**
- * Enqueue theme assets using dynamic manifest.json lookup
- * Automatically handles hashed filenames from Vite builds
- */
-add_action('wp_enqueue_scripts', function () {
-    App\Helpers\enqueue_vite_assets();
-});

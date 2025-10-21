@@ -216,8 +216,8 @@ class ShowcaseBlock extends Block
             ->addRepeater('marquee_logos', [
                 'label' => 'Marquee Logos',
                 'instructions' => 'Add logos for the 3-lane marquee (minimum 10 recommended)',
-                'min' => 10,
-                'max' => 25,
+                'min' => 25,
+                'max' => 75,
                 'layout' => 'block',
                 'button_label' => 'Add Logo',
                 'conditional_logic' => [

@@ -6,7 +6,9 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\Vite;
+use function App\Helpers\enqueue_vite_assets;
+use function App\Helpers\enqueue_editor_assets;
+use function App\Helpers\get_vite_asset;
 
 /**
  * Inject styles into the block editor.
@@ -35,52 +37,45 @@ add_filter('admin_head', function () {
         return;
     }
 
-    $dependencies = json_decode(Vite::content('editor.deps.json'));
-
-    foreach ($dependencies as $dependency) {
-        if (! wp_script_is($dependency)) {
-            wp_enqueue_script($dependency);
-        }
-    }
-
-    echo Vite::withEntryPoints([
-        'resources/js/editor.js',
-    ])->toHtml();
+    enqueue_editor_assets();
 });
 
 /**
- * Add Vite's HMR client to the block editor.
+ * Fallback font loading for production environments
+ * Ensures fonts load even if CSS compilation issues occur
  *
  * @return void
  */
-add_action('enqueue_block_assets', function () {
-    if (! is_admin() || ! get_current_screen()?->is_block_editor()) {
-        return;
-    }
+add_action('wp_head', function () {
+    echo "<style>
+        @font-face {
+            font-family: 'Lineca';
+            font-display: swap;
+            src: url('" . get_vite_asset('resources/fonts/Lineca-Regular.woff2') . "') format('woff2'),
+                url('" . get_vite_asset('resources/fonts/Lineca-Regular.woff') . "') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
 
-    if (! Vite::isRunningHot()) {
-        return;
-    }
+        @font-face {
+            font-family: 'Lineca';
+            font-display: swap;
+            src: url('" . get_vite_asset('resources/fonts/Lineca-Bold.woff2') . "') format('woff2'),
+                url('" . get_vite_asset('resources/fonts/Lineca-Bold.woff') . "') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+    </style>";
+}, 1); // Very high priority to load before other styles
 
-    try {
-        $script = sprintf(
-            <<<'JS'
-            window.__vite_client_url = '%s';
-
-            window.self !== window.top && document.head.appendChild(
-                Object.assign(document.createElement('script'), { type: 'module', src: '%s' })
-            );
-            JS
-            ,
-            untrailingslashit(Vite::asset('')),
-            Vite::asset('@vite/client')
-        );
-
-        wp_add_inline_script('wp-blocks', $script);
-    } catch (\Exception $e) {
-        // Silently fail if Vite assets can't be loaded
-        error_log('Vite HMR client error: ' . $e->getMessage());
-    }
+/**
+ * Enqueue theme assets using dynamic manifest.json lookup
+ * Automatically handles hashed filenames from Vite builds
+ *
+ * @return void
+ */
+add_action('wp_enqueue_scripts', function () {
+    enqueue_vite_assets();
 });
 
 /**

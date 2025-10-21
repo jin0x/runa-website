@@ -52,7 +52,7 @@
         x-data="faqAccordion"
     >
       @foreach($faq_items as $index => $item)
-        <div class="mb-1 rounded-lg overflow-hidden bg-[linear-gradient(180deg,rgba(102,102,102,0.40)_0%,rgba(102,102,102,0.20)_100%)]">
+        <div class="mb-1 rounded-lg overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.14)_100%)]">
           <button
             @click="toggle({{ $index }})"
             class="w-full text-left p-6 flex justify-between items-center focus:outline-none"
@@ -83,12 +83,12 @@
 
           <div
             x-show="isItemOpen({{ $index }})"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-100"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
+            x-transition:enter="transition-all ease-out duration-400"
+            x-transition:enter-start="opacity-0 max-h-0"
+            x-transition:enter-end="opacity-100 max-h-screen"
+            x-transition:leave="transition-all ease-in duration-300"
+            x-transition:leave-start="opacity-100 max-h-screen"
+            x-transition:leave-end="opacity-0 max-h-0"
             class="px-6 pb-6"
             id="{{ $faqId }}-{{ $index }}"
             aria-labelledby="{{ $faqId }}-heading-{{ $index }}"

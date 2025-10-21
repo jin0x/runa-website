@@ -21,21 +21,21 @@
 
   // Define variant classes
   $tabContainerClasses = match($variant) {
-      'underline' => 'bg-secondary-purple p-2 ',
+      'underline' => 'bg-secondary-purple p-2 px-2 rounded-full',
       'pills' => 'bg-neutral-100 p-1 rounded-lg',
       'buttons' => 'space-x-2',
       default => 'bg-primary-green-neon p-2 rounded-full',
   };
 
   $tabButtonBaseClasses = match($variant) {
-      'underline' => 'px-12 py-6 text-xl rounded-full whitespace-nowrap transition-all duration-300',
-      'pills' => 'px-6 py-2 text-xl font-medium rounded-md whitespace-nowrap',
-      'buttons' => 'px-6 py-2 text-xl font-medium rounded-md border whitespace-nowrap',
-      default => 'px-8 py-2 text-xl font-medium rounded-full whitespace-nowrap transition-all duration-300',
+      'underline' => 'px-8 py-6 text-xl rounded-full whitespace-nowrap transition-colors duration-300',
+      'pills' => 'px-6 py-2 text-xl font-medium rounded-md whitespace-nowrap transition-colors duration-200',
+      'buttons' => 'px-6 py-2 text-xl font-medium rounded-md border whitespace-nowrap transition-colors duration-200',
+      default => 'px-6 py-2 text-xl font-medium rounded-full whitespace-nowrap transition-colors duration-300',
   };
 
   $tabActiveClasses = match($variant) {
-      'underline' => 'tab-active-gradient font-bold text-primary-dark',
+      'underline' => 'tab-active-gradient text-primary-dark font-bold',
       'pills' => 'bg-white text-brand-primary shadow-sm',
       'buttons' => 'bg-brand-primary text-white border-brand-primary',
       default => 'bg-white text-primary-dark',
@@ -49,15 +49,19 @@
   };
 @endphp
 
-<div x-data="{ activeTab: '{{ $defaultActiveTab }}' }" class="{{ $class }}">
+<div
+  x-data="tabsComponent('{{ $defaultActiveTab }}')"
+  x-init="init()"
+  class="{{ $class }}"
+>
   {{-- Tab Navigation --}}
-  <div class="overflow-x-auto flex xl:justify-center rounded-full scrollbar-hide">
-    <div class="inline-flex xl:flex xl:w-full xl:min-w-0 {{ $tabContainerClasses }} gap-2 min-w-max">
+  <div class="flex xl:justify-center {{ $tabContainerClasses }}">
+    <div class="overflow-x-auto overflow-y-hidden inline-flex xl:flex xl:w-full xl:min-w-0 gap-2 max-h-[88px] items-center rounded-full px-2">
       @foreach($tabs as $tab)
         <button
-          @click="activeTab = '{{ $tab['id'] }}'"
+          @click="switchTab('{{ $tab['id'] }}')"
           :class="activeTab === '{{ $tab['id'] }}' ? '{{ $tabActiveClasses }}' : '{{ $tabInactiveClasses }}'"
-          class="{{ $tabButtonBaseClasses }} xl:flex-1"
+          class="{{ $tabButtonBaseClasses }} xl:flex-1 cursor-pointer font-heading"
           type="button"
         >
           {{ $tab['label'] }}
@@ -66,18 +70,62 @@
     </div>
   </div>
 
-  {{-- Tab Content --}}
+  {{-- Tab Content with Height Transition --}}
   <div class="mt-16">
-    @foreach($tabs as $tab)
-      <div
-        x-show="activeTab === '{{ $tab['id'] }}'"
-        id="{{ $tab['id'] }}"
-        role="tabpanel"
-      >
-        @if(isset($tab['content']))
-          {!! $tab['content'] !!}
-        @endif
-      </div>
-    @endforeach
+    <div
+      x-ref="contentWrapper"
+      class="relative overflow-hidden transition-all duration-500 ease-in-out"
+      :style="'height: ' + contentHeight"
+    >
+      @foreach($tabs as $tab)
+        <div
+          x-show="activeTab === '{{ $tab['id'] }}'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          data-tab-id="{{ $tab['id'] }}"
+          id="{{ $tab['id'] }}"
+          role="tabpanel"
+          class="w-full"
+          :class="activeTab === '{{ $tab['id'] }}' ? 'relative' : 'absolute top-0 left-0 invisible'"
+        >
+          @if(isset($tab['content']))
+            {!! $tab['content'] !!}
+          @endif
+        </div>
+      @endforeach
+    </div>
   </div>
 </div>
+
+<script>
+function tabsComponent(defaultTab) {
+  return {
+    activeTab: defaultTab,
+    contentHeight: 'auto',
+
+    init() {
+      this.$nextTick(() => {
+        this.updateHeight();
+      });
+    },
+
+    switchTab(tabId) {
+      this.activeTab = tabId;
+      this.$nextTick(() => {
+        this.updateHeight();
+      });
+    },
+
+    updateHeight() {
+      const activePanel = this.$refs.contentWrapper.querySelector('[data-tab-id="' + this.activeTab + '"]');
+      if (activePanel) {
+        this.contentHeight = activePanel.offsetHeight + 'px';
+      }
+    }
+  }
+}
+</script>

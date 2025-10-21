@@ -119,6 +119,9 @@ class HeroBlock extends Block
             'video' => $this->getVideo(),
             'lottie' => $this->getLottie(),
             'background_image' => $this->getBackgroundImage(),
+            'background_position' => $this->getBackgroundPosition(),
+            'overlay_color' => $this->getOverlayColor(),
+            'overlay_opacity' => $this->getOverlayOpacity(),
             'content_width' => $this->getContentWidth(),
             'compact' => $this->getCompact(),
         ];
@@ -189,6 +192,48 @@ class HeroBlock extends Block
                 'instructions' => 'Background image for the hero section',
                 'return_format' => 'array',
                 'preview_size' => 'medium',
+                'wrapper' => [
+                    'width' => '25',
+                ],
+            ])
+            ->addSelect('background_position', [
+                'label' => 'Background Image Focus',
+                'instructions' => 'Adjust how the background image is positioned within the hero.',
+                'choices' => [
+                    'top left' => 'Top Left',
+                    'top center' => 'Top Center',
+                    'top right' => 'Top Right',
+                    'center left' => 'Center Left',
+                    'center center' => 'Center',
+                    'center right' => 'Center Right',
+                    'bottom left' => 'Bottom Left',
+                    'bottom center' => 'Bottom Center',
+                    'bottom right' => 'Bottom Right',
+                ],
+                'default_value' => 'center center',
+                'ui' => 1,
+                'wrapper' => [
+                    'width' => '25',
+                ],
+            ])
+            ->addColorPicker('overlay_color', [
+                'label' => 'Overlay Color',
+                'default_value' => '#000000',
+                'wrapper' => [
+                    'width' => '25',
+                ],
+            ])
+            ->addRange('overlay_opacity', [
+                'label' => 'Overlay Opacity',
+                'instructions' => 'Controls the vertical fade of the overlay. The value defines how far the gradient extends from solid color (0%) to transparent (100%).',
+                'default_value' => 50,
+                'min' => 0,
+                'max' => 100,
+                'step' => 5,
+                'append' => '%',
+                'wrapper' => [
+                    'width' => '25',
+                ],
             ])
             ->addTab('Media', [
                 'placement' => 'top',
@@ -266,6 +311,41 @@ class HeroBlock extends Block
     public function getBackgroundImage()
     {
         return get_field('background_image');
+    }
+
+    /**
+     * Get the background position value.
+     *
+     * @return string
+     */
+    public function getBackgroundPosition()
+    {
+        return get_field('background_position') ?: 'center center';
+    }
+
+    /**
+     * Get the overlay color field.
+     *
+     * @return string|null
+     */
+    public function getOverlayColor()
+    {
+        return get_field('overlay_color') ?: null;
+    }
+
+    /**
+     * Get the overlay opacity field (normalized to 0–1).
+     *
+     * @return float
+     */
+    public function getOverlayOpacity()
+    {
+        $opacity = get_field('overlay_opacity');
+        if ($opacity === null) {
+            return 0;
+        }
+
+        return max(0, min(100, intval($opacity)));
     }
 
     /**

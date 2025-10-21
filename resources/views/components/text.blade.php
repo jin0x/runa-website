@@ -18,14 +18,23 @@
   // Define the size classes for text
   $sizeClasses = [
       TextSize::CAPTION => 'text-caption',
+      TextSize::CAPTION_BOLD => 'text-caption-bold',
       TextSize::XSMALL => 'text-xsmall',
+      TextSize::XSMALL_BOLD => 'text-xsmall-bold',
       TextSize::SMALL => 'text-small',
+      TextSize::SMALL_BOLD => 'text-small-bold',
       TextSize::BASE => 'text-default',
+      TextSize::BASE_BOLD => 'text-default-bold',
       TextSize::MEDIUM => 'text-medium',
+      TextSize::MEDIUM_BOLD => 'text-medium-bold',
       TextSize::LARGE => 'text-large',
+      TextSize::LARGE_BOLD => 'text-large-bold',
       TextSize::XLARGE => 'text-xlarge',
+      TextSize::XLARGE_BOLD => 'text-xlarge-bold',
       TextSize::CAPS => 'text-caps',
+      TextSize::CAPS_BOLD => 'text-caps-bold',
       TextSize::EYEBROW => 'text-eyebrow',
+      TextSize::EYEBROW_BOLD => 'text-eyebrow-bold',
   ];
 
   // Define the font type classes
@@ -71,7 +80,7 @@
 @endphp
 
 @if(trim($slot) !== '')
-  <{{ $as }} id="{{ $id }}" class="{{ $textClass }}">
+  <{{ $as }} {{ $attributes->merge(['id' => $id, 'class' => $textClass]) }}>
     {{ $slot }}
   </{{ $as }}>
 @endif

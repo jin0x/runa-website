@@ -39,15 +39,15 @@
     @endif
 
     <header class="absolute z-[100] w-full" role="banner">
-      <div class="relative pt-6">
+      <div class="container mx-auto relative pt-6">
 
-        <div class="mx-auto w-full px-4 lg:px-12 hidden lg:block">
+        <div class="mx-auto w-full px-4 xl:px-12 hidden lg:block">
           <div class="relative flex items-center justify-between sm:h-10 lg:justify-center" aria-label="Global">
             @if($header_logo)
               <div class="flex items-center flex-1 lg:absolute lg:inset-y-0 lg:left-0">
                 <a href="{{ home_url('/') }}">
                   <span class="sr-only">{{ $siteName }}</span>
-                  <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class="w-48 h-auto">
+                  <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class="w-31 h-auto">
                 </a>
               </div>
             @endif

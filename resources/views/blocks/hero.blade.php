@@ -32,6 +32,20 @@
 
   // Determine if content should be full-width or contained
   $isFullWidth = $content_width === 'full-width';
+
+  // background position (focus area of the image)
+  $positionClass = match($background_position) {
+    'top left' => 'object-left-top',
+    'top center' => 'object-top',
+    'top right' => 'object-right-top',
+    'center left' => 'object-left',
+    'center center' => 'object-center',
+    'center right' => 'object-right',
+    'bottom left' => 'object-left-bottom',
+    'bottom center' => 'object-bottom',
+    'bottom right' => 'object-right-bottom',
+    default => 'object-center',
+  };
 @endphp
 
 <x-section :size="SectionSize::NONE" classes="relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
@@ -41,8 +55,20 @@
       <img
         src="{{ $bg_image_url }}"
         alt="{{ $title ? strip_tags($title) : get_bloginfo('name') }}"
-        class="absolute inset-0 object-cover w-full h-full"
+        class="absolute inset-0 object-cover w-full h-full {{ $positionClass }}"
       >
+      @if (!empty($overlay_color))
+        <div
+          class="absolute inset-0 pointer-events-none"
+          style="
+            background: linear-gradient(
+              to right,
+              {{ $overlay_color }} 0%,
+              rgba(0, 0, 0, 0) {{ ($overlay_opacity ?? 50) }}%
+            );
+          ">
+        </div>
+      @endif
     @else
       {{-- Fallback background if no image is provided --}}
       <div class="absolute inset-0 bg-primary-dark"></div>
@@ -55,14 +81,16 @@
       {{-- Full Width: No container, just padding --}}
       <x-flex direction="col">
         @if ($eyebrow)
+        <div>
           <x-text
             :as="TextTag::SPAN"
             :size="TextSize::EYEBROW"
             :color="TextColor::GRADIENT"
             class="inline-block uppercase mb-3"
-          >
+            >
             {{ $eyebrow }}
           </x-text>
+        </div>
         @endif
 
         @if ($title)
@@ -115,14 +143,16 @@
       <x-container>
         <x-flex direction="col">
           @if ($eyebrow)
+          <div>
             <x-text
               :as="TextTag::SPAN"
               :size="TextSize::EYEBROW"
               :color="TextColor::GRADIENT"
               class="inline-block uppercase mb-3"
-            >
+              >
               {{ $eyebrow }}
             </x-text>
+          </div>
           @endif
 
           @if ($title)

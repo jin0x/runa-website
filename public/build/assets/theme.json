@@ -1311,6 +1311,16 @@
           "color": "#6666"
         },
         {
+          "name": "Neutral (Dark 60)",
+          "slug": "neutral-dark-60",
+          "color": "#3339"
+        },
+        {
+          "name": "Neutral (Gray 05)",
+          "slug": "neutral-gray-05",
+          "color": "#6666660d"
+        },
+        {
           "name": "Background (Secondary)",
           "slug": "background-secondary",
           "color": "#171717"

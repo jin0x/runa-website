@@ -123,8 +123,6 @@ class TestimonialsSliderBlock extends Block
             // Display Options
             'display_layout' => $this->getDisplayLayout(),
             'card_color' => $this->getCardColor(),
-            'show_company_logos' => $this->getShowCompanyLogos(),
-            'show_ratings' => $this->getShowRatings(),
             
             // Slider Settings
             'autoplay' => $this->getAutoplay(),
@@ -175,29 +173,16 @@ class TestimonialsSliderBlock extends Block
                 'label' => 'Display Layout',
                 'instructions' => 'Choose how to display testimonials',
                 'choices' => [
-                    'slider' => 'Multi-Slide (2 testimonials per slide)',
-                    'single' => 'Featured (1 large testimonial per slide)',
+                    'default' => 'Default',
+                    'logo_featured' => 'Logo Featured Right',
                 ],
-                'default_value' => 'slider',
+                'default_value' => 'default',
                 'layout' => 'horizontal',
                 'required' => 1,
             ])
             ->addPartial(CardOptions::withConfig([
                 'colors' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
             ]))
-            ->addTrueFalse('show_company_logos', [
-                'label' => 'Show Company Logos',
-                'instructions' => 'Display company logos in testimonials',
-                'default_value' => 1,
-                'ui' => 1,
-            ])
-            ->addTrueFalse('show_ratings', [
-                'label' => 'Show Ratings',
-                'instructions' => 'Display star ratings',
-                'default_value' => 1,
-                'ui' => 1,
-            ])
-            
             ->addTab('Slider Settings', [
                 'placement' => 'top',
             ])
@@ -279,7 +264,7 @@ class TestimonialsSliderBlock extends Block
      */
     public function getDisplayLayout()
     {
-        return get_field('display_layout') ?: 'slider';
+        return get_field('display_layout') ?: 'default';
     }
 
     /**
@@ -320,26 +305,6 @@ class TestimonialsSliderBlock extends Block
     public function getShowNavigation()
     {
         return get_field('show_navigation') !== null ? get_field('show_navigation') : true;
-    }
-
-    /**
-     * Get the show company logos field.
-     *
-     * @return bool
-     */
-    public function getShowCompanyLogos()
-    {
-        return get_field('show_company_logos') !== false ? get_field('show_company_logos') : true;
-    }
-
-    /**
-     * Get the show ratings field.
-     *
-     * @return bool
-     */
-    public function getShowRatings()
-    {
-        return get_field('show_ratings') !== false ? get_field('show_ratings') : true;
     }
 
     /**

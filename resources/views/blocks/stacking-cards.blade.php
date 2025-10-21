@@ -9,6 +9,8 @@
   use App\Enums\ThemeVariant;
   use App\Enums\SectionSize;
   use App\Enums\SectionHeadingVariant;
+  use App\Enums\ButtonType;
+  use App\Enums\ButtonVariant;
   use App\Enums\FontType;
   use App\Enums\TextColor;
   use App\Helpers\EnumHelper;
@@ -72,9 +74,9 @@
                       };
                       $bgColor = EnumHelper::getCardBackgroundClass ($colorVariant);
                     @endphp
-                    <div class="stacking-card absolute w-full transition-transform  duration-700 ease-out"
+                    <div class="stacking-card absolute w-full transition-transform duration-700 ease-out"
                         data-card-index="{{ $index }}"
-                        style="z-index: {{ 10 + $index }}; top: 0; left: 0;   transform: translateY(100vh);">
+                        style="z-index: {{ 10 + $index }}; top: 0; left: 0;   transform: translateY(100vh); opacity: 0;">
                       <div class="flex flex-row rounded-[32px] overflow-hidden  relative shadow-2xl  {{ $bgColor }}">
                         <div class="w-2/5 flex-shrink-0 py-6 pl-6">
                           <img src="{{ $card['image']['url'] }}" alt="{{ $card  ['image']['alt'] ?? $card['title'] }}" class="w-full h-full   object-cover min-h-[400px]"/>
@@ -102,17 +104,17 @@
                           </div>
 
                           @if(!empty($card['cta']))
-                            <div class="pt-8">
-                              <x-text
-                                :as="TextTag::A"
-                                :size="TextSize::BASE"
+                            <div class="pt-3">
+                              <x-button
+                                :as="ButtonType::LINK"
+                                :variant="ButtonVariant::DARK"
                                 :color="$cardTextColor"
-                                class="font-medium underline underline-offset-4   hover:opacity-75 transition-opacity"
+                                class="opacity-100"
                                 href="{{ $card['cta']['url'] }}"
                                 target="{{ $card['cta']['target'] ?? '_self' }}"
                               >
                                 {{ $card['cta']['title'] ?? 'Learn more' }}
-                              </x-text>
+                              </x-button>
                             </div>
                           @endif
                         </div>
@@ -262,8 +264,8 @@
     window.ScrollTrigger.create({
       trigger: scrollContent,
       start: "top top",
-      end: `+=${cards.length * window.innerHeight * 1.5}`,
-      scrub: 1.5,
+      end: `+=${cards.length * window.innerHeight * 0.75}`,
+      scrub: 1,
       pin: true,
       anticipatePin: 1,
       onUpdate: (self) => {
@@ -277,12 +279,9 @@
 
 
   // Show animation progression for testing
-  setTimeout(() => {
-    if (!isMobile && cardElements.length > 1) {
-      // Animate through 50% progress
-      updateActiveCard(0.5);
-    }
-  }, 2000);
+  if (!isMobile) {
+    updateActiveCard(0);
+  }
 
   window.addEventListener('resize', () => {
     checkMobile();

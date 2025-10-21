@@ -68,6 +68,10 @@
     {{-- Cards --}}
     <x-grid :columns="$gridColumns" :rowgapsize="$gapSize" colgapsize="lg" classes="mt-12">
         @foreach($cards as $card)
+          @php
+            // Bold any percentages in the text (e.g., "51%" becomes "<strong>51%</strong>")
+            $processedText = preg_replace('/(\d+(?:\.\d+)?%)/', '<strong>$1</strong>', $card['text']);
+          @endphp
             <div class="flex flex-col overflow-hidden gap-y-10 p-6">
                 @if ( $card['icon'] )
                     <div class="w-full overflow-hidden">
@@ -98,7 +102,7 @@
                         :size="TextSize::BASE"
                         class="text-left"
                     >
-                        {{ $card['text'] }}
+                        {!! $processedText !!}
                     </x-text>
                 </div>
             </div>
