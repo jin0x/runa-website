@@ -12,11 +12,10 @@
 
   // Show navigation when show_navigation is true, and there is more than one testimonial
   $showNavigation = $show_navigation && (count($testimonials) > 1);
-  $singleDisplay = $display_layout === 'single';
 @endphp
 
 @if($testimonials && count($testimonials) > 0)
-  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ !$singleDisplay  ? 'testimonials-slider-block' : 'testimonials-slider-block-featured' }} {{ $block->classes ?? '' }}">
+  <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="testimonials-slider-block-featured {{ $block->classes ?? '' }}">
     <x-container :size="ContainerSize::XLARGE">
 
       {{-- Section Heading --}}
@@ -30,61 +29,34 @@
         />
       @endif
 
-      @if($display_layout === 'single')
-        {{-- Single Testimonial Display with Slider --}}
-        <x-slider
-          :navigation="$show_navigation"
-          :pagination="false"
-          :loop="true"
-          :autoplayDelay="$autoplay_delay * 1000"
-          :slidesPerView="1"
-          :mobileSlidesPerView="1"
-          :tabletSlidesPerView="1"
-          :desktopSlidesPerView="1"
-          :spaceBetween="256"
-          :navigationPosition="'bottom-right'"
-          :slideCount="count($testimonials)"
-        >
-          @foreach($testimonials as $testimonial)
-            <div class="swiper-slide">
-              <x-testimonial-card
-                :post="$testimonial->ID"
-                :featured="true"
-                :cardColor="$card_color"
-                :showLogo="$show_company_logos"
-                :showRating="$show_ratings"
-              />
-            </div>
-          @endforeach
-        </x-slider>
-      @else
-        {{-- Slider Display --}}
-        <x-slider
-          :navigation="$show_navigation"
-          :pagination="false"
-          :loop="true"
-          :autoplayDelay="$autoplay_delay * 1000"
-          :slidesPerView="1"
-          :mobileSlidesPerView="1"
-          :tabletSlidesPerView="2"
-          :desktopSlidesPerView="2"
-          :spaceBetween="24"
-          :navigationPosition="'bottom-right'"
-          :slideCount="count($testimonials)"
-        >
-          @foreach($testimonials as $testimonial)
-            <div class="swiper-slide">
-              <x-testimonial-card
-                :post="$testimonial->ID"
-                :featured="false"
-                :cardColor="$card_color"
-                :showLogo="$show_company_logos"
-                :showRating="$show_ratings"
-              />
-            </div>
-          @endforeach
-        </x-slider>
-      @endif
+      <x-slider
+        :navigation="$showNavigation"
+        :pagination="false"
+        :loop="true"
+        :autoplayDelay="$autoplay_delay * 1000"
+        :slidesPerView="1"
+        :mobileSlidesPerView="1"
+        :tabletSlidesPerView="1"
+        :desktopSlidesPerView="1"
+        :spaceBetween="256"
+        :navigationPosition="'bottom-right'"
+        :slideCount="count($testimonials)"
+      >
+        @foreach($testimonials as $testimonial)
+          <div class="swiper-slide">
+            @if($display_layout === 'logo_featured')
+              <x-testimonial-card-right-logo
+              :post="$testimonial->ID"
+              :cardColor="$card_color" />
+            @else
+              <x-testimonial-card-right-quote
+              :post="$testimonial->ID"
+              :cardColor="$card_color" />
+            @endif
+          </div>
+        @endforeach
+      </x-slider>
+
     </x-container>
   </x-section>
 @else
