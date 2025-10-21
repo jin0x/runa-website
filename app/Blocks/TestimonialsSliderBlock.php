@@ -134,6 +134,7 @@ class TestimonialsSliderBlock extends Block
             // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
+            'arch_position' => $this->getArchPosition(),
         ];
     }
 
@@ -359,5 +360,10 @@ class TestimonialsSliderBlock extends Block
     public function getTheme()
     {
         return get_field('theme') ?: 'green';
+    }
+
+    public function getArchPosition()
+    {
+        return get_field('arch_position') ?: 'none';
     }
 }
