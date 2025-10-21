@@ -17,9 +17,6 @@
   // Convert to optimal section heading variant for contrast
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
-  // Convert arch position string to ArchPosition enum
-  $archPositionValue = EnumHelper::getArchPosition($arch_position ?? 'none');
-
   // FAQ text color
   $svgClasses  = $themeVariant === ThemeVariant::DARK ? 'white' : 'black';
 
@@ -36,7 +33,7 @@
 
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="$themeVariant" :archPosition="$archPositionValue" classes="{{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
   <x-container>
     @if($section_eyebrow || $section_title || $section_description)
       <x-section-heading

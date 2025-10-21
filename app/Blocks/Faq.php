@@ -150,7 +150,6 @@ class Faq extends Block
             // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
-            'arch_position' => $this->getArchPosition(),
         ];
     }
 
@@ -265,10 +264,5 @@ class Faq extends Block
     public function getBottomBackgroundImage()
     {
         return get_field('bottom_background_image');
-    }
-
-    public function getArchPosition()
-    {
-        return get_field('arch_position') ?: 'none';
     }
 }

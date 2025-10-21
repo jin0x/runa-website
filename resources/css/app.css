@@ -790,11 +790,223 @@ strong {
 
 /* Base arch styles with clip-path masking */
 .arch-outer {
+  /* Outer arch - larger curve at the top that extends outward */
+  clip-path: polygon(
+    0% 72px,
+    1% 69px,
+    2% 66px,
+    3% 64px,
+    4% 61px,
+    5% 58px,
+    6% 55px,
+    7% 53px,
+    8% 50px,
+    9% 48px,
+    10% 45px,
+    11% 43px,
+    12% 41px,
+    13% 38px,
+    14% 36px,
+    15% 34px,
+    16% 32px,
+    17% 30px,
+    18% 28px,
+    19% 26px,
+    20% 24px,
+    21% 23px,
+    22% 21px,
+    23% 19px,
+    24% 18px,
+    25% 16px,
+    26% 15px,
+    27% 14px,
+    28% 12px,
+    29% 11px,
+    30% 10px,
+    31% 9px,
+    32% 8px,
+    33% 7px,
+    34% 6px,
+    35% 5px,
+    36% 4px,
+    37% 3px,
+    38% 3px,
+    39% 2px,
+    40% 2px,
+    41% 1px,
+    42% 1px,
+    43% 1px,
+    44% 0px,
+    45% 0px,
+    46% 0px,
+    47% 0px,
+    48% 0px,
+    49% 0px,
+    50% 0px,
+    51% 0px,
+    52% 0px,
+    53% 0px,
+    54% 0px,
+    55% 0px,
+    56% 0px,
+    57% 1px,
+    58% 1px,
+    59% 1px,
+    60% 2px,
+    61% 2px,
+    62% 3px,
+    63% 3px,
+    64% 4px,
+    65% 5px,
+    66% 6px,
+    67% 7px,
+    68% 8px,
+    69% 9px,
+    70% 10px,
+    71% 11px,
+    72% 12px,
+    73% 14px,
+    74% 15px,
+    75% 16px,
+    76% 18px,
+    77% 19px,
+    78% 21px,
+    79% 23px,
+    80% 24px,
+    81% 26px,
+    82% 28px,
+    83% 30px,
+    84% 32px,
+    85% 34px,
+    86% 36px,
+    87% 38px,
+    88% 41px,
+    89% 43px,
+    90% 45px,
+    91% 48px,
+    92% 50px,
+    93% 53px,
+    94% 55px,
+    95% 58px,
+    96% 61px,
+    97% 64px,
+    98% 66px,
+    99% 69px,
+    100% 72px,
+    100% 100%,
+    0% 100%
+  );
   /* Add padding to compensate for the masked area */
   padding-top: 72px;
 }
 
 .arch-inner {
+  /* Inner arch - smaller curve at the top that creates a subtle indent */
+  clip-path: polygon(
+    0% 0px,
+    1% 3px,
+    2% 6px,
+    3% 8px,
+    4% 11px,
+    5% 14px,
+    6% 17px,
+    7% 19px,
+    8% 22px,
+    9% 24px,
+    10% 27px,
+    11% 29px,
+    12% 31px,
+    13% 34px,
+    14% 36px,
+    15% 38px,
+    16% 40px,
+    17% 42px,
+    18% 44px,
+    19% 46px,
+    20% 48px,
+    21% 49px,
+    22% 51px,
+    23% 53px,
+    24% 54px,
+    25% 56px,
+    26% 57px,
+    27% 58px,
+    28% 60px,
+    29% 61px,
+    30% 62px,
+    31% 63px,
+    32% 64px,
+    33% 65px,
+    34% 66px,
+    35% 67px,
+    36% 68px,
+    37% 69px,
+    38% 69px,
+    39% 70px,
+    40% 70px,
+    41% 71px,
+    42% 71px,
+    43% 71px,
+    44% 72px,
+    45% 72px,
+    46% 72px,
+    47% 72px,
+    48% 72px,
+    49% 72px,
+    50% 72px,
+    51% 72px,
+    52% 72px,
+    53% 72px,
+    54% 72px,
+    55% 72px,
+    56% 72px,
+    57% 71px,
+    58% 71px,
+    59% 71px,
+    60% 70px,
+    61% 70px,
+    62% 69px,
+    63% 69px,
+    64% 68px,
+    65% 67px,
+    66% 66px,
+    67% 65px,
+    68% 64px,
+    69% 63px,
+    70% 62px,
+    71% 61px,
+    72% 60px,
+    73% 58px,
+    74% 57px,
+    75% 56px,
+    76% 54px,
+    77% 53px,
+    78% 51px,
+    79% 49px,
+    80% 48px,
+    81% 46px,
+    82% 44px,
+    83% 42px,
+    84% 40px,
+    85% 38px,
+    86% 36px,
+    87% 34px,
+    88% 31px,
+    89% 29px,
+    90% 27px,
+    91% 24px,
+    92% 22px,
+    93% 19px,
+    94% 17px,
+    95% 14px,
+    96% 11px,
+    97% 8px,
+    98% 6px,
+    99% 3px,
+    100% 0px,
+    100% 100%,
+    0% 100%
+  );
   /* Add padding to compensate for the masked area */
   padding-top: 72px;
   @apply pt-32;
@@ -804,72 +1016,14 @@ strong {
 section:has(+ .arch-outer),
 section:has(+ * > .arch-outer:first-child) {
   margin-bottom: -72px;
-  @apply -mb-1 pb-40;
+  @apply -mb-24 pb-40;
 }
 
 /* Adjacent section handling - reduce bottom margin when section comes before arch-inner */
 section:has(+ .arch-inner),
 section:has(+ * > .arch-inner:first-child) {
   margin-bottom: -72px;
-  @apply -mb-1 pb-40;
-}
-
-/* Color the inner arch based on the PREVIOUS section's variant */
-section[data-variant="light"] + section .arch-inner-path {
-  fill: #ffffff;
-}
-
-section[data-variant="dark"] + section .arch-inner-path {
-  fill: var(--color-primary-dark);
-}
-
-section[data-variant="green"] + section .arch-inner-path {
-  fill: var(--color-primary-green-soft);
-}
-
-section[data-variant="purple"] + section .arch-inner-path {
-  fill: var(--color-secondary-purple);
-}
-
-section[data-variant="cyan"] + section .arch-inner-path {
-  fill: var(--color-secondary-cyan);
-}
-
-section[data-variant="yellow"] + section .arch-inner-path {
-  fill: var(--color-primary-yellow);
-}
-
-section[data-variant="default"] + section .arch-inner-path {
-  fill: #ffffff;
-}
-
-/* Handle cases where there's a wrapper element between sections */
-section[data-variant="light"] + * > section .arch-inner-path {
-  fill: #ffffff;
-}
-
-section[data-variant="dark"] + * > section .arch-inner-path {
-  fill: var(--color-primary-dark);
-}
-
-section[data-variant="green"] + * > section .arch-inner-path {
-  fill: var(--color-primary-green-soft);
-}
-
-section[data-variant="purple"] + * > section .arch-inner-path {
-  fill: var(--color-secondary-purple);
-}
-
-section[data-variant="cyan"] + * > section .arch-inner-path {
-  fill: var(--color-secondary-cyan);
-}
-
-section[data-variant="yellow"] + * > section .arch-inner-path {
-  fill: var(--color-primary-yellow);
-}
-
-section[data-variant="default"] + * > section .arch-inner-path {
-  fill: #ffffff;
+  @apply -mb-24 pb-40;
 }
 
 /* Responsive arch height for mobile devices */
