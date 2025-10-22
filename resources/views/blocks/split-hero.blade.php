@@ -1,7 +1,8 @@
 @php
   /**
    * Split Hero
-   * 50/50 split layout with content and media side by side
+   * 50/50 split layout with content and media side by side (desktop)
+   * Background image layout on mobile
    */
   use App\Enums\HeadingTag;
   use App\Enums\HeadingSize;
@@ -40,8 +41,21 @@
 @endphp
 
 <x-section :size="SectionSize::NONE" classes="bg-primary-dark relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
-  {{-- Media Section (Right) - Positioned absolutely to extend to screen edge --}}
-  <div class="absolute inset-y-0 right-0 w-1/2 lg:w-1/2 overflow-hidden">
+  
+  {{-- Background Image --}}
+  @if($media_type === 'image' && !empty($media_url))
+    <div class="absolute inset-0 lg:hidden">
+      <img 
+        src="{{ $media_url }}" 
+        alt="{{ $title ?? 'Split Hero background' }}"
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="absolute inset-0 lg:hidden pointer-events-none" style="background-color: {{ $overlay_color }}; opacity: {{ ($overlay_opacity ?? 50) / 100 }};"></div>
+  @endif
+
+  {{-- Media Section (Right) - Desktop only --}}
+  <div class="absolute inset-y-0 right-0 w-1/2 overflow-hidden hidden lg:block">
     @if(!empty($media_url))
       <x-media
         :mediaType="$media_type"
@@ -56,10 +70,10 @@
     @endif
   </div>
 
-  {{-- Content Section (Left) - Constrained by container --}}
-  <x-container classes="h-full">
+  {{-- Content Section --}}
+  <x-container classes="h-full relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
-      <div class="flex items-center justify-center px-6 py-20 lg:py-24 z-20 relative">
+      <div class="flex items-center justify-center px-6 py-20 lg:py-24">
         <x-flex direction="col" class="max-w-2xl">
           {{-- Eyebrow --}}
           @if ($eyebrow)
@@ -117,7 +131,7 @@
           @endif
         </x-flex>
       </div>
-      {{-- Empty second column to maintain grid spacing --}}
+      {{-- Empty second column to maintain grid spacing on desktop --}}
       <div class="hidden lg:block"></div>
     </div>
   </x-container>

@@ -117,6 +117,8 @@ class SplitHeroBlock extends Block
             'image' => $this->getImage(),
             'video' => $this->getVideo(),
             'lottie' => $this->getLottie(),
+            'overlay_color' => $this->getOverlayColor(),
+            'overlay_opacity' => $this->getOverlayOpacity(),
             'compact' => $this->getCompact(),
         ];
     }
@@ -167,6 +169,29 @@ class SplitHeroBlock extends Block
                 'placement' => 'top',
             ])
             ->addPartial(MediaComponent::class)
+
+            ->addTab('Background Overlay', [
+                'placement' => 'top',
+            ])
+            ->addColorPicker('overlay_color', [
+                'label' => 'Overlay Color (Mobile only)',
+                'default_value' => '#000000',
+                'wrapper' => [
+                    'width' => '25',
+                ],
+            ])
+            ->addRange('overlay_opacity', [
+                'label' => 'Overlay Opacity (Mobile only)',
+                'instructions' => 'Controls the opacity of the overlay.',
+                'default_value' => 50,
+                'min' => 0,
+                'max' => 100,
+                'step' => 5,
+                'append' => '%',
+                'wrapper' => [
+                    'width' => '25',
+                ],
+            ])
 
             ->addTab('Settings', [
                 'placement' => 'top',
@@ -259,6 +284,31 @@ class SplitHeroBlock extends Block
     public function getLottie()
     {
         return get_field('lottie');
+    }
+
+    /**
+     * Get the overlay color field.
+     *
+     * @return string|null
+     */
+    public function getOverlayColor()
+    {
+        return get_field('overlay_color') ?: null;
+    }
+
+    /**
+     * Get the overlay opacity field (normalized to 0–1).
+     *
+     * @return float
+     */
+    public function getOverlayOpacity()
+    {
+        $opacity = get_field('overlay_opacity');
+        if ($opacity === null) {
+            return 0;
+        }
+
+        return max(0, min(100, intval($opacity)));
     }
 
     /**
