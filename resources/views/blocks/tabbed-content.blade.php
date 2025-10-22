@@ -20,6 +20,9 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
+  // Convert arch position string to ArchPosition enum
+  $archPositionValue = EnumHelper::getArchPosition($arch_position ?? 'none');
+
   // Convert to optimal section heading variant for contrast
   $sectionHeadingVariant = EnumHelper::getSectionHeadingVariant($themeVariant);
 
@@ -108,7 +111,7 @@
   }
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" :archPosition="$archPositionValue" classes="{{ $block->classes }}">
   <x-container :size="ContainerSize::XLARGE">
 
     @if(!empty($section_eyebrow) || !empty($section_title) || !empty($section_description))

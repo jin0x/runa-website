@@ -150,6 +150,7 @@ class ImageCardsHover extends Block
             // Section Options
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
+            'arch_position' => $this->getArchPosition(),
         ];
     }
 
@@ -257,5 +258,10 @@ class ImageCardsHover extends Block
         public function getTheme()
     {
         return get_field('theme') ?: 'light';
+    }
+
+    public function getArchPosition()
+    {
+        return get_field('arch_position') ?: 'none';
     }
 }

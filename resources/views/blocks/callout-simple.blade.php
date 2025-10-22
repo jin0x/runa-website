@@ -19,6 +19,9 @@
   // Convert theme string to ThemeVariant enum
   $themeVariant = EnumHelper::getThemeVariant($theme);
 
+  // Convert arch position string to ArchPosition enum
+  $archPositionValue = EnumHelper::getArchPosition($arch_position ?? 'none');
+
   // Always use centered layout as per Figma design
   $contentClasses = 'flex flex-col gap-6 p-8 lg:p-16 content-end';
   $textContainerClasses = 'lg:max-w-[469px]';
@@ -42,7 +45,7 @@
 
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }} overflow-visible">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" :archPosition="$archPositionValue" classes="{{ $block->classes }} overflow-visible">
   <x-container classes="relative z-10 !px-0 min-h-[463px] flex items-end rounded-3xl overflow-hidden">
     @if($hasBackgroundImage)
       <img

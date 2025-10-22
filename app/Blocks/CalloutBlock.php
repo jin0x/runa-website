@@ -117,6 +117,7 @@ class CalloutBlock extends Block
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
             'background_image' => $this->getBackgroundImage(),
+            'arch_position' => $this->getArchPosition(),
         ];
     }
 
@@ -252,5 +253,10 @@ class CalloutBlock extends Block
     public function getBackgroundImage()
     {
         return get_field('background_image');
+    }
+
+    public function getArchPosition()
+    {
+        return get_field('arch_position') ?: 'none';
     }
 }
