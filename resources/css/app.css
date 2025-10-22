@@ -872,6 +872,19 @@ section:has(+ * > .arch-outer:first-child) {
 section:has(+ .arch-inner),
 section:has(+ * > .arch-inner:first-child) {
   margin-bottom: -72px;
+  @apply -mb-1;
+}
+
+section:has(+ script + .arch-outer),
+section:has(+ script + section.arch-outer) {
+  margin-bottom: -72px;
+  @apply -mb-1 pb-40;
+}
+
+/* Handle nested structures with script tags */
+section:has(+ script + * > .arch-outer:first-child),
+section:has(+ script + * > section.arch-outer:first-child) {
+  margin-bottom: -72px;
   @apply -mb-1 pb-40;
 }
 
@@ -930,6 +943,35 @@ section[data-variant="yellow"] + * > section .arch-inner-path {
 }
 
 section[data-variant="default"] + * > section .arch-inner-path {
+  fill: var(--color-primary-light);
+}
+
+/* Handle cases where there's a script tag between sections */
+section[data-variant="light"] + script + section .arch-inner-path {
+  fill: var(--color-primary-light);
+}
+
+section[data-variant="dark"] + script + section .arch-inner-path {
+  fill: var(--color-primary-dark);
+}
+
+section[data-variant="green"] + script + section .arch-inner-path {
+  fill: var(--color-primary-green-soft);
+}
+
+section[data-variant="purple"] + script + section .arch-inner-path {
+  fill: var(--color-secondary-purple);
+}
+
+section[data-variant="cyan"] + script + section .arch-inner-path {
+  fill: var(--color-secondary-cyan);
+}
+
+section[data-variant="yellow"] + script + section .arch-inner-path {
+  fill: var(--color-primary-yellow);
+}
+
+section[data-variant="default"] + script + section .arch-inner-path {
   fill: var(--color-primary-light);
 }
 
