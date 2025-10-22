@@ -877,7 +877,7 @@ section:has(+ * > .arch-inner:first-child) {
 
 /* Color the inner arch based on the PREVIOUS section's variant */
 section[data-variant="light"] + section .arch-inner-path {
-  fill: #ffffff;
+  fill: var(--color-primary-light);
 }
 
 section[data-variant="dark"] + section .arch-inner-path {
@@ -901,12 +901,12 @@ section[data-variant="yellow"] + section .arch-inner-path {
 }
 
 section[data-variant="default"] + section .arch-inner-path {
-  fill: #ffffff;
+  fill: var(--color-primary-light);
 }
 
 /* Handle cases where there's a wrapper element between sections */
 section[data-variant="light"] + * > section .arch-inner-path {
-  fill: #ffffff;
+  fill: var(--color-primary-light);
 }
 
 section[data-variant="dark"] + * > section .arch-inner-path {
@@ -930,7 +930,7 @@ section[data-variant="yellow"] + * > section .arch-inner-path {
 }
 
 section[data-variant="default"] + * > section .arch-inner-path {
-  fill: #ffffff;
+  fill: var(--color-primary-light);
 }
 
 /* Responsive arch height for mobile devices */
