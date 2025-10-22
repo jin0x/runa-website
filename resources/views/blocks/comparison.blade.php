@@ -191,6 +191,5 @@
         </div>
       @endif
     </div>
-  </div>
   </x-container>
 </x-section>
