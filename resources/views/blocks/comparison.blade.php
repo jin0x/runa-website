@@ -132,7 +132,7 @@
               :as="HeadingTag::H2"
               :size="HeadingSize::H2"
               :color="TextColor::DARK"
-              class="mb-6"
+              class="mb-4"
             >
               {{ $right_side['title'] }}
             </x-heading>
@@ -191,6 +191,5 @@
         </div>
       @endif
     </div>
-  </div>
   </x-container>
 </x-section>

@@ -87,12 +87,27 @@
   // If a color is provided, add the color class
   $colorClass = $color ? $colorClasses[$color] : '';
 
+  // Process slot content for automatic line breaks
+  $processedContent = (string) $slot;
+  
+  if (!empty(trim($processedContent))) {
+    // Normalize whitespace - convert all types to regular spaces
+    $processedContent = html_entity_decode($processedContent); // Convert &nbsp; etc
+    $processedContent = preg_replace('/\s+/u', ' ', $processedContent); // Unicode-aware whitespace normalization
+    
+    // Now apply line breaks with normalized content
+    $processedContent = preg_replace('/\.\s+/', '.<br> ', $processedContent);
+    $processedContent = preg_replace('/\.$/', '.<br>', $processedContent);
+    
+    $processedContent = trim($processedContent);
+  }
+
   // Combine the heading class with any additional classes passed from the parent
   $classes = trim("{$headingClass} {$fontClass} {$colorClass} {$class}");
 @endphp
 
 @if(trim($slot) !== '')
   <{{ $as }} id="{{ $id }}" class="{{ $classes }}">
-    {{ $slot }}
+    {!! $processedContent !!}
   </{{ $as }}>
 @endif

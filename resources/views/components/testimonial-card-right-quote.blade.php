@@ -81,7 +81,7 @@
           <x-heading
             :as="HeadingTag::H3"
             :size="HeadingSize::H3"
-            class="text-xl text-primary-dark leading-relaxed indent-[-0.45em] pl-[0.45em]"
+            class="text-primary-dark"
           >
             <strong>
               {{ $title }}
@@ -95,7 +95,7 @@
           <x-heading 
             :as="HeadingTag::H3" 
             :size="HeadingSize::H3" 
-            class="text-xl text-primary-dark leading-relaxed indent-[-0.45em] pl-[0.45em]">
+            class="text-primary-dark indent-[-0.45em] pl-[0.45em]">
             <strong>
               "{{ $quote }}"
             </strong>

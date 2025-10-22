@@ -764,6 +764,10 @@ strong {
   }
 }
 
+.testimonials-slider-block-featured {
+  overflow-x: hidden;
+}
+
 /* Testimonial card height matching */
 .testimonials-slider-block .swiper-slide {
   height: auto;
@@ -872,12 +876,25 @@ section:has(+ * > .arch-outer:first-child) {
 section:has(+ .arch-inner),
 section:has(+ * > .arch-inner:first-child) {
   margin-bottom: -72px;
+  @apply -mb-1;
+}
+
+section:has(+ script + .arch-outer),
+section:has(+ script + section.arch-outer) {
+  margin-bottom: -72px;
+  @apply -mb-1 pb-40;
+}
+
+/* Handle nested structures with script tags */
+section:has(+ script + * > .arch-outer:first-child),
+section:has(+ script + * > section.arch-outer:first-child) {
+  margin-bottom: -72px;
   @apply -mb-1 pb-40;
 }
 
 /* Color the inner arch based on the PREVIOUS section's variant */
 section[data-variant="light"] + section .arch-inner-path {
-  fill: #ffffff;
+  fill: var(--color-primary-light);
 }
 
 section[data-variant="dark"] + section .arch-inner-path {
@@ -901,12 +918,12 @@ section[data-variant="yellow"] + section .arch-inner-path {
 }
 
 section[data-variant="default"] + section .arch-inner-path {
-  fill: #ffffff;
+  fill: var(--color-primary-light);
 }
 
 /* Handle cases where there's a wrapper element between sections */
 section[data-variant="light"] + * > section .arch-inner-path {
-  fill: #ffffff;
+  fill: var(--color-primary-light);
 }
 
 section[data-variant="dark"] + * > section .arch-inner-path {
@@ -930,7 +947,36 @@ section[data-variant="yellow"] + * > section .arch-inner-path {
 }
 
 section[data-variant="default"] + * > section .arch-inner-path {
-  fill: #ffffff;
+  fill: var(--color-primary-light);
+}
+
+/* Handle cases where there's a script tag between sections */
+section[data-variant="light"] + script + section .arch-inner-path {
+  fill: var(--color-primary-light);
+}
+
+section[data-variant="dark"] + script + section .arch-inner-path {
+  fill: var(--color-primary-dark);
+}
+
+section[data-variant="green"] + script + section .arch-inner-path {
+  fill: var(--color-primary-green-soft);
+}
+
+section[data-variant="purple"] + script + section .arch-inner-path {
+  fill: var(--color-secondary-purple);
+}
+
+section[data-variant="cyan"] + script + section .arch-inner-path {
+  fill: var(--color-secondary-cyan);
+}
+
+section[data-variant="yellow"] + script + section .arch-inner-path {
+  fill: var(--color-primary-yellow);
+}
+
+section[data-variant="default"] + script + section .arch-inner-path {
+  fill: var(--color-primary-light);
 }
 
 /* Responsive arch height for mobile devices */
