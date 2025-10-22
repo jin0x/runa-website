@@ -120,14 +120,14 @@
               <img
                 src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
                 alt="{{ $companyName }} logo"
-                class="h-24 w-auto max-w-full object-contain"
+                class="h-64 w-auto max-w-full object-contain"
               >
             </a>
           @else
             <img
               src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
               alt="{{ $companyName }} logo"
-              class="h-24 w-auto max-w-full object-contain"
+              class="h-64 w-auto max-w-full object-contain"
             >
           @endif
        </div>
