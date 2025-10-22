@@ -764,6 +764,10 @@ strong {
   }
 }
 
+.testimonials-slider-block-featured {
+  overflow-x: hidden;
+}
+
 /* Testimonial card height matching */
 .testimonials-slider-block .swiper-slide {
   height: auto;
