@@ -129,8 +129,17 @@ function apply_tailwind_classes_to_content(string $content, array $options = [])
         '/<(h[1-6])>(.*?)<\/\1>/i',
         function ($matches) use ($heading_extra_class) {
             $tag = $matches[1];
-            $content = $matches[2];
-
+            $headingContent = $matches[2];
+        
+            // Apply period-to-line-break logic to heading content only
+            if (!empty(trim($headingContent))) {
+                $headingContent = html_entity_decode($headingContent);
+                $headingContent = preg_replace('/\s+/u', ' ', $headingContent);
+                $headingContent = preg_replace('/\.\s+/', '.<br> ',     $headingContent);
+                $headingContent = preg_replace('/\.$/', '.<br>', $headingContent);
+                $headingContent = trim($headingContent);
+            }
+                
             $classes = match ($tag) {
                 'h1' => 'heading-1 mb-6',
                 'h2' => 'heading-2 mb-6',
@@ -140,7 +149,7 @@ function apply_tailwind_classes_to_content(string $content, array $options = [])
                 'h6' => 'heading-6 mb-6',
             };
 
-            return "<{$tag} class=\"{$classes} {$heading_extra_class}\">{$content}</{$tag}>";
+            return "<{$tag} class=\"{$classes} {$heading_extra_class}\">{$headingContent}</{$tag}>";
         },
         $content
     );
