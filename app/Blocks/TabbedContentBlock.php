@@ -112,7 +112,9 @@ class TabbedContentBlock extends Block
     public function with()
     {
         return [
-            'section_heading' => $this->getSectionHeading(),
+            'section_eyebrow' => $this->getSectionEyebrow(),
+            'section_title' => $this->getSectionTitle(),
+            'section_description' => $this->getSectionDescription(),
             'tabs' => $this->getTabs(),
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
@@ -220,19 +222,19 @@ class TabbedContentBlock extends Block
         return $tabbedContent->build();
     }
 
-    /**
-     * Return the section heading fields.
-     *
-     * @return array
-     */
-    public function getSectionHeading()
+    public function getSectionEyebrow()
     {
-        $heading = get_field('section_heading');
-        return [
-            'eyebrow' => $heading['eyebrow'] ?? '',
-            'heading' => $heading['heading'] ?? '',
-            'subtitle' => $heading['subtitle'] ?? '',
-        ];
+        return get_field('eyebrow_heading_eyebrow');
+    }
+
+    public function getSectionTitle()
+    {
+        return get_field('section_heading_heading');
+    }
+
+    public function getSectionDescription()
+    {
+        return get_field('subtitle_heading_subtitle');
     }
 
     /**
