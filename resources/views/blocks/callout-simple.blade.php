@@ -45,13 +45,13 @@
 
 @endphp
 
-<x-section :size="$sectionSizeValue" :variant="$themeVariant" :archPosition="$archPositionValue" classes="{{ $block->classes }} overflow-visible">
-  <x-container classes="relative z-10 !px-0 min-h-[463px] flex items-end rounded-3xl overflow-hidden">
+<x-section :size="$sectionSizeValue" :variant="$themeVariant" :archPosition="$archPositionValue" classes="{{ $block->classes }} overflow-visible px-6">
+  <x-container classes="relative z-10 min-h-[463px] flex items-end rounded-3xl overflow-hidden">
     @if($hasBackgroundImage)
       <img
         src="{{ $backgroundImageUrl }}"
         alt=""
-        class="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        class="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-3xl"
         style="z-index:-1;"
       />
     @else
