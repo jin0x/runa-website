@@ -37,7 +37,7 @@
   @if($hasBackgroundImage)
     <div
       class="absolute inset-x-0 bottom-0 h-full bg-cover bg-center bg-no-repeat pointer-events-none"
-      style="background-image: url('{{ $backgroundImageUrl }}'); background-position: center bottom;"
+      style="background-image: url('{{ $backgroundImageUrl }}'); background-position: 50% 20%;"
     ></div>
   @endif
 
