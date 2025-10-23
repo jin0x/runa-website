@@ -141,65 +141,67 @@
     @else
       {{-- Contained: Within container --}}
       <x-container>
-        <x-flex direction="col">
-          @if ($eyebrow)
-          <div>
-            <x-text
-              :as="TextTag::SPAN"
-              :size="TextSize::EYEBROW"
-              :color="TextColor::GRADIENT"
-              class="inline-block uppercase mb-3"
-              >
-              {{ $eyebrow }}
-            </x-text>
-          </div>
-          @endif
-
-          @if ($title)
-            <x-heading
-              :as="HeadingTag::H1"
-              :size="HeadingSize::SUPER_DUPER"
-              :color="TextColor::DARK"
-              class="mb-3"
-            >
-              {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
-            </x-heading>
-          @endif
-
-          @if ($content)
-            <x-text
-              :as="TextTag::SPAN"
-              :size="TextSize::XLARGE"
-              :color="TextColor::DARK"
-              class="mb-8"
-            >
-              {!! $content !!}
-            </x-text>
-          @endif
-
-          @if (!empty($ctas))
-            <div class="flex flex-wrap gap-3">
-              @foreach ($ctas as $index => $button)
-                @php
-                  $button_label = $button['cta']['title'] ?? null;
-                  $button_link = $button['cta']['url'] ?? null;
-                  $button_target = $button['cta']['target'] ?? '_self';
-                  $buttonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
-                @endphp
-
-                @if (!empty($button_label) && !empty($button_link))
-                  <x-button
-                    :variant="$buttonVariant"
-                    :href="$button_link"
-                    target="{{ $button_target }}"
-                  >
-                    {{ $button_label }}
-                  </x-button>
-                @endif
-              @endforeach
+        <x-container>
+          <x-flex direction="col">
+            @if ($eyebrow)
+            <div>
+              <x-text
+                :as="TextTag::SPAN"
+                :size="TextSize::EYEBROW"
+                :color="TextColor::GRADIENT"
+                class="inline-block uppercase mb-3"
+                >
+                {{ $eyebrow }}
+              </x-text>
             </div>
-          @endif
-        </x-flex>
+            @endif
+  
+            @if ($title)
+              <x-heading
+                :as="HeadingTag::H1"
+                :size="HeadingSize::SUPER_DUPER"
+                :color="TextColor::DARK"
+                class="mb-3"
+              >
+                {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' .   $accentColor . '">$1</span>', $title) !!}
+              </x-heading>
+            @endif
+  
+            @if ($content)
+              <x-text
+                :as="TextTag::SPAN"
+                :size="TextSize::XLARGE"
+                :color="TextColor::DARK"
+                class="mb-8"
+              >
+                {!! $content !!}
+              </x-text>
+            @endif
+  
+            @if (!empty($ctas))
+              <div class="flex flex-wrap gap-3">
+                @foreach ($ctas as $index => $button)
+                  @php
+                    $button_label = $button['cta']['title'] ?? null;
+                    $button_link = $button['cta']['url'] ?? null;
+                    $button_target = $button['cta']['target'] ?? '_self';
+                    $buttonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
+                  @endphp
+  
+                  @if (!empty($button_label) && !empty($button_link))
+                    <x-button
+                      :variant="$buttonVariant"
+                      :href="$button_link"
+                      target="{{ $button_target }}"
+                    >
+                      {{ $button_label }}
+                    </x-button>
+                  @endif
+                @endforeach
+              </div>
+            @endif
+          </x-flex>
+        </x-container>
       </x-container>
     @endif
   </div>
