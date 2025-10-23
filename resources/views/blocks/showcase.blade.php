@@ -161,7 +161,7 @@
         <div class="marquee__lane mb-3.5 overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane1">
             @for ($i = 0; $i < 3; $i++)
-              <div class="marquee__part flex items-center gap-3.5 ml-3.5">
+              <div class="marquee__part flex items-center gap-3.5">
                 @foreach($lane1Logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
@@ -170,7 +170,7 @@
                   @endphp
 
                   @if(!empty($logo_url))
-                    <div class="flex items-center justify-center">
+                    <div class="flex items-center justify-center{{ $loop->last ? ' mr-3.5' : '' }}">
                       <img
                         src="{{ $logo_url }}"
                         alt="{{ $alt_text }}"
@@ -188,7 +188,7 @@
         <div class="marquee__lane mb-3.5 overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane2">
             @for ($i = 0; $i < 3; $i++)
-              <div class="marquee__part flex items-center gap-3.5 mr-3.5">
+              <div class="marquee__part flex items-center gap-3.5">
                 @foreach($lane2Logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
@@ -197,7 +197,7 @@
                   @endphp
 
                   @if(!empty($logo_url))
-                    <div class="flex items-center justify-center">
+                    <div class="flex items-center justify-center{{ $loop->last ? ' mr-3.5' : '' }}">
                       <img
                         src="{{ $logo_url }}"
                         alt="{{ $alt_text }}"
@@ -215,7 +215,7 @@
         <div class="marquee__lane overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane3">
             @for ($i = 0; $i < 3; $i++)
-              <div class="marquee__part flex items-center gap-3.5 ml-3.5">
+              <div class="marquee__part flex items-center gap-3.5">
                 @foreach($lane3Logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
@@ -224,7 +224,7 @@
                   @endphp
 
                   @if(!empty($logo_url))
-                    <div class="flex items-center justify-center">
+                    <div class="flex items-center justify-center{{ $loop->last ? ' mr-3.5' : '' }}">
                       <img
                         src="{{ $logo_url }}"
                         alt="{{ $alt_text }}"
@@ -268,18 +268,32 @@
               element.style.willChange = 'transform';
 
               // Modern GSAP animation - no timeline needed for simple infinite loops
-              const animation = window.gsap.to(selector, {
-                xPercent: direction === 1 ? -50 : 0,
-                duration: duration,
-                ease: "none",
-                repeat: -1,
-                force3D: true, // GPU acceleration
-                // Set initial position based on direction
-                ...(direction === -1 && {
-                  immediateRender: true,
-                  startAt: { xPercent: -50 }
-                })
-              });
+              const parts = element.querySelectorAll('.marquee__part');
+              if (parts.length && !element.dataset.marqueeCloned) {
+                element.appendChild(parts[0].cloneNode(true));
+
+                if (direction === -1) {
+                  const lastPartClone = parts[parts.length - 1].cloneNode(true);
+                  element.insertBefore(lastPartClone, element.firstElementChild);
+                }
+
+                element.dataset.marqueeCloned = 'true';
+              }
+
+              // Modern GSAP animation - no timeline needed for simple infinite loops
+              const startX = direction === -1 ? '-50%' : 0;
+              const endX = direction === 1 ? '-50%' : 0;
+              const animation = window.gsap.fromTo(
+                element,
+                { x: startX },
+                {
+                  x: endX,
+                  duration: duration,
+                  ease: "none",
+                  repeat: -1,
+                  force3D: true
+                }
+              );
 
               animations.push(animation);
             });
