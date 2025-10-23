@@ -103,7 +103,7 @@
       initSwiper() {        
         if (typeof Swiper !== 'undefined') {
           const config = {
-            loop: options.loop !== false,
+            loop: false,
             autoplay: options.autoplayDelay
               ? {
                   delay: options.autoplayDelay,
