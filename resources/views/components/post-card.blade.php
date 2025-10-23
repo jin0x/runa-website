@@ -33,9 +33,9 @@
 
 <article class="{{ $featured ? 'featured-post-card' : 'post-card' }} group">
   <a href="{{ $permalink }}" class="block">
-    <div class="{{ $featured ? 'flex flex-col lg:flex-row gap-8' : 'flex flex-col h-full' }}">
+    <div class="{{ $featured ? 'flex flex-col lg:flex-row md:gap-8' : 'flex flex-col h-full' }}">
       {{-- Image --}}
-      <div class="{{ $featured ? 'lg:w-1/2 rounded-2xl' : 'w-full' }} relative overflow-hidden bg-neutral-100 rounded-t-2xl">
+      <div class="{{ $featured ? 'lg:w-1/2' : 'rounded-t-2xl w-full' }} relative overflow-hidden bg-neutral-100">
         @if($thumbnail)
           <img
             src="{{ $thumbnail }}"
@@ -49,7 +49,7 @@
       </div>
 
       {{-- Content --}}
-      <div class="{{ $featured ? 'lg:w-1/2 flex flex-col justify-center py-6 pr-6' : 'flex-1 p-6' }}">
+      <div class="{{ $featured ? 'lg:w-1/2 flex flex-col justify-center py-6 pl-6 pr-6 md:pl-0' : 'flex-1 p-6' }}">
         {{-- Tag Badge --}}
         @if($primaryTag)
           <div class="mb-4">
