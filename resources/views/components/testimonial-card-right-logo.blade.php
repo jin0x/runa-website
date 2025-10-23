@@ -51,7 +51,7 @@
 @endphp
 
 <article class="featured-testimonial-card group">
-  <div class="p-8 lg:p-12 {{ $cardBgClasses }} rounded-2xl min-h-full flex gap-6 flex-1">
+  <div class="p-6 lg:p-12 {{ $cardBgClasses }} rounded-2xl min-h-full flex gap-6 flex-1 flex-col-reverse md:flex-row">
     <div>
       {{-- Quote --}}
       @if($quote)
@@ -114,20 +114,20 @@
       </div>
     </div>
     @if($companyLogo)
-       <div class="flex items-center justify-center min-w-1/2">
+       <div class="flex items-center justify-center min-w-1/2 px-9 py-6 md:py-12">
           @if($websiteUrl)
             <a href="{{ $websiteUrl }}" target="_blank" rel="noopener">
               <img
                 src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
                 alt="{{ $companyName }} logo"
-                class="h-64 w-auto max-w-full object-contain"
+                class="h-auto w-auto max-w-full object-contain"
               >
             </a>
           @else
             <img
               src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
               alt="{{ $companyName }} logo"
-              class="h-64 w-auto max-w-full object-contain"
+              class="h-auto w-auto max-w-full object-contain"
             >
           @endif
        </div>
