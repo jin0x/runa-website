@@ -58,7 +58,7 @@
         <div class="relative">
           <!-- Content Container -->
           <div class="scroll-lock-content">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start max-w-7xl mx-auto px-4">
               <!-- Left Content -->
               <div class="scroll-content-container relative min-h-[400px]">
                 @foreach($sections as $index => $section)

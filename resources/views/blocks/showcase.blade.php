@@ -46,6 +46,16 @@
   // Generate unique ID for marquee
   $marqueeId = 'showcase-marquee-' . uniqid();
 
+  // Split logos into 3 groups for visual variety across lanes
+  if (!empty($marquee_logos)) {
+      $logoChunks = array_chunk($marquee_logos, ceil(count($marquee_logos) / 3));
+      $lane1Logos = $logoChunks[0] ?? [];
+      $lane2Logos = $logoChunks[1] ?? $logoChunks[0] ?? [];
+      $lane3Logos = $logoChunks[2] ?? $logoChunks[0] ?? [];
+  } else {
+      $lane1Logos = $lane2Logos = $lane3Logos = [];
+  }
+
     // Set grid column values
   $gridColumns = match($columns) {
     '2' => '2',
@@ -151,8 +161,8 @@
         <div class="marquee__lane mb-3.5 overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane1">
             @for ($i = 0; $i < 3; $i++)
-              <div class="marquee__part flex items-center gap-3.5">
-                @foreach($marquee_logos as $logo)
+              <div class="marquee__part flex items-center gap-3.5 ml-3.5">
+                @foreach($lane1Logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
                     $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
@@ -179,7 +189,7 @@
           <div class="marquee__inner" id="{{ $marqueeId }}-lane2">
             @for ($i = 0; $i < 3; $i++)
               <div class="marquee__part flex items-center gap-3.5 mr-3.5">
-                @foreach($marquee_logos as $logo)
+                @foreach($lane2Logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
                     $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
@@ -205,8 +215,8 @@
         <div class="marquee__lane overflow-hidden">
           <div class="marquee__inner" id="{{ $marqueeId }}-lane3">
             @for ($i = 0; $i < 3; $i++)
-              <div class="marquee__part flex items-center gap-3.5">
-                @foreach($marquee_logos as $logo)
+              <div class="marquee__part flex items-center gap-3.5 ml-3.5">
+                @foreach($lane3Logos as $logo)
                   @php
                     $logo_image = $logo['logo'] ?? null;
                     $alt_text = $logo['alt_text'] ?? ($logo_image['alt'] ?? 'Logo');
