@@ -982,71 +982,36 @@ section[data-variant='default'] + script + section .arch-inner-path {
 /* Responsive arch height for mobile devices */
 @media (max-width: 768px) {
   .arch-outer {
-    clip-path: polygon(
-      0% 0px,
-      5% 8px,
-      10% 16px,
-      15% 23px,
-      20% 28px,
-      25% 32px,
-      30% 35px,
-      35% 37px,
-      40% 40px,
-      45% 43px,
-      50% 44px,
-      55% 43px,
-      60% 40px,
-      65% 37px,
-      70% 35px,
-      75% 32px,
-      80% 28px,
-      85% 23px,
-      90% 16px,
-      95% 8px,
-      100% 0px,
-      100% 100%,
-      0% 100%
-    );
-    padding-top: 48px;
+    padding-top: 72px;
   }
 
   .arch-inner {
-    clip-path: polygon(
-      0% 0px,
-      5% 8px,
-      10% 16px,
-      15% 23px,
-      20% 28px,
-      25% 32px,
-      30% 35px,
-      35% 37px,
-      40% 40px,
-      45% 43px,
-      50% 44px,
-      55% 43px,
-      60% 40px,
-      65% 37px,
-      70% 35px,
-      75% 32px,
-      80% 28px,
-      85% 23px,
-      90% 16px,
-      95% 8px,
-      100% 0px,
-      100% 100%,
-      0% 100%
-    );
-    padding-top: 48px;
-    @apply pt-16;
+    padding-top: 72px;
+    @apply pt-32;
   }
 
   section:has(+ .arch-outer),
   section:has(+ * > .arch-outer:first-child) {
-    margin-bottom: -48px;
+    margin-bottom: -72px;
+    @apply -mb-1 pb-40;
   }
 
   section:has(+ .arch-inner),
   section:has(+ * > .arch-inner:first-child) {
-    margin-bottom: -48px;
+    margin-bottom: -72px;
+    @apply -mb-1;
+  }
+
+  section:has(+ script + .arch-outer),
+  section:has(+ script + section.arch-outer) {
+    margin-bottom: -72px;
+    @apply -mb-1 pb-40;
+  }
+
+  /* Handle nested structures with script tags */
+  section:has(+ script + * > .arch-outer:first-child),
+  section:has(+ script + * > section. arch-outer:first-child) {
+    margin-bottom: -72px;
+    @apply -mb-1 pb-40;
   }
 }
