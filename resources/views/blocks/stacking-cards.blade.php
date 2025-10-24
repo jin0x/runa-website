@@ -130,9 +130,19 @@
         <!-- Mobile Layout (Simple Stack) -->
         <div class="block lg:hidden">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            @foreach($cards as $card)
+            @foreach($cards as $index => $card)
+              @php
+                // Cycle through 4 colors using ThemeVariant constants
+                $colorVariant = match($index % 4) {
+                  0 => ThemeVariant::CYAN,
+                  1 => ThemeVariant::GREEN,
+                  2 => ThemeVariant::PURPLE,
+                  3 => ThemeVariant::YELLOW,
+                };
+                $bgColor = EnumHelper::getCardBackgroundClass ($colorVariant);
+              @endphp
               <div class="mobile-card">
-                <div class="flex flex-col rounded-[32px] overflow-hidden relative   bg-white shadow-lg">
+                <div class="flex flex-col rounded-[32px] overflow-hidden relative shadow-lg {{ $bgColor }}">
                   <div>
                     <img src="{{ $card['image']['url'] }}" alt="{{ $card['image'] ['alt'] ?? $card['title'] }}" class="w-full h-auto object-cover  rounded-tl-[32px] rounded-tr-[32px]">
                   </div>
@@ -158,17 +168,17 @@
                     </div>
 
                     @if(!empty($card['cta']))
-                      <div class="pt-6">
-                        <x-text
-                          :as="TextTag::A"
-                          :size="TextSize::SMALL"
+                      <div class="pt-3">
+                        <x-button
+                          :as="ButtonType::LINK"
+                          :variant="ButtonVariant::DARK"
                           :color="$cardTextColor"
-                          class="font-normal underline underline-offset-4   hover:opacity-75 transition-opacity"
+                          class="opacity-100"
                           href="{{ $card['cta']['url'] }}"
                           target="{{ $card['cta']['target'] ?? '_self' }}"
                         >
                           {{ $card['cta']['title'] ?? 'Learn more' }}
-                        </x-text>
+                        </x-button>
                       </div>
                     @endif
                   </div>
