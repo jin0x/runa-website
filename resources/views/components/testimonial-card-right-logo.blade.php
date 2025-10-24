@@ -114,7 +114,7 @@
       </div>
     </div>
     @if($companyLogo)
-       <div class="flex items-center justify-center min-w-1/2">
+       <div class="flex items-center justify-center min-w-1/2 px-9 py-6 md:py-12">
           @if($websiteUrl)
             <a href="{{ $websiteUrl }}" target="_blank" rel="noopener">
               <img
