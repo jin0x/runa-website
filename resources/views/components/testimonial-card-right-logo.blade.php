@@ -118,14 +118,14 @@
           @if($websiteUrl)
             <a href="{{ $websiteUrl }}" target="_blank" rel="noopener">
               <img
-                src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
+                src="{{ $companyLogo['sizes']['full'] ?? $companyLogo['url'] }}"
                 alt="{{ $companyName }} logo"
                 class="h-30 lg:h-64 w-auto max-w-full object-contain"
               >
             </a>
           @else
             <img
-              src="{{ $companyLogo['sizes']['thumbnail'] ?? $companyLogo['url'] }}"
+              src="{{ $companyLogo['sizes']['full'] ?? $companyLogo['url'] }}"
               alt="{{ $companyName }} logo"
               class="h-30 lg:h-64 w-auto max-w-full object-contain"
             >
