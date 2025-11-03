@@ -4,6 +4,8 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\TextColor;
+  use App\Enums\ButtonVariant;
+  use App\Enums\ButtonSize;
   use App\Helpers\EnumHelper;
 @endphp
 
@@ -70,19 +72,16 @@
         {{-- CTA --}}
         @if($cta && !empty($cta['url']) && !empty($cta['title']))
             <div class="mt-auto">
-            <x-text
-                href="{{ $cta['url'] }}"
-                target="{{ $cta['target'] ?? '_self' }}"
-                :as="TextTag::A" 
-                :size="TextSize::XSMALL" 
-                :color="TextColor::LIGHT"
-                class="inline-flex items-center gap-2 !no-underline hover:underline transition-all duration-200 ease-in-out"
-            >
-                <span>{{ $cta['title'] }}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14" fill="none">
-                <path d="M7.00016 0.663574L5.82516 1.83857L10.4752 6.49691H0.333496V8.16357H10.4752L5.82516 12.8219L7.00016 13.9969L13.6668 7.33024L7.00016 0.663574Z" fill="black"/>
-                </svg>
-            </x-text>
+                <x-button
+                    :href="$cta['url']"
+                    :variant="ButtonVariant::SECONDARY"
+                    :size="ButtonSize::SMALL"
+                    iconPosition="right"
+                    iconType="arrow"
+                    target="{{ $cta['target'] ?? '_self' }}"
+                >
+                    {{ $cta['title'] }}
+                </x-button>
             </div>
         @endif
     </div>
