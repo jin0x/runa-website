@@ -4,6 +4,8 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\TextColor;
+  use App\Enums\ButtonVariant;
+  use App\Enums\ButtonSize;
   use App\Helpers\EnumHelper;
 @endphp
 
@@ -14,6 +16,7 @@
     'cardColor' => 'cyan',
     'textColor' => TextColor::LIGHT,
     'class' => '',
+    'cta' => null,
 ])
 
 @php
@@ -65,6 +68,21 @@
             >
                 {{ $text }}
             </x-text>
+        @endif
+        {{-- CTA --}}
+        @if($cta && !empty($cta['url']) && !empty($cta['title']))
+            <div class="mt-auto">
+                <x-button
+                    :href="$cta['url']"
+                    :variant="ButtonVariant::SECONDARY"
+                    :size="ButtonSize::SMALL"
+                    iconPosition="right"
+                    iconType="arrow"
+                    target="{{ $cta['target'] ?? '_self' }}"
+                >
+                    {{ $cta['title'] }}
+                </x-button>
+            </div>
         @endif
     </div>
 </div>
