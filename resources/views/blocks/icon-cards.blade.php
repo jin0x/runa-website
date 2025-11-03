@@ -63,6 +63,7 @@ $gapSize = 'lg';
                 :text="$card['text']"
                 :cardColor="$card_color"
                 :textColor="$cardTextColor"
+                :cta="$card['cta'] ?? null"
             />
         @endforeach
     </x-grid>

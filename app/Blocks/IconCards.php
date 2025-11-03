@@ -190,6 +190,11 @@ class IconCards extends Block
                         'return_format' => 'array',
                         'preview_size' => 'medium',
                     ])
+                    ->addLink('cta', [
+                        'label' => 'Call to Action',
+                        'instructions' => 'Link for this card',
+                        'return_format' => 'array',
+                    ])
                 ->endRepeater()
             ->addTab('Settings', [
                 'placement' => 'top',
