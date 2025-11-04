@@ -28,14 +28,14 @@ class CalloutSimple extends Block
      *
      * @var string
      */
-    public $category = 'text';
+    public $category = 'runa';
 
     /**
      * The block icon.
      *
      * @var string|array
      */
-    public $icon = 'editor-ul';
+    public $icon = 'megaphone';
 
     /**
      * The block keywords.

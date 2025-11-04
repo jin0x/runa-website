@@ -309,3 +309,23 @@ add_filter('facetwp_pre_load', function ($params, $facet) {
     }
     return $params;
 }, 10, 2);
+
+/**
+ * Unregister all core Gutenberg blocks.
+ *
+ * @return void
+ */
+add_action('allowed_block_types_all', function ($allowed_blocks, $editor_context) {
+    // Get all registered blocks
+    $registered_blocks = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+    // Filter out core blocks (blocks that start with 'core/')
+    $allowed_blocks = array_filter(
+        array_keys($registered_blocks),
+        function ($block_name) {
+            return strpos($block_name, 'core/') !== 0;
+        }
+    );
+
+    return array_values($allowed_blocks);
+}, 10, 2);
