@@ -80,6 +80,30 @@
           </div>
         @endif
 
+        @if(!empty($list_items))
+          <ul class="mb-8 space-y-4">
+            @foreach($list_items as $item)
+              <li class="flex gap-3 items-center">
+                {{-- SVG Icon Placeholder - Replace with your actual SVG --}}
+                <span class="flex-shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="16" fill="url(#paint0_linear_1564_27418)"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8937 19.9874L22.3049 10.5762L23.3655 11.6368L13.424 21.5784L12.8937 22.1087L12.3633 21.5784L7.39258 16.6076L8.45324 15.5469L12.8937 19.9874Z" fill="black"/>
+                    <defs>
+                      <linearGradient id="paint0_linear_1564_27418" x1="0" y1="32" x2="32" y2="0" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#00FFA3"/>
+                        <stop offset="0.48313" stop-color="#93FF82"/>
+                        <stop offset="0.943979" stop-color="#EEFC51"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </span>
+                <span class="flex-1">{{ $item['list_item_text'] }}</span>
+              </li>
+            @endforeach
+          </ul>
+        @endif
+
         @if(!empty($ctas))
           <div class="flex flex-wrap gap-4 mt-2">
             @foreach($ctas as $index => $button)

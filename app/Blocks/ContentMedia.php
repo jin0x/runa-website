@@ -143,6 +143,7 @@ class ContentMedia extends Block
             'section_subtitle' => $this->getSectionSubtitle(),
             'content_heading' => $this->getContentHeading(),
             'content_text' => $this->getContentText(),
+            'list_items' => $this->getListItems(),
             'ctas' => $this->getCtas(),
             'media_type' => $this->getMediaType(),
             'image' => $this->getImage(),
@@ -190,6 +191,20 @@ class ContentMedia extends Block
                         'toolbar' => 'full',
                         'media_upload' => 1,
                     ])
+                    ->addRepeater('list_items', [
+                        'label' => 'List Items',
+                        'instructions' => 'Add list items with icon and text',
+                        'min' => 0,
+                        'max' => 10,
+                        'layout' => 'block',
+                        'button_label' => 'Add List Item',
+                    ])
+                        ->addText('list_item_text', [
+                            'label' => 'Text',
+                            'instructions' => 'List item text',
+                            'required' => 1,
+                        ])
+                    ->endRepeater()
                     ->addRepeater('ctas', [
                         'label' => 'Call to Actions',
                         'instructions' => 'Add one or more call to action buttons',
@@ -269,6 +284,16 @@ class ContentMedia extends Block
     public function getContentText()
     {
         return get_field('left_content_content_text') ?: '';
+    }
+
+    /**
+     * Return the list items field.
+     *
+     * @return array
+     */
+    public function getListItems()
+    {
+        return get_field('left_content_list_items') ?: [];
     }
 
     /**
