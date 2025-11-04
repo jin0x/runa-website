@@ -69,6 +69,35 @@ return [
                 ],
             ],
         ],
+        'case-study' => [
+            'enter_title_here' => 'Enter case study title',
+            'menu_icon' => 'dashicons-portfolio',
+            'supports' => ['title', 'editor', 'revisions', 'thumbnail', 'excerpt'],
+            'show_in_rest' => true,
+            'has_archive' => true,
+            'publicly_queryable' => true,
+            'exclude_from_search' => false,
+            'labels' => [
+                'singular' => 'Case Study',
+                'plural' => 'Case Studies',
+            ],
+            'rewrite' => [
+                'slug' => 'case-studies',
+            ],
+            'admin_cols' => [
+                'case_study_category' => [
+                    'taxonomy' => 'case_study_category',
+                ],
+                'featured_image' => [
+                    'title' => 'Hero Image',
+                    'featured_image' => 'thumbnail',
+                ],
+                'date' => [
+                    'title' => 'Date',
+                    'default' => 'DESC',
+                ],
+            ],
+        ],
     ],
 
     /*
@@ -122,6 +151,27 @@ return [
             'show_in_rest' => true,
             'show_in_quick_edit' => true,
             'show_tagcloud' => true,
+            'meta_box_cb' => false,
+        ],
+        'case_study_category' => [
+            'links' => ['case-study'],
+            'labels' => [
+                'singular' => 'Case Study Category',
+                'plural' => 'Case Study Categories',
+                'menu_name' => 'Categories',
+                'all_items' => 'All Categories',
+                'add_new_item' => 'Add New Category',
+                'edit_item' => 'Edit Category',
+            ],
+            'hierarchical' => false,
+            'public' => true,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'show_in_menu' => true,
+            'show_in_nav_menus' => true,
+            'show_in_rest' => true,
+            'show_in_quick_edit' => true,
+            'show_tagcloud' => false,
             'meta_box_cb' => false,
         ],
     ],
