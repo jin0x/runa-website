@@ -106,7 +106,7 @@
     @endif
   </header>
 
-  <div class="single-case-content grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[6.7fr_3.3fr] gap-x-24">
+  <div class="single-case-content grid grid-cols-1 {{ $resultMetrics ? 'md:grid-cols-2 xl:grid-cols-[6.7fr_3.3fr]' : '' }} gap-x-24">
     {{-- Content --}}
     <div class="space-y-10">
 
@@ -157,53 +157,53 @@
     </div>
 
     {{-- Sidebar --}}
-    <div class="sidebar">
-      <div class="space-y-6 sticky top-10">
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H3"
-          :color="TextColor::GRAY"
-        >
-          Results
-        </x-heading>
-        @if(!empty($resultMetrics))
-          <ul class="space-y-4">
-            @foreach($resultMetrics as $item_result)
-              <li class="flex gap-2">
-                {{-- Checkmark Icon --}}
-                <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="24" height="24" rx="12" fill="url(#paint0_linear_2793_21186)"/>
-                    <path d="M18.002 8.53955L9.34766 17.1938L4.75586 12.6021L5.81641 11.5415L9.34766 15.0728L16.9414 7.479L18.002 8.53955Z" fill="black"/>
-                    <defs>
-                    <linearGradient id="paint0_linear_2793_21186" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#00FFA3"/>
-                    <stop offset="0.48313" stop-color="#93FF82"/>
-                    <stop offset="0.943979" stop-color="#EEFC51"/>
-                    </linearGradient>
-                    </defs>
-                    </svg>
-                </div>
-                <div class="flex flex-col">
-                  <x-heading
-                    :as="HeadingTag::H4"
-                    :color="TextColor::GRAY"
-                  >
-                    {{ $item_result['result_heading'] }}
-                  </x-heading>
-                  <x-text
-                    :as="TextTag::SPAN"
-                    :size="TextSize::MEDIUM"
-                  >
-                    {{ $item_result['result_description'] }}
-                  </x-text>
-                </div>
-              </li>
-            @endforeach
-          </ul>
-        @endif
+    @if($resultMetrics)
+      <div class="sidebar">
+        <div class="space-y-6 sticky top-10">
+          <x-heading
+            :as="HeadingTag::H2"
+            :size="HeadingSize::H3"
+            :color="TextColor::GRAY"
+          >
+            Results
+          </x-heading>
+            <ul class="space-y-4">
+              @foreach($resultMetrics as $item_result)
+                <li class="flex gap-2">
+                  {{-- Checkmark Icon --}}
+                  <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="24" height="24" rx="12" fill="url(#paint0_linear_2793_21186)"/>
+                      <path d="M18.002 8.53955L9.34766 17.1938L4.75586 12.6021L5.81641 11.5415L9.34766 15.0728L16.9414 7.479L18.002 8.53955Z" fill="black"/>
+                      <defs>
+                      <linearGradient id="paint0_linear_2793_21186" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#00FFA3"/>
+                      <stop offset="0.48313" stop-color="#93FF82"/>
+                      <stop offset="0.943979" stop-color="#EEFC51"/>
+                      </linearGradient>
+                      </defs>
+                      </svg>
+                  </div>
+                  <div class="flex flex-col">
+                    <x-heading
+                      :as="HeadingTag::H4"
+                      :color="TextColor::GRAY"
+                    >
+                      {{ $item_result['result_heading'] }}
+                    </x-heading>
+                    <x-text
+                      :as="TextTag::SPAN"
+                      :size="TextSize::MEDIUM"
+                    >
+                      {{ $item_result['result_description'] }}
+                    </x-text>
+                  </div>
+                </li>
+              @endforeach
+            </ul>
+        </div>
       </div>
-    </div>
+    @endif
   </div>
   <div class="max-w-4xl mx-auto py-8">
     {{-- The Solution --}}
@@ -239,7 +239,7 @@
       >
         {{ $successHeading }}
       </x-heading>
-      @if(!empty($successPoints))
+      @if($successPoints)
         <ul class="space-y-4">
           @foreach($successPoints as $item_success)
             <li class="flex gap-2">
