@@ -114,8 +114,16 @@ class CaseStudies extends Field
                 'toolbar' => 'basic',
                 'media_upload' => 0,
             ])
+            ->addWysiwyg('result_text', [
+                'label' => 'The Result',
+                'instructions' => 'Describe the solution',
+                'required' => 0,
+                'tabs' => 'visual',
+                'toolbar' => 'basic',
+                'media_upload' => 0,
+            ])
             ->addWysiwyg('solution_text', [
-                'label' => 'Runa\'s Solution',
+                'label' => 'Runa\'s Solution | The Result',
                 'instructions' => 'Describe how Runa solved the challenge',
                 'required' => 0,
                 'tabs' => 'visual',
