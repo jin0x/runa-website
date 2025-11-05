@@ -192,7 +192,10 @@ class CompanyDirectoryBlock extends Block
                 $company_slug = get_field('company_slug', $company->ID);
                 $country_code = get_field('country_code', $company->ID);
                 $country_name = get_field('country_name', $company->ID);
-                $company_currency = get_field('company_currency', $company->ID);
+
+                // Get currency field - it returns an array with 'value', 'label', 'disabled' keys
+                $currency_field = get_field('company_currency', $company->ID);
+                $company_currency = is_array($currency_field) && isset($currency_field['value']) ? $currency_field['value'] : $currency_field;
 
                 // Get taxonomies
                 $country_terms = get_the_terms($company->ID, 'company_country');

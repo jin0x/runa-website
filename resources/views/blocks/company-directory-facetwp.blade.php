@@ -145,10 +145,11 @@
                     $companies_query->the_post();
 
                     // Get ACF fields
-                    $company_slug = get_field('company_slug');
-                    $country_code = get_field('country_code');
-                    $country_name = get_field('country_name');
-                    $company_currency = get_field('company_currency');
+                    $post_id = get_the_ID();
+                    $company_slug = get_field('company_slug', $post_id);
+                    $country_code = get_field('country_code', $post_id);
+                    $country_name = get_field('country_name', $post_id);
+                    $company_currency = get_field('company_currency', $post_id);
 
                     // Get taxonomies
                     $country_terms = get_the_terms(get_the_ID(), 'company_country');
