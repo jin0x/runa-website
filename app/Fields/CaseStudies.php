@@ -56,7 +56,6 @@ class CaseStudies extends Field
             ->addTextarea('hero_description', [
                 'label' => 'Hero Description/Subtitle',
                 'instructions' => 'Enter the subtitle that appears below the main title',
-                'required' => 1,
                 'rows' => 3,
                 'placeholder' => 'e.g. With a double-digit lift in new signups...',
             ])
@@ -89,52 +88,53 @@ class CaseStudies extends Field
                 'label' => 'Company Information',
                 'placement' => 'top',
             ])
-            ->addPostObject('company_reference', [
-                'label' => 'Company Reference',
-                'instructions' => 'Select the company this case study is about',
-                'required' => 0,
-                'post_type' => ['company'],
-                'allow_null' => 1,
-                'multiple' => 0,
-                'return_format' => 'object',
+            ->addRepeater('case_study_left_content_items', [
+                'label' => 'Left Content Items',
+                'instructions' => 'Add here the main left-side case study content. This section typically includes company background or context, the challenge or opportunity, the approach or solution, and key narrative paragraphs.',
+                'layout' => 'block',
+                'button_label' => 'Add Content',
+                'min' => 0,
+                'max' => 10,
             ])
-            ->addWysiwyg('about_company', [
-                'label' => 'About Company',
-                'instructions' => 'Enter information about the company',
-                'required' => 0,
-                'tabs' => 'visual',
-                'toolbar' => 'basic',
-                'media_upload' => 0,
+                ->addText('content_title', [
+                    'label' => 'Heading',
+                    'required' => 1,
+                ])
+                ->addWysiwyg('content_description', [
+                    'label' => 'Content Description',
+                    'tabs' => 'visual',
+                    'toolbar' => 'basic',
+                    'media_upload' => 0,
+                ])
+            ->endRepeater()
+            ->addRepeater('case_study_bottom_content_items', [
+                'label' => 'Bottom Content Items',
+                'instructions' => 'Add here the bottom content of the case study, typically including summary of impact, key results, metrics, growth outcomes, or supporting performance data.',
+                'layout' => 'block',
+                'button_label' => 'Add Content',
+                'min' => 0,
+                'max' => 10,
             ])
-            ->addWysiwyg('challenge_text', [
-                'label' => 'The Challenge',
-                'instructions' => 'Describe the challenge the company faced',
-                'required' => 0,
-                'tabs' => 'visual',
-                'toolbar' => 'basic',
-                'media_upload' => 0,
-            ])
-            ->addWysiwyg('result_text', [
-                'label' => 'The Result',
-                'instructions' => 'Describe the solution',
-                'required' => 0,
-                'tabs' => 'visual',
-                'toolbar' => 'basic',
-                'media_upload' => 0,
-            ])
-            ->addWysiwyg('solution_text', [
-                'label' => 'Runa\'s Solution | The Result',
-                'instructions' => 'Describe how Runa solved the challenge',
-                'required' => 0,
-                'tabs' => 'visual',
-                'toolbar' => 'basic',
-                'media_upload' => 0,
-            ])
-
+                ->addText('content_title', [
+                    'label' => 'Heading',
+                    'required' => 1,
+                ])
+                ->addWysiwyg('content_description', [
+                    'label' => 'Content Description',
+                    'tabs' => 'visual',
+                    'toolbar' => 'basic',
+                    'media_upload' => 0,
+                ])
+            ->endRepeater()
             // Results Section
             ->addTab('results_section', [
                 'label' => 'Results',
                 'placement' => 'top',
+            ])
+            ->addMessage('Right Content', 'Add here the main right-side case study content.')
+            ->addText('results_section_heading', [
+                'label' => 'Heading',
+                'instructions' => '"Results" as default',
             ])
             ->addRepeater('results', [
                 'label' => 'Result Metrics',
@@ -178,6 +178,10 @@ class CaseStudies extends Field
             ->addTab('success_points', [
                 'label' => 'Success Points',
                 'placement' => 'top',
+            ])
+            ->addText('success_points_section_heading', [
+                'label' => 'Heading',
+                'instructions' => '"Why partners trust Runa for long-term growth" as default',
             ])
             ->addRepeater('success_points', [
                 'label' => 'Success in Numbers',
