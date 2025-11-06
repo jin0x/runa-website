@@ -27,31 +27,47 @@
   $caseStudyPdfUrl = $caseStudyPdfUrl ? esc_url($caseStudyPdfUrl) : '';
   $ctaText = get_field('cta_text') ?? 'Download Case Study';
 
-  // Company data
-  $companyReference = get_field('company_reference');
-  $companyId        = $companyReference?->ID ?? null;
-  $companyName      = $companyId ? get_the_title($companyId) : '';
+  // Hero image fallback
+  $heroImageHtml = '';
+  $heroImageField = get_field('hero_image');
 
-  $aboutCompany = get_field('about_company');
-  $aboutHeading = $companyName ? 'About ' . $companyName : 'About the company';
+  if ($heroImageField) {
+      $heroImageHtml = wp_get_attachment_image(
+          $heroImageField['ID'],
+          'full',
+          false,
+          [
+              'class' => 'w-full h-auto',
+              'loading' => 'lazy',
+          ]
+      );
+  } elseif (has_post_thumbnail($postId)) {
+      $heroImageHtml = get_the_post_thumbnail(
+          $postId,
+          'full',
+          [
+              'class' => 'w-full h-auto',
+              'loading' => 'lazy',
+          ]
+      );
+  }
 
-  $challengeHeading = 'The challenge';
-  $challengeContent = get_field('challenge_text');
+  // Left Content
+  $case_study_left_content_items = get_field('case_study_left_content_items');
 
-  $theResultHeading = 'The result';
-  $theResultContent = get_field('result_text');
-
+  // Right Content | Sidebar
+  $resultHeading = get_field('results_section_heading') ? get_field('results_section_heading') : 'Results';
   $resultMetrics = get_field('results');
 
-  $solutionHeading    = 'The solution';
-  $theSolutionContent = get_field('solution_text');
+  // Bottom Content
+  $case_study_bottom_content_items = get_field('case_study_bottom_content_items');
 
   // Testimonial
   $testimonialReference = get_field('testimonial_reference');
 
   // Success Points
-  $successPoints  = get_field('success_points');
-  $successHeading = $companyName ? 'Why ' . $companyName . ' trust Runa for long-term growth': 'Why partners trust Runa for long-term growth';
+  $successPointsHeading = get_field('success_points_section_heading') ? get_field('success_points_section_heading') : 'Why partners trust Runa for long-term growth';
+  $successPoints        = get_field('success_points');
 @endphp
 
 <article @php(post_class('case-study-single max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:pt-40 md:pb-30'))>
@@ -99,61 +115,33 @@
       </div>
     @endif
 
-    @if (has_post_thumbnail())
+    @if ($heroImageHtml)
       <div class="mb-16 rounded-lg overflow-hidden">
-        @php(the_post_thumbnail('full', ['class' => 'w-full h-auto']))
+        {!! $heroImageHtml !!}
       </div>
     @endif
   </header>
 
   <div class="single-case-content grid grid-cols-1 {{ $resultMetrics ? 'md:grid-cols-2 xl:grid-cols-[6.7fr_3.3fr]' : '' }} gap-x-24">
-    {{-- Content --}}
+    {{-- Left Content --}}
     <div class="space-y-10">
-
-      {{-- About --}}
-      <div class="space-y-6">
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H3"
-        >
-          {{ $aboutHeading }}
-        </x-heading>
-        @if($aboutCompany)
-          <div>
-            {!! apply_tailwind_classes_to_content($aboutCompany) !!}
+      @if($case_study_left_content_items)
+        @foreach($case_study_left_content_items as $left_item)
+          <div class="space-y-6">
+            <x-heading
+              :as="HeadingTag::H2"
+              :size="HeadingSize::H3"
+            >
+              {{ $left_item['content_title'] }}
+            </x-heading>
+            @if($left_item['content_description'])
+              <div>
+                {!! apply_tailwind_classes_to_content($left_item['content_description']) !!}
+              </div>
+            @endif
           </div>
-        @endif
-      </div>
-
-      {{-- The Challenge --}}
-      <div class="space-y-6">
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H3"
-        >
-          {{ $challengeHeading }}
-        </x-heading>
-        @if($challengeContent)
-          <div>
-            {!! apply_tailwind_classes_to_content($challengeContent) !!}
-          </div>
-        @endif
-      </div>
-
-      {{-- The Result --}}
-      <div class="space-y-6">
-        <x-heading
-          :as="HeadingTag::H2"
-          :size="HeadingSize::H3"
-        >
-          {{ $theResultHeading }}
-        </x-heading>
-        @if($theResultContent)
-          <div>
-            {!! apply_tailwind_classes_to_content($theResultContent) !!}
-          </div>
-        @endif
-      </div> 
+        @endforeach
+      @endif
     </div>
 
     {{-- Sidebar --}}
@@ -165,7 +153,7 @@
             :size="HeadingSize::H3"
             :color="TextColor::GRAY"
           >
-            Results
+            {{ $resultHeading }}
           </x-heading>
             <ul class="space-y-4">
               @foreach($resultMetrics as $item_result)
@@ -206,25 +194,29 @@
     @endif
   </div>
   <div class="max-w-4xl mx-auto py-8">
-    {{-- The Solution --}}
-    <div class="space-y-6">
-      <x-heading
-        :as="HeadingTag::H2"
-        :size="HeadingSize::H3"
-      >
-        {{ $solutionHeading }}
-      </x-heading>
-      @if($theSolutionContent)
-        <div>
-          {!! apply_tailwind_classes_to_content($theSolutionContent) !!}
+    {{-- Bottom --}}
+    @if($case_study_bottom_content_items)
+      @foreach($case_study_bottom_content_items as $bottom_item)
+        <div class="space-y-6">
+          <x-heading
+            :as="HeadingTag::H2"
+            :size="HeadingSize::H3"
+          >
+            {{ $bottom_item['content_title'] }}
+          </x-heading>
+          @if($bottom_item['content_description'])
+            <div>
+              {!! apply_tailwind_classes_to_content($bottom_item['content_description']) !!}
+            </div>
+          @endif
         </div>
-      @endif
-    </div> 
+      @endforeach
+    @endif 
 
     {{-- Testimonial Card --}}
     @if($testimonialReference)
       <div class="py-12">
-        <x-testimonial-card-right-quote
+        <x-testimonial-card-centered
           :post="$testimonialReference->ID"
           cardColor="green" 
         />
@@ -237,7 +229,7 @@
         :as="HeadingTag::H2"
         :size="HeadingSize::H3"
       >
-        {{ $successHeading }}
+        {{ $successPointsHeading}}
       </x-heading>
       @if($successPoints)
         <ul class="space-y-4">
@@ -278,5 +270,3 @@
 
   </div>
 </article>
-
-
