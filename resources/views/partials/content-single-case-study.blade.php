@@ -66,7 +66,7 @@
   $testimonialReference = get_field('testimonial_reference');
 
   // Success Points
-  $successPointsHeading = get_field('success_points_section_heading') ? get_field('success_points_section_heading') : 'Why partners trust Runa for long-term growth';
+  $successPointsHeading = get_field('success_points_section_heading') ? get_field('success_points_section_heading') : 'Success In Numbers';
   $successPoints        = get_field('success_points');
 @endphp
 
@@ -224,49 +224,48 @@
     @endif
 
     {{-- Success Points --}}
-    <div class="space-y-6">
-      <x-heading
-        :as="HeadingTag::H2"
-        :size="HeadingSize::H3"
-      >
-        {{ $successPointsHeading}}
-      </x-heading>
-      @if($successPoints)
-        <ul class="space-y-4">
-          @foreach($successPoints as $item_success)
-            <li class="flex gap-2">
-              {{-- Checkmark Icon --}}
-              <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="40" height="40" rx="20" fill="url(#paint0_linear_552_13364)"/>
-                  <mask id="mask0_552_13364" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="7" width="25" height="26">
-                  <rect x="8" y="7.375" width="25" height="25" fill="#D9D9D9"/>
-                  </mask>
-                  <g mask="url(#mask0_552_13364)">
-                  <path d="M17.2882 25.6042L20.5 23.1563L23.7119 25.6042L22.4445 21.5417L25.4133 19.5625H21.8195L20.5 15.4826L19.1806 19.5625H15.5868L18.5556 21.5417L17.2882 25.6042ZM14.0677 30.2917L16.4896 22.375L10.0834 17.7917H18L20.5 9.45834L23 17.7917H30.9167L24.5105 22.375L26.9323 30.2917L20.5 25.3958L14.0677 30.2917Z" fill="black"/>
-                  </g>
-                  <defs>
-                  <linearGradient id="paint0_linear_552_13364" x1="0" y1="40" x2="40" y2="0" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#00FFA3"/>
-                  <stop offset="0.48313" stop-color="#93FF82"/>
-                  <stop offset="0.943979" stop-color="#EEFC51"/>
-                  </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <div class="flex flex-col">
-                <x-text
-                  :as="TextTag::SPAN"
-                  :size="TextSize::MEDIUM"
-                >
-                  {{ $item_success['success_point_text'] }}
-                </x-text>
-              </div>
-            </li>
-          @endforeach
-        </ul>
-      @endif
-    </div>
-
+    @if($successPoints)
+      <div class="space-y-6">
+        <x-heading
+          :as="HeadingTag::H2"
+          :size="HeadingSize::H3"
+        >
+          {{ $successPointsHeading}}
+        </x-heading>
+          <ul class="space-y-4">
+            @foreach($successPoints as $item_success)
+              <li class="flex gap-2">
+                {{-- Checkmark Icon --}}
+                <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="20" fill="url(#paint0_linear_552_13364)"/>
+                    <mask id="mask0_552_13364" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="7" width="25" height="26">
+                    <rect x="8" y="7.375" width="25" height="25" fill="#D9D9D9"/>
+                    </mask>
+                    <g mask="url(#mask0_552_13364)">
+                    <path d="M17.2882 25.6042L20.5 23.1563L23.7119 25.6042L22.4445 21.5417L25.4133 19.5625H21.8195L20.5 15.4826L19.1806 19.5625H15.5868L18.5556 21.5417L17.2882 25.6042ZM14.0677 30.2917L16.4896 22.375L10.0834 17.7917H18L20.5 9.45834L23 17.7917H30.9167L24.5105 22.375L26.9323 30.2917L20.5 25.3958L14.0677 30.2917Z" fill="black"/>
+                    </g>
+                    <defs>
+                    <linearGradient id="paint0_linear_552_13364" x1="0" y1="40" x2="40" y2="0" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#00FFA3"/>
+                    <stop offset="0.48313" stop-color="#93FF82"/>
+                    <stop offset="0.943979" stop-color="#EEFC51"/>
+                    </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="flex flex-col">
+                  <x-text
+                    :as="TextTag::SPAN"
+                    :size="TextSize::MEDIUM"
+                  >
+                    {{ $item_success['success_point_text'] }}
+                  </x-text>
+                </div>
+              </li>
+            @endforeach
+          </ul>
+      </div>
+    @endif
   </div>
 </article>
