@@ -181,7 +181,7 @@ class CaseStudies extends Field
             ])
             ->addText('success_points_section_heading', [
                 'label' => 'Heading',
-                'instructions' => '"Why partners trust Runa for long-term growth" as default',
+                'instructions' => '"Success In Numbers" as default',
             ])
             ->addRepeater('success_points', [
                 'label' => 'Success in Numbers',
