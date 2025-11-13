@@ -59,26 +59,41 @@
             ])
 
             <div class="hidden lg:absolute lg:flex lg:items-center lg:justify-end lg:inset-y-0 lg:right-0 gap-2">
-              @if (!empty($primary_cta_url) && !empty($primary_cta_label))
-                <x-button
-                  :size="ButtonSize::DEFAULT"
-                  :variant="ButtonVariant::NAV"
-                  :iconPosition="'left'"
-                  :iconType="'user'"
-                  :href="$primary_cta_url"
-                  target="{{ $primary_cta_target }}"
-                >
-                  {{ $primary_cta_label }}
-                </x-button>
-              @endif
-              @if (!empty($secondary_cta_url) && !empty($secondary_cta_label))
-                <x-button
-                  :variant="ButtonVariant::PRIMARY"
-                  :href="$secondary_cta_url"
-                  target="{{ $secondary_cta_target }}"
-                >
-                  {{ $secondary_cta_label }}
-                </x-button>
+              @if (!empty($primary_cta_url) && !empty($secondary_cta_url) && !empty($primary_cta_label))
+                {{-- Custom Split Button: User Icon links to Primary, Text links to Secondary --}}
+                <div class="inline-flex items-center gap-2 rounded-full btn-nav transition-all duration-300 px-6 py-3 lg:min-h-[55px] overflow-hidden" style="background: var(--gradient-3);">
+                  {{-- Left Side: User Icon + Divider → Primary CTA --}}
+                  <a href="{{ $primary_cta_url }}" target="{{ $primary_cta_target }}" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    {{-- User Icon --}}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="11.5" stroke="url(#userIconGradient)" stroke-opacity="0.5"/>
+                      <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12Z" stroke="url(#userIconGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6 18C6 15.7909 8.68629 14 12 14C15.3137 14 18 15.7909 18 18" stroke="url(#userIconGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <defs>
+                        <linearGradient id="userIconGradient" x1="12" y1="0" x2="12" y2="24" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#FFF"/>
+                          <stop offset="1" stop-color="#FFF" stop-opacity="0.5"/>
+                        </linearGradient>
+                      </defs>
+                    </svg>
+
+                    {{-- Divider --}}
+                    <svg width="1" height="32" viewBox="0 0 1 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="0.5" y1="0" x2="0.5" y2="32" stroke="url(#dividerGradient)" stroke-width="1"/>
+                      <defs>
+                        <linearGradient id="dividerGradient" x1="0.5" y1="0" x2="0.5" y2="32" gradientUnits="userSpaceOnUse">
+                          <stop offset="0.1634" stop-color="white" stop-opacity="0.1"/>
+                          <stop offset="1" stop-color="white" stop-opacity="0.4"/>
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </a>
+
+                  {{-- Right Side: Text → Secondary CTA --}}
+                  <a href="{{ $secondary_cta_url }}" target="{{ $secondary_cta_target }}" class="text-small text-gradient-primary hover:opacity-80 transition-opacity !no-underline">
+                    {{ $secondary_cta_label }}
+                  </a>
+                </div>
               @endif
             </div>
 
@@ -154,23 +169,41 @@
               ])
 
               <div class="flex flex-col gap-2 p-4 text-center items-start">
-                @if (!empty($primary_cta_url) && !empty($primary_cta_label))
-                  <x-button
-                    :variant="ButtonVariant::PRIMARY"
-                    :href="$primary_cta_url"
-                    target="{{ $primary_cta_target }}"
-                  >
-                    {{ $primary_cta_label }}
-                  </x-button>
-                @endif
-                @if (!empty($secondary_cta_url) && !empty($secondary_cta_label))
-                  <x-button
-                    :variant="ButtonVariant::SECONDARY"
-                    :href="$secondary_cta_url"
-                    target="{{ $secondary_cta_target }}"
-                  >
-                    {{ $secondary_cta_label }}
-                  </x-button>
+                @if (!empty($primary_cta_url) && !empty($secondary_cta_url) && !empty($primary_cta_label))
+                  {{-- Mobile Split Button: User Icon links to Primary, Text links to Secondary --}}
+                  <div class="inline-flex items-center gap-2 rounded-full btn-nav transition-all duration-300 px-6 py-3 w-full max-w-none" style="background: var(--gradient-3);">
+                    {{-- Left Side: User Icon + Divider → Primary CTA --}}
+                    <a href="{{ $primary_cta_url }}" target="{{ $primary_cta_target }}" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                      {{-- User Icon --}}
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="11.5" stroke="url(#userIconGradientMobile)" stroke-opacity="0.5"/>
+                        <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12Z" stroke="url(#userIconGradientMobile)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6 18C6 15.7909 8.68629 14 12 14C15.3137 14 18 15.7909 18 18" stroke="url(#userIconGradientMobile)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                          <linearGradient id="userIconGradientMobile" x1="12" y1="0" x2="12" y2="24" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFF"/>
+                            <stop offset="1" stop-color="#FFF" stop-opacity="0.5"/>
+                          </linearGradient>
+                        </defs>
+                      </svg>
+
+                      {{-- Divider --}}
+                      <svg width="1" height="32" viewBox="0 0 1 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0.5" y1="0" x2="0.5" y2="32" stroke="url(#dividerGradientMobile)" stroke-width="1"/>
+                        <defs>
+                          <linearGradient id="dividerGradientMobile" x1="0.5" y1="0" x2="0.5" y2="32" gradientUnits="userSpaceOnUse">
+                            <stop offset="0.1634" stop-color="white" stop-opacity="0.1"/>
+                            <stop offset="1" stop-color="white" stop-opacity="0.4"/>
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </a>
+
+                    {{-- Right Side: Text → Secondary CTA --}}
+                    <a href="{{ $secondary_cta_url }}" target="{{ $secondary_cta_target }}" class="text-small text-gradient-primary hover:opacity-80 transition-opacity !no-underline flex-1 text-left pb-0.5">
+                      {{ $primary_cta_label }}
+                    </a>
+                  </div>
                 @endif
               </div>
             </div>
