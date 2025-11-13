@@ -36,7 +36,7 @@
 
   // Define size classes for buttons
   $sizeClasses = [
-      ButtonSize::DEFAULT => 'px-6 py-3',
+      ButtonSize::DEFAULT => 'px-6 py-3 lg:min-h-[55px]',
       ButtonSize::SMALL => 'px-6 py-2',
       ButtonSize::LARGE => 'px-10 py-6',
   ];
