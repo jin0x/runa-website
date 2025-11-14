@@ -295,7 +295,7 @@ body {
 }
 
 .heading-super {
-  @apply text-5xl md:text-7xl font-bold leading-[85%];
+  @apply text-5xl md:text-6xl lg:text-7xl font-bold leading-[85%];
   font-family: var(--font-heading);
 }
 
