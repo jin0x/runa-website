@@ -631,7 +631,7 @@ strong {
 
 /* Post Card Styles */
 .post-card {
-  @apply bg-white rounded-2xl border border-neutral-100 overflow-hidden transition-all duration-300;
+  @apply bg-white rounded-[12px] border border-neutral-100 overflow-hidden transition-all duration-300;
 }
 
 .post-card:hover {
@@ -643,7 +643,7 @@ strong {
 }
 
 .featured-post-card {
-  @apply bg-white rounded-2xl border border-neutral-100 overflow-hidden transition-all duration-300;
+  @apply bg-white rounded-[12px] border border-neutral-100 overflow-hidden transition-all duration-300;
 }
 
 .featured-post-card:hover {
