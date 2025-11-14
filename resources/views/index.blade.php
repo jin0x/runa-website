@@ -7,6 +7,26 @@
 @extends('layouts.app')
 
 @section('content')
+  @php
+    $isPaged = is_paged();
+    $featuredQuery = null;
+    $hasFeaturedPosts = false;
+
+    if (! $isPaged) {
+      $featuredQuery = new WP_Query([
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'meta_key'       => RUNA_FEATURED_POST_META_KEY,
+        'meta_value'     => '1',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+      ]);
+
+      $hasFeaturedPosts = $featuredQuery->have_posts();
+    }
+  @endphp
+
   <x-container :size="ContainerSize::LARGE" classes="py-16 md:pt-40 md:pb-30">
     {{-- Blog Title --}}
     <div class="mb-12 flex flex-col items-center gap-y-6">
@@ -62,28 +82,20 @@
       </x-alert>
       {!! get_search_form(false) !!}
     @else
-      @php
-        $postCount = 0;
-        $posts = [];
-        while(have_posts()) {
-          the_post();
-          $posts[] = get_the_ID();
-          $postCount++;
-        }
-        rewind_posts();
-      @endphp
-
-      {{-- Featured Post (First Post) --}}
-      @if($postCount > 0)
-        @php the_post() @endphp
-        <div class="mb-16">
-          <x-post-card :featured="true" :post="get_the_ID()" />
+      {{-- Featured posts --}}
+      @if(!$isPaged && $hasFeaturedPosts)
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          @while($featuredQuery->have_posts())
+            @php $featuredQuery->the_post() @endphp
+            <x-post-card :featured="true" :post="get_the_ID()" />
+          @endwhile
         </div>
+        @php wp_reset_postdata() @endphp
       @endif
 
-      {{-- Regular Posts Grid --}}
-      @if($postCount > 1)
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+      {{-- Remaining posts grid --}}
+      @if(have_posts())
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           @while(have_posts())
             @php the_post() @endphp
             <x-post-card :featured="false" :post="get_the_ID()" />

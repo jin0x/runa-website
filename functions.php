@@ -2,7 +2,8 @@
 
 use Roots\Acorn\Application;
 
-define("TEXT_DOMAIN", "runa");
+define('TEXT_DOMAIN', 'runa');
+define('RUNA_FEATURED_POST_META_KEY', 'featured_post');
 
 /*
 |--------------------------------------------------------------------------

@@ -3,6 +3,7 @@
   use App\Enums\HeadingSize;
   use App\Enums\TextSize;
   use App\Enums\TextTag;
+  use App\Enums\TextColor;
 @endphp
 
 @props([
@@ -21,9 +22,10 @@
   $author = get_the_author_meta('display_name', get_post_field('post_author', $postId));
   $authorAvatar = get_avatar_url(get_post_field('post_author', $postId), ['size' => 32]);
 
-  // Get primary tag
-  $tags = get_the_tags($postId);
-  $primaryTag = !empty($tags) ? $tags[0] : null;
+  // Get up to three tags (featured) or two (regular)
+  $tags = get_the_tags($postId) ?: [];
+  $tagLimit = $featured ? 3 : 2;
+  $displayTags = array_slice($tags, 0, $tagLimit);
 
   // Reading time (rough estimate)
   $content = get_post_field('post_content', $postId);
@@ -31,32 +33,63 @@
   $readingTime = ceil($wordCount / 200); // Average reading speed of 200 words per minute
 @endphp
 
-<article class="{{ $featured ? 'featured-post-card' : 'post-card' }} group">
+<article class="{{ $featured ? 'featured-post-card' : 'post-card' }}">
   <a href="{{ $permalink }}" class="block">
-    <div class="{{ $featured ? 'flex flex-col lg:flex-row md:gap-8' : 'flex flex-col h-full' }}">
+    <div class="flex flex-col h-full">
       {{-- Image --}}
-      <div class="{{ $featured ? 'lg:w-1/2' : 'rounded-t-2xl w-full' }} relative overflow-hidden bg-neutral-100">
+      <div class="{{ $featured ? 'rounded-t-[12px]' : 'rounded-[12px]' }} w-full relative overflow-hidden bg-neutral-100">
         @if($thumbnail)
           <img
             src="{{ $thumbnail }}"
             alt="{{ $title }}"
-            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 {{ $featured ? 'aspect-[16/8]' : 'aspect-[4/2]' }}"
+            class="w-full h-full object-cover transition-transform duration-300 {{ $featured ? 'aspect-[16/9]' : 'aspect-[16/9]' }}"
             loading="lazy"
           >
         @else
-          <div class="w-full {{ $featured ? 'aspect-[16/10]' : 'aspect-[4/3]' }} bg-gradient-to-br from-primary-green-neon to-primary-yellow"></div>
+          <div class="w-full {{ $featured ? 'aspect-[16/9]' : 'aspect-[16/9]' }} bg-gradient-to-br from-primary-green-neon to-primary-yellow"></div>
         @endif
       </div>
 
       {{-- Content --}}
-      <div class="{{ $featured ? 'lg:w-1/2 flex flex-col justify-center py-6 pl-6 pr-6 lg:pl-0' : 'flex-1 p-6' }}">
-        {{-- Tag Badge --}}
-        @if($primaryTag)
-          <div class="mb-4">
-            <x-badge variant="default" size="sm" rounded="full"
-              class="bg-primary-green-neon text-primary-dark">
-              {{ $primaryTag->name }}
-            </x-badge>
+      <div class="flex flex-col h-full p-6">
+        {{-- Tag Badges --}}
+        @if($featured || !empty($displayTags))
+          <div class="flex flex-wrap justify-between mb-6">
+            <div class="flex flex-wrap gap-2">
+              @if($featured)
+                <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-purple">
+                  <x-text
+                    :as="TextTag::SPAN"
+                    :size="TextSize::CAPTION"
+                    class="text-primary-dark"
+                  >
+                    Featured
+                  </x-text>
+                </x-badge>
+              @endif
+
+              @foreach($displayTags as $tag)
+                <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-cyan">
+                  <x-text
+                    :as="TextTag::SPAN"
+                    :size="TextSize::CAPTION"
+                    class="text-primary-dark"
+                  >
+                    {{ $tag->name }}
+                  </x-text>
+                </x-badge>
+              @endforeach
+            </div>
+
+            <div>
+              <x-text
+                :as="TextTag::SPAN"
+                :size="TextSize::CAPTION"
+                class="text-primary-dark"
+              >
+                {{ $readingTime }} min read
+              </x-text>
+            </div>
           </div>
         @endif
 
@@ -64,7 +97,7 @@
         <x-heading
           :as="$featured ? HeadingTag::H2 : HeadingTag::H3"
           :size="$featured ? HeadingSize::H3 : HeadingSize::H5"
-          class="mb-3 line-clamp-2 group-hover:text-primary-green-neon transition-colors duration-200"
+          class="mb-6 line-clamp-2 transition-colors duration-200"
         >
           {!! $title !!}
         </x-heading>
@@ -78,11 +111,17 @@
           {{ $excerpt }}
         </x-text>
 
-        {{-- Meta --}}
-        <div class="flex items-center gap-2 text-sm text-neutral-400 mt-auto">
-          <time datetime="{{ get_the_date('c', $postId) }}">{{ $date }}</time>
-          <span>•</span>
-          <span>{{ $readingTime }} min read</span>
+        <div class="mt-auto">
+          <x-text 
+            :as="TextTag::A" 
+            :size="TextSize::SMALL" 
+            :color="TextColor::LIGHT"
+            class="inline-flex items-center gap-1 !no-underline hover:underline transition-all duration-200 ease-in-out">
+              <span>Read more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7.00016 0.663574L5.82516 1.83857L10.4752 6.49691H0.333496V8.16357H10.4752L5.82516 12.8219L7.00016 13.9969L13.6668 7.33024L7.00016 0.663574Z" fill="black"/>
+              </svg>
+          </x-text>
         </div>
       </div>
     </div>
