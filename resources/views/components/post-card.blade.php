@@ -49,7 +49,7 @@
       </div>
 
       {{-- Content --}}
-      <div class="{{ $featured ? 'lg:w-1/2 flex flex-col justify-center py-6 pl-6 pr-6 md:pl-0' : 'flex-1 p-6' }}">
+      <div class="{{ $featured ? 'lg:w-1/2 flex flex-col justify-center py-6 pl-6 pr-6 lg:pl-0' : 'flex-1 p-6' }}">
         {{-- Tag Badge --}}
         @if($primaryTag)
           <div class="mb-4">

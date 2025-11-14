@@ -63,7 +63,7 @@
 
    {{-- Section Heading --}}
   @if($section_eyebrow || $section_title || $section_description)
-    <div class="px-4 md:px-0">
+    <div class="px-4 md:px-2 lg:px-0">
       <x-section-heading
       :eyebrow="$section_eyebrow"
       :heading="$section_title"
