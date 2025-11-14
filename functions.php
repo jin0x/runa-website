@@ -76,3 +76,31 @@ collect(['setup', 'filters', 'helpers'])
  * Change the font name, weights and styles to what you are using as needed.
  */
 define('GOOGLE_FONTS', 'Inter:300,400,500:latin');
+
+/**
+ * Remove trailing slashes from all link outputs
+ */
+
+// Filter ACF Link field outputs
+add_filter('acf/load_value/type=link', 'remove_trailing_slash_from_acf_links', 10, 3);
+function remove_trailing_slash_from_acf_links($value, $post_id, $field) {
+    if (is_array($value) && isset($value['url'])) {
+        $value['url'] = untrailingslashit($value['url']);
+    }
+    return $value;
+}
+
+// Filter WordPress navigation menu links
+add_filter('wp_nav_menu_objects', 'remove_trailing_slash_from_nav_menu');
+function remove_trailing_slash_from_nav_menu($menu_items) {
+    foreach ($menu_items as $menu_item) {
+        $menu_item->url = untrailingslashit($menu_item->url);
+    }
+    return $menu_items;
+}
+
+// Filter social network URLs and other URLs in content
+add_filter('the_content', 'remove_trailing_slash_from_content_links');
+function remove_trailing_slash_from_content_links($content) {
+    return preg_replace('/href="([^"]+)\/"/', 'href="$1"', $content);
+}
