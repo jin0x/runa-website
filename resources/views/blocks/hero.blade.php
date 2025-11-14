@@ -79,7 +79,7 @@
   <div class="absolute bottom-0 left-0 right-0 z-20 pb-16 px-4 lg:px-8">
     @if($isFullWidth)
       {{-- Full Width: No container, just padding --}}
-      <x-flex direction="col">
+      <x-flex direction="col" class="max-w-full">
         @if ($eyebrow)
         <div>
           <x-text
@@ -98,7 +98,7 @@
             :as="HeadingTag::H1"
             :size="HeadingSize::SUPER_DUPER"
             :color="TextColor::DARK"
-            class="mb-3"
+            class="mb-3 break-words"
           >
             {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
           </x-heading>
@@ -109,7 +109,7 @@
             :as="TextTag::SPAN"
             :size="TextSize::XLARGE"
             :color="TextColor::DARK"
-            class="mb-8"
+            class="mb-8 break-words"
           >
             {!! $content !!}
           </x-text>
@@ -161,7 +161,7 @@
                 :as="HeadingTag::H1"
                 :size="HeadingSize::SUPER_DUPER"
                 :color="TextColor::DARK"
-                class="mb-3"
+                class="mb-3 break-words"
               >
                 {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' .   $accentColor . '">$1</span>', $title) !!}
               </x-heading>
@@ -172,7 +172,7 @@
                 :as="TextTag::SPAN"
                 :size="TextSize::XLARGE"
                 :color="TextColor::DARK"
-                class="mb-8"
+                class="mb-8 break-words"
               >
                 {!! $content !!}
               </x-text>
