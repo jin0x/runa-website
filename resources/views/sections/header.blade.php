@@ -13,6 +13,8 @@
     $secondary_cta_url = $secondary_cta['url'] ?? '';
     $secondary_cta_target = $secondary_cta['target'] ?? '';
     $secondary_cta_label = $secondary_cta['title'] ?? '';
+    $has_primary_cta = !empty($primary_cta_url) && !empty($primary_cta_label);
+    $has_secondary_cta = !empty($secondary_cta_url) && !empty($secondary_cta_label);
     $header_logo = get_field('header_logo', 'option');
 @endphp
 @if($enable_header_banner && $header_banner_message)
@@ -49,26 +51,32 @@
             ])
 
             <div class="hidden lg:absolute lg:flex lg:items-center lg:justify-end lg:inset-y-0 lg:right-0 gap-2">
-              @if (!empty($primary_cta_url) && !empty($primary_cta_label))
-                <x-button
-                  :size="ButtonSize::DEFAULT"
-                  :variant="ButtonVariant::NAV"
-                  :iconPosition="'left'"
-                  :iconType="'user'"
-                  :href="$primary_cta_url"
-                  target="{{ $primary_cta_target }}"
-                >
-                  {{ $primary_cta_label }}
-                </x-button>
-              @endif
-              @if (!empty($secondary_cta_url) && !empty($secondary_cta_label))
-                <x-button
-                  :variant="ButtonVariant::PRIMARY"
-                  :href="$secondary_cta_url"
-                  target="{{ $secondary_cta_target }}"
-                >
-                  {{ $secondary_cta_label }}
-                </x-button>
+              @if ($has_primary_cta)
+                <div class="inline-flex items-center {{ $has_secondary_cta ? 'gap-2' : '' }} rounded-full btn-nav transition-all duration-300 px-6 py-3 lg:min-h-[55px] overflow-hidden" style="background: var(--gradient-3);">
+                  {{-- Primary CTA --}}
+                  <a href="{{ $primary_cta_url }}" target="{{ $primary_cta_target }}" class="flex items-center hover:opacity-80 transition-opacity text-small text-white !no-underline {{ $has_secondary_cta ? 'gap-3' : 'justify-center w-full text-center' }}">
+                    {{ $primary_cta_label }}
+                    @if ($has_secondary_cta)
+                      {{-- Divider --}}
+                      <svg width="1" height="32" viewBox="0 0 1 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0.5" y1="0" x2="0.5" y2="32" stroke="url(#dividerGradient)" stroke-width="1"/>
+                        <defs>
+                          <linearGradient id="dividerGradient" x1="0.5" y1="0" x2="0.5" y2="32" gradientUnits="userSpaceOnUse">
+                            <stop offset="0.1634" stop-color="white" stop-opacity="0.1"/>
+                            <stop offset="1" stop-color="white" stop-opacity="0.4"/>
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    @endif
+                  </a>
+
+                  @if ($has_secondary_cta)
+                    {{-- Secondary CTA --}}
+                    <a href="{{ $secondary_cta_url }}" target="{{ $secondary_cta_target }}" class="text-small text-gradient-primary hover:opacity-80 transition-opacity !no-underline">
+                      {{ $secondary_cta_label }}
+                    </a>
+                  @endif
+                </div>
               @endif
             </div>
 
