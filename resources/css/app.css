@@ -629,6 +629,14 @@ strong {
   list-style: initial;
 }
 
+.break-smart {
+  overflow-wrap: break-word;
+  word-break: normal; 
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
 /* Post Card Styles */
 .post-card {
   @apply bg-white rounded-[12px] border border-neutral-100 overflow-hidden transition-all duration-300;

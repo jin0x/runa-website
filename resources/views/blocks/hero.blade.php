@@ -98,7 +98,7 @@
             :as="HeadingTag::H1"
             :size="HeadingSize::SUPER_DUPER"
             :color="TextColor::DARK"
-            class="mb-3 break-words"
+            class="mb-3 break-smart"
           >
             {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' . $accentColor . '">$1</span>', $title) !!}
           </x-heading>
@@ -109,7 +109,7 @@
             :as="TextTag::SPAN"
             :size="TextSize::XLARGE"
             :color="TextColor::DARK"
-            class="mb-8 break-words"
+            class="mb-8 break-smart"
           >
             {!! $content !!}
           </x-text>
@@ -161,7 +161,7 @@
                 :as="HeadingTag::H1"
                 :size="HeadingSize::SUPER_DUPER"
                 :color="TextColor::DARK"
-                class="mb-3 break-words"
+                class="mb-3 break-smart"
               >
                 {!! preg_replace('/<span>(.*?)<\/span>/', '<span class="' .   $accentColor . '">$1</span>', $title) !!}
               </x-heading>
@@ -172,7 +172,7 @@
                 :as="TextTag::SPAN"
                 :size="TextSize::XLARGE"
                 :color="TextColor::DARK"
-                class="mb-8 break-words"
+                class="mb-8 break-smart"
               >
                 {!! $content !!}
               </x-text>
