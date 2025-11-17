@@ -41,6 +41,15 @@ add_filter('admin_head', function () {
 });
 
 /**
+ * Load Cookiebot consent management script
+ *
+ * @return void
+ */
+add_action('wp_head', function () {
+    echo '<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="cf7749ec-01b4-4229-a719-a26dd73f708b" data-blockingmode="auto" type="text/javascript"></script>';
+}, 1); // High priority to load early
+
+/**
  * Fallback font loading for production environments
  * Ensures fonts load even if CSS compilation issues occur
  *
