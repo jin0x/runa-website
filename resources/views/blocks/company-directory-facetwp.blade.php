@@ -161,11 +161,6 @@
                       <div class="text-sm font-normal {{ $textColor }}">
                         {!! get_the_title() !!}
                       </div>
-                      @if(!empty($company_slug))
-                        <div class="text-xs text-gray-500">
-                          {{ $company_slug }}
-                        </div>
-                      @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
                       @if($category_terms && !is_wp_error($category_terms))

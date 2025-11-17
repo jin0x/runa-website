@@ -175,11 +175,6 @@
                     <div class="text-sm font-medium {{ $textColor }}">
                       {{ $company['title'] }}
                     </div>
-                    @if(!empty($company['slug']))
-                      <div class="text-xs text-gray-500">
-                        {{ $company['slug'] }}
-                      </div>
-                    @endif
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
                     {{ $company['country_name'] ?? 'N/A' }}
