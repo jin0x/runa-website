@@ -57,7 +57,7 @@
             <x-text
               :as="TextTag::DIV"
               :size="TextSize::LARGE"
-              class="max-w-none mb-6 tabbed-content"
+              class="max-w-none mb-6 tabbed-content pl-1.5"
             >
               {!! $tab['content_data']['text'] !!}
             </x-text>
