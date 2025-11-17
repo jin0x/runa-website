@@ -390,7 +390,7 @@
                 {{-- Odd index (1, 3): Image then Text (side by side on desktop, stacked on mobile) --}}
                 <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
                   @if(!empty($image_url))
-                    <div class="showcase-grid-image flex-1 max-w-3xs">
+                    <div class="showcase-grid-image flex-1 max-w-3xs order-2 md:order-none">
                       <img
                         src="{{ $image_url }}"
                         alt="{{ $image_alt }}"
@@ -399,7 +399,7 @@
                     </div>
                   @endif
 
-                  <div class="showcase-grid-text flex-1 text-left">
+                  <div class="showcase-grid-text flex-1 text-left order-1 md:order-none">
                     @if(!empty($item_title))
                       <x-heading
                         :as="HeadingTag::H2"
