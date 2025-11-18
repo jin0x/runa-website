@@ -83,7 +83,7 @@
     if ($groupCount === 1) {
         $widthClass = 'w-[400px]'; // Single group - narrow
     } elseif ($hasFeatured) {
-        $widthClass = 'w-[1000px]'; // Regular + Featured - wider
+        $widthClass = 'w-[866px]'; // Regular + Featured - wider
     } else {
         $widthClass = 'w-[800px]'; // Two regular groups - medium
     }
@@ -93,7 +93,7 @@
     <div class="px-8 py-8">
       
       @if (!empty($item->submenu_groups))
-        <div class="grid {{ count($item->submenu_groups) === 2 ? 'grid-cols-2' : 'grid-cols-1' }} gap-3">
+        <div class="grid {{ count($item->submenu_groups) === 2 ? ($hasFeatured ? 'md:grid-cols-2 xl:grid-cols-[7fr_3fr]' : 'grid-cols-2') : 'grid-cols-1' }} gap-3">
           @foreach ($item->submenu_groups as $group)
             @if ($group['type'] === 'regular')
               {{-- Regular Group with Gray Box --}}
