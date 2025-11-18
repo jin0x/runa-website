@@ -340,7 +340,17 @@ add_action('allowed_block_types_all', function ($allowed_blocks, $editor_context
 }, 10, 2);
 
 /**
- * Keep featured posts out of the standard blog loop so they can be rendered separately.
+ * Register custom query vars used by the theme.
+ */
+add_filter('query_vars', function ($vars) {
+    $vars[] = 'featured';
+
+    return $vars;
+});
+
+/**
+ * Keep featured posts out of the standard blog loop so they can be rendered separately,
+ * allow "featured" filter
  */
 add_action('pre_get_posts', function ($query) {
     if (! defined('RUNA_FEATURED_POST_META_KEY')) {
@@ -348,6 +358,30 @@ add_action('pre_get_posts', function ($query) {
     }
 
     if (is_admin() || ! $query->is_main_query() || ! $query->is_home()) {
+        return;
+    }
+
+    $isFeaturedFilter = (string) $query->get('featured') === '1';
+    $existingMetaQuery = $query->get('meta_query');
+
+    if ($isFeaturedFilter) {
+        $featuredOnly = [
+            'key'     => RUNA_FEATURED_POST_META_KEY,
+            'value'   => '1',
+            'compare' => '=',
+        ];
+
+        if (! empty($existingMetaQuery)) {
+            if (! isset($existingMetaQuery['relation'])) {
+                $existingMetaQuery['relation'] = 'AND';
+            }
+
+            $existingMetaQuery[] = $featuredOnly;
+            $query->set('meta_query', $existingMetaQuery);
+            return;
+        }
+
+        $query->set('meta_query', [$featuredOnly]);
         return;
     }
 
@@ -363,8 +397,6 @@ add_action('pre_get_posts', function ($query) {
             'compare' => '!=',
         ],
     ];
-
-    $existingMetaQuery = $query->get('meta_query');
 
     if (! empty($existingMetaQuery)) {
         if (! isset($existingMetaQuery['relation'])) {
