@@ -30,14 +30,14 @@
   </div>
 @endif
 @if($enable_header_banner && $header_banner_message)
-  <div class="{{ is_admin_bar_showing() ? 'lg:pt-[40px]' : 'lg:pt-[60px]' }}">
+  <div class="{{ is_admin_bar_showing() ? 'xl:pt-[40px]' : 'xl:pt-[60px]' }}">
     @endif
     <header class="absolute z-[100] w-full" role="banner">
       <div class="container mx-auto relative pt-6">
-        <div class="mx-auto w-full px-4 xl:px-12 hidden lg:block">
-          <div class="relative flex items-center justify-between sm:h-10 lg:justify-center" aria-label="Global">
+        <div class="mx-auto w-full px-4 xl:px-12 hidden xl:block">
+          <div class="relative flex items-center justify-between sm:h-10 xl:justify-center" aria-label="Global">
             @if($header_logo)
-              <div class="flex items-center flex-1 lg:absolute lg:inset-y-0 lg:left-0">
+              <div class="flex items-center flex-1 xl:absolute xl:inset-y-0 xl:left-0">
                 <a href="{{ home_url('/') }}">
                   <span class="sr-only">{{ $siteName }}</span>
                   <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class="w-31 h-auto">
@@ -50,9 +50,9 @@
                 'slug' => 'primary',
             ])
 
-            <div class="hidden lg:absolute lg:flex lg:items-center lg:justify-end lg:inset-y-0 lg:right-0 gap-2">
+            <div class="hidden xl:absolute xl:flex xl:items-center xl:justify-end xl:inset-y-0 xl:right-0 gap-2">
               @if ($has_primary_cta)
-                <div class="inline-flex items-center {{ $has_secondary_cta ? 'gap-2' : '' }} rounded-full btn-nav transition-all duration-300 px-6 py-3 lg:min-h-[55px] overflow-hidden" style="background: var(--gradient-3);">
+                <div class="inline-flex items-center {{ $has_secondary_cta ? 'gap-2' : '' }} rounded-full btn-nav transition-all duration-300 px-6 py-3 xl:min-h-[55px] overflow-hidden" style="background: var(--gradient-3);">
                   {{-- Primary CTA --}}
                   <a href="{{ $primary_cta_url }}" target="{{ $primary_cta_target }}" class="flex items-center hover:opacity-80 transition-opacity text-small text-white !no-underline {{ $has_secondary_cta ? 'gap-3' : 'justify-center w-full text-center' }}">
                     {{ $primary_cta_label }}
@@ -93,7 +93,7 @@
             -->
         <div
           x-data="{isMobileNavOpen: false}"
-          class="absolute top-0 inset-x-0 p-2 origin-top-right lg:hidden">
+          class="absolute top-0 inset-x-0 p-2 origin-top-right xl:hidden">
           <div class="rounded-lg shadow-md bg-primary-dark ring-1 ring-black ring-opacity-5 overflow-hidden">
             <div class="px-5 py-4 flex items-center justify-between">
               @if($header_logo)
