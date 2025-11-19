@@ -116,7 +116,7 @@
                            class="group flex items-center justify-between px-3 py-2 rounded-lg hover:bg-neutral-400/10 transition-all duration-200 ease-in-out !no-underline">
                           <div class="flex-1">
                             <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK">
-                              {{ $link['label'] ?? '' }}
+                              {!! $link['label'] ?? '' !!}
                             </x-text>
                             @if (!empty($link['description']))
                               <x-text :size="TextSize::XSMALL" :color="TextColor::DARK" class="mt-1">

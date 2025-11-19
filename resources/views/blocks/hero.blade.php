@@ -141,7 +141,7 @@
     @else
       {{-- Contained: Within container --}}
       <x-container>
-        <x-container>
+        <x-container classes="px-0! md:px-6">
           <x-flex direction="col">
             @if ($eyebrow)
             <div>

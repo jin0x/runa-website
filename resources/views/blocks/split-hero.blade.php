@@ -10,6 +10,7 @@
   use App\Enums\TextSize;
   use App\Enums\ButtonVariant;
   use App\Enums\SectionSize;
+  use App\Enums\ContainerSize;
   use App\Enums\TextColor;
 
   // Set height based on compact option
@@ -40,19 +41,7 @@
   $mediaClasses = 'w-full h-full object-cover';
 @endphp
 
-<x-section :size="SectionSize::NONE" classes="bg-primary-dark relative w-full {{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
-  
-  {{-- Background Image --}}
-  @if($media_type === 'image' && !empty($media_url))
-    <div class="absolute inset-0 lg:hidden">
-      <img 
-        src="{{ $media_url }}" 
-        alt="{{ $title ?? 'Split Hero background' }}"
-        class="w-full h-full object-cover"
-      />
-    </div>
-    <div class="absolute inset-0 lg:hidden pointer-events-none" style="background-color: {{ $overlay_color }}; opacity: {{ ($overlay_opacity ?? 50) / 100 }};"></div>
-  @endif
+<x-section :size="SectionSize::NONE" classes="bg-primary-dark relative w-full lg:{{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
 
   {{-- Media Section (Right) - Desktop only --}}
   <div class="absolute inset-y-0 right-0 w-1/2 overflow-hidden hidden lg:block">
@@ -135,4 +124,17 @@
       <div class="hidden lg:block"></div>
     </div>
   </x-container>
+
+    {{-- Mobile Media Section - Below content --}}
+    @if(!empty($media_url))
+    <x-container classes="lg:hidden h-full relative z-10 px-0!">
+      <x-media
+      :mediaType="$media_type"
+      :mediaUrl="$media_url"
+      :altText="$title ?? 'Split Hero media'"
+      :classes="'w-full h-auto object-cover'"
+      containerClasses="w-full"
+      />
+    </x-container>
+    @endif
 </x-section>
