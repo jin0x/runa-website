@@ -54,8 +54,51 @@
   x-init="init()"
   class="{{ $class }}"
 >
-  {{-- Tab Navigation --}}
-  <div class="flex xl:justify-center {{ $tabContainerClasses }}">
+  {{-- Mobile Dropdown Navigation --}}
+  <div class="xl:hidden">
+    <div class="relative" @click.outside="dropdownOpen = false">
+      <button
+        @click="dropdownOpen = !dropdownOpen"
+        class="w-full bg-secondary-purple text-primary-dark font-heading text-large font-bold px-6 py-4 rounded-lg flex items-center justify-between"
+        type="button"
+      >
+        <span x-text="getCurrentTabLabel()" class="font-normal"></span>
+        <svg 
+          class="w-5 h-5 transition-transform duration-200"
+          :class="dropdownOpen ? 'rotate-180' : ''"
+          fill="currentColor" 
+          viewBox="0 0 20 20"
+        >
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+      
+      <div
+        x-show="dropdownOpen"
+        x-transition:enter="transition ease-out duration-100"
+        x-transition:enter-start="transform opacity-0 scale-95"
+        x-transition:enter-end="transform opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-75"
+        x-transition:leave-start="transform opacity-100 scale-100"
+        x-transition:leave-end="transform opacity-0 scale-95"
+        class="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border z-50"
+      >
+        @foreach($tabs as $tab)
+          <button
+            @click="switchTab('{{ $tab['id'] }}'); dropdownOpen = false"
+            class="w-full text-left px-6 py-4 text-normal text-primary-dark hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg transition-colors duration-200"
+            :class="activeTab === '{{ $tab['id'] }}' ? 'bg-gray-100 font-bold' : ''"
+            type="button"
+          >
+            {{ $tab['label'] }}
+          </button>
+        @endforeach
+      </div>
+    </div>
+  </div>
+
+  {{-- Desktop Tab Navigation --}}
+  <div class="hidden xl:flex xl:justify-center {{ $tabContainerClasses }}">
     <div class="overflow-x-auto overflow-y-hidden inline-flex xl:flex xl:w-full xl:min-w-0 gap-2 max-h-[88px] items-center rounded-full px-2">
       @foreach($tabs as $tab)
         <button
@@ -106,6 +149,8 @@ function tabsComponent(defaultTab) {
   return {
     activeTab: defaultTab,
     contentHeight: 'auto',
+    dropdownOpen: false,
+    tabs: @json($tabs),
 
     init() {
       this.$nextTick(() => {
@@ -125,6 +170,11 @@ function tabsComponent(defaultTab) {
       if (activePanel) {
         this.contentHeight = activePanel.offsetHeight + 'px';
       }
+    },
+
+    getCurrentTabLabel() {
+      const currentTab = this.tabs.find(tab => tab.id === this.activeTab);
+      return currentTab ? currentTab.label : '';
     }
   }
 }
