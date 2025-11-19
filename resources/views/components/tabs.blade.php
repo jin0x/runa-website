@@ -55,7 +55,7 @@
   class="{{ $class }}"
 >
   {{-- Mobile Dropdown Navigation --}}
-  <div class="xl:hidden">
+  <div class="lg:hidden">
     <div class="relative" @click.outside="dropdownOpen = false">
       <button
         @click="dropdownOpen = !dropdownOpen"
@@ -98,13 +98,13 @@
   </div>
 
   {{-- Desktop Tab Navigation --}}
-  <div class="hidden xl:flex xl:justify-center {{ $tabContainerClasses }}">
-    <div class="overflow-x-auto overflow-y-hidden inline-flex xl:flex xl:w-full xl:min-w-0 gap-2 max-h-[88px] items-center rounded-full px-2">
+  <div class="hidden lg:flex lg:justify-center {{ $tabContainerClasses }}">
+    <div class="overflow-x-auto overflow-y-hidden inline-flex lg:flex lg:w-full lg:min-w-0 gap-2 max-h-[88px] items-center rounded-full px-2">
       @foreach($tabs as $tab)
         <button
           @click="switchTab('{{ $tab['id'] }}')"
           :class="activeTab === '{{ $tab['id'] }}' ? '{{ $tabActiveClasses }}' : '{{ $tabInactiveClasses }}'"
-          class="{{ $tabButtonBaseClasses }} xl:flex-1 cursor-pointer font-heading"
+          class="{{ $tabButtonBaseClasses }} lg:flex-1 cursor-pointer font-heading"
           type="button"
         >
           {{ $tab['label'] }}
