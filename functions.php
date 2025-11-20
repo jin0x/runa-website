@@ -83,7 +83,8 @@ define('GOOGLE_FONTS', 'Inter:300,400,500:latin');
 
 // Filter ACF Link field outputs
 add_filter('acf/load_value/type=link', 'remove_trailing_slash_from_acf_links', 10, 3);
-function remove_trailing_slash_from_acf_links($value, $post_id, $field) {
+function remove_trailing_slash_from_acf_links($value, $post_id, $field)
+{
     if (is_array($value) && isset($value['url'])) {
         $value['url'] = untrailingslashit($value['url']);
     }
@@ -92,7 +93,8 @@ function remove_trailing_slash_from_acf_links($value, $post_id, $field) {
 
 // Filter WordPress navigation menu links
 add_filter('wp_nav_menu_objects', 'remove_trailing_slash_from_nav_menu');
-function remove_trailing_slash_from_nav_menu($menu_items) {
+function remove_trailing_slash_from_nav_menu($menu_items)
+{
     foreach ($menu_items as $menu_item) {
         $menu_item->url = untrailingslashit($menu_item->url);
     }
@@ -101,6 +103,36 @@ function remove_trailing_slash_from_nav_menu($menu_items) {
 
 // Filter social network URLs and other URLs in content
 add_filter('the_content', 'remove_trailing_slash_from_content_links');
-function remove_trailing_slash_from_content_links($content) {
+function remove_trailing_slash_from_content_links($content)
+{
     return preg_replace('/href="([^"]+)\/"/', 'href="$1"', $content);
+}
+
+/**
+ * Add security headers for WP Engine hosting
+ * Addresses security findings: CSP, HSTS, X-Frame-Options, X-Powered-By
+ */
+add_action('send_headers', 'add_security_headers');
+function add_security_headers()
+{
+    // Only add headers on front-end (not in admin)
+    if (!is_admin()) {
+        // Content Security Policy - Defense against XSS attacks
+        header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self'; connect-src 'self' https://www.google-analytics.com;");
+
+        // HTTP Strict Transport Security - Force HTTPS
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+            header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+        }
+
+        // X-Frame-Options - Prevent clickjacking
+        header('X-Frame-Options: SAMEORIGIN');
+
+        // Remove X-Powered-By header (hide server info)
+        header_remove('X-Powered-By');
+
+        // Additional security headers
+        header('X-Content-Type-Options: nosniff');
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+    }
 }
