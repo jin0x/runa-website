@@ -13,9 +13,6 @@
   use App\Enums\ContainerSize;
   use App\Enums\TextColor;
 
-  // Set height based on compact option
-  $heightClass = $compact ? 'h-[600px]' : 'h-screen';
-
   // Define button variants
   $primaryButtonVariant = ButtonVariant::PRIMARY;
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
@@ -41,7 +38,7 @@
   $mediaClasses = 'w-full h-full object-cover';
 @endphp
 
-<x-section :size="SectionSize::NONE" classes="bg-primary-dark relative w-full lg:{{ $heightClass }} overflow-hidden {{ $block->classes ?? '' }}">
+<x-section :size="SectionSize::NONE" classes="bg-primary-dark relative w-full {{ $compact ? 'lg:h-[600px]' : 'lg:h-screen' }} overflow-hidden {{ $block->classes ?? '' }}">
 
   {{-- Media Section (Right) - Desktop only --}}
   <div class="absolute inset-y-0 right-0 w-1/2 overflow-hidden hidden lg:block">
@@ -62,7 +59,7 @@
   {{-- Content Section --}}
   <x-container classes="h-full relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
-      <div class="flex items-center justify-center px-6 py-20 lg:py-24">
+      <div class="flex items-center justify-center px-6 pb-20 pt-32 lg:py-24">
         <x-flex direction="col" class="max-w-2xl">
           {{-- Eyebrow --}}
           @if ($eyebrow)
