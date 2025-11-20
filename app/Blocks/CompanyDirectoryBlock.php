@@ -364,8 +364,8 @@ class CompanyDirectoryBlock extends Block
                 }
             }
 
-            // Log the failed lookup for debugging
-            error_log("Country code lookup failed for: " . $countryName);
+            // Log the failed lookup for debugging (sanitize to prevent log injection)
+            error_log("Country code lookup failed for: " . str_replace(["\n", "\r"], '', $countryName));
             return null;
         }
     }

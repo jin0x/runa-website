@@ -167,9 +167,9 @@
               @foreach($companies as $company)
                 <tr
                   class="company-row hover:{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200"
-                  data-company-name="{{ strtolower($company['title']) }}"
-                  data-country="{{ !empty($company['countries']) ? implode(',', array_map('strtolower', $company['countries'])) : '' }}"
-                  data-categories="{{ !empty($company['categories']) ? implode(',', array_map('strtolower', $company['categories'])) : '' }}"
+                  data-company-name="{{ esc_attr(strtolower($company['title'])) }}"
+                  data-country="{{ esc_attr(!empty($company['countries']) ? implode(',', array_map('strtolower', $company['countries'])) : '') }}"
+                  data-categories="{{ esc_attr(!empty($company['categories']) ? implode(',', array_map('strtolower', $company['categories'])) : '') }}"
                 >
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm font-medium {{ $textColor }}">
