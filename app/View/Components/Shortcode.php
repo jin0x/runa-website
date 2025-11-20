@@ -53,7 +53,7 @@ class Shortcode extends Component {
         // Convert the shortcode attributes array to a string
         $attributes_string = implode( ' ', array_map(
             static function ( $value, $key ) {
-                return $key . '="' . $value . '"';
+                return $key . '="' . esc_attr( $value ) . '"';
             },
             $this->shortcodeAttributes,
             array_keys( $this->shortcodeAttributes )

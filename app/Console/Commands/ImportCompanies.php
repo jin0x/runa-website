@@ -49,6 +49,13 @@ class ImportCompanies
             $file = ABSPATH . $file;
         }
 
+        // Validate the file path to prevent path traversal attacks
+        $validated_file = $this->validateFilePath($file);
+        if ($validated_file === false) {
+            WP_CLI::error("Invalid file path. File must be within WordPress directory.");
+        }
+        $file = $validated_file;
+
         WP_CLI::log("🚀 Companies Import Tool");
         WP_CLI::log("========================");
 
@@ -361,5 +368,39 @@ class ImportCompanies
         }
         fclose($handle);
         return $lines;
+    }
+
+    /**
+     * Validate file path to prevent path traversal attacks
+     *
+     * @param string $file The file path to validate
+     * @return string|false The validated real path or false if invalid
+     */
+    private function validateFilePath($file)
+    {
+        // Get the real path (resolves symlinks and removes ../ sequences)
+        $real_path = realpath(dirname($file));
+
+        // If realpath returns false, the directory doesn't exist
+        if ($real_path === false) {
+            return false;
+        }
+
+        // Reconstruct the full file path with validated directory
+        $real_path = $real_path . '/' . basename($file);
+
+        // Get the allowed base directory (WordPress root)
+        $allowed_base = realpath(ABSPATH);
+
+        if ($allowed_base === false) {
+            return false;
+        }
+
+        // Ensure the file path starts with the allowed base directory
+        if (!str_starts_with($real_path, $allowed_base)) {
+            return false;
+        }
+
+        return $real_path;
     }
 }
