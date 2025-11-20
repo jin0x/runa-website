@@ -121,26 +121,29 @@ function apply_tailwind_classes_to_content(string $content, array $options = [])
         $p_class .= ' mb-4';
     }
 
-    $content = str_replace('<p>', '<p class="' . trim($p_class) . '">', $content);
+    $content = str_replace('<p>', '<p class="' . esc_attr(trim($p_class)) . '">', $content);
 
-    $heading_extra_class = $options['heading'] ?? ''; 
+    $heading_extra_class = $options['heading'] ?? '';
 
     $content = preg_replace_callback(
         '/<(h[1-6])>(.*?)<\/\1>/i',
         function ($matches) use ($heading_extra_class) {
-            $tag = $matches[1];
+            $tag = esc_attr($matches[1]);
             $headingContent = $matches[2];
-        
+
             // Apply period-to-line-break logic to heading content only
             if (!empty(trim($headingContent))) {
                 $headingContent = html_entity_decode($headingContent);
                 $headingContent = preg_replace('/\s+/u', ' ', $headingContent);
-                $headingContent = preg_replace('/\.\s+/', '.<br> ',     $headingContent);
+                $headingContent = preg_replace('/\.\s+/', '.<br> ', $headingContent);
                 $headingContent = preg_replace('/\.$/', '.<br>', $headingContent);
                 $headingContent = trim($headingContent);
             }
-                
-            $classes = match ($tag) {
+
+            // Escape the heading content while allowing <br> tags
+            $headingContent = wp_kses($headingContent, ['br' => []]);
+
+            $classes = match ($matches[1]) {
                 'h1' => 'heading-1 mb-6',
                 'h2' => 'heading-2 mb-6',
                 'h3' => 'heading-3 mb-6',
@@ -149,7 +152,11 @@ function apply_tailwind_classes_to_content(string $content, array $options = [])
                 'h6' => 'heading-6 mb-6',
             };
 
-            return "<{$tag} class=\"{$classes} {$heading_extra_class}\">{$headingContent}</{$tag}>";
+            // Escape class names
+            $safe_classes = esc_attr($classes);
+            $safe_heading_extra_class = esc_attr($heading_extra_class);
+
+            return "<{$tag} class=\"{$safe_classes} {$safe_heading_extra_class}\">{$headingContent}</{$tag}>";
         },
         $content
     );
@@ -157,7 +164,7 @@ function apply_tailwind_classes_to_content(string $content, array $options = [])
     $content = str_replace('<ul>', '<ul class="list-disc pl-6">', $content);
     $content = str_replace('<li>', '<li class="mb-1">', $content);
     $strong_extra_class = $options['strong'] ?? '';
-    $content = str_replace('<strong>', '<strong class="' . $strong_extra_class . '">', $content);
+    $content = str_replace('<strong>', '<strong class="' . esc_attr($strong_extra_class) . '">', $content);
     $content = preg_replace(
         '/<a(.*?)>/i',
         '<a$1 class="hover:underline underline-offset-4">',
