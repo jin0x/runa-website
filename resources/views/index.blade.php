@@ -4,6 +4,7 @@
   use App\Enums\ContainerSize;
   use App\Enums\TextTag;
   use App\Enums\TextSize;
+  use App\Enums\TextColor;
 @endphp
 
 @extends('layouts.app')
@@ -70,7 +71,7 @@
 
   <x-container :size="ContainerSize::LARGE" classes="py-16 md:pt-40 md:pb-30">
     {{-- Blog Title --}}
-    <div class="mb-12 flex flex-col items-center gap-y-6">
+    <div class="mb-12 flex flex-col gap-y-6">
       <x-heading
         :as="HeadingTag::H1"
         :size="HeadingSize::DISPLAY_LARGE"
