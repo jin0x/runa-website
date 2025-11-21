@@ -112,70 +112,80 @@
     {{-- Filters + Search --}}
     <div class="mb-12 flex flex-col gap-y-6">
       <div class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[6.7fr_3.3fr] gap-x-6">
-       
-        <div class="flex flex-wrap gap-3">
-          @if($flag['showFilters'])
-            @if($flag['showFeaturedFilter'])
-              <a href="{{ $flag['featuredActive'] ? $blogBaseUrl : $featuredFilterUrl }}">
-                <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-purple">
-                  <x-text
-                    :as="TextTag::SPAN"
-                    :size="TextSize::CAPTION"
-                    class="text-primary-dark !flex items-center gap-3"
-                  >
-                    Featured
+        <div class="flex-col gap-5">
+          <x-text
+          :as="TextTag::SPAN"
+          :size="TextSize::XSMALL"
+          :color="TextColor::GRAY"
+          class="font-medium mb-6"
+          >
+            Filter by:
+          </x-text>
 
-                    @if($flag['featuredActive'])
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_4548_740)">
-                          <path d="M7.99992 1.33331C4.31325 1.33331 1.33325 4.31331 1.33325 7.99998C1.33325 11.6866 4.31325 14.6666 7.99992 14.6666C11.6866 14.6666 14.6666 11.6866 14.6666 7.99998C14.6666 4.31331 11.6866 1.33331 7.99992 1.33331ZM11.3333 10.3933L10.3933 11.3333L7.99992 8.93998L5.60659 11.3333L4.66659 10.3933L7.05992 7.99998L4.66659 5.60665L5.60659 4.66665L7.99992 7.05998L10.3933 4.66665L11.3333 5.60665L8.93992 7.99998L11.3333 10.3933Z" fill="black"/>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4548_740">
-                            <rect width="16" height="16" fill="white"/>
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    @endif
-                  </x-text>
-                </x-badge>
-              </a>
+          <div class="flex flex-wrap gap-3">
+            @if($flag['showFilters'])
+             @if($flag['showFeaturedFilter'])
+               <a href="{{ $flag['featuredActive'] ? $blogBaseUrl : $featuredFilterUrl }}">
+                 <x-badge variant="default" size="sm" rounded="sm" class="!bg-secondary-purple">
+                   <x-text
+                     :as="TextTag::SPAN"
+                     :size="TextSize::CAPTION"
+                     class="text-primary-dark !flex items-center gap-3 !normal-case"
+                   >
+                     Featured
+ 
+                     @if($flag['featuredActive'])
+                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                         <g clip-path="url(#clip0_4548_740)">
+                           <path d="M7.99992 1.33331C4.31325 1.33331 1.33325 4.31331 1.33325 7.99998C1.33325 11.6866 4.31325 14.6666 7.99992 14.6666C11.6866 14.6666 14.6666 11.6866 14.6666 7.99998C14.6666 4.31331 11.6866 1.33331 7.99992 1.33331ZM11.3333 10.3933L10.3933 11.3333L7.99992 8.93998L5.60659 11.3333L4.66659 10.3933L7.05992 7.99998L4.66659 5.60665L5.60659 4.66665L7.99992 7.05998L10.3933 4.66665L11.3333 5.60665L8.93992 7.99998L11.3333 10.3933Z" fill="black"/>
+                         </g>
+                         <defs>
+                           <clipPath id="clip0_4548_740">
+                             <rect width="16" height="16" fill="white"/>
+                           </clipPath>
+                         </defs>
+                       </svg>
+                     @endif
+                   </x-text>
+                 </x-badge>
+               </a>
+             @endif
+
+             @if($flag['showTagFilters'])
+               @foreach($tags as $tag)
+                 @php
+                   $isTagActive = in_array((int) $tag->term_id, $flag['activeTagIds'], true);
+                 @endphp
+                 @continue($flag['tagActive'] && !$isTagActive)
+ 
+                 <a href="{{ $isTagActive ? $blogBaseUrl : get_tag_link($tag) }}">
+                   <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-cyan">
+                     <x-text
+                       :as="TextTag::SPAN"
+                       :size="TextSize::CAPTION"
+                       class="text-primary-dark !flex items-center gap-3 !normal-case"
+                     >
+                       {{ ucwords(strtolower($tag->name)) }}
+ 
+                       @if($isTagActive)
+                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <g clip-path="url(#clip0_4548_740)">
+                             <path d="M7.99992 1.33331C4.31325 1.33331 1.33325 4.31331 1.33325 7.99998C1.33325 11.6866 4.31325 14.6666 7.99992 14.6666C11.6866 14.6666 14.6666 11.6866 14.6666 7.99998C14.6666 4.31331 11.6866 1.33331 7.99992 1.33331ZM11.3333 10.3933L10.3933 11.3333L7.99992 8.93998L5.60659 11.3333L4.66659 10.3933L7.05992 7.99998L4.66659 5.60665L5.60659 4.66665L7.99992 7.05998L10.3933 4.66665L11.3333 5.60665L8.93992 7.99998L11.3333 10.3933Z" fill="black"/>
+                           </g>
+                           <defs>
+                             <clipPath id="clip0_4548_740">
+                               <rect width="16" height="16" fill="white"/>
+                             </clipPath>
+                           </defs>
+                         </svg>
+                       @endif
+                     </x-text>
+                   </x-badge>
+                 </a>
+               @endforeach
+             @endif
             @endif
-
-            @if($flag['showTagFilters'])
-              @foreach($tags as $tag)
-                @php
-                  $isTagActive = in_array((int) $tag->term_id, $flag['activeTagIds'], true);
-                @endphp
-                @continue($flag['tagActive'] && !$isTagActive)
-
-                <a href="{{ $isTagActive ? $blogBaseUrl : get_tag_link($tag) }}">
-                  <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-cyan">
-                    <x-text
-                      :as="TextTag::SPAN"
-                      :size="TextSize::CAPTION"
-                      class="text-primary-dark !flex items-center gap-3"
-                    >
-                      {{ $tag->name }}
-
-                      @if($isTagActive)
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g clip-path="url(#clip0_4548_740)">
-                            <path d="M7.99992 1.33331C4.31325 1.33331 1.33325 4.31331 1.33325 7.99998C1.33325 11.6866 4.31325 14.6666 7.99992 14.6666C11.6866 14.6666 14.6666 11.6866 14.6666 7.99998C14.6666 4.31331 11.6866 1.33331 7.99992 1.33331ZM11.3333 10.3933L10.3933 11.3333L7.99992 8.93998L5.60659 11.3333L4.66659 10.3933L7.05992 7.99998L4.66659 5.60665L5.60659 4.66665L7.99992 7.05998L10.3933 4.66665L11.3333 5.60665L8.93992 7.99998L11.3333 10.3933Z" fill="black"/>
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_4548_740">
-                              <rect width="16" height="16" fill="white"/>
-                            </clipPath>
-                          </defs>
-                        </svg>
-                      @endif
-                    </x-text>
-                  </x-badge>
-                </a>
-              @endforeach
-            @endif
-          @endif
+          </div>
         </div>
 
         <div class="blog-post-search w-full md:w-auto md:max-w-md">
@@ -194,6 +204,7 @@
             </div>
           </form>
         </div>
+        
       </div>
     </div>
     
