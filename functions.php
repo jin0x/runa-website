@@ -117,8 +117,20 @@ function add_security_headers()
 {
     // Only add headers on front-end (not in admin)
     if (!is_admin()) {
+        // Build dynamic CSP that allows both frontend and backend domains
+        $csp_domains = get_csp_allowed_domains();
+
         // Content Security Policy - Defense against XSS attacks
-        header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self'; connect-src 'self' https://www.google-analytics.com;");
+        // Dynamically allows assets from both frontend domain (runa.io) and backend domain (wpengine)
+        $csp = "default-src 'self' {$csp_domains}; ";
+        $csp .= "script-src 'self' {$csp_domains} 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com; ";
+        $csp .= "style-src 'self' {$csp_domains} 'unsafe-inline' https://fonts.googleapis.com; ";
+        $csp .= "font-src 'self' {$csp_domains} https://fonts.gstatic.com; ";
+        $csp .= "img-src 'self' {$csp_domains} data: https:; ";
+        $csp .= "frame-src 'self'; ";
+        $csp .= "connect-src 'self' {$csp_domains} https://www.google-analytics.com https://consent.cookiebot.com;";
+
+        header("Content-Security-Policy: {$csp}");
 
         // HTTP Strict Transport Security - Force HTTPS
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
@@ -135,4 +147,42 @@ function add_security_headers()
         header('X-Content-Type-Options: nosniff');
         header('Referrer-Policy: strict-origin-when-cross-origin');
     }
+}
+
+/**
+ * Get CSP-allowed domains based on environment
+ * Allows assets from both frontend and backend domains
+ *
+ * @return string Space-separated list of allowed domains for CSP
+ */
+function get_csp_allowed_domains()
+{
+    // Get current site URL from WordPress
+    $site_url = home_url();
+    $parsed_site = parse_url($site_url);
+    $site_host = $parsed_site['host'] ?? '';
+
+    // Environment-specific backend domains
+    $backend_domains = [
+        'runa.io' => 'https://runaio.wpenginepowered.com',
+        'staging.runa.io' => 'https://runaiostaging.wpenginepowered.com',
+        'runa.local' => '', // Local development has no separate backend
+    ];
+
+    // Start with site's own domain (already covered by 'self', but explicit is safer)
+    $allowed = [];
+
+    // Add backend domain if it exists for this environment
+    if (isset($backend_domains[$site_host]) && !empty($backend_domains[$site_host])) {
+        $allowed[] = $backend_domains[$site_host];
+    }
+
+    // Always allow local development domains
+    if (defined('WP_ENVIRONMENT_TYPE') && WP_ENVIRONMENT_TYPE === 'local') {
+        $allowed[] = 'http://runa.local';
+        $allowed[] = 'https://runa.local';
+    }
+
+    // Return space-separated list
+    return !empty($allowed) ? implode(' ', $allowed) : '';
 }
