@@ -157,24 +157,61 @@ function add_security_headers()
  */
 function get_csp_allowed_domains()
 {
-    // Get current site URL from WordPress
+    // Environment configuration: frontend domain => backend domain
+    $environment_map = [
+        'runa.io' => 'https://runaio.wpenginepowered.com',
+        'staging.runa.io' => 'https://runaiostaging.wpenginepowered.com',
+        'runastg.wpenginepowered.com' => 'https://runaiostaging.wpenginepowered.com', // Staging backend
+        'runa.local' => '', // Local development has no separate backend
+    ];
+
+    // Reverse map: backend domain => frontend domain (for when home_url is backend)
+    $backend_to_frontend = [
+        'runaio.wpenginepowered.com' => 'https://runa.io',
+        'runaiostaging.wpenginepowered.com' => 'https://staging.runa.io',
+        'runastg.wpenginepowered.com' => 'https://staging.runa.io',
+    ];
+
+    $allowed = [];
+
+    // Get home_url hostname
     $site_url = home_url();
     $parsed_site = parse_url($site_url);
     $site_host = $parsed_site['host'] ?? '';
 
-    // Environment-specific backend domains
-    $backend_domains = [
-        'runa.io' => 'https://runaio.wpenginepowered.com',
-        'staging.runa.io' => 'https://runaiostaging.wpenginepowered.com',
-        'runa.local' => '', // Local development has no separate backend
-    ];
+    // Get current request hostname (might be different from home_url when behind proxy)
+    $request_host = $_SERVER['HTTP_HOST'] ?? '';
 
-    // Start with site's own domain (already covered by 'self', but explicit is safer)
-    $allowed = [];
+    // Check if home_url is a frontend domain
+    if (isset($environment_map[$site_host]) && !empty($environment_map[$site_host])) {
+        $allowed[] = $environment_map[$site_host];
+    }
 
-    // Add backend domain if it exists for this environment
-    if (isset($backend_domains[$site_host]) && !empty($backend_domains[$site_host])) {
-        $allowed[] = $backend_domains[$site_host];
+    // Check if home_url is a backend domain
+    if (isset($backend_to_frontend[$site_host])) {
+        // home_url is backend, allow the corresponding frontend
+        $frontend_domain = $backend_to_frontend[$site_host];
+        $allowed[] = $frontend_domain;
+
+        // Also allow the backend itself
+        $allowed[] = 'https://' . $site_host;
+    }
+
+    // Check request hostname separately (in case it differs from home_url)
+    if ($request_host !== $site_host) {
+        if (isset($environment_map[$request_host]) && !empty($environment_map[$request_host])) {
+            $backend = $environment_map[$request_host];
+            if (!in_array($backend, $allowed)) {
+                $allowed[] = $backend;
+            }
+        }
+
+        if (isset($backend_to_frontend[$request_host])) {
+            $frontend = $backend_to_frontend[$request_host];
+            if (!in_array($frontend, $allowed)) {
+                $allowed[] = $frontend;
+            }
+        }
     }
 
     // Always allow local development domains
@@ -183,6 +220,7 @@ function get_csp_allowed_domains()
         $allowed[] = 'https://runa.local';
     }
 
-    // Return space-separated list
+    // Remove duplicates and return
+    $allowed = array_unique($allowed);
     return !empty($allowed) ? implode(' ', $allowed) : '';
 }
