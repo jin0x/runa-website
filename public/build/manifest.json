@@ -4,7 +4,7 @@
     "src": "editor.deps.json"
   },
   "resources/css/app.css": {
-    "file": "assets/app-cQrEGzxP.css",
+    "file": "assets/app-DJGmnCn-.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -30,7 +30,7 @@
     "src": "resources/fonts/Lineca-Regular.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BMd24Smn.js",
+    "file": "assets/app-grfm8tUT.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,

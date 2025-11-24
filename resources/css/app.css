@@ -17,6 +17,10 @@ body {
   }
 }
 
+[x-cloak] {
+  display: none !important;
+}
+
 /* GSAP Animation Optimizations */
 .marquee__inner,
 .marquee__part,
@@ -631,7 +635,7 @@ strong {
 
 .break-smart {
   overflow-wrap: break-word;
-  word-break: normal; 
+  word-break: normal;
   hyphens: auto;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
