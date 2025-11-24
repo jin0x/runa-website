@@ -35,9 +35,9 @@
 
 <article class="{{ $featured ? 'featured-post-card' : 'post-card' }}">
   <a href="{{ $permalink }}" class="block">
-    <div class="flex flex-col h-full">
+    <div class="flex flex-col h-full p-6">
       {{-- Image --}}
-      <div class="{{ $featured ? 'rounded-t-[12px]' : 'rounded-[12px]' }} w-full relative overflow-hidden bg-neutral-100">
+      <div class="{{ $featured ? 'rounded-t-[12px]' : 'rounded-[12px]' }} w-full relative overflow-hidden mb-6">
         @if($thumbnail)
           <img
             src="{{ $thumbnail }}"
@@ -51,7 +51,7 @@
       </div>
 
       {{-- Content --}}
-      <div class="flex flex-col h-full p-6">
+      <div class="flex flex-col h-full">
         {{-- Tag Badges --}}
         @if($featured || !empty($displayTags))
           <div class="flex flex-wrap justify-between mb-6">
