@@ -41,6 +41,19 @@ add_filter('admin_head', function () {
 });
 
 /**
+ * Preload critical fonts to prevent FOUT (Flash of Unstyled Text)
+ *
+ * @return void
+ */
+add_action('wp_head', function () {
+    $lineca_regular_woff2 = get_vite_asset('resources/fonts/Lineca-Regular.woff2');
+    $lineca_bold_woff2 = get_vite_asset('resources/fonts/Lineca-Bold.woff2');
+
+    echo "<link rel='preload' href='{$lineca_regular_woff2}' as='font' type='font/woff2' crossorigin='anonymous'>";
+    echo "<link rel='preload' href='{$lineca_bold_woff2}' as='font' type='font/woff2' crossorigin='anonymous'>";
+}, 0); // Highest priority to load first
+
+/**
  * Load Cookiebot consent management script
  *
  * @return void
