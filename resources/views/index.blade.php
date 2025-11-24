@@ -112,14 +112,14 @@
     {{-- Filters + Search --}}
     <div class="mb-12 flex flex-col gap-y-6">
       <div class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[6.7fr_3.3fr] gap-x-6">
-        <div class="flex-col gap-5">
+        <div class="flex flex-col">
           <x-text
           :as="TextTag::SPAN"
           :size="TextSize::XSMALL"
           :color="TextColor::GRAY"
           class="font-medium mb-6"
           >
-            Filter by:
+            Filter by
           </x-text>
 
           <div class="flex flex-wrap gap-3">
