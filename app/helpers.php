@@ -300,3 +300,81 @@ function has_acf_blocks()
 
     return $hasAcfBlocks;
 }
+
+/**
+ * Get related posts of post
+ *
+ * @param number $post_id is the ID of the current post
+ * @param number $related_count is the number of the posts in the query
+ * @param array  $args are the optional arguments of the query
+ *
+ * @return WP_Query
+ */
+function get_related_posts(int $post_id, $related_count, array $args = []): \WP_Query
+{
+    $terms = get_the_terms($post_id, 'category');
+
+    if (empty($terms)) {
+        $terms = [];
+    }
+
+    $term_list = wp_list_pluck($terms, 'slug');
+
+    $post_type = get_post_type($post_id);
+
+    $related_args = [
+        'post_type'      => $post_type,
+        'posts_per_page' => $related_count ?: -1,
+        'post_status'    => 'publish',
+        'post__not_in'   => [$post_id],
+        'orderby'        => 'rand',
+    ];
+
+    if (!empty($term_list)) {
+        $related_args['tax_query'] = [
+            'taxonomy' => 'category',
+            'field'    => 'slug',
+            'terms'    => $term_list
+        ];
+    }
+
+    return new \WP_Query($related_args);
+}
+
+/**
+ * Get related posts IDs
+ *
+ * @param number $post_id is the ID of the current post
+ * @param number $related_count is the number of the posts in the query
+ * @param array  $args are the optional arguments of the query
+ *
+ * @return array [array]
+ */
+function get_related_posts_ids(int $post_id, $related_count, array $args = []): array
+{
+    $terms     = get_the_terms($post_id, 'category') ?? [];
+    $term_list = $terms ? wp_list_pluck($terms, 'slug') : [];
+    $post_type = get_post_type($post_id);
+    $tax_query = [];
+
+    if (!empty($term_list)) {
+        $tax_query = [
+            'taxonomy' => 'category',
+            'field'    => 'slug',
+            'terms'    => $term_list
+        ];
+    }
+
+    $related_post_ids = get_posts([
+        'post_type'      => $post_type,
+        'posts_per_page' => $related_count ?: -1,
+        'post_status'    => 'publish',
+        'post__not_in'   => [$post_id],
+        'orderby'        => 'rand',
+        'tax_query'      => $tax_query
+    ]);
+
+    return array_map(static function ($post) {
+        return $post->ID ?? null;
+    }, $related_post_ids);
+}
