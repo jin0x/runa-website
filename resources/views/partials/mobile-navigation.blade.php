@@ -5,7 +5,7 @@
 @endphp
 
 @if ($navigation)
-  <nav aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="px-4 py-3 bg-primary-dark rounded-xl">
+  <nav aria-label="{{ $name }}" id="{{ $slug }}-navigation" class="max-h-screen">
     <ul class="space-y-2">
       @foreach ($navigation as $item)
         <li x-data="{ open: false }" class="menu-item relative {{ $item->classes ?? '' }} {{ $item->active ? 'active' : '' }}">
@@ -47,7 +47,7 @@
                     <div class="py-3">
                       @if ($group['type'] === 'regular')
                         {{-- Regular Group --}}
-                        <div class="bg-neutral-dark-10 rounded-xl p-4">
+                        <div class="bg-neutral-0-10 rounded-xl p-4">
                           <div class="flex items-center gap-3 mb-3">
                             @if (!empty($group['icon']['url']))
                               <img src="{{ $group['icon']['url'] }}" alt="{{ $group['icon']['alt'] ?? '' }}" class="w-6 h-6 flex-shrink-0">
