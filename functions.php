@@ -224,3 +224,4 @@ function get_csp_allowed_domains()
     $allowed = array_unique($allowed);
     return !empty($allowed) ? implode(' ', $allowed) : '';
 }
+

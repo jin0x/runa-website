@@ -289,24 +289,21 @@ function enqueue_editor_assets()
  */
 function get_frontend_home_url()
 {
+    // Backend to frontend mapping (same pattern as get_csp_allowed_domains)
+    $backend_to_frontend = [
+        'runaio.wpenginepowered.com' => 'https://runa.io',
+        'runaiostaging.wpenginepowered.com' => 'https://staging.runa.io',
+        'runastg.wpenginepowered.com' => 'https://staging.runa.io',
+    ];
+
     $request_host = $_SERVER['HTTP_HOST'] ?? '';
 
-    // Production frontend
-    if ($request_host === 'runa.io') {
-        return 'https://runa.io';
+    // Check if current request is from a backend domain
+    if (isset($backend_to_frontend[$request_host])) {
+        return $backend_to_frontend[$request_host];
     }
 
-    // Staging frontend
-    if ($request_host === 'staging.runa.io') {
-        return 'https://staging.runa.io';
-    }
-
-    // Local development
-    if ($request_host === 'runa.local') {
-        return 'http://runa.local';
-    }
-
-    // Default fallback to home_url() for direct backend access or wp-admin
+    // Default fallback to home_url() for direct frontend or admin access
     return home_url('/');
 }
 
