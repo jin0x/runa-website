@@ -4,12 +4,12 @@
     "src": "editor.deps.json"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DJGmnCn-.css",
+    "file": "assets/app-Bh3xaX8m.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/editor.css": {
-    "file": "assets/editor-BEe1u-En.css",
+    "file": "assets/editor-Cv7Uy-Uj.css",
     "src": "resources/css/editor.css",
     "isEntry": true
   },
@@ -30,7 +30,7 @@
     "src": "resources/fonts/Lineca-Regular.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-grfm8tUT.js",
+    "file": "assets/app-BMd24Smn.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
