@@ -1296,6 +1296,16 @@
           "color": "#00000052"
         },
         {
+          "name": "Primary (Dark 95)",
+          "slug": "primary-dark-95",
+          "color": "#000000f2"
+        },
+        {
+          "name": "Neutral (0 10)",
+          "slug": "neutral-0-10",
+          "color": "#ffffff1a"
+        },
+        {
           "name": "Neutral (0 32)",
           "slug": "neutral-0-32",
           "color": "#ffffff52"
