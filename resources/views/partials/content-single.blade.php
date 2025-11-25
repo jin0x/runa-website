@@ -52,7 +52,7 @@
     }
   }
 @endphp
-<article <?php post_class('h-entry w-full relative py-12 overflow-visible md:pt-40'); ?>>
+<article <?php post_class('h-entry w-full relative py-20 overflow-visible md:pt-40'); ?>>
   <div class="w-full mx-auto relative px-6 lg:px-8 lg:max-w-[1600px] ">
     <div class="w-full mx-auto relative lg:max-w-7xl">
       <x-text 

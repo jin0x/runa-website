@@ -101,7 +101,17 @@
         <div
           x-data="{
             isMobileNavOpen: false,
-            adminBarHeight: null
+            adminBarHeight: null,
+            // hamburguer validation color
+            burgerBaseColor: '{{ $use_secondary_logo ? '#000' : '#fff' }}',
+            burgerColor() {
+              return this.isMobileNavOpen ? '#fff' : this.burgerBaseColor;
+            },
+            // logo swap when menu opens on dark overlay
+            defaultLogoUrl: '{{ addslashes($active_header_logo['url'] ?? '') }}',
+            defaultLogoAlt: '{{ addslashes($active_header_logo_alt ?? $siteName) }}',
+            openLogoUrl: '{{ addslashes($use_secondary_logo ? ($header_logo['url'] ?? ($active_header_logo['url'] ?? '')) : ($active_header_logo['url'] ?? '')) }}',
+            openLogoAlt: '{{ addslashes($use_secondary_logo ? ($header_logo['alt'] ?? $siteName) : ($active_header_logo_alt ?? $siteName)) }}'
           }"
           x-init="
             if (document.body.classList.contains('admin-bar')) {
@@ -127,11 +137,15 @@
           :class="isMobileNavOpen ? 'fixed inset-0 z-[120] bg-primary-dark-95 min-h-screen' : 'absolute top-0 inset-x-0 origin-top-right'">
           <div>
             <div class="px-6 py-3 flex items-center justify-between">
-              @if($header_logo)
+              @if($active_header_logo)
                 <div>
                   <a href="{{ home_url('/') }}">
                     <span class="sr-only">{{ $siteName }}</span>
-                    <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class=" w-[100px] md:w-48 h-auto">
+                    <img
+                      :src="isMobileNavOpen && openLogoUrl ? openLogoUrl : defaultLogoUrl"
+                      :alt="isMobileNavOpen && openLogoAlt ? openLogoAlt : defaultLogoAlt"
+                      class=" w-[100px] md:w-48 h-auto"
+                    >
                   </a>
                 </div>
               @endif
@@ -144,12 +158,12 @@
                         x-on:click.prevent="isMobileNavOpen = !isMobileNavOpen"
                 >
                   <span class="sr-only" x-text="isMobileNavOpen ? 'Close Menu' : 'Open Menu'"></span>
-                  <svg :class="{ 'hidden': isMobileNavOpen }" class="h-10 w-10 xmlns="http://www.w3.org/2000/svg" fill="none"
-                       viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
+                  <svg :class="{ 'hidden': isMobileNavOpen }" class="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none"
+                       viewBox="0 0 24 24" :stroke="burgerColor()" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                   </svg>
                   <svg :class="{ 'hidden': !isMobileNavOpen }" class="h-10 w-10" xmlns="http://www.w3.org/2000/svg"
-                       fill="none" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
+                       fill="none" viewBox="0 0 24 24" :stroke="burgerColor()" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                   </svg>
                 </button>
