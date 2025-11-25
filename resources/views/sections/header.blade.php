@@ -16,6 +16,13 @@
     $has_primary_cta = !empty($primary_cta_url) && !empty($primary_cta_label);
     $has_secondary_cta = !empty($secondary_cta_url) && !empty($secondary_cta_label);
     $header_logo = get_field('header_logo', 'option');
+    $header_logo_secondary = get_field('header_logo_secondary', 'option');
+    $use_secondary_logo = is_singular('post') || is_singular('case-study');
+    $active_header_logo = ($use_secondary_logo && $header_logo_secondary) ? $header_logo_secondary : $header_logo;
+    $active_header_logo_alt = $siteName;
+    if (is_array($active_header_logo) && !empty($active_header_logo['alt'])) {
+      $active_header_logo_alt = $active_header_logo['alt'];
+    }
 @endphp
 @if($enable_header_banner && $header_banner_message)
   <div id="header-banner" x-data="{ isVisible: true }" x-show="isVisible" class="hidden lg:flex justify-between absolute top-0 w-full bg-primary-violet text-white py-6 px-4 lg:px-12  items-center gap-4 z-[110]">
@@ -36,11 +43,11 @@
       <div class="container mx-auto relative pt-6">
         <div class="mx-auto w-full px-4 xl:px-12 hidden xl:block">
           <div class="relative flex items-center justify-between sm:h-10 xl:justify-center" aria-label="Global">
-            @if($header_logo)
+            @if($active_header_logo)
               <div class="flex items-center flex-1 xl:absolute xl:inset-y-0 xl:left-0">
                 <a href="{{ home_url('/') }}">
                   <span class="sr-only">{{ $siteName }}</span>
-                  <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class="w-31 h-auto">
+                  <img src="{{ $active_header_logo['url'] }}" alt="{{ $active_header_logo_alt }}" class="w-31 h-auto">
                 </a>
               </div>
             @endif
