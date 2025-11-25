@@ -99,33 +99,57 @@
                 To: "opacity-0 scale-95"
             -->
         <div
-          x-data="{isMobileNavOpen: false}"
-          class="absolute top-0 inset-x-0 p-2 origin-top-right xl:hidden">
-          <div class="rounded-lg shadow-md bg-primary-dark ring-1 ring-black ring-opacity-5 overflow-hidden">
-            <div class="px-5 py-4 flex items-center justify-between">
+          x-data="{
+            isMobileNavOpen: false,
+            adminBarHeight: null
+          }"
+          x-init="
+            if (document.body.classList.contains('admin-bar')) {
+              const setOffset = () => {
+                adminBarHeight = (window.innerWidth < 783 ? 46 : 32) + 'px';
+                if (isMobileNavOpen) {
+                  $el.style.top = adminBarHeight;
+                }
+              };
+              setOffset();
+              window.addEventListener('resize', setOffset);
+            }
+          "
+          x-effect="
+            if (isMobileNavOpen && adminBarHeight) {
+              $el.style.top = adminBarHeight;
+            } else {
+              $el.style.top = null;
+            }
+            document.body.classList.toggle('overflow-hidden', isMobileNavOpen);
+          "
+          class="xl:hidden flex flex-col"
+          :class="isMobileNavOpen ? 'fixed inset-0 z-[120] bg-primary-dark-95 min-h-screen' : 'absolute top-0 inset-x-0 origin-top-right'">
+          <div>
+            <div class="px-6 py-3 flex items-center justify-between">
               @if($header_logo)
                 <div>
                   <a href="{{ home_url('/') }}">
                     <span class="sr-only">{{ $siteName }}</span>
-                    <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class="w-48 h-auto">
+                    <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class=" w-[100px] md:w-48 h-auto">
                   </a>
                 </div>
               @endif
               <div class="-mr-2">
                 <button type="button"
-                        class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-navy"
+                        class="inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100"
                         aria-label="Main menu"
                         x-bind:aria-expanded="isMobileNavOpen"
                         x-bind:aria-label="isMobileNavOpen ? 'Close main menu' : 'Main menu'"
                         x-on:click.prevent="isMobileNavOpen = !isMobileNavOpen"
                 >
                   <span class="sr-only" x-text="isMobileNavOpen ? 'Close Menu' : 'Open Menu'"></span>
-                  <svg :class="{ 'hidden': isMobileNavOpen }" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                       viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <svg :class="{ 'hidden': isMobileNavOpen }" class="h-10 w-10 xmlns="http://www.w3.org/2000/svg" fill="none"
+                       viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                   </svg>
-                  <svg :class="{ 'hidden': !isMobileNavOpen }" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg"
-                       fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <svg :class="{ 'hidden': !isMobileNavOpen }" class="h-10 w-10" xmlns="http://www.w3.org/2000/svg"
+                       fill="none" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                   </svg>
                 </button>
@@ -133,7 +157,8 @@
             </div>
             <div
               :class="{ 'hidden': !isMobileNavOpen }"
-              class="transition transform"
+              class="transition transform flex-1 overflow-y-auto px-5 pb-8"
+              style="max-height: 100vh;"
               x-show="isMobileNavOpen"
               @click.away="isMobileNavOpen = false"
               x-transition:enter="duration-150 ease-out"

@@ -202,6 +202,8 @@ body {
 
   /* Custom Gradient Colors */
   --color-primary-dark-32: rgba(0, 0, 0, 0.32);
+  --color-primary-dark-95: rgba(0, 0, 0, 0.95);
+  --color-neutral-0-10: rgba(255, 255, 255, 0.10);
   --color-neutral-0-32: rgba(255, 255, 255, 0.32);
   --color-neutral-dark-10: rgba(102, 102, 102, 0.1);
   --color-neutral-dark-40: rgba(102, 102, 102, 0.4);
