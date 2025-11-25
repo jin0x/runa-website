@@ -46,7 +46,7 @@
     ]);
 
     $postsPageId       = get_option('page_for_posts');
-    $blogBaseUrl       = $postsPageId ? get_permalink($postsPageId) : home_url('/');
+    $blogBaseUrl       = $postsPageId ? get_permalink($postsPageId) : App\Helpers\get_frontend_home_url();
     $featuredFilterUrl = add_query_arg('featured', '1', $blogBaseUrl);
 
     $showFeaturedFilter = ($hasFeaturedPosts || $featuredActive) && !$tagActive && !$searchActive;

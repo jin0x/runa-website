@@ -45,7 +45,7 @@
           <div class="relative flex items-center justify-between sm:h-10 xl:justify-center" aria-label="Global">
             @if($active_header_logo)
               <div class="flex items-center flex-1 xl:absolute xl:inset-y-0 xl:left-0">
-                <a href="{{ home_url('/') }}">
+                <a href="{{ App\Helpers\get_frontend_home_url() }}">
                   <span class="sr-only">{{ $siteName }}</span>
                   <img src="{{ $active_header_logo['url'] }}" alt="{{ $active_header_logo_alt }}" class="w-31 h-auto">
                 </a>
@@ -105,7 +105,7 @@
             <div class="px-5 py-4 flex items-center justify-between">
               @if($header_logo)
                 <div>
-                  <a href="{{ home_url('/') }}">
+                  <a href="{{ App\Helpers\get_frontend_home_url() }}">
                     <span class="sr-only">{{ $siteName }}</span>
                     <img src="{{ $header_logo['url'] }}" alt="{{ $header_logo['alt'] ?: $siteName }}" class="w-48 h-auto">
                   </a>

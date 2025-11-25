@@ -44,7 +44,7 @@ foreach ($social_networks_array as $network) {
     <!-- Top Section: Logo Only -->
     <div class="mb-12 lg:mb-16">
       @if($footer_logo)
-        <a href="<?php echo home_url('/'); ?>">
+        <a href="{{ App\Helpers\get_frontend_home_url() }}">
           <img src="{{ $footer_logo['url'] }}" alt="{{ $footer_logo['alt'] }}" class="h-10 w-auto">
         </a>
       @endif

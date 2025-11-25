@@ -278,6 +278,39 @@ function enqueue_editor_assets()
 }
 
 /**
+ * Get the frontend home URL based on the current request domain
+ * Handles Cloudflare Worker routing between HubSpot/WordPress
+ *
+ * This function detects whether the request is coming from the public-facing
+ * frontend domain (runa.io, staging.runa.io) or the backend WPEngine domain,
+ * and returns the appropriate home URL for frontend links.
+ *
+ * @return string The frontend home URL
+ */
+function get_frontend_home_url()
+{
+    $request_host = $_SERVER['HTTP_HOST'] ?? '';
+
+    // Production frontend
+    if ($request_host === 'runa.io') {
+        return 'https://runa.io';
+    }
+
+    // Staging frontend
+    if ($request_host === 'staging.runa.io') {
+        return 'https://staging.runa.io';
+    }
+
+    // Local development
+    if ($request_host === 'runa.local') {
+        return 'http://runa.local';
+    }
+
+    // Default fallback to home_url() for direct backend access or wp-admin
+    return home_url('/');
+}
+
+/**
  * Check if current page/post has any ACF blocks
  *
  * @return bool True if ACF blocks are found, false otherwise

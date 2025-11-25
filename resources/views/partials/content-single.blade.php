@@ -19,7 +19,7 @@
   $related_posts_ids = get_related_posts_ids($post_id, $related_posts_count);
 
   $postsPageId       = get_option('page_for_posts');
-  $blogBaseUrl       = $postsPageId ? get_permalink($postsPageId) : home_url('/');
+  $blogBaseUrl       = $postsPageId ? get_permalink($postsPageId) : App\Helpers\get_frontend_home_url();
 
   // Get social networks from the repeater
   $social_networks_array = get_field('social_networks', 'option') ?: [];
