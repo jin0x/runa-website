@@ -42,6 +42,13 @@ class HeaderSettings extends Field
                 'preview_size' => 'medium',
                 'library' => 'all',
             ])
+            ->addImage('header_logo_secondary', [
+                'label' => 'Header Logo (Secondary / Dark)',
+                'instructions' => 'Upload the secondary/dark logo version for layouts without a hero (e.g., blog posts, case studies).',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'library' => 'all',
+            ])
             ->addRepeater('header_buttons', [
                 'label' => 'Header Buttons',
                 'instructions' => 'Add up to 2 call-to-action buttons. The first button will be primary, the second will be secondary.',
