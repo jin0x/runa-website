@@ -8,9 +8,12 @@
   use App\Enums\ButtonType;
   use App\Enums\ButtonSize;
   use function App\Helpers\apply_tailwind_classes_to_content;
+  use function App\Helpers\get_share_links_for_post;
 
   // Global context
-  $postId = $post ?? get_the_ID();
+  $postId = is_object($post ?? null) && isset($post->ID)
+    ? (int) $post->ID
+    : (int) ($post ?? get_the_ID());
 
   // Category badge
   $caseStudyCategories = get_the_terms($postId, 'case_study_category');
@@ -70,7 +73,7 @@
   $successPoints        = get_field('success_points');
 @endphp
 
-<article @php(post_class('case-study-single max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:pt-40 md:pb-30'))>
+<article <?php post_class('case-study-single max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:pt-40 md:pb-30');?>>
   <header class="text-center flex flex-col space-y-10">
     @if($primaryCategory)
       <div>
@@ -145,16 +148,16 @@
     </div>
 
     {{-- Sidebar --}}
-    @if($resultMetrics)
       <div class="sidebar">
         <div class="space-y-6 sticky top-10">
-          <x-heading
-            :as="HeadingTag::H2"
-            :size="HeadingSize::H3"
-            :color="TextColor::GRAY"
-          >
-            {{ $resultHeading }}
-          </x-heading>
+          @if($resultMetrics)
+            <x-heading
+              :as="HeadingTag::H2"
+              :size="HeadingSize::H3"
+              :color="TextColor::GRAY"
+            >
+              {{ $resultHeading }}
+            </x-heading>
             <ul class="space-y-4">
               @foreach($resultMetrics as $item_result)
                 <li class="flex gap-2">
@@ -189,9 +192,29 @@
                 </li>
               @endforeach
             </ul>
+          @endif
+          {{-- Social Share --}}
+          @php $shareLinks = get_share_links_for_post($postId); @endphp
+          <div>
+            <x-text
+              :as="TextTag::SPAN"
+              :size="TextSize::MEDIUM"
+              class="block tracking-[0.08em] font-bold text-primary-dark mb-6"
+            >
+              Share
+            </x-text>
+            <div class="flex gap-3">
+              @foreach($shareLinks as $share)
+                <x-social-icon
+                  :network="$share['network']"
+                  :href="$share['url']"
+                  :target="$share['target']"
+                />
+              @endforeach
+            </div>
+          </div>
         </div>
       </div>
-    @endif
   </div>
   <div class="max-w-4xl mx-auto py-8">
     {{-- Bottom --}}
