@@ -408,3 +408,50 @@ function get_related_posts_ids(int $post_id, $related_count, array $args = []): 
         return $post->ID ?? null;
     }, $related_post_ids);
 }
+
+/**
+ * Build share links (LinkedIn, X, mail) for a given post.
+ *
+ * @param mixed $post Post ID or WP_Post
+ * @return array<int, array<string, string>>
+ */
+function get_share_links_for_post($post): array
+{
+    if (empty($post)) {
+        return [];
+    }
+
+    $post_id = is_object($post) && isset($post->ID) ? (int) $post->ID : (int) $post;
+    if (!$post_id) {
+        return [];
+    }
+
+    $permalink = get_permalink($post_id);
+    $title     = get_the_title($post_id);
+
+    if (empty($permalink)) {
+        return [];
+    }
+
+    $shareText        = trim(($title ? $title . ' ' : '') . $permalink);
+    $shareTextEncoded = rawurlencode($shareText);
+    $titleEncoded     = rawurlencode((string) $title);
+
+    return [
+        [
+            'network' => 'linkedin',
+            'url'     => "https://www.linkedin.com/feed/?shareActive=true&text={$shareTextEncoded}",
+            'target'  => '_blank',
+        ],
+        [
+            'network' => 'x',
+            'url'     => "https://twitter.com/intent/tweet?text={$shareTextEncoded}",
+            'target'  => '_blank',
+        ],
+        [
+            'network' => 'mail',
+            'url'     => "mailto:?subject={$titleEncoded}&body={$shareTextEncoded}",
+            'target'  => '_self',
+        ],
+    ];
+}
