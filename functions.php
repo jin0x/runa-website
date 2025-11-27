@@ -225,3 +225,18 @@ function get_csp_allowed_domains()
     return !empty($allowed) ? implode(' ', $allowed) : '';
 }
 
+/**
+ * Increase FacetWP dropdown limit for company directory facets
+ * By default, FacetWP limits dropdowns to 10-20 items
+ * This filter increases the limit to show all available options
+ */
+add_filter('facetwp_facets', function($facets) {
+    foreach ($facets as $key => $facet) {
+        // Set higher limits for company directory facets
+        if (isset($facet['name']) && in_array($facet['name'], ['company_country', 'company_category'])) {
+            $facets[$key]['count'] = 500; // Show up to 500 countries/categories
+        }
+    }
+    return $facets;
+}, 10, 1);
+
