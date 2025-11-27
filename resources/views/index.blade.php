@@ -38,6 +38,7 @@
     ]);
 
     $hasFeaturedPosts = $featuredQuery->have_posts();
+    $featuredCount    = ($showFeatured && $hasFeaturedPosts) ? (int) $featuredQuery->post_count : 0;
 
     $tags = get_tags([
       'orderby'    => 'count',
@@ -215,10 +216,10 @@
     @else
       {{-- Featured posts --}}
       @if($flag['showFeatured'] && $flag['hasFeaturedPosts'])
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div class="grid grid-cols-1 gap-6 mb-12 {{ $featuredCount === 1 ? '' : 'md:grid-cols-2' }}">
           @while($featuredQuery->have_posts())
             @php $featuredQuery->the_post() @endphp
-            <x-post-card :featured="true" :post="get_the_ID()" />
+            <x-post-card :featured="true" :post="get_the_ID()" :single-featured="$featuredCount === 1" />
           @endwhile
         </div>
         @php wp_reset_postdata() @endphp

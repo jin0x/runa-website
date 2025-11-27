@@ -9,11 +9,13 @@
 @props([
     'featured' => false,
     'post' => null,
+    'singleFeatured' => false,
 ])
 
 @php
   // Get post data
   $postId = $post ?? get_the_ID();
+  $isSingleFeatured = $featured && $singleFeatured;
   $title = get_the_title($postId);
   $excerpt = get_the_excerpt($postId);
   $permalink = get_permalink($postId);
@@ -34,24 +36,26 @@
 @endphp
 
 <article class="{{ $featured ? 'featured-post-card' : 'post-card' }}">
-  <a href="{{ $permalink }}" class="block">
-    <div class="flex flex-col h-full p-6">
+  <a href="{{ $permalink }}" class="block h-full">
+    <div class="flex flex-col {{ $isSingleFeatured ? 'md:flex-row gap-6' : '' }} h-full p-6">
       {{-- Image --}}
-      <div class="{{ $featured ? 'rounded-t-[12px]' : 'rounded-[12px]' }} w-full relative overflow-hidden mb-6">
-        @if($thumbnail)
-          <img
-            src="{{ $thumbnail }}"
-            alt="{{ $title }}"
-            class="w-full h-full object-cover transition-transform duration-300 {{ $featured ? 'aspect-[16/9]' : 'aspect-[16/9]' }}"
-            loading="lazy"
-          >
-        @else
-          <div class="w-full {{ $featured ? 'aspect-[16/9]' : 'aspect-[16/9]' }} bg-gradient-to-br from-primary-green-neon to-primary-yellow"></div>
-        @endif
+      <div class="{{ $isSingleFeatured ? 'md:flex-1' : '' }}">
+        <div class="rounded-[16px] {{ $featured ? 'md:rounded-[24px]' : '' }} aspect-[16/9] w-full relative overflow-hidden {{ $isSingleFeatured ? 'mb-6 md:mb-0' : 'mb-6' }}">
+          @if($thumbnail)
+            <img
+              src="{{ $thumbnail }}"
+              alt="{{ $title }}"
+              class="w-full h-full object-cover transition-transform duration-300"
+              loading="lazy"
+            >
+          @else
+            <div class="w-full h-full bg-gradient-to-br from-primary-green-neon to-primary-yellow"></div>
+          @endif
+        </div>
       </div>
 
       {{-- Content --}}
-      <div class="flex flex-col h-full">
+      <div class="flex flex-col h-full {{ $isSingleFeatured ? 'md:flex-1' : '' }}">
         {{-- Tag Badges --}}
         @if($featured || !empty($displayTags))
           <div class="flex flex-wrap justify-between mb-6">
@@ -61,7 +65,7 @@
                   <x-text
                     :as="TextTag::SPAN"
                     :size="TextSize::CAPTION"
-                    class="text-primary-dark"
+                    class="text-primary-dark !flex items-center gap-3 !normal-case"
                   >
                     Featured
                   </x-text>
@@ -73,7 +77,7 @@
                   <x-text
                     :as="TextTag::SPAN"
                     :size="TextSize::CAPTION"
-                    class="text-primary-dark"
+                    class="text-primary-dark !flex items-center gap-3 !normal-case"
                   >
                     {{ $tag->name }}
                   </x-text>
@@ -112,17 +116,15 @@
         </x-text>
 
         <div class="mt-auto">
-          <a href="{{ $permalink }}" class="block">
-            <x-text 
-              :size="TextSize::SMALL" 
-              :color="TextColor::LIGHT"
-              class="inline-flex items-center gap-1 !no-underline hover:underline transition-all duration-200 ease-in-out">
-                <span>Read more</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M7.00016 0.663574L5.82516 1.83857L10.4752 6.49691H0.333496V8.16357H10.4752L5.82516 12.8219L7.00016 13.9969L13.6668 7.33024L7.00016 0.663574Z" fill="black"/>
-                </svg>
-            </x-text>
-          </a>
+          <x-text 
+            :size="TextSize::SMALL" 
+            :color="TextColor::LIGHT"
+            class="inline-flex items-center gap-1 !no-underline hover:underline transition-all duration-200 ease-in-out">
+              <span>Read more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7.00016 0.663574L5.82516 1.83857L10.4752 6.49691H0.333496V8.16357H10.4752L5.82516 12.8219L7.00016 13.9969L13.6668 7.33024L7.00016 0.663574Z" fill="black"/>
+              </svg>
+          </x-text>
         </div>
       </div>
     </div>
