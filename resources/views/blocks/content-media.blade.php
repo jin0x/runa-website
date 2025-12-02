@@ -66,7 +66,7 @@
     @endif
 
     {{-- Split Content Layout --}}
-    <div class="max-w-7xl grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[1fr_1fr] gap-12 lg:gap-18 items-center justify-center mx-auto">
+    <div class="max-w-7xl {{ $media_type === 'video' ?  "flex flex-col" : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[1fr_1fr] gap-12 lg:gap-18" }} items-center justify-center mx-auto">
       {{-- Left Side - Content --}}
       <div class="flex flex-col order-1">
         @if(!empty($content_heading))
