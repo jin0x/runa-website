@@ -159,7 +159,7 @@
                   <tr class="company-row hover:{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200">
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm font-normal {{ $textColor }}">
-                        {!! get_the_title() !!}
+                        {{ get_the_title() }}
                       </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm {{ $textColor }}">
@@ -167,7 +167,7 @@
                         <div class="flex flex-wrap gap-1">
                           @foreach($category_terms as $category)
                             <span class="inline-flex items-center px-2 py-1 text-xs">
-                              {!! $category->name !!}
+                              {{ $category->name }}
                             </span>
                           @endforeach
                         </div>

@@ -78,7 +78,7 @@
               :size="HeadingSize::HERO"
               class="mb-3 break-smart"
             >
-              {!! $title !!}
+              {{ $title }}
             </x-heading>
           </header>
 

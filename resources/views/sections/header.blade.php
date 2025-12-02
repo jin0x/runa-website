@@ -26,7 +26,7 @@
 @endphp
 @if($enable_header_banner && $header_banner_message)
   <div id="header-banner" x-data="{ isVisible: true }" x-show="isVisible" class="hidden lg:flex justify-between absolute top-0 w-full bg-primary-violet text-white py-6 px-4 lg:px-12  items-center gap-4 z-[110]">
-    <div>{!! $header_banner_message !!}</div>
+    <div>{!! wp_kses_post($header_banner_message) !!}</div>
     <button
       type="button"
       class="text-white bg-transparent border-2 border-white rounded-full h-6 w-6 cursor-pointer text-xs font-normal"

@@ -67,7 +67,7 @@
           :size="TextSize::EYEBROW"
           class="block max-w-max mx-auto pill uppercase {{ $isShowcase ? 'mb-6' : 'mb-3' }} font-bold {{ $eyebrowClasses }}"
         >
-          {!! $eyebrow !!}
+          {{ $eyebrow }}
         </x-text>
 
         <x-heading
@@ -75,7 +75,7 @@
           :size="$headingSize"
           class="pb-[0.25rem] {{ $isShowcase ? 'mb-6' : 'mb-3' }} font-bold {{ $titleClasses }}"
         >
-          {!! $heading !!}
+          {{ $heading }}
         </x-heading>
 
         <x-text
@@ -83,7 +83,7 @@
           :size="TextSize::XLARGE"
           class="pb-[0.25rem] max-w-[80ch] mx-auto {{ $subtitleClasses }}"
         >
-          {!! $subtitle !!}
+          {{ $subtitle }}
         </x-text>
     </x-container>
 
