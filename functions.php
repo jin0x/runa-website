@@ -115,8 +115,21 @@ function remove_trailing_slash_from_content_links($content)
 add_action('send_headers', 'add_security_headers');
 function add_security_headers()
 {
-    // Only add headers on front-end (not in admin)
-    if (!is_admin()) {
+    // HTTP Strict Transport Security - Force HTTPS on ALL requests (including REST API)
+    // This MUST be applied globally to protect backend endpoints from MITM attacks
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+        header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+    }
+
+    // Remove X-Powered-By header globally (hide server info)
+    header_remove('X-Powered-By');
+
+    // X-Content-Type-Options - Prevent MIME sniffing (global)
+    header('X-Content-Type-Options: nosniff');
+
+    // Only add CSP and other headers on front-end (not in admin or REST API)
+    // CSP can break admin functionality, so we scope it to frontend only
+    if (!is_admin() && strpos($_SERVER['REQUEST_URI'], '/wp-json/') === false) {
         // Build dynamic CSP that allows both frontend and backend domains
         $csp_domains = get_csp_allowed_domains();
 
@@ -133,19 +146,10 @@ function add_security_headers()
 
         header("Content-Security-Policy: {$csp}");
 
-        // HTTP Strict Transport Security - Force HTTPS
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-            header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
-        }
-
-        // X-Frame-Options - Prevent clickjacking
+        // X-Frame-Options - Prevent clickjacking (frontend only)
         header('X-Frame-Options: SAMEORIGIN');
 
-        // Remove X-Powered-By header (hide server info)
-        header_remove('X-Powered-By');
-
-        // Additional security headers
-        header('X-Content-Type-Options: nosniff');
+        // Referrer-Policy (frontend only)
         header('Referrer-Policy: strict-origin-when-cross-origin');
     }
 }
