@@ -167,7 +167,7 @@
                         <div class="flex flex-wrap gap-1">
                           @foreach($category_terms as $category)
                             <span class="inline-flex items-center px-2 py-1 text-xs">
-                              {{ $category->name }}
+                              {!! esc_html($category->name) !!}
                             </span>
                           @endforeach
                         </div>
