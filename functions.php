@@ -123,12 +123,13 @@ function add_security_headers()
         // Content Security Policy - Defense against XSS attacks
         // Dynamically allows assets from both frontend domain (runa.io) and backend domain (wpengine)
         $csp = "default-src 'self' {$csp_domains}; ";
-        $csp .= "script-src 'self' {$csp_domains} 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com; ";
+        $csp .= "script-src 'self' {$csp_domains} 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com; ";
         $csp .= "style-src 'self' {$csp_domains} 'unsafe-inline' https://fonts.googleapis.com; ";
         $csp .= "font-src 'self' {$csp_domains} https://fonts.gstatic.com; ";
         $csp .= "img-src 'self' {$csp_domains} data: https:; ";
         $csp .= "frame-src 'self'; ";
-        $csp .= "connect-src 'self' {$csp_domains} https://www.google-analytics.com https://consent.cookiebot.com;";
+        $csp .= "connect-src 'self' {$csp_domains} https://www.google-analytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com; ";
+        $csp .= "worker-src 'self' blob:;";
 
         header("Content-Security-Policy: {$csp}");
 
