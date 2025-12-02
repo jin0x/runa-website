@@ -135,7 +135,7 @@
           :mediaType="$media_type"
           :mediaUrl="$media_url"
           :classes="$mediaClasses"
-          containerClasses="order-2 overflow-hidden rounded-lg"
+          containerClasses="overflow-hidden rounded-lg"
         />
       </div>
     </div>
