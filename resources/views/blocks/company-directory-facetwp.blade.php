@@ -76,7 +76,7 @@
           <div class="mt-4">
             <button
               type="button"
-              onclick="FWP.reset()"
+              onclick="if (typeof FWP !== 'undefined' && typeof FWP.reset === 'function') FWP.reset();"
               class="group text-sm {{ $textColor }} w-full px-6 py-6 pr-12 flex items-center justify-between gap-3 transition-colors duration-200"
               aria-label="Clear all filters"
             >
@@ -228,129 +228,223 @@
   </x-container>
 </x-section>
 
+{{-- FacetWP 4.3.6/4.4.1 Polyfill - Fixes missing methods in minified build --}}
+<script>
+(function() {
+    'use strict';
+
+    // Wait for FWP to be defined by the plugin
+    function initPolyfills() {
+        if (typeof window.FWP === 'undefined') {
+            setTimeout(initPolyfills, 50);
+            return;
+        }
+
+        // Polyfill for missing toggleOverlay method
+        if (typeof window.FWP.toggleOverlay !== 'function') {
+            window.FWP.toggleOverlay = function(which) {
+                const facets = document.querySelectorAll('.facetwp-facet');
+                facets.forEach(facet => {
+                    if (which === 'on') {
+                        facet.classList.add('is-loading');
+                    } else {
+                        facet.classList.remove('is-loading');
+                    }
+                });
+            };
+        }
+
+        // Polyfill for missing parseFacets method
+        if (typeof window.FWP.parseFacets !== 'function') {
+            window.FWP.parseFacets = function() {
+                window.FWP.facets = window.FWP.facets || {};
+                window.FWP.facet_type = window.FWP.facet_type || {};
+
+                const facetElements = document.querySelectorAll('.facetwp-facet');
+                facetElements.forEach(facetEl => {
+                    const facetName = facetEl.getAttribute('data-name');
+                    const facetType = facetEl.getAttribute('data-ui') || facetEl.getAttribute('data-type');
+                    const isIgnored = facetEl.classList.contains('facetwp-ignore');
+
+                    if (!facetName || !facetType) return;
+
+                    // Store facet type
+                    window.FWP.facet_type[facetName] = facetType;
+
+                    // Trigger facet refresh hook if not ignored
+                    if (!isIgnored && window.FWP.hooks && typeof window.FWP.hooks.doAction === 'function') {
+                        window.FWP.hooks.doAction('facetwp/refresh/' + facetType, facetEl, facetName);
+                    }
+                });
+            };
+        }
+
+        // Polyfill for missing loadFromHash method
+        if (typeof window.FWP.loadFromHash !== 'function') {
+            window.FWP.loadFromHash = function() {
+                const prefix = window.FWP_JSON ? window.FWP_JSON.prefix : 'fwp_';
+                let hash = [];
+                const getStr = window.location.search.replace('?', '').split('&');
+
+                getStr.forEach(val => {
+                    const paramName = val.split('=')[0];
+                    if (paramName.indexOf(prefix) === 0) {
+                        hash.push(val.replace(prefix, ''));
+                    }
+                });
+
+                hash = hash.join('&');
+
+                // Reset facet values
+                if (window.FWP.facets) {
+                    Object.keys(window.FWP.facets).forEach(key => {
+                        window.FWP.facets[key] = [];
+                    });
+                }
+
+                window.FWP.paged = 1;
+                if (window.FWP.extras) {
+                    window.FWP.extras.sort = 'default';
+                }
+
+                if (hash !== '') {
+                    hash.split('&').forEach(chunk => {
+                        const obj = chunk.split('=')[0];
+                        const val = chunk.split('=')[1];
+
+                        if (obj === 'paged') {
+                            window.FWP.paged = val;
+                        } else if (obj === 'per_page' || obj === 'sort') {
+                            if (window.FWP.extras) {
+                                window.FWP.extras[obj] = val;
+                            }
+                        } else if (val !== '') {
+                            const type = window.FWP.facet_type ? window.FWP.facet_type[obj] : '';
+                            if (type === 'search' || type === 'autocomplete') {
+                                window.FWP.facets[obj] = decodeURIComponent(val);
+                            } else {
+                                window.FWP.facets[obj] = decodeURIComponent(val).split(',');
+                            }
+                        }
+                    });
+                }
+            };
+        }
+    }
+
+    // Start polling for FWP
+    initPolyfills();
+})();
+</script>
+
 {{-- FacetWP Integration JavaScript --}}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize FacetWP for this block instance
-    const block = document.querySelector('[data-company-directory-facetwp]');
-    if (block) {
-        new CompanyDirectoryFacetWP(block);
-    }
-});
+(function() {
+    'use strict';
 
-/**
- * Company Directory FacetWP Integration Class
- * Handles styling and UX improvements for FacetWP
- */
-function CompanyDirectoryFacetWP(blockElement) {
-    this.block = blockElement;
-    this.theme = this.block.dataset.theme || 'light';
+    // Wait for both DOM and FacetWP to be ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const block = document.querySelector('[data-company-directory-facetwp]');
+        if (!block) return;
 
-    // Initialize styling and event listeners
-    this.init();
-}
+        const theme = block.dataset.theme || 'light';
+        const isDark = theme === 'dark';
+        const textColor = isDark ? 'text-white' : 'text-black';
+        const placeholderColor = isDark ? 'placeholder-gray-400' : 'placeholder-gray-500';
 
-CompanyDirectoryFacetWP.prototype.init = function() {
-    // Style FacetWP elements to match theme
-    this.styleFacetWPElements();
+        let hasSetDefaultCountry = false;
 
-    // Set up FacetWP event listeners
-    this.setupFacetWPEvents();
-};
+        // Style FacetWP elements
+        function styleFacetWPElements() {
+            // Style dropdowns
+            const selects = block.querySelectorAll('.facetwp-dropdown select');
+            selects.forEach(select => {
+                select.className = `w-full px-0 py-0 border-0 bg-transparent ${textColor} focus:outline-none focus:ring-0 focus:border-transparent`;
+            });
 
-CompanyDirectoryFacetWP.prototype.styleFacetWPElements = function() {
-    const isDark = this.theme === 'dark';
-    const borderColor = isDark ? 'border-gray-700' : 'border-gray-200';
-    const bgColor = isDark ? 'bg-gray-900' : 'bg-gray-50';
-    const textColor = isDark ? 'text-white' : 'text-black';
-    const placeholderColor = isDark ? 'placeholder-gray-400' : 'placeholder-gray-500';
+            // Style search input
+            const searchInputs = block.querySelectorAll('.facetwp-search input');
+            searchInputs.forEach(input => {
+                input.className = `w-full px-0 py-0 border-0 bg-transparent ${textColor} ${placeholderColor} focus:outline-none focus:ring-0 focus:border-transparent`;
+            });
+        }
 
-    // Style dropdowns
-    const selects = this.block.querySelectorAll('.facetwp-dropdown select');
-    selects.forEach(select => {
-        select.className = `w-full px-0 py-0 border-0 bg-transparent ${textColor} focus:outline-none focus:ring-0 focus:border-transparent`;
+        // Replace dropdown placeholders
+        function replaceDropdownPlaceholders() {
+            const countrySelect = block.querySelector('.facetwp-facet-company_country select option[value=""]');
+            if (countrySelect && countrySelect.textContent.trim().toLowerCase() === 'any') {
+                countrySelect.textContent = 'Country';
+            }
+
+            const categorySelect = block.querySelector('.facetwp-facet-company_category select option[value=""]');
+            if (categorySelect && categorySelect.textContent.trim().toLowerCase() === 'any') {
+                categorySelect.textContent = 'Category';
+            }
+
+            const searchInput = block.querySelector('.facetwp-facet-company_search input');
+            if (searchInput) {
+                const current = (searchInput.placeholder || '').trim().toLowerCase();
+                if (current === 'enter keywords') {
+                    searchInput.placeholder = 'Search';
+                }
+            }
+        }
+
+        // Add/remove loading states
+        function addLoadingState() {
+            const template = block.querySelector('.facetwp-template');
+            if (template) {
+                template.style.opacity = '0.5';
+                template.style.pointerEvents = 'none';
+            }
+        }
+
+        function removeLoadingState() {
+            const template = block.querySelector('.facetwp-template');
+            if (template) {
+                template.style.opacity = '1';
+                template.style.pointerEvents = 'auto';
+            }
+        }
+
+        // Wait for FacetWP to be fully ready
+        function initFacetWP() {
+            if (typeof FWP === 'undefined' || typeof FWP.refresh !== 'function') {
+                setTimeout(initFacetWP, 50);
+                return;
+            }
+
+            // FacetWP hooks (modern API)
+            document.addEventListener('facetwp-loaded', function() {
+                // Set default country only once on initial load
+                if (!hasSetDefaultCountry) {
+                    if (typeof FWP.facets.company_country === 'undefined' || FWP.facets.company_country.length === 0) {
+                        hasSetDefaultCountry = true;
+                        FWP.facets.company_country = ['united-states'];
+                        FWP.soft_refresh = true;
+                        FWP.refresh();
+                        return; // Don't run other code on this initial refresh
+                    }
+                }
+
+                replaceDropdownPlaceholders();
+                removeLoadingState();
+                styleFacetWPElements();
+            });
+
+            document.addEventListener('facetwp-refresh', function() {
+                if (FWP.loaded) {
+                    addLoadingState();
+                }
+            });
+
+            // Initial styling
+            setTimeout(styleFacetWPElements, 100);
+        }
+
+        initFacetWP();
     });
-
-    // Style search input
-    const searchInputs = this.block.querySelectorAll('.facetwp-search input');
-    searchInputs.forEach(input => {
-        input.className = `w-full px-0 py-0 border-0 bg-transparent ${textColor} ${placeholderColor} focus:outline-none focus:ring-0 focus:border-transparent`;
-    });
-};
-
-CompanyDirectoryFacetWP.prototype.setupFacetWPEvents = function() {
-    // Flag to prevent infinite loop when setting default country
-    let hasSetDefaultCountry = false;
-
-    // Set default country to US on initial load
-    document.addEventListener('facetwp-loaded', function() {
-        // Check if this is the initial load (no filters set yet)
-        // Only set default once to prevent infinite loop
-        if (!hasSetDefaultCountry &&
-            (typeof FWP.facets.company_country === 'undefined' || FWP.facets.company_country.length === 0)) {
-            hasSetDefaultCountry = true;
-            // Set default country to 'united-states' (FacetWP uses term slug)
-            FWP.facets.company_country = ['united-states'];
-            FWP.refresh();
-        }
-
-        // Replace default "Any" label with placeholders
-        this.replaceDropdownPlaceholders();
-
-        this.removeLoadingState();
-        this.styleFacetWPElements(); // Re-apply styles after AJAX
-    }.bind(this));
-
-    // Add loading state when filtering
-    document.addEventListener('facetwp-refresh', function() {
-        if (FWP.loaded) {
-            this.addLoadingState();
-        }
-    }.bind(this));
-};
-
-CompanyDirectoryFacetWP.prototype.addLoadingState = function() {
-    const template = this.block.querySelector('.facetwp-template');
-    if (template) {
-        template.style.opacity = '0.5';
-        template.style.pointerEvents = 'none';
-    }
-};
-
-CompanyDirectoryFacetWP.prototype.removeLoadingState = function() {
-    const template = this.block.querySelector('.facetwp-template');
-    if (template) {
-        template.style.opacity = '1';
-        template.style.pointerEvents = 'auto';
-    }
-};
-CompanyDirectoryFacetWP.prototype.replaceDropdownPlaceholders = function() {
-    // removing "any"
-    const countryPlaceholder = 'Country';
-    const categoryPlaceholder = 'Category';
-    const searchPlaceholder = 'Search';
-
-    // pais
-    const countrySelect = this.block.querySelector('.facetwp-facet-company_country select option[value=""]');
-    if (countrySelect && countrySelect.textContent.trim().toLowerCase() === 'any') {
-        countrySelect.textContent = countryPlaceholder;
-    }
-
-    // category
-    const categorySelect = this.block.querySelector('.facetwp-facet-company_category select option[value=""]');
-    if (categorySelect && categorySelect.textContent.trim().toLowerCase() === 'any') {
-        categorySelect.textContent = categoryPlaceholder;
-    }
-
-    // search
-    const searchInput = this.block.querySelector('.facetwp-facet-company_search input');
-    if (searchInput) {
-        const current = (searchInput.placeholder || '').trim().toLowerCase();
-        if (current === 'enter keywords') {
-            searchInput.placeholder = searchPlaceholder;
-        }
-    }
-};
+})();
 </script>
 
 {{-- FacetWP Styling --}}

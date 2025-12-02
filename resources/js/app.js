@@ -95,6 +95,21 @@ domReady(() => {
   window.gsap = gsap;
   window.ScrollTrigger = ScrollTrigger;
 
+  // FacetWP 4.4.1 polyfill - fix missing toggleOverlay method
+  if (typeof window.FWP !== 'undefined' && typeof window.FWP.toggleOverlay !== 'function') {
+    window.FWP.toggleOverlay = function(which) {
+      const method = which === 'on' ? 'addClass' : 'removeClass';
+      const facets = document.querySelectorAll('.facetwp-facet');
+      facets.forEach(facet => {
+        if (method === 'addClass') {
+          facet.classList.add('is-loading');
+        } else {
+          facet.classList.remove('is-loading');
+        }
+      });
+    };
+  }
+
   // Test GSAP
   if (typeof gsap !== 'undefined') {
     gsap.set('body', { opacity: 1 });
