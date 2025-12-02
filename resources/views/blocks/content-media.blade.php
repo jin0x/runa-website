@@ -34,13 +34,11 @@
   // $imageClasses = 'object-cover h-[294px] xl:h-[650px] w-full';
   $mediaClasses = $media_type === 'video' ? 'w-[1000px] aspect-video' : 'object-cover h-[294px] xl:h-[650px] w-full';
 
-  // Updated Media URL validation with video embed support
   $media_url = '';
   if ($media_type === 'video') {
           // Use uploaded file
           $video = get_field('right_media_video');
           $media_url = (!empty($video) && is_array($video)) ? ($video['url'] ?? '') : '';
-      
   } elseif ($media_type === 'image' && !empty($image)) {
       if (is_array($image)) {
           $media_url = $image['url'] ?? '';
