@@ -29,13 +29,14 @@
   $buttonVariant = ButtonVariant::PRIMARY;
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
-  // Media classes
-  $mediaClasses = 'object-cover h-[294px] xl:h-[650px] w-full';
+  // Media classes - different for videos vs images
+  $mediaClasses = $media_type === 'video' ? 'w-[1000px] aspect-video' : 'object-cover h-[294px] xl:h-[650px] w-full';
 
-  // Media URL validation
   $media_url = '';
-  if ($media_type === 'video' && !empty($video) && is_array($video)) {
-      $media_url = $video['url'] ?? '';
+  if ($media_type === 'video') {
+          // Use uploaded file
+          $video = get_field('right_media_video');
+          $media_url = (!empty($video) && is_array($video)) ? ($video['url'] ?? '') : '';
   } elseif ($media_type === 'image' && !empty($image)) {
       if (is_array($image)) {
           $media_url = $image['url'] ?? '';
@@ -61,7 +62,7 @@
     @endif
 
     {{-- Split Content Layout --}}
-    <div class="max-w-7xl grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[1fr_1fr] gap-12 lg:gap-18 items-center justify-center mx-auto">
+    <div class="max-w-7xl {{ $media_type === 'video' ?  "flex flex-col" : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[1fr_1fr] gap-12 lg:gap-18" }} items-center justify-center mx-auto">
       {{-- Left Side - Content --}}
       <div class="flex flex-col order-1">
         @if(!empty($content_heading))
@@ -128,13 +129,50 @@
         @endif
       </div>
 
-      {{-- Right Side - Media --}}
-      <x-media
-        :mediaType="$media_type"
-        :mediaUrl="$media_url"
-        :classes="$mediaClasses"
-        containerClasses="order-2 overflow-hidden rounded-[48px]"
-      />
+      {{-- Right Side - Media with media anchor --}}
+      <div id="media" class="order-2">
+        <x-media
+          :mediaType="$media_type"
+          :mediaUrl="$media_url"
+          :classes="$mediaClasses"
+          containerClasses="overflow-hidden rounded-lg"
+        />
+      </div>
     </div>
   </x-container>
 </x-section>
+
+{{-- Smooth Scroll JavaScript --}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle smooth scroll for hash links
+    function smoothScrollToAnchor(hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        }
+    }
+
+    // Handle clicks on anchor links
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href*="#media"]');
+        if (link) {
+            e.preventDefault();
+            smoothScrollToAnchor('#media');
+            // Update URL without triggering page reload
+            history.pushState(null, null, link.href);
+        }
+    });
+
+    // Handle direct page loads with hash
+    if (window.location.hash === '#media') {
+        setTimeout(() => {
+            smoothScrollToAnchor('#media');
+        }, 500); // Small delay to ensure page and videos are fully loaded
+    }
+});
+</script>

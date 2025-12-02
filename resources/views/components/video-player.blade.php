@@ -9,7 +9,7 @@
     'title' => '', // Video title
     'description' => '', // Video description
     'autoplay' => false, // Auto-play video
-    'muted' => true, // Start muted
+    'muted' => false, // Start muted
     'loop' => false, // Loop video
     'controls' => true, // Show native controls
     'customControls' => false, // Use custom controls
