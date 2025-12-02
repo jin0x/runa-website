@@ -30,8 +30,6 @@
   $secondaryButtonVariant = ButtonVariant::SECONDARY;
 
   // Media classes - different for videos vs images
-  // $videoClasses = 'w-full aspect-video';
-  // $imageClasses = 'object-cover h-[294px] xl:h-[650px] w-full';
   $mediaClasses = $media_type === 'video' ? 'w-[1000px] aspect-video' : 'object-cover h-[294px] xl:h-[650px] w-full';
 
   $media_url = '';
@@ -132,7 +130,7 @@
       </div>
 
       {{-- Right Side - Media with media anchor --}}
-      <div @if($media_type === 'video') id="media" class="order-2" @endif>
+      <div id="media" class="order-2">
         <x-media
           :mediaType="$media_type"
           :mediaUrl="$media_url"
