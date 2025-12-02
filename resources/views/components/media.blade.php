@@ -22,12 +22,12 @@
   @elseif($mediaType === 'video' && $mediaUrl)
     <video
       class="{{ $classes }}"
-      autoplay
-      muted
-      loop
+      controls
       playsinline
+      preload="metadata"
     >
       <source src="{{ $mediaUrl }}" type="video/mp4">
+      Your browser does not support the video tag.
     </video>
   @elseif($mediaType === 'lottie' && $mediaUrl)
     <div

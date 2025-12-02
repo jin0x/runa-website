@@ -47,7 +47,7 @@ class MediaComponent extends Partial
                 ],
             ])
             ->addFile('video', [
-                'label' => 'Video',
+                'label' => 'Video File',
                 'instructions' => 'Upload or select a video file (MP4)',
                 'return_format' => 'array',
                 'library' => 'all',
