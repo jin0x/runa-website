@@ -352,8 +352,6 @@
         const textColor = isDark ? 'text-white' : 'text-black';
         const placeholderColor = isDark ? 'placeholder-gray-400' : 'placeholder-gray-500';
 
-        let hasSetDefaultCountry = false;
-
         // Style FacetWP elements
         function styleFacetWPElements() {
             // Style dropdowns
@@ -414,23 +412,20 @@
                 return;
             }
 
-            // FacetWP hooks (modern API)
-            document.addEventListener('facetwp-loaded', function() {
-                // Set default country only once on initial load
-                if (!hasSetDefaultCountry) {
-                    if (typeof FWP.facets.company_country === 'undefined' || FWP.facets.company_country.length === 0) {
-                        hasSetDefaultCountry = true;
-                        FWP.facets.company_country = ['united-states'];
-                        FWP.soft_refresh = true;
-                        FWP.refresh();
-                        return; // Don't run other code on this initial refresh
-                    }
-                }
-
+            // Handler function for when facets are loaded
+            function handleFacetWPLoaded() {
                 replaceDropdownPlaceholders();
                 removeLoadingState();
                 styleFacetWPElements();
-            });
+            }
+
+            // Listen for future facetwp-loaded events
+            document.addEventListener('facetwp-loaded', handleFacetWPLoaded);
+
+            // If FacetWP is already loaded, call the handler immediately
+            if (FWP.loaded) {
+                handleFacetWPLoaded();
+            }
 
             document.addEventListener('facetwp-refresh', function() {
                 if (FWP.loaded) {
