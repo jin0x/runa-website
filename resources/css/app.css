@@ -645,7 +645,7 @@ strong {
 
 /* Post Card Styles */
 .post-card {
-  @apply bg-white rounded-[12px] border border-neutral-100 overflow-hidden transition-all duration-300 shadow-lg;
+  @apply bg-white rounded-[12px] overflow-hidden transition-all duration-300 shadow-lg;
 }
 
 .post-card:hover {
@@ -657,7 +657,7 @@ strong {
 }
 
 .featured-post-card {
-  @apply bg-white rounded-[12px] border border-neutral-100 overflow-hidden transition-all duration-300 shadow-lg;
+  @apply bg-white rounded-[12px] overflow-hidden transition-all duration-300 shadow-lg;
 }
 
 .featured-post-card:hover {
