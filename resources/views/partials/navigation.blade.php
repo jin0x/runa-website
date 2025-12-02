@@ -113,7 +113,7 @@
                       <li>
                         <a href="{{ $link['url'] ?? '#' }}" 
                            target="{{ $link['target'] ?? '_self' }}" 
-                           class="group flex items-center justify-between px-3 py-2 rounded-lg hover:bg-neutral-400/10 transition-all duration-200 ease-in-out !no-underline">
+                           class="group flex items-center justify-between px-3 py-2 rounded-lg hover:bg-neutral-400/25 transition-all duration-200 ease-in-out !no-underline">
                           <div class="flex-1">
                             <x-text :size="TextSize::MEDIUM_BOLD" :color="TextColor::DARK">
                               {!! $link['label'] ?? '' !!}
