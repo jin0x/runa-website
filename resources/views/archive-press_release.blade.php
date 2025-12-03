@@ -62,6 +62,9 @@
 
     // Get background overlay opacity
     $pressBackgroundOpacity = get_field('press_releases_background_opacity', 'options') ?: 60;
+    
+    // Get background image position
+    $pressBackgroundPosition = get_field('press_releases_background_position', 'options') ?: 'center center';
   @endphp
 
   {{-- Press Releases Hero Section --}}
@@ -73,6 +76,7 @@
           src="{{ $pressBgImageUrl }}"
           alt="Press Releases"
           class="absolute inset-0 object-cover w-full h-full"
+          style="object-position: {{ $pressBackgroundPosition }};"
         >
         {{-- Dark overlay for better text readability --}}
         <div class="absolute inset-0 bg-black z-10" style="opacity: {{ $pressBackgroundOpacity / 100 }};"></div>

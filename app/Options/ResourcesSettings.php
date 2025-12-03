@@ -50,6 +50,26 @@ class ResourcesSettings extends Field
                 'step' => 5,
                 'prepend' => '',
                 'append' => '%',
+            ])
+            ->addSelect('resources_background_position', [
+                'label' => 'Background Image Position',
+                'instructions' => 'Controls how the background image is positioned within the hero section',
+                'choices' => [
+                    'center top' => 'Top',
+                    'center 25%' => 'Upper Center',
+                    'center center' => 'Center',
+                    'center 75%' => 'Lower Center', 
+                    'center bottom' => 'Bottom',
+                    'left center' => 'Left',
+                    'right center' => 'Right',
+                    'left top' => 'Top Left',
+                    'right top' => 'Top Right',
+                    'left bottom' => 'Bottom Left',
+                    'right bottom' => 'Bottom Right',
+                ],
+                'default_value' => 'center center',
+                'allow_null' => 0,
+                'ui' => 1,
             ]);
 
         return $resourcesSettings->build();
