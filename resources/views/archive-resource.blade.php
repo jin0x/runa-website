@@ -177,7 +177,7 @@
                        :size="TextSize::CAPTION"
                        class="text-primary-dark !flex items-center gap-3 !normal-case"
                      >
-                       {{ ucwords(strtolower($category->name)) }}
+                       {{ html_entity_decode(ucwords(strtolower($category->name)), ENT_QUOTES, 'UTF-8') }}
  
                        @if($isCategoryActive)
                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -241,7 +241,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
         @while(have_posts())
           @php the_post() @endphp
-          <x-post-card :featured="false" :post="get_the_ID()" />
+          <x-post-card :featured="$flag['featuredActive']" :post="get_the_ID()" />
         @endwhile
       </div>
       @endif

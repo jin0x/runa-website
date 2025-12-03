@@ -130,7 +130,7 @@
                        :size="TextSize::CAPTION"
                        class="text-primary-dark !flex items-center gap-3 !normal-case"
                      >
-                       {{ ucwords(strtolower($category->name)) }}
+                       {{ html_entity_decode(ucwords(strtolower($category->name)), ENT_QUOTES, 'UTF-8') }}
  
                        @if($isCategoryActive)
                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
