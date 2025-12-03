@@ -12,7 +12,7 @@
   @while(have_posts()) 
     @php the_post() @endphp
         {{-- Page Content --}}
-        <div class="prose max-w-none">
+        <div class="max-w-none">
           @php(the_content())
         </div>
   @endwhile
