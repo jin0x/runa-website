@@ -40,6 +40,16 @@ class PressReleasesSettings extends Field
                 'return_format' => 'array',
                 'preview_size' => 'medium',
                 'library' => 'all',
+            ])
+            ->addRange('press_releases_background_opacity', [
+                'label' => 'Background Overlay Opacity',
+                'instructions' => 'Controls the darkness of the overlay on top of the background image (higher = darker overlay, better text readability)',
+                'default_value' => 60,
+                'min' => 0,
+                'max' => 90,
+                'step' => 5,
+                'prepend' => '',
+                'append' => '%',
             ]);
 
         return $pressReleasesSettings->build();

@@ -59,6 +59,9 @@
     if (!empty($pressBackgroundImage) && is_array($pressBackgroundImage)) {
         $pressBgImageUrl = $pressBackgroundImage['url'] ?? '';
     }
+
+    // Get background overlay opacity
+    $pressBackgroundOpacity = get_field('press_releases_background_opacity', 'options') ?: 60;
   @endphp
 
   {{-- Press Releases Hero Section --}}
@@ -71,6 +74,8 @@
           alt="Press Releases"
           class="absolute inset-0 object-cover w-full h-full"
         >
+        {{-- Dark overlay for better text readability --}}
+        <div class="absolute inset-0 bg-black z-10" style="opacity: {{ $pressBackgroundOpacity / 100 }};"></div>
       @else
         {{-- Fallback background if no image is provided --}}
         <div class="absolute inset-0 bg-primary-dark"></div>
