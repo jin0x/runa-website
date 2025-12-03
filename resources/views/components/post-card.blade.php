@@ -24,10 +24,27 @@
   $author = get_the_author_meta('display_name', get_post_field('post_author', $postId));
   $authorAvatar = get_avatar_url(get_post_field('post_author', $postId), ['size' => 32]);
 
-  // Get up to three tags (featured) or two (regular)
-  $tags = get_the_tags($postId) ?: [];
+  // Get taxonomy terms based on post type
+  $postType = get_post_type($postId);
+  $terms = [];
+  
+  switch ($postType) {
+    case 'resource':
+      $terms = get_the_terms($postId, 'resource_category') ?: [];
+      break;
+    case 'press_release':
+      // Press releases don't have categories, so empty array
+      $terms = [];
+      break;
+    case 'post':
+    default:
+      $terms = get_the_tags($postId) ?: [];
+      break;
+  }
+
+  // Get up to three terms (featured) or two (regular)
   $tagLimit = $featured ? 3 : 2;
-  $displayTags = array_slice($tags, 0, $tagLimit);
+  $displayTags = array_slice($terms, 0, $tagLimit);
 
   // Reading time (rough estimate)
   $content = get_post_field('post_content', $postId);
@@ -79,7 +96,7 @@
                     :size="TextSize::CAPTION"
                     class="text-primary-dark !flex items-center gap-3 !normal-case"
                   >
-                    {{ $tag->name }}
+                    {{ html_entity_decode($tag->name, ENT_QUOTES, 'UTF-8') }}
                   </x-text>
                 </x-badge>
               @endforeach

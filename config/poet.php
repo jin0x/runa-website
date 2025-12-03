@@ -98,6 +98,61 @@ return [
                 ],
             ],
         ],
+        'resource' => [
+            'enter_title_here' => 'Enter resource title',
+            'menu_icon' => 'dashicons-media-document',
+            'supports' => ['title', 'editor', 'revisions', 'thumbnail', 'excerpt'],
+            'show_in_rest' => true,
+            'has_archive' => true,
+            'publicly_queryable' => true,
+            'exclude_from_search' => false,
+            'labels' => [
+                'singular' => 'Resource',
+                'plural' => 'Resources',
+            ],
+            'rewrite' => [
+                'slug' => 'resources',
+            ],
+            'admin_cols' => [
+                'resource_category' => [
+                    'taxonomy' => 'resource_category',
+                ],
+                'featured_image' => [
+                    'title' => 'Featured Image',
+                    'featured_image' => 'thumbnail',
+                ],
+                'date' => [
+                    'title' => 'Date',
+                    'default' => 'DESC',
+                ],
+            ],
+        ],
+        'press_release' => [
+            'enter_title_here' => 'Enter press release title',
+            'menu_icon' => 'dashicons-megaphone',
+            'supports' => ['title', 'editor', 'revisions', 'thumbnail', 'excerpt'],
+            'show_in_rest' => true,
+            'has_archive' => true,
+            'publicly_queryable' => true,
+            'exclude_from_search' => false,
+            'labels' => [
+                'singular' => 'Press Release',
+                'plural' => 'Press Releases',
+            ],
+            'rewrite' => [
+                'slug' => 'press-releases',
+            ],
+            'admin_cols' => [
+                'featured_image' => [
+                    'title' => 'Featured Image',
+                    'featured_image' => 'thumbnail',
+                ],
+                'date' => [
+                    'title' => 'Date',
+                    'default' => 'DESC',
+                ],
+            ],
+        ],
     ],
 
     /*
@@ -172,6 +227,27 @@ return [
             'show_in_rest' => true,
             'show_in_quick_edit' => true,
             'show_tagcloud' => false,
+            'meta_box_cb' => false,
+        ],
+        'resource_category' => [
+            'links' => ['resource'],
+            'labels' => [
+                'singular' => 'Resource Category',
+                'plural' => 'Resource Categories',
+                'menu_name' => 'Categories',
+                'all_items' => 'All Categories',
+                'add_new_item' => 'Add New Category',
+                'edit_item' => 'Edit Category',
+            ],
+            'hierarchical' => true,
+            'public' => true,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'show_in_menu' => true,
+            'show_in_nav_menus' => true,
+            'show_in_rest' => true,
+            'show_in_quick_edit' => true,
+            'show_tagcloud' => true,
             'meta_box_cb' => false,
         ],
     ],

@@ -423,3 +423,77 @@ add_action('pre_get_posts', function ($query) {
 
     $query->set('meta_query', $featuredFilter);
 });
+
+/**
+ * Keep featured resources out of the standard resources loop so they can be rendered separately,
+ * allow "featured" filter for resources
+ */
+add_action('pre_get_posts', function ($query) {
+    // Only apply to resource archive pages
+    if (is_admin() || ! $query->is_main_query()) {
+        return;
+    }
+
+    // Check if this is a resource archive or resource category page
+    $isResourceArchive = $query->is_post_type_archive('resource');
+    $isResourceTaxonomy = $query->is_tax('resource_category');
+    
+    if (!$isResourceArchive && !$isResourceTaxonomy) {
+        return;
+    }
+
+    $isFeaturedFilter = (string) $query->get('featured') === '1';
+    $existingMetaQuery = $query->get('meta_query');
+    $isPaged = $query->get('paged') > 1;
+    $hasSearch = !empty($query->get('s'));
+
+    if ($isFeaturedFilter) {
+        // Show only featured resources when filtering
+        $featuredOnly = [
+            'key'     => 'runa_featured_resource',
+            'value'   => '1',
+            'compare' => '=',
+        ];
+
+        if (! empty($existingMetaQuery)) {
+            if (! isset($existingMetaQuery['relation'])) {
+                $existingMetaQuery['relation'] = 'AND';
+            }
+
+            $existingMetaQuery[] = $featuredOnly;
+            $query->set('meta_query', $existingMetaQuery);
+            return;
+        }
+
+        $query->set('meta_query', [$featuredOnly]);
+        return;
+    }
+
+    // Only exclude featured resources on the first page when not filtering by category or searching
+    if (!$isPaged && !$hasSearch && $isResourceArchive) {
+        $featuredFilter = [
+            'relation' => 'OR',
+            [
+                'key'     => 'runa_featured_resource',
+                'compare' => 'NOT EXISTS',
+            ],
+            [
+                'key'     => 'runa_featured_resource',
+                'value'   => '1',
+                'compare' => '!=',
+            ],
+        ];
+
+        if (! empty($existingMetaQuery)) {
+            if (! isset($existingMetaQuery['relation'])) {
+                $existingMetaQuery['relation'] = 'AND';
+            }
+
+            $existingMetaQuery[] = $featuredFilter;
+            $query->set('meta_query', $existingMetaQuery);
+            return;
+        }
+
+        $query->set('meta_query', $featuredFilter);
+    }
+});
