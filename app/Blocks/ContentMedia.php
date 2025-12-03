@@ -51,7 +51,7 @@ class ContentMedia extends Block
      *
      * @var array
      */
-    public $post_types = ['page'];
+    public $post_types = ['page', 'resource'];
 
     /**
      * The parent block type allow list.
