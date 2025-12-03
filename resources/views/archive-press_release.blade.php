@@ -183,53 +183,52 @@
         @php wp_reset_postdata() @endphp
       @endif
 
-      {{-- Remaining press releases - simple list format --}}
+      {{-- Remaining press releases - card grid format to match Figma --}}
       @if(have_posts())
-        <div class="space-y-8 mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
           @while(have_posts())
             @php the_post() @endphp
             
-            {{-- Press Release Item --}}
-            <article class="border-b border-gray-200 pb-8">
-              <div class="flex flex-col md:flex-row md:items-start gap-4">
-                {{-- Date --}}
-                <div class="flex-shrink-0">
-                  <x-text
-                    :as="TextTag::SPAN"
-                    :size="TextSize::SMALL"
-                    :color="TextColor::GRAY"
-                    class="font-medium"
-                  >
-                    {{ get_the_date('M j, Y') }}
-                  </x-text>
-                </div>
-                
-                {{-- Content --}}
-                <div class="flex-1">
-                  <x-heading
-                    :as="HeadingTag::H2"
-                    :size="HeadingSize::H3"
-                    class="mb-3"
-                  >
-                    <a href="{{ get_permalink() }}" class="hover:text-primary-green-neon transition-colors">
-                      {!! get_the_title() !!}
-                    </a>
-                  </x-heading>
-                  
-                  @if(get_the_excerpt())
-                    <x-text
-                      :as="TextTag::P"
-                      :size="TextSize::BASE"
-                      class="mb-4"
-                    >
-                      {!! get_the_excerpt() !!}
-                    </x-text>
-                  @endif
-                  
-                  <a href="{{ get_permalink() }}" class="text-primary-green-neon hover:underline text-small font-medium">
-                    Read more →
-                  </a>
-                </div>
+            {{-- Press Release Card --}}
+            <article class="press-release-card flex flex-col bg-white rounded-lg p-6 shadow-sm border border-gray-100 h-full">
+              {{-- Date --}}
+              <x-text
+                :as="TextTag::SPAN"
+                :size="TextSize::SMALL"
+                :color="TextColor::GRAY"
+                class="font-medium block mb-6"
+              >
+                {{ get_the_date('M j, Y g:i A') }}
+              </x-text>
+              
+              {{-- Title --}}
+              <x-heading
+                :as="HeadingTag::H4"
+                :size="HeadingSize::H4"
+                class="mb-3"
+              >
+                {!! get_the_title() !!}
+              </x-heading>
+              
+              {{-- Excerpt/Subtitle --}}
+              @if(get_the_excerpt())
+                <x-text
+                  :as="TextTag::P"
+                  :size="TextSize::LARGE"
+                  class="text-gray-700 mb-6 line-clamp-3"
+                >
+                  {{ get_the_excerpt() }}...
+                </x-text>
+              @endif
+              
+              {{-- Read More Link --}}
+              <div class="mt-auto">
+                <a href="{{ get_permalink() }}" class="inline-flex items-center gap-2 hover:underline text-base font-medium transition-all duration-200">
+                  Read now
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="pt-0.5">
+                    <path d="M8.00018 0.757812L6.65685 2.10114L11.2235 6.66781H0.666016V8.33447H11.2235L6.65685 12.9011L8.00018 14.2445L14.6668 7.57781L8.00018 0.757812Z" fill="currentColor"/>
+                  </svg>
+                </a>
               </div>
             </article>
           @endwhile
