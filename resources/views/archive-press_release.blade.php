@@ -125,46 +125,48 @@
             @php the_post() @endphp
             
             {{-- Press Release Card --}}
-            <article class="press-release-card flex flex-col bg-white rounded-lg p-6 shadow-lg h-full">
-              {{-- Date --}}
-              <x-text
-                :as="TextTag::SPAN"
-                :size="TextSize::SMALL"
-                :color="TextColor::GRAY"
-                class="font-medium block mb-6"
-              >
-                {{ get_the_date('M j, Y g:i A') }}
-              </x-text>
-              
-              {{-- Title --}}
-              <x-heading
-                :as="HeadingTag::H4"
-                :size="HeadingSize::H4_BOLD"
-                class="mb-3"
-              >
-                {!! get_the_title() !!}
-              </x-heading>
-              
-              {{-- Excerpt/Subtitle --}}
-              @if(get_the_excerpt())
+            <article class="press-release-card">
+              <a href="{{ get_permalink() }}" class="bg-white rounded-lg p-6 shadow-sm border border-gray-100 h-full flex flex-col block hover:shadow-md transition-shadow duration-200 !no-underline">
+                {{-- Date --}}
                 <x-text
-                  :as="TextTag::P"
-                  :size="TextSize::LARGE"
-                  class="text-gray-700 mb-6 line-clamp-3"
+                  :as="TextTag::SPAN"
+                  :size="TextSize::SMALL"
+                  :color="TextColor::GRAY"
+                  class="font-medium block mb-6"
                 >
-                  {{ get_the_excerpt() }}...
+                  {{ get_the_date('M j, Y g:i A') }}
                 </x-text>
-              @endif
               
-              {{-- Read More Link --}}
-              <div class="mt-auto">
-                <a href="{{ get_permalink() }}" class="inline-flex items-center gap-2 !no-underline hover:underline text-base font-medium transition-all duration-200">
-                  Read now
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="pt-0.5">
-                    <path d="M8.00018 0.757812L6.65685 2.10114L11.2235 6.66781H0.666016V8.33447H11.2235L6.65685 12.9011L8.00018 14.2445L14.6668 7.57781L8.00018 0.757812Z" fill="currentColor"/>
-                  </svg>
-                </a>
-              </div>
+                {{-- Title --}}
+                <x-heading
+                  :as="HeadingTag::H4"
+                  :size="HeadingSize::H4_BOLD"
+                  class="mb-3"
+                >
+                  {!! get_the_title() !!}
+                </x-heading>
+              
+                {{-- Excerpt/Subtitle --}}
+                @if(get_the_excerpt())
+                  <x-text
+                    :as="TextTag::P"
+                    :size="TextSize::LARGE"
+                    class="text-gray-700 mb-6 line-clamp-3"
+                  >
+                    {{ get_the_excerpt() }}...
+                  </x-text>
+                @endif
+              
+                {{-- Read More Link --}}
+                <div class="mt-auto">
+                  <span class="inline-flex items-center gap-2 !no-underline hover:underline text-base font-medium transition-all duration-200">
+                    Read now
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="pt-0.5">
+                      <path d="M8.00018 0.757812L6.65685 2.10114L11.2235 6.66781H0.666016V8.33447H11.2235L6.65685 12.9011L8.00018 14.2445L14.6668 7.57781L8.00018 0.757812Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                </div>
+              </a>
             </article>
           @endwhile
         </div>
