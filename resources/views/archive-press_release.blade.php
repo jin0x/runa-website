@@ -158,7 +158,7 @@
               
               {{-- Read More Link --}}
               <div class="mt-auto">
-                <a href="{{ get_permalink() }}" class="inline-flex items-center gap-2 hover:underline text-base font-medium transition-all duration-200">
+                <a href="{{ get_permalink() }}" class="inline-flex items-center gap-2 !no-underline hover:underline text-base font-medium transition-all duration-200">
                   Read now
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="pt-0.5">
                     <path d="M8.00018 0.757812L6.65685 2.10114L11.2235 6.66781H0.666016V8.33447H11.2235L6.65685 12.9011L8.00018 14.2445L14.6668 7.57781L8.00018 0.757812Z" fill="currentColor"/>

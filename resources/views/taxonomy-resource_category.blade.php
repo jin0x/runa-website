@@ -94,7 +94,7 @@
           :size="HeadingSize::DISPLAY_LARGE"
           class="text-white"
         >
-          {{ $currentTerm->name }}
+          Resources
         </x-heading>
       </x-container>
     </div>
