@@ -40,5 +40,6 @@ jobs:
           WPE_ENV: runastg
           REMOTE_PATH: "wp-content/themes/runa/"
           FLAGS: -azvr --inplace --delete --exclude=".*" --exclude-from=.deployignore
+          SCRIPT: "wp-content/themes/runa/scripts/post-deploy.sh"
           CACHE_CLEAR: TRUE
           PHP_LINT: TRUE
