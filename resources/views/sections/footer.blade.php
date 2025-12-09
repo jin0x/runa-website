@@ -38,7 +38,7 @@ foreach ($social_networks_array as $network) {
 }
 ?>
 
-<footer id="footer-container" class="footer bg-primary-dark text-gray-300 py-16 relative" aria-labelledby="footer-heading">
+<footer id="footer" class="footer bg-primary-dark text-gray-300 py-16 relative" aria-labelledby="footer-heading">
   <h2 id="footer-heading" class="sr-only">Footer</h2>
   <div class="container mx-auto px-4">
     <!-- Top Section: Logo Only -->
