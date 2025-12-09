@@ -50,6 +50,7 @@
               :cta="$card['cta'] ?? null"
               :cardColor="$card_color"
               :size="$card_size"
+              :imageRatio="$image_ratio ?? null"
             />
           @endforeach
         </div>
@@ -64,6 +65,7 @@
               :cta="$card['cta'] ?? null"
               :cardColor="$card_color"
               :size="$card_size"
+              :imageRatio="$image_ratio ?? null"
             />
           @endforeach
         </x-grid>
