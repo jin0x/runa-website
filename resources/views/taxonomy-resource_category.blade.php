@@ -118,21 +118,21 @@
           <div class="flex flex-wrap gap-3">
             @if($flag['showFilters'])
              @if($flag['showCategoryFilters'])
+               {{-- On category pages, show only the active category with X to remove filter --}}
                @foreach($categories as $category)
                  @php
                    $isCategoryActive = in_array((int) $category->term_id, $flag['activeCategoryIds'], true);
                  @endphp
- 
-                 <a href="{{ $isCategoryActive ? $resourcesBaseUrl : get_term_link($category) }}">
-                   <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-cyan">
-                     <x-text
-                       :as="TextTag::SPAN"
-                       :size="TextSize::CAPTION"
-                       class="text-primary-dark !flex items-center gap-3 !normal-case"
-                     >
-                       {{ html_entity_decode(ucwords(strtolower($category->name)), ENT_QUOTES, 'UTF-8') }}
- 
-                       @if($isCategoryActive)
+                 @if($isCategoryActive)
+                   <a href="{{ $resourcesBaseUrl }}">
+                     <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-cyan">
+                       <x-text
+                         :as="TextTag::SPAN"
+                         :size="TextSize::CAPTION"
+                         class="text-primary-dark !flex items-center gap-3 !normal-case"
+                       >
+                         {{ html_entity_decode(ucwords(strtolower($category->name)), ENT_QUOTES, 'UTF-8') }}
+         
                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                            <g clip-path="url(#clip0_4548_740)">
                              <path d="M7.99992 1.33331C4.31325 1.33331 1.33325 4.31331 1.33325 7.99998C1.33325 11.6866 4.31325 14.6666 7.99992 14.6666C11.6866 14.6666 14.6666 11.6866 14.6666 7.99998C14.6666 4.31331 11.6866 1.33331 7.99992 1.33331ZM11.3333 10.3933L10.3933 11.3333L7.99992 8.93998L5.60659 11.3333L4.66659 10.3933L7.05992 7.99998L4.66659 5.60665L5.60659 4.66665L7.99992 7.05998L10.3933 4.66665L11.3333 5.60665L8.93992 7.99998L11.3333 10.3933Z" fill="black"/>
@@ -143,10 +143,10 @@
                              </clipPath>
                            </defs>
                          </svg>
-                       @endif
-                     </x-text>
-                   </x-badge>
-                 </a>
+                       </x-text>
+                     </x-badge>
+                   </a>
+                 @endif
                @endforeach
              @endif
             @endif

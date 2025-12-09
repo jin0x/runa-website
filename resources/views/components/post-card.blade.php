@@ -117,7 +117,7 @@
         {{-- Title --}}
         <x-heading
           :as="$featured ? HeadingTag::H2 : HeadingTag::H3"
-          :size="$featured ? HeadingSize::H3 : HeadingSize::H5"
+          :size="$featured ? HeadingSize::H3_BOLD : HeadingSize::H5_BOLD"
           class="mb-6 line-clamp-2 transition-colors duration-200"
         >
           {!! $title !!}
