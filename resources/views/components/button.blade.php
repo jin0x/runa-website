@@ -18,9 +18,9 @@
 @php
   // Define variant classes for buttons
   $variantClasses = [
-      ButtonVariant::PRIMARY => 'btn-primary text-primary-dark border-1 border-transparent hover:text-primary-light hover:border-primary-green-neon',
-      ButtonVariant::SECONDARY => 'btn-secondary text-primary-light border-1 border-primary-green-neon transition-all duration-300 hover:text-primary-dark hover:border-transparent',
-      ButtonVariant::LIGHT => 'btn-light text-primary-dark border-1 border-white transition-all duration-300 hover:bg-white hover:bg-opacity-100',
+      ButtonVariant::PRIMARY => 'btn-primary text-primary-dark hover:text-primary-light',
+      ButtonVariant::SECONDARY => 'btn-secondary text-primary-light transition-all duration-300 hover:text-primary-dark',
+      ButtonVariant::LIGHT => 'btn-light text-primary-dark transition-all duration-300 hover:bg-white hover:bg-opacity-100',
       ButtonVariant::DARK => 'btn-dark text-white border-1 border-transparent hover:text-primary-light hover:border-primary-green-neon',
       ButtonVariant::NAV => 'btn-nav transition-all duration-300',
   ];

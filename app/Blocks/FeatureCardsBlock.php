@@ -87,6 +87,7 @@ class FeatureCardsBlock extends Block
             'columns' => $this->getColumns(),
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
+            'image_ratio' => $this->getImageRatio(),
         ];
     }
 
@@ -220,5 +221,10 @@ class FeatureCardsBlock extends Block
     public function getTheme()
     {
         return get_field('theme') ?: 'light';
+    }
+
+    public function getImageRatio()
+    {
+        return null;
     }
 }

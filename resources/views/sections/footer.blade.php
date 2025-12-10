@@ -38,7 +38,7 @@ foreach ($social_networks_array as $network) {
 }
 ?>
 
-<footer class="footer bg-primary-dark text-gray-300 py-16 relative" aria-labelledby="footer-heading">
+<footer id="footer" class="footer bg-primary-dark text-gray-300 py-16 relative" aria-labelledby="footer-heading">
   <h2 id="footer-heading" class="sr-only">Footer</h2>
   <div class="container mx-auto px-4">
     <!-- Top Section: Logo Only -->
@@ -59,19 +59,19 @@ foreach ($social_networks_array as $network) {
           <p class="widget-title uppercase text-primary-green-neon mb-6">
             SIGN UP FOR OUR NEWSLETTER
           </p>
-          
+
           <form action="#" method="POST" class="flex gap-2 items-center mb-8 max-w-3xs">
             <?php wp_nonce_field('newsletter_signup', 'newsletter_nonce'); ?>
             <label for="newsletter-email" class="sr-only">Email address</label>
-            <input 
-              type="email" 
-              id="newsletter-email" 
-              name="email" 
+            <input
+              type="email"
+              id="newsletter-email"
+              name="email"
               placeholder="Email address"
               required
               class="flex-1 px-4 py-3 bg-neutral-dark-60 placeholder-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-lime focus:border-transparent max-h-10"
             >
-            <button 
+            <button
               type="submit"
               class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-[#00FFA3] via-[#93FF82] to-[#EEFC51] rounded-full flex items-center justify-center hover:opacity-90 transition-opacity"
               aria-label="Subscribe to newsletter"
