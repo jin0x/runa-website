@@ -76,9 +76,13 @@
         @endif
 
         @if(!empty($content_text))
-          <div class="mb-8 prose max-w-none">
+          <x-text
+            :as="TextTag::DIV"
+            :size="TextSize::MEDIUM"
+            class="mb-8 prose max-w-none"
+          >
             {!! $content_text !!}
-          </div>
+          </x-text>
         @endif
 
         @if(!empty($list_items))
@@ -99,7 +103,13 @@
                     </defs>
                   </svg>
                 </span>
-                <span class="flex-1">{{ $item['list_item_text'] }}</span>
+                <x-text
+                  :as="TextTag::SPAN"
+                  :size="TextSize::MEDIUM"
+                  class="flex-1"
+                >
+                  {{ $item['list_item_text'] }}
+                </x-text>
               </li>
             @endforeach
           </ul>
