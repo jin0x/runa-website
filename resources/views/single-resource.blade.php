@@ -178,33 +178,41 @@
       border-radius: 12px;
     }
     
-    .guide-content blockquote {
-      background: #4ADE80;
+    .guide-content .quote-inner-box {
+      background-color: #4ADE80;
       color: #1F2937;
       border-radius: 16px;
       padding: 2rem;
       border: none;
+      border-left: none;
       margin: 2rem 0;
-      font-weight: 500;
+      text-align: center;
+      font-size: 24px;
     }
     
     .guide-content ul {
       list-style: none;
       padding-left: 0;
     }
-    
+
     .guide-content ul li {
       position: relative;
-      padding-left: 1.5rem;
-      margin-bottom: 0.5rem;
+      padding-left: 2rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
     }
-    
+
     .guide-content ul li::before {
-      content: '✓';
+      content: '';
       position: absolute;
       left: 0;
-      color: #4ADE80;
-      font-weight: bold;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64' fill='none'%3E%3Crect width='64' height='64' rx='32' fill='url(%23paint0_linear_288_12129)'/%3E%3Cmask id='mask0_288_12129' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='12' y='12' width='40' height='40'%3E%3Crect x='12' y='12' width='40' height='40' fill='%23D9D9D9'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_288_12129)'%3E%3Cpath d='M25.8882 25.6665L24.2493 22.1388L20.7216 20.4999L24.2493 18.861L25.8882 15.3333L27.5271 18.861L31.0549 20.4999L27.5271 22.1388L25.8882 25.6665ZM36.9993 30.6943L35.6105 27.7221L32.6383 26.3333L35.6105 24.9443L36.9993 21.9721L38.3882 24.9443L41.3604 26.3333L38.3882 27.7221L36.9993 30.6943ZM18.0271 34.0277L16.6382 31.0555L13.666 29.6666L16.6382 28.2777L18.0271 25.3055L19.416 28.2777L22.3882 29.6666L19.416 31.0555L18.0271 34.0277ZM19.1104 46.1666L16.9993 44.0555L29.4993 31.5555L36.166 38.2499L48.3883 24.5416L50.3327 26.4583L36.166 42.4166L29.4993 35.7777L19.1104 46.1666Z' fill='%231C1B1F'/%3E%3C/g%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_288_12129' x1='0' y1='64' x2='64' y2='0' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%2300FFA3'/%3E%3Cstop offset='0.48313' stop-color='%2393FF82'/%3E%3Cstop offset='0.943979' stop-color='%23EEFC51'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-size: contain;
     }
     
     .toc-container {
