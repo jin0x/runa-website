@@ -1,0 +1,44 @@
+# Dependencies (installed during CI build)
+/node_modules
+/vendor
+
+# Development files
+.git
+.github
+.gitignore
+.editorconfig
+.env
+.env.example
+
+# Source files (not needed in production)
+/resources/css
+/resources/js
+
+# Config and build tools
+package.json
+package-lock.json
+composer.json
+composer.lock
+vite.config.js
+tailwind.config.js
+postcss.config.js
+phpcs.xml
+phpunit.xml
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE.md
+
+# IDE and OS files
+.DS_Store
+.idea
+.vscode
+*.log
+npm-debug.log
+yarn.lock
+yarn-error.log
+
+# Test files
+/tests
+phpunit.xml.dist

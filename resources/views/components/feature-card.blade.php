@@ -14,6 +14,7 @@
     'cta' => null,
     'cardColor' => 'cyan', // ThemeVariant color
     'size' => 'default', // 'default', 'large', 'small'
+    'imageRatio' => null, // e.g., '16:9' to override height with aspect ratio
     'class' => '',
 ])
 
@@ -46,6 +47,10 @@
       'small' => 'h-48',
       default => 'h-[372px]',
   };
+
+  $imageClass = ($imageRatio === '16:9' || $imageRatio === '16/9')
+      ? 'w-full aspect-[16/9] object-cover'
+      : "w-full {$imageHeight} object-cover";
 @endphp
 
 <div class="{{ $cardBgClasses }} {{ $paddingClasses }} rounded-2xl {{ $class }} text-left max-w-md flex flex-col h-full">
@@ -55,7 +60,7 @@
       <img 
         src="{{ $image_url }}" 
         alt="{{ $image_alt }}"
-        class="w-full {{ $imageHeight }} object-cover"
+        class="{{ $imageClass }}"
         loading="lazy"
       />
     </div>
