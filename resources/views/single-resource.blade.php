@@ -179,8 +179,8 @@
     }
     
     .guide-content .quote-inner-box {
-      background: #93FF82;
-      color: #0000;
+      background: var(--color-primary-green-soft);
+      color: var(--color-primary-dark);
       border-radius: 32px;
       padding: 24px 40px;
       margin: 2rem 0;
@@ -191,7 +191,7 @@
       font-weight: 800;
       display: flex;
       align-items: center;
-      min-height: 350px;
+      min-height: 300px;
     }
 
     .guide-content .quote-inner-box * {
@@ -200,6 +200,34 @@
 
     .guide-content .quote-inner-box .quote-wrapper {
       display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    /* Source/citation styling - appears after quote text */
+    .guide-content .quote-inner-box p:last-child,
+    .guide-content .quote-inner-box .quote-text > p:last-child,
+    .guide-content .quote-inner-box .quote-wrapper > p:last-child {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--color-primary-dark);
+      font-size: 14px;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .guide-content .quote-inner-box a,
+    .guide-content .quote-inner-box .quote-text a,
+    .guide-content .quote-inner-box .quote-wrapper a {
+      color: var(--color-primary-dark);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s ease;
+    }
+
+    .guide-content .quote-inner-box a:hover {
+      opacity: 0.7;
+      text-decoration: underline;
     }
     /* Checklist with custom tick marks */
     .guide-content .checklist,
