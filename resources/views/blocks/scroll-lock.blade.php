@@ -63,12 +63,12 @@
               <div class="scroll-content-container relative min-h-[400px]">
                 @foreach($sections as $index => $section)
                   @php
-                    // Cycle through 4 colors: green, cyan, yellow, purple
+                    // Cycle through 4 colors: green, purple, yellow, cyan
                     $titleColor = match($index % 4) {
                       0 => 'text-primary-green-neon',
-                      1 => 'text-secondary-cyan',
+                      1 => 'text-secondary-purple',
                       2 => 'text-primary-yellow',
-                      3 => 'text-secondary-purple',
+                      3 => 'text-secondary-cyan',
                     };
 
                     // Progress bar widths
@@ -82,9 +82,9 @@
                     // Background color classes for the bar
                     $barColorClass = match($index % 4) {
                         0 => 'bg-primary-green-neon',
-                        1 => 'bg-secondary-cyan',
+                        1 => 'bg-secondary-purple',
                         2 => 'bg-primary-yellow',
-                        3 => 'bg-secondary-purple',
+                        3 => 'bg-secondary-cyan',
                     };
                   @endphp
 
@@ -258,7 +258,7 @@
 
         // Animate progress bar from 0 to 100%
         if (progressBar && barColor) {
-          progressBar.classList.remove('bg-white/20', 'bg-primary-green-neon', 'bg-secondary-cyan', 'bg-primary-yellow', 'bg-secondary-purple');
+          progressBar.classList.remove('bg-white/20', 'bg-primary-green-neon', 'bg-secondary-purple', 'bg-primary-yellow', 'bg-secondary-cyan');
           progressBar.classList.add(barColor);
 
           // Reset to 0
