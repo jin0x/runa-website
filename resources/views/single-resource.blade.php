@@ -74,8 +74,8 @@
 
         {{-- Guide Content with TOC - Constrained Width --}}
         @if(!empty($guideSectionBlocks) || !empty($tocItems))
-          <div class="guide-content-wrapper mx-auto px-16 py-16">
-            <div class="flex">
+          <div class="guide-content-wrapper max-w-[1600px] mx-auto px-16 py-16">
+            <div class="flex justify-between">
               {{-- Table of Contents - Sticky Sidebar --}}
               <aside class="guide-toc w-86 flex-shrink-0 pr-12 sticky top-8 self-start">
                 <div class="toc-container">
