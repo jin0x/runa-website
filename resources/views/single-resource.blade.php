@@ -176,25 +176,69 @@
     
     .guide-content img {
       border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Image source/caption styling - paragraph right after image */
+    .guide-content img + p,
+    .guide-content figure img + figcaption,
+    .guide-content .prose img + p {
+      margin-top: 0.25rem !important;
+      margin-bottom: 1.5rem;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-primary-dark);
+      font-style: normal;
+    }
+
+    .guide-content img + p a,
+    .guide-content figure figcaption a,
+    .guide-content .prose img + p a {
+      color: var(--color-primary-dark);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .guide-content img + p a:hover,
+    .guide-content figure figcaption a:hover,
+    .guide-content .prose img + p a:hover {
+      text-decoration: underline;
+      opacity: 0.8;
     }
     
-    .guide-content .quote-inner-box {
+    /* Custom quote boxes (from old site HTML) AND native blockquotes */
+    .guide-content .quote-inner-box,
+    .guide-content blockquote,
+    .guide-content .prose blockquote {
       background: var(--color-primary-green-soft);
       color: var(--color-primary-dark);
       border-radius: 32px;
       padding: 24px 40px;
       margin: 2rem 0;
-      border: none;
-      border-left: none;
+      border: none !important;
+      border-left: none !important;
       text-align: center;
       font-size: 32px;
       font-weight: 800;
       display: flex;
       align-items: center;
+      justify-content: center;
       min-height: 300px;
+      flex-direction: column;
+      quotes: none;
     }
 
-    .guide-content .quote-inner-box * {
+    /* Remove automatic quote marks */
+    .guide-content blockquote::before,
+    .guide-content blockquote::after,
+    .guide-content .prose blockquote::before,
+    .guide-content .prose blockquote::after {
+      content: none !important;
+    }
+
+    .guide-content .quote-inner-box *,
+    .guide-content blockquote *,
+    .guide-content .prose blockquote * {
       margin: 0;
     }
 
@@ -204,28 +248,53 @@
       width: 100%;
     }
 
+    /* Style blockquote paragraphs like quote text */
+    .guide-content blockquote p,
+    .guide-content .prose blockquote p {
+      font-size: inherit;
+      font-weight: inherit;
+      color: inherit;
+      text-align: center;
+    }
+
+    .guide-content blockquote p:first-child,
+    .guide-content .prose blockquote p:first-child {
+      font-size: 32px;
+      font-weight: 600;
+      font-family: var(--font-heading);
+      
+    }
+
     /* Source/citation styling - appears after quote text */
     .guide-content .quote-inner-box p:last-child,
     .guide-content .quote-inner-box .quote-text > p:last-child,
-    .guide-content .quote-inner-box .quote-wrapper > p:last-child {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 2px solid var(--color-primary-dark);
-      font-size: 14px;
-      font-weight: 800;
-      text-align: left;
+    .guide-content .quote-inner-box .quote-wrapper > p:last-child,
+    .guide-content blockquote p:last-child:not(:first-child),
+    .guide-content .prose blockquote p:last-child:not(:first-child) {
+      margin-top: 2rem !important;
+      padding-top: 1.5rem !important;
+      border-top: 2px solid var(--color-primary-dark) !important;
+      font-size: 14px !important;
+      font-weight: 800 !important;
+      text-align: left !important;
+      width: 100% !important;
+      font-style: normal !important;
     }
 
     .guide-content .quote-inner-box a,
     .guide-content .quote-inner-box .quote-text a,
-    .guide-content .quote-inner-box .quote-wrapper a {
+    .guide-content .quote-inner-box .quote-wrapper a,
+    .guide-content blockquote a,
+    .guide-content .prose blockquote a {
       color: var(--color-primary-dark);
       text-decoration: none;
       font-weight: 600;
       transition: opacity 0.2s ease;
     }
 
-    .guide-content .quote-inner-box a:hover {
+    .guide-content .quote-inner-box a:hover,
+    .guide-content blockquote a:hover,
+    .guide-content .prose blockquote a:hover {
       opacity: 0.7;
       text-decoration: underline;
     }
