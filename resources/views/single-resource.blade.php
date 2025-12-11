@@ -74,7 +74,7 @@
 
         {{-- Guide Content with TOC - Constrained Width --}}
         @if(!empty($guideSectionBlocks) || !empty($tocItems))
-          <div class="guide-content-wrapper max-w-7xl mx-auto px-16 py-16">
+          <div class="guide-content-wrapper mx-auto px-16 py-16">
             <div class="flex">
               {{-- Table of Contents - Sticky Sidebar --}}
               <aside class="guide-toc w-86 flex-shrink-0 pr-12 sticky top-8 self-start">
@@ -94,7 +94,7 @@
                           <li class="toc-item">
                             <a href="#{{ $item['anchor'] }}" class="toc-link flex items-center justify-between text-xs py-1 !no-underline">
                               <x-text :size="TextSize::MEDIUM">{{ $item['text'] }}</x-text>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="min-w-[20px]">
                                 <g clip-path="url(#clip0_4852_2584)">
                                  <path d="M9.99992 3.33337L8.82492 4.50837L13.4749 9.16671H3.33325V10.8334H13.4749L8.82492 15.4917L9.99992 16.6667L16.6666 10L9.99992 3.33337Z" fill="black"/>
                                 </g>
@@ -114,7 +114,7 @@
                   {{-- Download CTA --}}
                   @if($downloadLink)
                     <div class="toc-cta mt-12">
-                      <a href="{{ $downloadLink }}" target="_blank" class="inline-flex items-center gap-3 bg-primary-green-neon text-primary-dark px-6 py-3 rounded-lg font-medium hover:bg-primary-green-neon/90 transition-colors !no-underline">
+                      <a href="{{ $downloadLink }}" target="_blank" class="inline-flex items-center gap-3 primary-button-gradient text-primary-dark px-6 py-3 rounded-full font-medium hover:bg-primary-green-neon/90 transition-colors !no-underline">
                         <x-text :size="TextSize::SMALL">Download PDF</x-text>
                       </a>
                     </div>
@@ -123,7 +123,7 @@
               </aside>
 
               {{-- Main Content --}}
-              <main class="guide-main-content flex-1 ml-6">
+              <main class="guide-main-content flex-1 ml-6 max-w-5xl">
                 <div class="guide-content">
                   @foreach($guideSectionBlocks as $block)
                     {!! render_block($block) !!}
@@ -179,23 +179,39 @@
     }
     
     .guide-content .quote-inner-box {
-      background-color: #4ADE80;
-      color: #1F2937;
-      border-radius: 16px;
-      padding: 2rem;
+      background: #93FF82;
+      color: #0000;
+      border-radius: 32px;
+      padding: 24px 40px;
+      margin: 2rem 0;
       border: none;
       border-left: none;
-      margin: 2rem 0;
       text-align: center;
-      font-size: 24px;
-    }
-    
-    .guide-content ul {
-      list-style: none;
-      padding-left: 0;
+      font-size: 32px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      min-height: 350px;
     }
 
-    .guide-content ul li {
+    .guide-content .quote-inner-box * {
+      margin: 0;
+    }
+
+    .guide-content .quote-inner-box .quote-wrapper {
+      display: flex;
+    }
+    /* Checklist with custom tick marks */
+    .guide-content .checklist,
+    .guide-content ul.checklist,
+    .guide-content .prose ul.checklist {
+      list-style: none !important;
+      padding-left: 0 !important;
+    }
+
+    .guide-content .checklist li,
+    .guide-content ul.checklist li,
+    .guide-content .prose ul.checklist li {
       position: relative;
       padding-left: 2rem;
       margin-bottom: 0.75rem;
@@ -203,18 +219,63 @@
       align-items: center;
     }
 
-    .guide-content ul li::before {
+    .guide-content .checklist li::before,
+    .guide-content ul.checklist li::before,
+    .guide-content .prose ul.checklist li::before {
       content: '';
       position: absolute;
       left: 0;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       flex-shrink: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64' fill='none'%3E%3Crect width='64' height='64' rx='32' fill='url(%23paint0_linear_288_12129)'/%3E%3Cmask id='mask0_288_12129' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='12' y='12' width='40' height='40'%3E%3Crect x='12' y='12' width='40' height='40' fill='%23D9D9D9'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_288_12129)'%3E%3Cpath d='M25.8882 25.6665L24.2493 22.1388L20.7216 20.4999L24.2493 18.861L25.8882 15.3333L27.5271 18.861L31.0549 20.4999L27.5271 22.1388L25.8882 25.6665ZM36.9993 30.6943L35.6105 27.7221L32.6383 26.3333L35.6105 24.9443L36.9993 21.9721L38.3882 24.9443L41.3604 26.3333L38.3882 27.7221L36.9993 30.6943ZM18.0271 34.0277L16.6382 31.0555L13.666 29.6666L16.6382 28.2777L18.0271 25.3055L19.416 28.2777L22.3882 29.6666L19.416 31.0555L18.0271 34.0277ZM19.1104 46.1666L16.9993 44.0555L29.4993 31.5555L36.166 38.2499L48.3883 24.5416L50.3327 26.4583L36.166 42.4166L29.4993 35.7777L19.1104 46.1666Z' fill='%231C1B1F'/%3E%3C/g%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_288_12129' x1='0' y1='64' x2='64' y2='0' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%2300FFA3'/%3E%3Cstop offset='0.48313' stop-color='%2393FF82'/%3E%3Cstop offset='0.943979' stop-color='%23EEFC51'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Crect width='24' height='24' rx='12' fill='url(%23paint0_linear_4968_29576)'/%3E%3Cpath d='M18.002 8.53955L9.34766 17.1938L4.75586 12.6021L5.81641 11.5415L9.34766 15.0728L16.9414 7.479L18.002 8.53955Z' fill='black'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_4968_29576' x1='0' y1='24' x2='24' y2='0' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%2300FFA3'/%3E%3Cstop offset='0.48313' stop-color='%2393FF82'/%3E%3Cstop offset='0.943979' stop-color='%23EEFC51'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-size: contain;
     }
-    
+
+    /* Standard bullet points */
+    .guide-content ul:not(.checklist) {
+      list-style: disc;
+      padding-left: 2rem;
+    }
+
+    .guide-content ul:not(.checklist) li {
+      margin-bottom: 0.75rem;
+    }
+
+    .guide-content ul:not(.checklist) li::marker {
+      color: #000;
+    }
+
+    /* Match heading sizes to app.css definitions */
+    .guide-content .prose h1,
+    .guide-content h1 {
+      font-size: 2rem;
+      line-height: 85%;
+      font-weight: 700;
+    }
+
+    @media (min-width: 768px) {
+      .guide-content .prose h1,
+      .guide-content h1 {
+        font-size: 3rem;
+      }
+    }
+
+    .guide-content .prose h2,
+    .guide-content h2 {
+      font-size: 1.75rem;
+      line-height: 85%;
+      font-weight: 700;
+    }
+
+    @media (min-width: 768px) {
+      .guide-content .prose h2,
+      .guide-content h2 {
+        font-size: 2.5rem;
+      }
+    }
+
     .toc-container {
       padding: 2rem;
       height: fit-content;
