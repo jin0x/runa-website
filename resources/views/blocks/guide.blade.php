@@ -12,196 +12,24 @@
   use App\Enums\TextColor;
 @endphp
 
-{{-- Hero Section - Inline rendering --}}
+{{-- Hero Section - Using existing Hero block template --}}
 @if($hero_title)
-  @php
-
-    // Handle background image URL
-    $bg_image_url = '';
-    if (!empty($background_image) && is_array($background_image)) {
-        $bg_image_url = $background_image['url'] ?? '';
-    } elseif (!empty($background_image)) {
-        $bg_image_url = $background_image;
-    }
-
-    // Set height based on compact option
-    $heightClass = $compact ? 'h-[600px]' : 'h-screen';
-
-    // Define button variants
-    $primaryButtonVariant = ButtonVariant::PRIMARY;
-    $secondaryButtonVariant = ButtonVariant::SECONDARY;
-
-    // Determine if content should be full-width or contained
-    $isFullWidth = $content_width === 'full-width';
-
-    // background position (focus area of the image)
-    $positionClass = match($background_position) {
-      'top left' => 'object-left-top',
-      'top center' => 'object-top',
-      'top right' => 'object-right-top',
-      'center left' => 'object-left',
-      'center center' => 'object-center',
-      'center right' => 'object-right',
-      'bottom left' => 'object-left-bottom',
-      'bottom center' => 'object-bottom',
-      'bottom right' => 'object-right-bottom',
-      default => 'object-center',
-    };
-  @endphp
-
-  <x-section :size="SectionSize::NONE" classes="relative w-full {{ $heightClass }} overflow-hidden">
-    {{-- Background Image --}}
-    <div class="absolute inset-0 w-full h-full z-0">
-      @if (!empty($bg_image_url))
-        <img
-          src="{{ $bg_image_url }}"
-          alt="{{ $hero_title ? strip_tags($hero_title) : get_bloginfo('name') }}"
-          class="absolute inset-0 object-cover w-full h-full {{ $positionClass }}"
-        >
-        @if (!empty($overlay_color))
-          <div
-            class="absolute inset-0 pointer-events-none"
-            style="
-              background: linear-gradient(
-                to right,
-                {{ $overlay_color }} 0%,
-                rgba(0, 0, 0, 0) {{ ($overlay_opacity ?? 50) }}%
-              );
-            ">
-          </div>
-        @endif
-      @else
-        <div class="absolute inset-0 bg-primary-dark"></div>
-      @endif
-    </div>
-
-    {{-- Content Container --}}
-    <div class="absolute bottom-0 left-0 right-0 z-20 pb-16 px-4 lg:px-8">
-      @if($isFullWidth)
-        <x-flex direction="col" class="max-w-full">
-          @if ($hero_eyebrow)
-            <div>
-              <x-text
-                :as="TextTag::SPAN"
-                :size="TextSize::EYEBROW"
-                :color="TextColor::GRADIENT"
-                class="inline-block uppercase mb-3"
-              >
-                {{ $hero_eyebrow }}
-              </x-text>
-            </div>
-          @endif
-
-          @if ($hero_title)
-            <x-heading
-              :as="HeadingTag::H1"
-              :size="HeadingSize::SUPER_DUPER"
-              :color="TextColor::DARK"
-              class="mb-6"
-            >
-              {!! $hero_title !!}
-            </x-heading>
-          @endif
-
-          @if ($hero_description)
-            <x-text
-              :as="TextTag::P"
-              :size="TextSize::LARGE"
-              :color="TextColor::DARK"
-              class="mb-8 max-w-3xl"
-            >
-              {!! $hero_description !!}
-            </x-text>
-          @endif
-
-          @if(!empty($hero_ctas))
-            <div class="flex flex-wrap gap-4">
-              @foreach($hero_ctas as $index => $button)
-                @php
-                  $button_label = $button['cta']['title'] ?? null;
-                  $button_link = $button['cta']['url'] ?? null;
-                  $button_target = $button['cta']['target'] ?? '_self';
-                  $currentButtonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
-                @endphp
-
-                @if($button_label && $button_link)
-                  <x-button
-                    :variant="$currentButtonVariant"
-                    :href="$button_link"
-                    target="{{ $button_target }}"
-                  >
-                    {{ $button_label }}
-                  </x-button>
-                @endif
-              @endforeach
-            </div>
-          @endif
-        </x-flex>
-      @else
-        <x-container>
-          <x-flex direction="col" class="max-w-4xl">
-            @if ($hero_eyebrow)
-              <div>
-                <x-text
-                  :as="TextTag::SPAN"
-                  :size="TextSize::EYEBROW"
-                  :color="TextColor::GRADIENT"
-                  class="inline-block uppercase mb-3"
-                >
-                  {{ $hero_eyebrow }}
-                </x-text>
-              </div>
-            @endif
-
-            @if ($hero_title)
-              <x-heading
-                :as="HeadingTag::H1"
-                :size="HeadingSize::SUPER_DUPER"
-                :color="TextColor::DARK"
-                class="mb-6"
-              >
-                {!! $hero_title !!}
-              </x-heading>
-            @endif
-
-            @if ($hero_description)
-              <x-text
-                :as="TextTag::P"
-                :size="TextSize::LARGE"
-                :color="TextColor::DARK"
-                class="mb-8 max-w-3xl"
-              >
-                {!! $hero_description !!}
-              </x-text>
-            @endif
-
-            @if(!empty($hero_ctas))
-              <div class="flex flex-wrap gap-4">
-                @foreach($hero_ctas as $index => $button)
-                  @php
-                    $button_label = $button['cta']['title'] ?? null;
-                    $button_link = $button['cta']['url'] ?? null;
-                    $button_target = $button['cta']['target'] ?? '_self';
-                    $currentButtonVariant = $index === 0 ? $primaryButtonVariant : $secondaryButtonVariant;
-                  @endphp
-
-                  @if($button_label && $button_link)
-                    <x-button
-                      :variant="$currentButtonVariant"
-                      :href="$button_link"
-                      target="{{ $button_target }}"
-                    >
-                      {{ $button_label }}
-                    </x-button>
-                  @endif
-                @endforeach
-              </div>
-            @endif
-          </x-flex>
-        </x-container>
-      @endif
-    </div>
-  </x-section>
+  @include('blocks.hero', [
+    'eyebrow' => $hero_eyebrow,
+    'title' => $hero_title,
+    'content' => $hero_description,
+    'ctas' => $hero_ctas,
+    'media_type' => $media_type,
+    'image' => $image,
+    'video' => $video,
+    'lottie' => $lottie,
+    'background_image' => $background_image,
+    'background_position' => $background_position,
+    'overlay_color' => $overlay_color,
+    'overlay_opacity' => $overlay_opacity,
+    'content_width' => $content_width,
+    'compact' => $compact,
+  ])
 @endif
 
 {{-- Guide Content with TOC - Constrained Width --}}
