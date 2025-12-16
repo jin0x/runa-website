@@ -44,10 +44,11 @@ class GuideSectionBlock extends Block
 
     /**
      * The block post type allow list.
+     * Set to empty array to disable this block (replaced by comprehensive Guide block)
      *
      * @var array
      */
-    public $post_types = ['resource'];
+    public $post_types = [];
 
     /**
      * The parent block type allow list.
