@@ -11,9 +11,11 @@
 @section('content')
   @while(have_posts()) 
     @php the_post() @endphp
-        {{-- Page Content --}}
+      {{-- Resource Content - All blocks render normally --}}
+      <article class="resource-single">
         <div class="max-w-none">
           @php(the_content())
         </div>
+      </article>
   @endwhile
 @endsection
