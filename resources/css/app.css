@@ -500,12 +500,39 @@ body {
 
 /* Apply default text styles to native paragraph tags */
 p {
-  @apply text-xs leading-[110%];
+  @apply text-sm leading-[140%];
   font-family: var(--font-body);
 }
 
 strong {
   @apply font-bold;
+}
+
+/* Prose content styling - apply correct fonts to rich text editor content */
+.prose {
+  font-family: var(--font-body);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-family: var(--font-heading);
+}
+
+.prose p,
+.prose li,
+.prose blockquote,
+.prose td,
+.prose th {
+  font-family: var(--font-body);
+}
+
+.prose strong,
+.prose b {
+  font-weight: bold;
 }
 
 /* Utility classes */
