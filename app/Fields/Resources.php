@@ -45,6 +45,16 @@ class Resources extends Field
             'ui_off_text' => 'No',
         ]);
 
+        // Guide-specific fields - only show for Guides category  
+        $resources->addTab('Guide Settings', [
+            'placement' => 'top',
+        ])
+        ->addUrl('guide_download_link', [
+            'label' => 'Download PDF Link',
+            'instructions' => 'Optional: Add a link to a downloadable PDF version of this guide',
+            'required' => 0,
+        ]);
+
         return $resources->build();
     }
 }
