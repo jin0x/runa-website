@@ -17,6 +17,7 @@
   $variantClasses = match($variant) {
       'primary' => 'bg-brand-primary text-white',
       'secondary' => 'bg-brand-secondary text-white',
+      'tertiary' => 'bg-secondary-cyan text-black',
       'success' => 'bg-semantic-success text-white',
       'warning' => 'bg-semantic-warning text-neutral-900',
       'error' => 'bg-semantic-error text-white',
@@ -59,7 +60,11 @@
   @endif
 
   {{-- Badge Content --}}
-  <span>{{ $slot }}</span>
+  <x-text
+    :as="TextTag::SPAN"
+    :size="TextSize::CAPTION"
+    class="leading-none"
+  >{{ $slot }}</x-text>
 
   {{-- Remove Button --}}
   @if($removable)
