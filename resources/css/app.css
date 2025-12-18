@@ -194,7 +194,7 @@ body {
 
   /* Neutral Colors */
   --color-neutral-0: #ffffff;
-  --color-neutral-50: #f3f3f3;
+  --color-neutral-50: #f0f0f0;
   --color-neutral-100: #d7d8d6;
   --color-neutral-400: #9c9ea0;
   --color-neutral-700: #53565a;
@@ -570,6 +570,10 @@ strong {
 
 .bg-secondary {
   background-color: var(--color-background-secondary);
+}
+
+.bg-secondary-cyan {
+  background-color: var(--color-secondary-cyan);
 }
 
 .bg-percentage-card {
