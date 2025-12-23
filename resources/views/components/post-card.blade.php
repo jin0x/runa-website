@@ -27,10 +27,16 @@
   // Get taxonomy terms based on post type
   $postType = get_post_type($postId);
   $terms = [];
-  
+
   switch ($postType) {
     case 'resource':
-      $terms = get_the_terms($postId, 'resource_category') ?: [];
+      $terms = get_the_terms($postId, 'resource_format') ?: [];
+      break;
+    case 'case-study':
+      // For case studies, show both format and topic terms
+      $formatTerms = get_the_terms($postId, 'resource_format') ?: [];
+      $topicTerms = get_the_terms($postId, 'resource_topic') ?: [];
+      $terms = array_merge($formatTerms, $topicTerms);
       break;
     case 'press_release':
       // Press releases don't have categories, so empty array
@@ -54,10 +60,10 @@
 
 <article class="{{ $featured ? 'featured-post-card' : 'post-card' }}">
   <a href="{{ $permalink }}" class="block h-full">
-    <div class="flex flex-col {{ $isSingleFeatured ? 'md:flex-row gap-6' : '' }} h-full p-6">
+    <div class="flex flex-col h-full p-6">
       {{-- Image --}}
-      <div class="{{ $isSingleFeatured ? 'md:flex-1' : '' }}">
-        <div class="rounded-[16px] {{ $featured ? 'md:rounded-[24px]' : '' }} aspect-[16/9] w-full relative overflow-hidden {{ $isSingleFeatured ? 'mb-6 md:mb-0' : 'mb-6' }}">
+      <div>
+        <div class="rounded-[16px] {{ $featured ? 'md:rounded-[24px]' : '' }} aspect-[16/9] w-full relative overflow-hidden mb-6">
           @if($thumbnail)
             <img
               src="{{ $thumbnail }}"
@@ -72,7 +78,7 @@
       </div>
 
       {{-- Content --}}
-      <div class="flex flex-col h-full {{ $isSingleFeatured ? 'md:flex-1' : '' }}">
+      <div class="flex flex-col h-full">
         {{-- Tag Badges --}}
         @if($featured || !empty($displayTags))
           <div class="flex flex-wrap justify-between mb-6">

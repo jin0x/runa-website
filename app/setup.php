@@ -497,3 +497,196 @@ add_action('pre_get_posts', function ($query) {
         $query->set('meta_query', $featuredFilter);
     }
 });
+
+/**
+ * AJAX handler for resource filtering (Topics/Formats tabs)
+ *
+ * Security Note: This endpoint is intentionally public (wp_ajax_nopriv_) as it's used
+ * for filtering public resources on the Resources archive page. Anonymous users must
+ * be able to filter and view published resources.
+ *
+ * - Read-only operation (no data modification)
+ * - Only queries published posts (public data)
+ * - Nonce verification prevents CSRF
+ * - All input is sanitized and validated
+ */
+add_action('wp_ajax_filter_resources', __NAMESPACE__ . '\\ajax_filter_resources');
+add_action('wp_ajax_nopriv_filter_resources', __NAMESPACE__ . '\\ajax_filter_resources');
+
+function ajax_filter_resources() {
+    // Verify nonce for CSRF protection
+    if (!isset($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'filter_resources')) {
+        wp_send_json_error(['message' => 'Invalid nonce'], 403);
+        return;
+    }
+
+    // Sanitize and validate all input
+    $tab = sanitize_text_field($_GET['tab'] ?? 'topics');
+    $filters = json_decode(stripslashes($_GET['filters'] ?? '[]'), true);
+    $featured = sanitize_text_field($_GET['featured'] ?? '0');
+    $search = sanitize_text_field($_GET['search'] ?? '');
+    $page = max(1, intval($_GET['page'] ?? 1));
+    $per_page = 9;
+
+    // Validate tab parameter (whitelist)
+    if (!in_array($tab, ['topics', 'formats'], true)) {
+        wp_send_json_error(['message' => 'Invalid tab parameter'], 400);
+        return;
+    }
+
+    // Validate filters array
+    if (!is_array($filters)) {
+        $filters = [];
+    }
+
+    // Validate featured parameter (whitelist)
+    if (!in_array($featured, ['0', '1'], true)) {
+        $featured = '0';
+    }
+
+    // Determine post types based on tab
+    if ($tab === 'topics') {
+        // Topics tab: Only case studies
+        $post_types = ['case-study'];
+        $taxonomy = 'resource_topic';
+    } else {
+        // Formats tab: Both resources and case studies
+        $post_types = ['resource', 'case-study'];
+        $taxonomy = 'resource_format';
+    }
+
+    // Build query args
+    $args = [
+        'post_type' => $post_types,
+        'post_status' => 'publish',
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    ];
+
+    // Add taxonomy filter if filters are active
+    if (!empty($filters) && is_array($filters)) {
+        $args['tax_query'] = [
+            [
+                'taxonomy' => $taxonomy,
+                'field' => 'term_id',
+                'terms' => array_map('intval', $filters),
+                'operator' => 'IN',
+            ],
+        ];
+    }
+
+    // Add featured filter
+    if ($featured === '1') {
+        $args['meta_query'] = [
+            [
+                'key' => 'runa_featured_resource',
+                'value' => '1',
+                'compare' => '=',
+            ],
+        ];
+    }
+
+    // Add search query
+    if (!empty($search)) {
+        $args['s'] = $search;
+    }
+
+    // Get featured posts (only on first page, not filtering, not searching)
+    $featured_posts = [];
+    $featured_post_ids = [];
+
+    if ($page === 1 && $featured !== '1' && empty($search)) {
+        $featured_args = array_merge($args, [
+            'posts_per_page' => -1,
+            'meta_query' => [
+                [
+                    'key' => 'runa_featured_resource',
+                    'value' => '1',
+                    'compare' => '=',
+                ],
+            ],
+        ]);
+
+        if (isset($featured_args['paged'])) {
+            unset($featured_args['paged']);
+        }
+
+        $featured_query = new \WP_Query($featured_args);
+
+        if ($featured_query->have_posts()) {
+            while ($featured_query->have_posts()) {
+                $featured_query->the_post();
+
+                $html = \Roots\view('components.post-card', [
+                    'featured' => true,
+                    'post' => get_the_ID(),
+                    'singleFeatured' => $featured_query->post_count === 1,
+                ])->render();
+
+                $featured_posts[] = [
+                    'id' => get_the_ID(),
+                    'html' => $html,
+                ];
+                $featured_post_ids[] = get_the_ID();
+            }
+            wp_reset_postdata();
+        }
+    }
+
+    // Always exclude featured posts from main query when not filtering by featured
+    // This ensures featured posts don't appear in pagination on subsequent pages
+    if ($featured !== '1' && empty($search)) {
+        $featured_ids_args = array_merge($args, [
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'meta_query' => [
+                [
+                    'key' => 'runa_featured_resource',
+                    'value' => '1',
+                    'compare' => '=',
+                ],
+            ],
+        ]);
+
+        if (isset($featured_ids_args['paged'])) {
+            unset($featured_ids_args['paged']);
+        }
+
+        $all_featured_ids = get_posts($featured_ids_args);
+
+        if (!empty($all_featured_ids)) {
+            $args['post__not_in'] = $all_featured_ids;
+        }
+    }
+
+    // Get main posts
+    $query = new \WP_Query($args);
+    $posts = [];
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            $html = \Roots\view('components.post-card', [
+                'featured' => false,
+                'post' => get_the_ID(),
+            ])->render();
+
+            $posts[] = [
+                'id' => get_the_ID(),
+                'html' => $html,
+            ];
+        }
+        wp_reset_postdata();
+    }
+
+    wp_send_json_success([
+        'posts' => $posts,
+        'featured' => $featured_posts,
+        'has_more' => $page < $query->max_num_pages,
+        'total' => $query->found_posts,
+        'max_pages' => $query->max_num_pages,
+    ]);
+}
