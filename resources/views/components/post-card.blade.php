@@ -117,7 +117,7 @@
         {{-- Title --}}
         <x-heading
           :as="$featured ? HeadingTag::H2 : HeadingTag::H3"
-          :size="$featured ? HeadingSize::H3_BOLD : HeadingSize::H5_BOLD"
+          :size="$featured ? HeadingSize::H3_BOLD : HeadingSize::H4_BOLD"
           class="mb-6 line-clamp-2 transition-colors duration-200"
         >
           {!! $title !!}
@@ -126,8 +126,8 @@
         {{-- Excerpt --}}
         <x-text
           :as="TextTag::P"
-          :size="$featured ? TextSize::BASE : TextSize::SMALL"
-          class="text-neutral-400 mb-6 {{ $featured ? 'line-clamp-3' : 'line-clamp-2' }}"
+          :size="TextSize::LARGE"
+          class="mb-6 {{ $featured ? 'line-clamp-3' : 'line-clamp-2' }}"
         >
           {{ $excerpt }}
         </x-text>
