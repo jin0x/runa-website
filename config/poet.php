@@ -85,8 +85,11 @@ return [
                 'slug' => 'case-studies',
             ],
             'admin_cols' => [
-                'case_study_category' => [
-                    'taxonomy' => 'case_study_category',
+                'resource_format' => [
+                    'taxonomy' => 'resource_format',
+                ],
+                'resource_topic' => [
+                    'taxonomy' => 'resource_topic',
                 ],
                 'featured_image' => [
                     'title' => 'Hero Image',
@@ -114,8 +117,8 @@ return [
                 'slug' => 'resources',
             ],
             'admin_cols' => [
-                'resource_category' => [
-                    'taxonomy' => 'resource_category',
+                'resource_format' => [
+                    'taxonomy' => 'resource_format',
                 ],
                 'featured_image' => [
                     'title' => 'Featured Image',
@@ -208,36 +211,15 @@ return [
             'show_tagcloud' => true,
             'meta_box_cb' => false,
         ],
-        'case_study_category' => [
-            'links' => ['case-study'],
+        'resource_format' => [
+            'links' => ['resource', 'case-study'],
             'labels' => [
-                'singular' => 'Case Study Category',
-                'plural' => 'Case Study Categories',
-                'menu_name' => 'Categories',
-                'all_items' => 'All Categories',
-                'add_new_item' => 'Add New Category',
-                'edit_item' => 'Edit Category',
-            ],
-            'hierarchical' => false,
-            'public' => true,
-            'show_ui' => true,
-            'show_admin_column' => true,
-            'show_in_menu' => true,
-            'show_in_nav_menus' => true,
-            'show_in_rest' => true,
-            'show_in_quick_edit' => true,
-            'show_tagcloud' => false,
-            'meta_box_cb' => false,
-        ],
-        'resource_category' => [
-            'links' => ['resource'],
-            'labels' => [
-                'singular' => 'Resource Category',
-                'plural' => 'Resource Categories',
-                'menu_name' => 'Categories',
-                'all_items' => 'All Categories',
-                'add_new_item' => 'Add New Category',
-                'edit_item' => 'Edit Category',
+                'singular' => 'Format',
+                'plural' => 'Formats',
+                'menu_name' => 'Formats',
+                'all_items' => 'All Formats',
+                'add_new_item' => 'Add New Format',
+                'edit_item' => 'Edit Format',
             ],
             'hierarchical' => true,
             'public' => true,
@@ -248,7 +230,26 @@ return [
             'show_in_rest' => true,
             'show_in_quick_edit' => true,
             'show_tagcloud' => true,
-            'meta_box_cb' => false,
+        ],
+        'resource_topic' => [
+            'links' => ['case-study'],
+            'labels' => [
+                'singular' => 'Topic',
+                'plural' => 'Topics',
+                'menu_name' => 'Topics',
+                'all_items' => 'All Topics',
+                'add_new_item' => 'Add New Topic',
+                'edit_item' => 'Edit Topic',
+            ],
+            'hierarchical' => true,
+            'public' => true,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'show_in_menu' => true,
+            'show_in_nav_menus' => true,
+            'show_in_rest' => true,
+            'show_in_quick_edit' => true,
+            'show_tagcloud' => true,
         ],
     ],
 
