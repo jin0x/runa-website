@@ -158,24 +158,15 @@ function add_security_headers()
  * Get CSP-allowed domains based on environment
  * Allows assets from both frontend and backend domains
  *
+ * Uses centralized domain configuration from App\Helpers\DomainConfig
+ *
  * @return string Space-separated list of allowed domains for CSP
  */
 function get_csp_allowed_domains()
 {
-    // Environment configuration: frontend domain => backend domain
-    $environment_map = [
-        'runa.io' => 'https://runaio.wpenginepowered.com',
-        'staging.runa.io' => 'https://runaiostaging.wpenginepowered.com',
-        'runastg.wpenginepowered.com' => 'https://runaiostaging.wpenginepowered.com', // Staging backend
-        'runa.local' => '', // Local development has no separate backend
-    ];
-
-    // Reverse map: backend domain => frontend domain (for when home_url is backend)
-    $backend_to_frontend = [
-        'runaio.wpenginepowered.com' => 'https://runa.io',
-        'runaiostaging.wpenginepowered.com' => 'https://staging.runa.io',
-        'runastg.wpenginepowered.com' => 'https://staging.runa.io',
-    ];
+    // Use centralized domain configuration
+    $environment_map = \App\Helpers\DomainConfig::FRONTEND_TO_BACKEND;
+    $backend_to_frontend = \App\Helpers\DomainConfig::BACKEND_TO_FRONTEND;
 
     $allowed = [];
 

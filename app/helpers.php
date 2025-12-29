@@ -7,6 +7,56 @@
 namespace App\Helpers;
 
 /**
+ * Centralized domain configuration for Cloudflare Worker proxy setup.
+ *
+ * This maps between WPEngine backend domains and public-facing frontend domains.
+ * Used by CSP headers, URL helpers, and other domain-aware functionality.
+ *
+ * NOTE: The mu-plugins (use-production-urls.php, use-staging-urls.php) are deployed
+ * manually via SSH and handle the actual URL rewriting. These constants are for
+ * theme-level functionality only.
+ */
+class DomainConfig
+{
+    /**
+     * Frontend domain => Backend domain mapping
+     * Used when we know the frontend domain and need the backend
+     */
+    public const FRONTEND_TO_BACKEND = [
+        'runa.io' => 'https://runaio.wpenginepowered.com',
+        'staging.runa.io' => 'https://runaiostaging.wpenginepowered.com',
+        'runastg.wpenginepowered.com' => 'https://runaiostaging.wpenginepowered.com',
+        'runa.local' => '',
+    ];
+
+    /**
+     * Backend domain => Frontend domain mapping
+     * Used when WordPress home_url is the backend domain and we need the public URL
+     */
+    public const BACKEND_TO_FRONTEND = [
+        'runaio.wpenginepowered.com' => 'https://runa.io',
+        'runaiostaging.wpenginepowered.com' => 'https://staging.runa.io',
+        'runastg.wpenginepowered.com' => 'https://staging.runa.io',
+    ];
+
+    /**
+     * Get the frontend URL for a given backend host
+     */
+    public static function getFrontendUrl(string $backendHost): ?string
+    {
+        return self::BACKEND_TO_FRONTEND[$backendHost] ?? null;
+    }
+
+    /**
+     * Get the backend URL for a given frontend host
+     */
+    public static function getBackendUrl(string $frontendHost): ?string
+    {
+        return self::FRONTEND_TO_BACKEND[$frontendHost] ?? null;
+    }
+}
+
+/**
  * Get asset URL from manifest.json
  * Bypass for Acorn beta Vite::asset() bug
  *
@@ -289,18 +339,12 @@ function enqueue_editor_assets()
  */
 function get_frontend_home_url()
 {
-    // Backend to frontend mapping (same pattern as get_csp_allowed_domains)
-    $backend_to_frontend = [
-        'runaio.wpenginepowered.com' => 'https://runa.io',
-        'runaiostaging.wpenginepowered.com' => 'https://staging.runa.io',
-        'runastg.wpenginepowered.com' => 'https://staging.runa.io',
-    ];
-
     $request_host = $_SERVER['HTTP_HOST'] ?? '';
 
     // Check if current request is from a backend domain
-    if (isset($backend_to_frontend[$request_host])) {
-        return $backend_to_frontend[$request_host];
+    $frontend_url = DomainConfig::getFrontendUrl($request_host);
+    if ($frontend_url !== null) {
+        return $frontend_url;
     }
 
     // Default fallback to home_url() for direct frontend or admin access
