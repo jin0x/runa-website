@@ -101,6 +101,7 @@
                 To: "opacity-0 scale-95"
             -->
         <div
+          x-cloak
           x-data="{
             isMobileNavOpen: false,
             adminBarHeight: null,
@@ -172,6 +173,7 @@
               </div>
             </div>
             <div
+              x-cloak
               :class="{ 'hidden': !isMobileNavOpen }"
               class="transition transform flex-1 overflow-y-auto px-5 pb-8"
               style="max-height: 100vh;"
