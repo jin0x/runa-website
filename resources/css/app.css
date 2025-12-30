@@ -876,23 +876,6 @@ strong {
   @apply no-underline hover:underline;
 }
 
-/* Showcase Grid Hover Effect */
-.showcase-grid-item {
-  opacity: 0.6;
-  transition: opacity 0.3s ease, background-color 0.3s ease;
-}
-
-.showcase-grid-item:hover {
-  opacity: 1;
-}
-
-/* Disable hover effect on touch devices */
-@media (hover: none) and (pointer: coarse) {
-  .showcase-grid-item {
-    opacity: 1;
-  }
-}
-
 /* =============================================================================
    SECTION ARCH DIVIDERS - Subtractive Masking Approach
    Both outer and inner arches are positioned at the top of the section
