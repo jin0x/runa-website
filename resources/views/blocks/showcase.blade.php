@@ -345,14 +345,7 @@
         $gridId = 'showcase-grid-' . uniqid();
       @endphp
       <div class="mb-24 xl:pl-26 xl:pr-26">
-        <div
-          id="{{ $gridId }}"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6
-            [&_.showcase-grid-item]:opacity-60
-            [&_.showcase-grid-item]:transition-opacity
-            [&_.showcase-grid-item]:duration-200
-            [&_.showcase-grid-item:hover]:opacity-100"
-        >
+        <div id="{{ $gridId }}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @foreach($gridItems as $index => $item)
             @php
               $item_image = $item['grid_image'] ?? null;
