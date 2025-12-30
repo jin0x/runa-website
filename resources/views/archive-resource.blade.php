@@ -16,7 +16,7 @@
     'taxonomy'   => 'resource_format',
     'orderby'    => 'name',
     'order'      => 'ASC',
-    'hide_empty' => false,
+    'hide_empty' => true, // Only show formats with posts
   ]);
 
   // Get all topic terms (for Topics tab)
@@ -24,7 +24,7 @@
     'taxonomy'   => 'resource_topic',
     'orderby'    => 'name',
     'order'      => 'ASC',
-    'hide_empty' => false,
+    'hide_empty' => true, // Only show topics with posts
   ]);
 
   // Get resources background image from options
@@ -187,7 +187,7 @@
             <button
               @click="toggleTab('topics')"
               :class="activeTab === 'topics' ? 'bg-primary-green-neon text-primary-dark' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'"
-              class="px-8 py-4 rounded-lg font-medium transition-colors flex items-center gap-2 min-w-[180px] justify-between"
+              class="px-8 py-4 rounded-lg font-medium transition-colors flex items-center gap-2 min-w-[180px] justify-between cursor-pointer"
             >
               <span>Topics</span>
               <span x-show="activeTab === 'topics'">{!! $svg_checkmark !!}</span>
@@ -196,7 +196,7 @@
             <button
               @click="toggleTab('formats')"
               :class="activeTab === 'formats' ? 'bg-primary-green-neon text-primary-dark' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'"
-              class="px-8 py-4 rounded-lg font-medium transition-colors flex items-center gap-2 min-w-[180px] justify-between"
+              class="px-8 py-4 rounded-lg font-medium transition-colors flex items-center gap-2 min-w-[180px] justify-between cursor-pointer"
             >
               <span>Formats</span>
               <span x-show="activeTab === 'formats'">{!! $svg_checkmark !!}</span>
@@ -236,9 +236,9 @@
         </x-text>
 
         <div class="flex flex-wrap gap-3">
-          {{-- Featured Filter --}}
-          <div x-show="activeFilters.length === 0">
-            <button @click="toggleFeatured()">
+          {{-- Featured Filter - Only show if there are featured posts or featured is active --}}
+          <div x-show="activeFilters.length === 0 && (featuredPosts.length > 0 || featuredActive)">
+            <button @click="toggleFeatured()" class="cursor-pointer">
               <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-purple min-h-[24px]">
                 <x-text
                   :as="TextTag::SPAN"
@@ -268,7 +268,7 @@
             <div class="flex flex-wrap gap-3">
               @foreach($topics as $topic)
                 <div x-show="activeFilters.length === 0 || isFilterActive('{{ $topic->term_id }}')">
-                  <button @click="toggleFilter('{{ $topic->term_id }}')">
+                  <button @click="toggleFilter('{{ $topic->term_id }}')" class="cursor-pointer">
                     <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-cyan min-h-[24px]">
                       <x-text
                         :as="TextTag::SPAN"
@@ -301,7 +301,7 @@
             <div class="flex flex-wrap gap-3">
               @foreach($formats as $format)
                 <div x-show="activeFilters.length === 0 || isFilterActive('{{ $format->term_id }}')">
-                  <button @click="toggleFilter('{{ $format->term_id }}')">
+                  <button @click="toggleFilter('{{ $format->term_id }}')" class="cursor-pointer">
                     <x-badge variant="default" size="sm" rounded="sm" class="bg-secondary-cyan min-h-[24px]">
                       <x-text
                         :as="TextTag::SPAN"
@@ -339,7 +339,10 @@
       {{-- Results --}}
       <div x-show="!loading">
         {{-- Featured Resources --}}
-        <div x-show="featuredPosts.length > 0" class="grid grid-cols-1 gap-6 mb-12 md:grid-cols-2">
+        <div
+          x-show="featuredPosts.length > 0"
+          :class="featuredPosts.length === 1 ? 'grid grid-cols-1 gap-6 mb-12' : 'grid grid-cols-1 gap-6 mb-12 md:grid-cols-2'"
+        >
           <template x-for="post in featuredPosts" :key="post.id">
             <div x-html="post.html"></div>
           </template>

@@ -17,7 +17,9 @@
 
   // Category badge
   $caseStudyCategories = get_the_terms($postId, 'case_study_category');
-  $primaryCategory     = $caseStudyCategories[0] ?? null;
+  $primaryCategory     = (!is_wp_error($caseStudyCategories) && !empty($caseStudyCategories))
+      ? $caseStudyCategories[0]
+      : null;
 
   // Hero description
   $heroDescription = get_field('hero_description') ?? '';
