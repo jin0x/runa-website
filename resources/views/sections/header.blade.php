@@ -1,6 +1,7 @@
 @php
   use App\Enums\ButtonSize;
   use App\Enums\ButtonVariant;
+  use function App\Helpers\has_acf_blocks;
     $enable_header_banner = get_field( 'enable_header_banner', 'option' );
     $header_banner_message = get_field( 'header_banner_message', 'option' );
     $header_buttons = get_field('header_buttons', 'option') ?: [];
@@ -17,7 +18,8 @@
     $has_secondary_cta = !empty($secondary_cta_url) && !empty($secondary_cta_label);
     $header_logo = get_field('header_logo', 'option');
     $header_logo_secondary = get_field('header_logo_secondary', 'option');
-    $use_secondary_logo = is_singular('post') || is_singular('case-study');
+    $is_text_page = is_page() && !has_acf_blocks();
+    $use_secondary_logo = is_singular('post') || is_singular('case-study') || $is_text_page;
     $active_header_logo = ($use_secondary_logo && $header_logo_secondary) ? $header_logo_secondary : $header_logo;
     $active_header_logo_alt = $siteName;
     if (is_array($active_header_logo) && !empty($active_header_logo['alt'])) {
