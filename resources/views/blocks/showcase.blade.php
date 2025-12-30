@@ -101,6 +101,10 @@
 
     {{-- Statistics Cards --}}
     @if(!empty($statistics_cards))
+      @php
+        $statsId = 'showcase-stats-' . uniqid();
+      @endphp
+      <div id="{{ $statsId }}">
       <x-grid :columns="$gridColumns" class="p-6 mb-12">
         @foreach($statistics_cards as $card)
           <div class="text-center p-6 max-w-52 justify-self-center">
@@ -130,7 +134,9 @@
                 :color="TextColor::GREEN_SOFT"
                 class="mb-2"
               >
-                {{ $card['statistic'] }}
+                <span class="showcase-stat-number" data-stat-number="{{ $card['statistic'] }}">
+                  {{ $card['statistic'] }}
+                </span>
               </x-heading>
             @endif
 
@@ -147,6 +153,7 @@
           </div>
         @endforeach
       </x-grid>
+      </div>
     @endif
 
         {{-- Media Section --}}
@@ -332,97 +339,78 @@
     @endif
 
     {{-- Grid Layout Section --}}
-    @if($media_type === 'grid' && !empty($grid_items) && count($grid_items) === 4)
+    @if($media_type === 'grid' && !empty($grid_items) && count($grid_items) >= 3)
       @php
+        $gridItems = array_slice($grid_items, 0, 3);
         $gridId = 'showcase-grid-' . uniqid();
       @endphp
-      <div class="mb-24">
-        <div id="{{ $gridId }}" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3">
-          @foreach($grid_items as $index => $item)
+      <div class="mb-24 xl:pl-26 xl:pr-26">
+        <div
+          id="{{ $gridId }}"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6
+            [&_.showcase-grid-item]:opacity-60
+            [&_.showcase-grid-item]:transition-opacity
+            [&_.showcase-grid-item]:duration-200
+            [&_.showcase-grid-item:hover]:opacity-100"
+        >
+          @foreach($gridItems as $index => $item)
             @php
               $item_image = $item['grid_image'] ?? null;
               $item_title = $item['grid_title'] ?? '';
               $item_description = $item['grid_description'] ?? '';
+              $item_link = $item['grid_link'] ?? null;
               $image_url = is_array($item_image) ? ($item_image['url'] ?? '') : '';
               $image_alt = is_array($item_image) ? ($item_image['alt'] ?? $item_title) : $item_title;
-
-              // Determine layout: even index (0, 2) = Text left, Image right | odd index (1, 3) = Image left, Text right
-              $isTextFirst = $index % 2 === 0;
+              $link_url = is_array($item_link) ? ($item_link['url'] ?? '') : '';
+              $link_target = is_array($item_link) ? ($item_link['target'] ?? '_self') : '_self';
+              $hasLink = !empty($link_url);
             @endphp
 
-            <div class="showcase-grid-item group relative overflow-hidden">
-              @if($isTextFirst)
-                {{-- Even index (0, 2): Text then Image (side by side on desktop, stacked on mobile) --}}
-                <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
-                  <div class="showcase-grid-text flex-1 text-left">
-                    @if(!empty($item_title))
-                      <x-heading
-                        :as="HeadingTag::H2"
-                        :size="HeadingSize::H2_MEDIUM"
-                        :color="TextColor::GREEN_SOFT"
-                        class="mb-3"
-                      >
-                        {{ $item_title }}
-                      </x-heading>
-                    @endif
-
-                    @if(!empty($item_description))
-                      <x-text
-                        :as="TextTag::P"
-                        :size="TextSize::MEDIUM"
-                      >
-                        {{ $item_description }}
-                      </x-text>
-                    @endif
+            <a
+              href="{{ $hasLink ? $link_url : 'javascript:void(0)' }}"
+              target="{{ $hasLink ? $link_target : '_self' }}"
+              class="showcase-grid-item group relative overflow-hidden block h-full !no-underline {{ $hasLink ? 'cursor-pointer' : 'cursor-default' }}"
+            >
+              <div class="flex flex-col items-center text-center gap-6 h-full px-6">
+                @if(!empty($image_url))
+                  <div class="showcase-grid-image w-full flex justify-center">
+                    <img
+                      src="{{ $image_url }}"
+                      alt="{{ $image_alt }}"
+                      class="w-full max-w-[200px] h-auto rounded-lg object-contain"
+                    />
                   </div>
+                @endif
 
-                  @if(!empty($image_url))
-                    <div class="showcase-grid-image flex-1 max-w-3xs">
-                      <img
-                        src="{{ $image_url }}"
-                        alt="{{ $image_alt }}"
-                        class="w-full h-auto rounded-lg object-cover"
-                      />
-                    </div>
-                  @endif
-                </div>
-              @else
-                {{-- Odd index (1, 3): Image then Text (side by side on desktop, stacked on mobile) --}}
-                <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
-                  @if(!empty($image_url))
-                    <div class="showcase-grid-image flex-1 max-w-3xs order-2 md:order-none">
-                      <img
-                        src="{{ $image_url }}"
-                        alt="{{ $image_alt }}"
-                        class="w-full h-auto rounded-lg object-cover"
-                      />
-                    </div>
+                <div class="showcase-grid-text w-full">
+                  @if(!empty($item_title))
+                    <x-heading
+                      :as="HeadingTag::H2"
+                      :size="HeadingSize::H2_MEDIUM"
+                      :color="TextColor::GREEN_NEON"
+                      class="mb-2 flex gap-2 justify-center items-center"
+                    >
+                      {{ $item_title }}
+
+                      @if($hasLink)
+                        <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13.3333 0L10.9833 2.35L20.2833 11.6667H0V15H20.2833L10.9833 24.3167L13.3333 26.6667L26.6667 13.3333L13.3333 0Z" fill="#00FFA3"/>
+                        </svg>
+                      @endif
+                    </x-heading>
                   @endif
 
-                  <div class="showcase-grid-text flex-1 text-left order-1 md:order-none">
-                    @if(!empty($item_title))
-                      <x-heading
-                        :as="HeadingTag::H2"
-                        :size="HeadingSize::H2_MEDIUM"
-                        :color="TextColor::GREEN_SOFT"
-                        class="mb-3"
-                      >
-                        {{ $item_title }}
-                      </x-heading>
-                    @endif
-
-                    @if(!empty($item_description))
-                      <x-text
-                        :as="TextTag::P"
-                        :size="TextSize::MEDIUM"
-                      >
-                        {{ $item_description }}
-                      </x-text>
-                    @endif
-                  </div>
+                  @if(!empty($item_description))
+                    <x-text
+                      :as="TextTag::P"
+                      :size="TextSize::MEDIUM"
+                    >
+                      {{ $item_description }}
+                    </x-text>
+                  @endif
                 </div>
-              @endif
-            </div>
+              </div>
+            </a>
           @endforeach
         </div>
       </div>
@@ -459,11 +447,11 @@
   </x-container>
 </x-section>
 
-{{-- Grid Highlight Animation - Must be at bottom after GSAP loads --}}
-@if($media_type === 'grid' && !empty($grid_items) && count($grid_items) === 4)
+{{-- Statistics Number Animation --}}
+@if(!empty($statistics_cards) && ($enable_number_animation ?? false) && !empty($statsId))
 <script>
 (function() {
-  const gridId = '{{ $gridId }}';
+  const statsId = '{{ $statsId }}';
 
   // Wait for GSAP to be available
   const waitForGSAP = (callback, maxAttempts = 50) => {
@@ -481,117 +469,105 @@
     checkGSAP();
   };
 
-  const initGridHighlight = () => {
-    const gridContainer = document.getElementById(gridId);
-    if (!gridContainer) {
+  const initStatsAnimation = () => {
+    const container = document.getElementById(statsId);
+    if (!container || container.dataset.statsInit === 'true') {
       return;
     }
 
-    const items = gridContainer.querySelectorAll('.showcase-grid-item');
-    if (items.length === 0) {
+    const numbers = container.querySelectorAll('[data-stat-number]');
+    if (!numbers.length) {
       return;
     }
 
-    // Remove CSS transitions that might conflict
-    items.forEach(item => {
-      item.style.transition = 'none';
-    });
+    container.dataset.statsInit = 'true';
 
-    // Create timeline
-    const timeline = window.gsap.timeline({
-      repeat: -1,
-      repeatDelay: 0
-    });
+    const tweens = [];
+    let observer = null;
+    const parseStat = (text) => {
+      if (!text) return null;
+      const match = text.trim().match(/([\d.,]+)(.*)/);
+      if (!match) return null;
 
-    // Cycle through each item
-    items.forEach((item, index) => {
-      timeline.to(item, {
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.inOut"
-      }, index * 3);
+      const numericPart = match[1].replace(/,/g, '');
+      const suffix = match[2] || '';
+      const target = parseFloat(numericPart);
 
-      timeline.to(item, {
-        opacity: 0.6,
-        duration: 0.5,
-        ease: "power2.inOut"
-      }, index * 3 + 2.5);
-    });
+      if (Number.isNaN(target)) return null;
 
-    // Set initial state
-    items.forEach((item, index) => {
-      window.gsap.set(item, { opacity: index === 0 ? 1 : 0.6 });
-    });
+      const decimals = (numericPart.split('.')[1] || '').length;
 
-
-    // Hover handlers
-    let leaveTimeout;
-
-    items.forEach((item, index) => {
-    item.addEventListener('mouseenter', () => {
-    // Clear any pending leave timeout
-    if (leaveTimeout) {
-      clearTimeout(leaveTimeout);
-      leaveTimeout = null;
-    }
-
-    timeline.pause();
-
-    // Dim ALL items first
-    items.forEach(i => {
-      window.gsap.to(i, {
-        opacity: 0.6,
-        duration: 0.3,
-        ease: "power2.out"
-      });
-    });
-
-    // Then highlight only the hovered item
-    window.gsap.to(item, {
-      opacity: 1,
-      duration: 0.3,
-      ease: "power2.out"
-    });
-  });
-
-    item.addEventListener('mouseleave', () => {
-      // Add delay before resetting
-      leaveTimeout = setTimeout(() => {
-        // Animate all items to initial state
-        items.forEach((i, idx) => {
-          window.gsap.to(i, {
-            opacity: idx === 0 ? 1 : 0.6,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        });
-
-        // Restart timeline after animation completes
-        setTimeout(() => {
-          timeline.restart();
-        }, 300); // Match the animation duration
-      }, 400); // Delay before reset starts
-    });
-  });
-
-    return () => {
-      timeline.kill();
-      items.forEach(item => {
-        item.style.transition = '';
-        window.gsap.set(item, { clearProps: 'opacity' });
-      });
+      return { target, suffix, decimals };
     };
+
+    const formatNumber = (value, decimals) => {
+      const raw = decimals > 0 ? value.toFixed(decimals) : Math.round(value).toString();
+      return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
+    const animateNumber = (el) => {
+      const parsed = parseStat(el.dataset.statNumber || el.textContent);
+      if (!parsed) return;
+
+      const { target, suffix, decimals } = parsed;
+      const state = { value: 0 };
+
+      el.textContent = `0${suffix}`;
+
+      const tween = window.gsap.fromTo(state, { value: 0 }, {
+        value: target,
+        duration: 1.25,
+        ease: "power1.out",
+        onUpdate: () => {
+          el.textContent = `${formatNumber(state.value, decimals)}${suffix}`;
+        }
+      });
+
+      tweens.push(tween);
+    };
+
+    let hasAnimated = false;
+
+    const start = () => {
+      if (hasAnimated) return;
+      hasAnimated = true;
+      numbers.forEach(animateNumber);
+    };
+
+    const cleanup = () => {
+      tweens.forEach(t => t && t.kill && t.kill());
+      tweens.length = 0;
+      if (observer) observer.disconnect();
+      observer = null;
+    };
+
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            start();
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(container);
+
+      return cleanup;
+    }
+
+    start();
+    return cleanup;
   };
 
-  // Wait for GSAP then initialize
   waitForGSAP(() => {
     if (window.GSAPManager) {
       window.GSAPManager.register(
-        `showcase-grid-${gridId}`,
-        initGridHighlight
+        `showcase-stats-${statsId}`,
+        initStatsAnimation
       );
     } else {
-      initGridHighlight();
+      initStatsAnimation();
     }
   });
 })();
