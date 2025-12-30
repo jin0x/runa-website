@@ -77,7 +77,7 @@
                     <div class="stacking-card absolute w-full transition-transform duration-700 ease-out"
                         data-card-index="{{ $index }}"
                         style="z-index: {{ 10 + $index }}; top: 0; left: 0;   transform: translateY(100vh); opacity: 0;">
-                      <div class="flex flex-row rounded-[32px] overflow-hidden  relative shadow-2xl  {{ $bgColor }}">
+                      <div class="flex flex-row rounded-4xl overflow-hidden  relative shadow-2xl  {{ $bgColor }}">
                         <div class="w-2/5 flex-shrink-0 py-6 pl-6">
                           <img src="{{ $card['image']['url'] }}" alt="{{ $card  ['image']['alt'] ?? $card['title'] }}" class="w-full h-full   object-cover min-h-[400px]"/>
                         </div>
@@ -142,7 +142,7 @@
                 $bgColor = EnumHelper::getCardBackgroundClass ($colorVariant);
               @endphp
               <div class="mobile-card">
-                <div class="flex flex-col rounded-[32px] overflow-hidden relative shadow-lg {{ $bgColor }}">
+                <div class="flex flex-col rounded-2xl overflow-hidden relative shadow-lg {{ $bgColor }}">
                   <div>
                     <img src="{{ $card['image']['url'] }}" alt="{{ $card['image'] ['alt'] ?? $card['title'] }}" class="w-full h-auto object-cover  rounded-tl-[32px] rounded-tr-[32px]">
                   </div>
