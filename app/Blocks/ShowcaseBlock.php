@@ -97,6 +97,7 @@ class ShowcaseBlock extends Block
             'cta' => $this->getCta(),
             'accent_color' => $this->getAccentColor(),
             'columns' => $this->getColumns(),
+            'enable_number_animation' => $this->getEnableNumberAnimation(),
 
             // Section Options
             'section_size' => $this->getSectionSize(),
@@ -161,7 +162,7 @@ class ShowcaseBlock extends Block
                     'video' => 'Video',
                     'lottie' => 'Lottie Animation',
                     'logo-marquee' => 'Logo Marquee (3 Lanes)',
-                    'grid' => 'Grid Layout (4 Items)'
+                    'grid' => 'Grid Layout (3 Items)'
                 ],
                 'default_value' => 'image',
                 'required' => 1,
@@ -245,9 +246,9 @@ class ShowcaseBlock extends Block
             ->endRepeater()
             ->addRepeater('grid_items', [
                 'label' => 'Grid Items',
-                'instructions' => 'Add 4 items for the grid layout',
-                'min' => 4,
-                'max' => 4,
+                'instructions' => 'Add 3 items for the grid layout',
+                'min' => 3,
+                'max' => 3,
                 'layout' => 'block',
                 'button_label' => 'Add Grid Item',
                 'conditional_logic' => [
@@ -277,6 +278,12 @@ class ShowcaseBlock extends Block
                 'instructions' => 'Enter the description for this grid item',
                 'rows' => 3,
                 'required' => 1,
+            ])
+            ->addLink('grid_link', [
+                'label' => 'Link',
+                'instructions' => 'Optional link for the entire card',
+                'return_format' => 'array',
+                'required' => 0,
             ])
             ->endRepeater()
 
@@ -309,6 +316,12 @@ class ShowcaseBlock extends Block
             ])
             ->addTab('Settings', [
                 'placement' => 'top',
+            ])
+            ->addTrueFalse('enable_number_animation', [
+                'label' => 'Enable Number Animation',
+                'instructions' => 'Animate statistics numbers on scroll (use numeric values like 190+ or 1.5B+).',
+                'ui' => 1,
+                'default_value' => 0,
             ])
             ->addPartial(SectionOptions::withConfig([
                 'themes' => [ThemeVariant::LIGHT, ThemeVariant::DARK]
@@ -378,6 +391,11 @@ class ShowcaseBlock extends Block
     public function getAccentColor()
     {
         return get_field('accent_color') ?: 'green-neon';
+    }
+
+    public function getEnableNumberAnimation()
+    {
+        return (bool) get_field('enable_number_animation');
     }
 
     public function getColumns()
