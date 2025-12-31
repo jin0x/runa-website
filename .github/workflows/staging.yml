@@ -50,7 +50,9 @@ jobs:
         run: npm run build
 
       - name: Deploy to WP Engine Staging
-        uses: wpengine/github-action-wpe-site-deploy@v3
+        # Pinned to v3.2.6 due to broken Docker image in v3.2.7+ (wpengine/site-deploy:1.0.6 missing linux/amd64)
+        # See: https://github.com/wpengine/github-action-wpe-site-deploy/issues/125
+        uses: wpengine/github-action-wpe-site-deploy@v3.2.6
         with:
           WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
           WPE_ENV: runastg
