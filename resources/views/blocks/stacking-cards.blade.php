@@ -78,8 +78,8 @@
                         data-card-index="{{ $index }}"
                         style="z-index: {{ 10 + $index }}; top: 0; left: 0;   transform: translateY(100vh); opacity: 0;">
                       <div class="flex flex-row rounded-4xl overflow-hidden  relative shadow-2xl  {{ $bgColor }}">
-                        <div class="w-2/5 flex-shrink-0 py-6 pl-6">
-                          <img src="{{ $card['image']['url'] }}" alt="{{ $card  ['image']['alt'] ?? $card['title'] }}" class="w-full h-full   object-cover min-h-[400px]"/>
+                        <div class="w-1/2 flex-shrink-0 py-6 pl-6">
+                          <img src="{{ $card['image']['url'] }}" alt="{{ $card  ['image']['alt'] ?? $card['title'] }}" class="w-full h-full   object-cover"/>
                         </div>
                         <div class="flex flex-col flex-1 p-8 lg:p-12 min-h-[400px]  justify-center">
                           <div class="space-y-4">

@@ -145,15 +145,28 @@
           });
 
           try {
-            const response = await fetch('{{ admin_url("admin-ajax.php") }}?' + params);
+            // Use current domain instead of configured WordPress URL to avoid CORS issues
+            const ajaxUrl = window.location.origin + '/wp-admin/admin-ajax.php';
+            const response = await fetch(ajaxUrl + '?' + params);
             const data = await response.json();
 
             if (data.success) {
               if (this.page === 1) {
-                this.posts = data.data.posts;
-                this.featuredPosts = data.data.featured || [];
+                // When Featured filter is active, show posts in featured grid (larger cards)
+                if (this.featuredActive) {
+                  this.featuredPosts = data.data.posts;
+                  this.posts = [];
+                } else {
+                  this.posts = data.data.posts;
+                  this.featuredPosts = data.data.featured || [];
+                }
               } else {
-                this.posts = [...this.posts, ...data.data.posts];
+                // For pagination, append to appropriate array
+                if (this.featuredActive) {
+                  this.featuredPosts = [...this.featuredPosts, ...data.data.posts];
+                } else {
+                  this.posts = [...this.posts, ...data.data.posts];
+                }
               }
               this.hasMore = data.data.has_more;
             }
@@ -341,17 +354,17 @@
         {{-- Featured Resources --}}
         <div
           x-show="featuredPosts.length > 0"
-          :class="featuredPosts.length === 1 ? 'grid grid-cols-1 gap-6 mb-12' : 'grid grid-cols-1 gap-6 mb-12 md:grid-cols-2'"
+          :class="featuredPosts.length === 1 ? 'grid grid-cols-1 gap-6 mb-12' : 'grid grid-cols-1 gap-6 mb-12 md:grid-cols-2 md:grid-rows-[1fr] md:auto-rows-fr'"
         >
           <template x-for="post in featuredPosts" :key="post.id">
-            <div x-html="post.html"></div>
+            <div class="flex" x-html="post.html"></div>
           </template>
         </div>
 
         {{-- Regular Resources Grid --}}
-        <div x-show="posts.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div x-show="posts.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 auto-rows-fr">
           <template x-for="post in posts" :key="post.id">
-            <div x-html="post.html"></div>
+            <div class="flex" x-html="post.html"></div>
           </template>
         </div>
 

@@ -108,15 +108,17 @@
               @endforeach
             </div>
 
-            <div>
-              <x-text
-                :as="TextTag::SPAN"
-                :size="TextSize::CAPTION"
-                class="text-primary-dark"
-              >
-                {{ $readingTime }} min read
-              </x-text>
-            </div>
+            @if($readingTime > 0)
+              <div>
+                <x-text
+                  :as="TextTag::SPAN"
+                  :size="TextSize::CAPTION"
+                  class="text-primary-dark"
+                >
+                  {{ $readingTime }} min read
+                </x-text>
+              </div>
+            @endif
           </div>
         @endif
 

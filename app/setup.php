@@ -669,9 +669,13 @@ function ajax_filter_resources() {
         while ($query->have_posts()) {
             $query->the_post();
 
+            // When filtering by featured, render as featured cards
+            $is_featured_filter = $featured === '1';
+
             $html = \Roots\view('components.post-card', [
-                'featured' => false,
+                'featured' => $is_featured_filter,
                 'post' => get_the_ID(),
+                'singleFeatured' => $is_featured_filter && $query->post_count === 1,
             ])->render();
 
             $posts[] = [
