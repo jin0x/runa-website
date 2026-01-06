@@ -34,10 +34,31 @@
 
 {{-- Guide Content with TOC - Constrained Width --}}
 @if(!empty($guide_sections) || !empty($toc_items))
-  <div class="guide-content-wrapper max-w-[1600px] mx-auto px-16 py-16">
+  <div class="guide-content-wrapper max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16">
+    {{-- Mobile Dropdown TOC - Visible only on mobile --}}
+    @if(!empty($toc_items))
+      <div class="mobile-toc-dropdown lg:hidden mb-8">
+        <select id="mobile-toc-select" class="w-full px-2 sm:px-4 py-3 bg-white text-sm sm:text-base focus:outline-none">
+          <option value="">Table of Contents</option>
+          @foreach($toc_items as $item)
+            <option value="#{{ $item['anchor'] }}">{{ $item['text'] }}</option>
+          @endforeach
+        </select>
+
+        {{-- Download CTA for Mobile --}}
+        @if($download_link)
+          <div class="mt-4 sm:mt-6">
+            <a href="{{ $download_link }}" target="_blank" class="inline-flex items-center gap-2 sm:gap-3 primary-button-gradient text-primary-dark px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium hover:bg-primary-green-neon/90 transition-colors !no-underline w-full justify-center text-sm sm:text-base">
+              <x-text :size="TextSize::SMALL">Download PDF</x-text>
+            </a>
+          </div>
+        @endif
+      </div>
+    @endif
+
     <div class="flex justify-between">
-      {{-- Table of Contents - Sticky Sidebar --}}
-      <aside class="guide-toc w-86 flex-shrink-0 pr-12 sticky top-8 self-start">
+      {{-- Table of Contents - Sticky Sidebar (Desktop only) --}}
+      <aside class="guide-toc w-86 flex-shrink-0 pr-12 sticky top-8 self-start hidden lg:block">
         <div class="toc-container">
           <x-heading
             :as="HeadingTag::H3"
@@ -104,10 +125,10 @@
   </div>
 @endif
 
-{{-- JavaScript for Smooth Scrolling --}}
+{{-- JavaScript for Smooth Scrolling and Mobile Dropdown --}}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Smooth scrolling for TOC links
+  // Smooth scrolling for TOC links (desktop sidebar)
   const tocLinks = document.querySelectorAll('.toc-link');
   tocLinks.forEach(link => {
     link.addEventListener('click', function(e) {
@@ -122,5 +143,51 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // Mobile dropdown navigation
+  const mobileSelect = document.getElementById('mobile-toc-select');
+  if (mobileSelect) {
+    // Function to update placeholder styling
+    function updatePlaceholderStyling() {
+      if (mobileSelect.value === '') {
+        mobileSelect.classList.add('show-placeholder');
+      } else {
+        mobileSelect.classList.remove('show-placeholder');
+      }
+    }
+
+    // Set initial state
+    updatePlaceholderStyling();
+
+    // Animate chevron on focus/blur
+    mobileSelect.addEventListener('focus', function() {
+      this.classList.add('dropdown-open');
+    });
+
+    mobileSelect.addEventListener('blur', function() {
+      this.classList.remove('dropdown-open');
+    });
+
+    // Handle navigation
+    mobileSelect.addEventListener('change', function() {
+      updatePlaceholderStyling();
+      const targetHash = this.value;
+      if (targetHash) {
+        const targetId = targetHash.substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          // Reset dropdown to placeholder after navigation
+          setTimeout(() => {
+            this.value = '';
+            updatePlaceholderStyling();
+          }, 100);
+        }
+      }
+    });
+  }
 });
 </script>
