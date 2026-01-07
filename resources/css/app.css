@@ -1220,6 +1220,51 @@ section[data-variant='default'] + script + section .arch-inner-path {
   color: #000;
 }
 
+/* SVG and Image bullet points - keep icon and text on same line */
+.guide-content li svg,
+.guide-content li img {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+
+.guide-content li:has(svg),
+.guide-content li:has(img) {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+}
+
+.guide-content ul li:has(svg),
+.guide-content ul li:has(img) {
+  padding-left: 0;
+}
+
+/* Also handle when img/svg is a direct child of paragraph in list item */
+.guide-content li p img,
+.guide-content li p svg {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+
+.guide-content li:has(p img),
+.guide-content li:has(p svg) {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+}
+
+/* Handle content that's directly in the guide prose (not in a list) */
+.guide-content .prose img[width="20"],
+.guide-content img[width="20"] {
+  display: inline-block !important;
+  vertical-align: middle;
+  margin: 0 0.5rem 0 0;
+}
+
 /* Match heading sizes to app.css definitions */
 .guide-content .prose h1,
 .guide-content h1 {
