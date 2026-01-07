@@ -56,7 +56,7 @@
       </div>
     @endif
 
-    <div class="flex justify-between">
+    <div class="flex flex-col lg:flex-row lg:justify-between">
       {{-- Table of Contents - Sticky Sidebar (Desktop only) --}}
       <aside class="guide-toc w-86 flex-shrink-0 pr-12 sticky top-8 self-start hidden lg:block">
         <div class="toc-container">
@@ -104,7 +104,7 @@
       </aside>
 
       {{-- Main Content --}}
-      <main class="guide-main-content flex-1 ml-6 max-w-5xl">
+      <main class="guide-main-content flex-1 lg:ml-6 max-w-full lg:max-w-5xl">
         <div class="guide-content">
           @foreach($guide_sections as $section)
             @php
