@@ -1047,11 +1047,38 @@ section[data-variant='default'] + script + section .arch-inner-path {
 /* Guide Styling */
 .guide-content {
   /* Enhanced prose styling for guides */
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.guide-content * {
+  max-width: 100%;
+}
+
+.guide-main-content {
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .guide-content img {
   border-radius: 12px;
   margin-bottom: 0.5rem;
+  height: auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+.guide-content pre,
+.guide-content code {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.guide-content table {
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
 }
 
 /* Image source/caption styling - paragraph right after image */
@@ -1087,21 +1114,44 @@ section[data-variant='default'] + script + section .arch-inner-path {
 .guide-content .prose blockquote {
   background: var(--color-primary-green-soft);
   color: var(--color-primary-dark);
-  border-radius: 32px;
-  padding: 24px 40px;
-  margin: 2rem 0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin: 1.5rem 0;
   border: none !important;
   border-left: none !important;
   text-align: center;
-  font-size: 32px;
+  font-size: 20px;
   font-weight: 800;
   font-family: var(--font-heading);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 300px;
+  min-height: 200px;
   flex-direction: column;
   quotes: none;
+}
+
+@media (min-width: 640px) {
+  .guide-content .quote-inner-box,
+  .guide-content blockquote,
+  .guide-content .prose blockquote {
+    border-radius: 24px;
+    padding: 20px 28px;
+    font-size: 24px;
+    min-height: 240px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .guide-content .quote-inner-box,
+  .guide-content blockquote,
+  .guide-content .prose blockquote {
+    border-radius: 32px;
+    padding: 24px 40px;
+    font-size: 32px;
+    min-height: 300px;
+    margin: 2rem 0;
+  }
 }
 
 /* Remove automatic quote marks */
@@ -1135,9 +1185,23 @@ section[data-variant='default'] + script + section .arch-inner-path {
 
 .guide-content blockquote p:first-child,
 .guide-content .prose blockquote p:first-child {
-  font-size: 32px;
+  font-size: 20px;
   font-weight: 600;
   font-family: var(--font-heading);
+}
+
+@media (min-width: 640px) {
+  .guide-content blockquote p:first-child,
+  .guide-content .prose blockquote p:first-child {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .guide-content blockquote p:first-child,
+  .guide-content .prose blockquote p:first-child {
+    font-size: 32px;
+  }
 }
 
 /* Source/citation styling - appears after quote text */
@@ -1146,14 +1210,38 @@ section[data-variant='default'] + script + section .arch-inner-path {
 .guide-content .quote-inner-box .quote-wrapper > p:last-child,
 .guide-content blockquote p:last-child:not(:first-child),
 .guide-content .prose blockquote p:last-child:not(:first-child) {
-  margin-top: 2rem !important;
-  padding-top: 1.5rem !important;
+  margin-top: 1rem !important;
+  padding-top: 1rem !important;
   border-top: 2px solid var(--color-primary-dark) !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
   font-weight: 800 !important;
   text-align: left !important;
   width: 100% !important;
   font-style: normal !important;
+}
+
+@media (min-width: 640px) {
+  .guide-content .quote-inner-box p:last-child,
+  .guide-content .quote-inner-box .quote-text > p:last-child,
+  .guide-content .quote-inner-box .quote-wrapper > p:last-child,
+  .guide-content blockquote p:last-child:not(:first-child),
+  .guide-content .prose blockquote p:last-child:not(:first-child) {
+    margin-top: 1.5rem !important;
+    padding-top: 1.25rem !important;
+    font-size: 13px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .guide-content .quote-inner-box p:last-child,
+  .guide-content .quote-inner-box .quote-text > p:last-child,
+  .guide-content .quote-inner-box .quote-wrapper > p:last-child,
+  .guide-content blockquote p:last-child:not(:first-child),
+  .guide-content .prose blockquote p:last-child:not(:first-child) {
+    margin-top: 2rem !important;
+    padding-top: 1.5rem !important;
+    font-size: 14px !important;
+  }
 }
 
 .guide-content .quote-inner-box a,
