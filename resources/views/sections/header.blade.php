@@ -154,21 +154,52 @@
               @endif
               <div class="-mr-2">
                 <button type="button"
-                        class="inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+                        class="relative group inline-flex items-center justify-center"
                         aria-label="Main menu"
                         x-bind:aria-expanded="isMobileNavOpen"
                         x-bind:aria-label="isMobileNavOpen ? 'Close main menu' : 'Main menu'"
                         x-on:click.prevent="isMobileNavOpen = !isMobileNavOpen"
                 >
                   <span class="sr-only" x-text="isMobileNavOpen ? 'Close Menu' : 'Open Menu'"></span>
-                  <svg :class="{ 'hidden': isMobileNavOpen }" class="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none"
-                       viewBox="0 0 24 24" :stroke="burgerColor()" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                  </svg>
-                  <svg :class="{ 'hidden': !isMobileNavOpen }" class="h-10 w-10" xmlns="http://www.w3.org/2000/svg"
-                       fill="none" viewBox="0 0 24 24" :stroke="burgerColor()" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                  </svg>
+                  <div
+                    class="relative flex overflow-hidden items-center justify-center w-[50px] h-[50px] transform transition-all duration-200"
+                  >
+                    <div
+                      class="flex flex-col justify-between w-[26px] h-[20px] transform transition-all duration-300 overflow-hidden"
+                    >
+                      <div
+                        class="h-[2px] w-6 transform transition-all duration-300 origin-left mb-0.5 rounded"
+                        :class="isMobileNavOpen ? 'translate-x-10' : 'translate-x-0'"
+                        :style="{ backgroundColor: burgerColor() }"
+                      ></div>
+                      <div
+                        class="h-[2px] w-6 transform transition-all duration-300 delay-75 mb-0.5 rounded"
+                        :class="isMobileNavOpen ? 'translate-x-10' : 'translate-x-0'"
+                        :style="{ backgroundColor: burgerColor() }"
+                      ></div>
+                      <div
+                        class="h-[2px] w-6 transform transition-all duration-300 origin-left delay-150 rounded"
+                        :class="isMobileNavOpen ? 'translate-x-10' : 'translate-x-0'"
+                        :style="{ backgroundColor: burgerColor() }"
+                      ></div>
+
+                      <div
+                        class="absolute items-center justify-between transform transition-all duration-500 top-2.5 flex w-0"
+                        :class="isMobileNavOpen ? 'translate-x-0 w-12' : '-translate-x-10 w-0'"
+                      >
+                        <div
+                          class="absolute left-[1px] h-[2px] w-6 transform transition-all duration-500 delay-300 rounded"
+                          :class="isMobileNavOpen ? 'rotate-45' : 'rotate-0'"
+                          :style="{ backgroundColor: burgerColor() }"
+                        ></div>
+                        <div
+                          class="absolute left-[1px] h-[2px] w-6 transform transition-all duration-500 delay-300 rounded"
+                          :class="isMobileNavOpen ? '-rotate-45' : 'rotate-0'"
+                          :style="{ backgroundColor: burgerColor() }"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
                 </button>
               </div>
             </div>
