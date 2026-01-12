@@ -386,9 +386,11 @@
                       {{ $item_title }}
 
                       @if($hasLink)
+                        <div class="showcase-grid-arrow inline-flex transition-transform duration-300 ease-out group-hover:translate-x-2">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M13.3333 0L10.9833 2.35L20.2833 11.6667H0V15H20.2833L10.9833 24.3167L13.3333 26.6667L26.6667 13.3333L13.3333 0Z" fill="#00FFA3"/>
                         </svg>
+                        </div>
                       @endif
                     </x-heading>
                   @endif
