@@ -160,7 +160,7 @@ class FeatureCardsBlock extends Block
                 'required' => 1,
             ])
             ->addPartial(CardOptions::withConfig([
-                'colors' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN]
+                'colors' => [ThemeVariant::PURPLE, ThemeVariant::CYAN, ThemeVariant::YELLOW, ThemeVariant::GREEN, ThemeVariant::WHITE]
             ]))
             ->addSelect('card_size', [
                 'label' => 'Card Size',
