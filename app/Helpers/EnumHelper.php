@@ -21,6 +21,7 @@ class EnumHelper
             'purple' => ThemeVariant::PURPLE,
             'cyan' => ThemeVariant::CYAN,
             'yellow' => ThemeVariant::YELLOW,
+            'white' => ThemeVariant::WHITE,
             default => ThemeVariant::LIGHT,
         };
     }
@@ -37,6 +38,7 @@ class EnumHelper
             ThemeVariant::DARK => SectionHeadingVariant::GREEN,    // colorful text on dark bg
             ThemeVariant::CYAN => SectionHeadingVariant::LIGHT,    // dark text on cyan bg
             ThemeVariant::YELLOW => SectionHeadingVariant::LIGHT,  // dark text on yellow bg
+            ThemeVariant::WHITE => SectionHeadingVariant::LIGHT,   // dark text on white bg
             default => SectionHeadingVariant::LIGHT,
         };
     }
@@ -84,6 +86,7 @@ class EnumHelper
             ThemeVariant::CYAN => 'bg-secondary-cyan',
             ThemeVariant::YELLOW => 'bg-primary-yellow',
             ThemeVariant::GREEN => 'bg-primary-green-soft',
+            ThemeVariant::WHITE => '',
             default => 'bg-secondary-cyan',
         };
     }

@@ -69,6 +69,7 @@ class CardOptions extends Partial
             ThemeVariant::CYAN => 'Cyan',
             ThemeVariant::YELLOW => 'Yellow',
             ThemeVariant::GREEN => 'Green',
+            ThemeVariant::WHITE => 'White',
         ];
 
         if (!$this->config || !isset($this->config['colors'])) {

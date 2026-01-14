@@ -32,6 +32,8 @@
   // Text colors based on theme
   $textColor = $themeVariant === ThemeVariant::DARK ? 'text-white' : 'text-black';
   $borderColor = $themeVariant === ThemeVariant::DARK ? 'border-gray-700' : 'border-gray-200';
+  $default_country_slug = !empty($default_country) ? $default_country : '';
+  $hide_reset_filter = !empty($show_default_country);
 
   // Input/select field colors and SVG Decoration for dropdown
 
@@ -62,6 +64,9 @@
       data-company-directory
       class="company-directory-block"
       data-theme="{{ $theme }}"
+      @if($default_country_slug)
+        data-default-country="{{ $default_country_slug }}"
+      @endif
     >
       {{-- Filter Section --}}
       <div class="mb-8">
@@ -76,10 +81,12 @@
               class="{{ $textColor }} {{$form_classes}}"
               aria-label="Filter companies by country"
             >
-              <option value="">All Countries</option>
+              <option value="" @if(empty($default_country_slug)) selected @endif>All Countries</option>
               @if(!empty($countries))
                 @foreach($countries as $country)
-                  <option value="{{ $country->slug }}">{{ $country->name }} ({{ $country->count }})</option>
+                  <option value="{{ $country->slug }}" @if($default_country_slug === $country->slug) selected @endif>
+                    {{ $country->name }} ({{ $country->count }})
+                  </option>
                 @endforeach
               @endif
             </select>
@@ -120,16 +127,18 @@
           </div>
 
           {{-- Clear Filters --}}
-          <div class="mt-4">
-            <button
-              data-clear-filters
-              class="group text-sm {{ $textColor }} w-full px-6 py-6 pr-12 flex items-center justify-between gap-3 transition-colors duration-200"
-              aria-label="Clear all filters"
-            >
-              Reset Filter
-              {!! $svg_reset !!}
-            </button>
-          </div>
+          @if(!$hide_reset_filter)
+            <div class="mt-4">
+              <button
+                data-clear-filters
+                class="group text-sm {{ $textColor }} w-full px-6 py-6 pr-12 flex items-center justify-between gap-3 transition-colors duration-200"
+                aria-label="Clear all filters"
+              >
+                Reset Filter
+                {!! $svg_reset !!}
+              </button>
+            </div>
+          @endif
         </form>
       </div>
 
@@ -168,8 +177,8 @@
                 <tr
                   class="company-row hover:{{ $themeVariant === ThemeVariant::DARK ? 'bg-gray-800' : 'bg-gray-50' }} transition-colors duration-200"
                   data-company-name="{{ esc_attr(strtolower($company['title'])) }}"
-                  data-country="{{ esc_attr(!empty($company['countries']) ? implode(',', array_map('strtolower', $company['countries'])) : '') }}"
-                  data-categories="{{ esc_attr(!empty($company['categories']) ? implode(',', array_map('strtolower', $company['categories'])) : '') }}"
+                  data-country="{{ esc_attr(!empty($company['country_slugs']) ? implode(',', array_map('strtolower', $company['country_slugs'])) : (!empty($company['countries']) ? implode(',', array_map('strtolower', $company['countries'])) : '')) }}"
+                  data-categories="{{ esc_attr(!empty($company['category_slugs']) ? implode(',', array_map('strtolower', $company['category_slugs'])) : (!empty($company['categories']) ? implode(',', array_map('strtolower', $company['categories'])) : '')) }}"
                 >
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm font-medium {{ $textColor }}">
@@ -257,6 +266,7 @@ function CompanyDirectoryFilter(blockElement) {
     this.resultsCount = this.block.querySelector('[data-results-count]');
     this.noResults = this.block.querySelector('[data-no-results]');
     this.companyRows = this.block.querySelectorAll('.company-row');
+    this.defaultCountry = this.block.dataset.defaultCountry || '';
 
     // Bind methods to preserve context
     this.filterCompanies = this.filterCompanies.bind(this);
@@ -294,6 +304,11 @@ CompanyDirectoryFilter.prototype.init = function() {
     // Clear filters button
     if (this.clearButton) {
         this.clearButton.addEventListener('click', this.clearFilters);
+    }
+
+    if (this.defaultCountry && this.countryFilter) {
+        this.countryFilter.value = this.defaultCountry;
+        this.filterCompanies();
     }
 };
 

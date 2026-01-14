@@ -11,6 +11,7 @@ class ThemeVariant
     public const GRADIENT = 'gradient';
     public const CYAN = 'cyan';
     public const YELLOW = 'yellow';
+    public const WHITE = 'white';
 
     public static function getValues(): array
     {
@@ -22,6 +23,7 @@ class ThemeVariant
             self::GRADIENT,
             self::CYAN,
             self::YELLOW,
+            self::WHITE,
         ];
     }
 }

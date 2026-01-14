@@ -4,6 +4,7 @@
   use App\Enums\TextTag;
   use App\Enums\TextSize;
   use App\Enums\TextColor;
+  use App\Enums\ThemeVariant;
   use App\Helpers\EnumHelper;
 @endphp
 
@@ -32,6 +33,8 @@
 
   // Use EnumHelper for consistent card background colors
   $cardBgClasses = EnumHelper::getCardBackgroundClass($cardColor);
+  $isWhiteCard = $cardColor === ThemeVariant::WHITE;
+  $whiteCardClass = $isWhiteCard ? 'shadow-lg' : '';
 
   $textColor = 'text-primary-dark'; // Consistent dark text on bright backgrounds
 
@@ -53,7 +56,7 @@
       : "w-full {$imageHeight} object-cover";
 @endphp
 
-<div class="{{ $cardBgClasses }} {{ $paddingClasses }} rounded-2xl {{ $class }} text-left max-w-md flex flex-col h-full">
+<div class="{{ $cardBgClasses }} {{ $paddingClasses }} rounded-2xl {{ $whiteCardClass }} {{ $class }} text-left max-w-md flex flex-col h-full">
   {{-- Image --}}
   @if($image_url)
     <div class="mb-10 overflow-hidden rounded-xl">
