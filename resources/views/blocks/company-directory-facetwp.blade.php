@@ -22,6 +22,8 @@
   $borderColor = $themeVariant === ThemeVariant::DARK ? 'border-gray-700' : 'border-gray-200';
   $form_classes = 'w-full px-6 py-6 flex items-center justify-between gap-3 '.($themeVariant === ThemeVariant::DARK ? 'bg-gray-900' : 'bg-neutral-gray-05').' rounded-md appearance-none focus:outline-none';
   $svg_reset = '<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 '.$textColor.' transition-transform duration-500 ease-in-out group-hover:rotate-360"><g clip-path="url(#clip0_3437_54923)"><path d="M14.7085 5.79183C13.5001 4.5835 11.8418 3.8335 10.0001 3.8335C6.3168 3.8335 3.3418 6.81683 3.3418 10.5002C3.3418 14.1835 6.3168 17.1668 10.0001 17.1668C13.1085 17.1668 15.7001 15.0418 16.4418 12.1668H14.7085C14.0251 14.1085 12.1751 15.5002 10.0001 15.5002C7.2418 15.5002 5.00013 13.2585 5.00013 10.5002C5.00013 7.74183 7.2418 5.50016 10.0001 5.50016C11.3835 5.50016 12.6168 6.07516 13.5168 6.9835L10.8335 9.66683H16.6668V3.8335L14.7085 5.79183Z" fill="currentColor"/></g><defs><clipPath id="clip0_3437_54923"><rect width="20" height="20" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg>';
+  $default_country_slug = !empty($default_country) ? $default_country : '';
+  $hide_reset_filter = !empty($show_default_country);
 @endphp
 
 <x-section :size="$sectionSizeValue" :variant="$themeVariant" classes="{{ $block->classes }}">
@@ -44,6 +46,9 @@
       data-company-directory-facetwp
       class="company-directory-facetwp-block"
       data-theme="{{ $theme }}"
+      @if($default_country_slug)
+        data-default-country="{{ $default_country_slug }}"
+      @endif
     >
       {{-- Filter Section --}}
       <div class="mb-8">
@@ -73,17 +78,19 @@
             </div>
           </div>
           {{-- Clear Filters Button --}}
-          <div class="mt-4">
-            <button
-              type="button"
-              onclick="if (typeof FWP !== 'undefined' && typeof FWP.reset === 'function') FWP.reset();"
-              class="group text-sm {{ $textColor }} w-full px-6 py-6 pr-12 flex items-center justify-between gap-3 transition-colors duration-200"
-              aria-label="Clear all filters"
-            >
-              Reset Filter
-              {!! $svg_reset !!}
-            </button>
-          </div>
+          @if(!$hide_reset_filter)
+            <div class="mt-4">
+              <button
+                type="button"
+                onclick="if (typeof FWP !== 'undefined' && typeof FWP.reset === 'function') FWP.reset();"
+                class="group text-sm {{ $textColor }} w-full px-6 py-6 pr-12 flex items-center justify-between gap-3 transition-colors duration-200"
+                aria-label="Clear all filters"
+              >
+                Reset Filter
+                {!! $svg_reset !!}
+              </button>
+            </div>
+          @endif
         </div>
       </div>
 
@@ -351,6 +358,8 @@
         const isDark = theme === 'dark';
         const textColor = isDark ? 'text-white' : 'text-black';
         const placeholderColor = isDark ? 'placeholder-gray-400' : 'placeholder-gray-500';
+        const defaultCountry = block.dataset.defaultCountry || '';
+        let defaultCountryApplied = false;
 
         // Style FacetWP elements
         function styleFacetWPElements() {
@@ -405,6 +414,30 @@
             }
         }
 
+        function applyDefaultCountry() {
+            if (!defaultCountry || defaultCountryApplied || typeof FWP === 'undefined') {
+                return;
+            }
+
+            const current = FWP.facets && Array.isArray(FWP.facets.company_country)
+                ? FWP.facets.company_country
+                : [];
+            const countrySelect = block.querySelector('.facetwp-facet-company_country select');
+            const currentSelection = countrySelect ? countrySelect.value : '';
+
+            if (current.length > 0 || currentSelection) {
+                defaultCountryApplied = true;
+                return;
+            }
+
+            defaultCountryApplied = true;
+            if (countrySelect) {
+                countrySelect.value = defaultCountry;
+            }
+            FWP.facets.company_country = [defaultCountry];
+            FWP.refresh();
+        }
+
         // Wait for FacetWP to be fully ready
         function initFacetWP() {
             if (typeof FWP === 'undefined' || typeof FWP.refresh !== 'function') {
@@ -417,6 +450,7 @@
                 replaceDropdownPlaceholders();
                 removeLoadingState();
                 styleFacetWPElements();
+                applyDefaultCountry();
             }
 
             // Listen for future facetwp-loaded events

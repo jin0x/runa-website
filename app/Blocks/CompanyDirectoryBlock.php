@@ -96,6 +96,8 @@ class CompanyDirectoryBlock extends Block
             'section_size' => $this->getSectionSize(),
             'theme' => $this->getTheme(),
             'use_facetwp' => $use_facetwp,
+            'show_default_country' => $this->getShowDefaultCountry(),
+            'default_country' => $this->getDefaultCountry(),
         ];
 
         // Only load company data if not using FacetWP
@@ -122,6 +124,37 @@ class CompanyDirectoryBlock extends Block
                 'placement' => 'top',
             ])
             ->addPartial(SectionHeading::class)
+
+            ->addTab('Companies Settings', [
+                'placement' => 'top',
+            ])
+            ->addTrueFalse('show_default_country', [
+                'label' => 'Show a default country',
+                'message' => 'Apply a default country filter on initial load',
+                'default_value' => 0,
+                'ui' => 1,
+            ])
+            ->addTaxonomy('default_country', [
+                'label' => 'Default country',
+                'instructions' => 'Select a country to pre-filter the directory on page load.',
+                'taxonomy' => 'company_country',
+                'field_type' => 'select',
+                'allow_null' => 1,
+                'add_term' => 0,
+                'save_terms' => 0,
+                'load_terms' => 0,
+                'return_format' => 'id',
+                'multiple' => 0,
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'show_default_country',
+                            'operator' => '==',
+                            'value' => '1',
+                        ],
+                    ],
+                ],
+            ])
 
             ->addTab('Settings', [
                 'placement' => 'top',
@@ -164,7 +197,7 @@ class CompanyDirectoryBlock extends Block
     public function getCompanies()
     {
         // Use transient caching for companies data
-        $cache_key = 'company_directory_data_v2';
+        $cache_key = 'company_directory_data_v3';
         $companies_data = get_transient($cache_key);
 
         if (false === $companies_data) {
@@ -209,7 +242,9 @@ class CompanyDirectoryBlock extends Block
                     'country_name' => $country_name,
                     'company_currency' => $company_currency,
                     'countries' => $country_terms ? array_map(fn($term) => $term->name, $country_terms) : [],
+                    'country_slugs' => $country_terms ? array_map(fn($term) => $term->slug, $country_terms) : [],
                     'categories' => $category_terms ? array_map(fn($term) => $term->name, $category_terms) : [],
+                    'category_slugs' => $category_terms ? array_map(fn($term) => $term->slug, $category_terms) : [],
                 ];
             }
 
@@ -303,6 +338,40 @@ class CompanyDirectoryBlock extends Block
         // Default to true if FacetWP is available, false otherwise
         $default = function_exists('FWP') ? true : false;
         return get_field('use_facetwp') !== null ? get_field('use_facetwp') : $default;
+    }
+
+    public function getShowDefaultCountry()
+    {
+        return (bool) get_field('show_default_country');
+    }
+
+    public function getDefaultCountry()
+    {
+        if (!$this->getShowDefaultCountry()) {
+            return null;
+        }
+
+        $term = get_field('default_country');
+
+        if (empty($term)) {
+            return null;
+        }
+
+        if ($term instanceof \WP_Term) {
+            return $term->slug;
+        }
+
+        $term_id = is_numeric($term) ? (int) $term : 0;
+        if ($term_id <= 0) {
+            return null;
+        }
+
+        $resolved = get_term($term_id, 'company_country');
+        if (!$resolved || is_wp_error($resolved)) {
+            return null;
+        }
+
+        return $resolved->slug;
     }
 
     /**
